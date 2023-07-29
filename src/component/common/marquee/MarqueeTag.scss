@@ -1,0 +1,14 @@
+.marque_section {
+    background: #74766f;
+    padding: 4px;
+    color: #fff;
+    z-index: 1;
+    margin-left: 2px;
+}
+
+
+@media screen and (max-width: 800px) {
+    .marque_section {
+        margin-left:unset;
+    }
+}

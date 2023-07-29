@@ -1,0 +1,9 @@
+.update_agent{
+    margin: 15px;
+}
+
+@media screen and (max-width: 800px) {
+    .update_agent{
+        margin: 0px !important; 
+    }
+}

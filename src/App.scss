@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  font-family: NoirPro, sans-serif !important;
+}
+.d-none {
+  display: none !important;
+  transition: transform 0.3s cubic-bezier(0.7, 0.3, 0.1, 1), height 0s ease 0.3s,
+    width 0s ease 0.3s, -webkit-transform 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
+}
+a {
+  text-decoration: none;
+  color: #fff;
+}
+a:hover {
+  text-decoration: none;
+  outline: 0;
+  color: #fff;
+}
+.lightback{
+  background: #a7d8fd;
+}
+.lightlay{
+  background: #f9c9d4;
+}
+.back{
+  background: #63b7f7;
+}
+.lay{
+  background: #ef839b;
+}
+.text_success{
+  color: green;
+}
+.text_danger{
+  color: red;
+}
+.ant-btn-default {
+  background: #74766f !important;
+  color: #fff;
+  border-radius: 2px;
+  border: unset;
+  outline: unset;
+  margin-right: 14px;
+}
+.ant-btn-primary{
+  background: #5d7074 !important;
+  color: #fff;
+  border-radius: 2px;
+  border: unset;
+  outline: unset;
+}
+.main_live_section{
+  background-color: #fff;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #bfbfbf;
+  font-weight: 600;
+ 
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #bfbfbf;
+  font-weight: 600;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #bfbfbf;
+  font-weight: 600;
+}
+
+// svg {
+//   color: #fff;
+// }
+
+td, th{
+  white-space: nowrap;
+}
+
+:where(.css-dev-only-do-not-override-12jzuas).ant-card {
+  border-radius: 2px;
+}
+
+.dateHiglight {
+  background: #d5dc66;
+  &:hover{
+    background: #d5dc66 !important;
+
+  }
+}
+
+::selection {
+  background: #5d7074;
+  color: #fff;
+}
+.text-center{
+  text-align: center !important;
+}

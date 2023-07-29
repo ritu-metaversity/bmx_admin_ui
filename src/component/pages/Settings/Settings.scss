@@ -1,0 +1,90 @@
+.setting_main {
+  .setting_data1 {
+    background: #74766f;
+    margin-right: 13px;
+    margin-top: 12px;
+    margin-left: -4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 0px;
+  }
+  .setting_data {
+    background: #74766f;
+    margin: 12px 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 4px;
+    cursor: pointer;
+
+    p {
+      color: #fff;
+      text-align: center;
+      cursor: pointer;
+    }
+    a{
+        text-align: center;
+    }
+  }
+  .setting_detail {
+    background-color: #fff !important;
+    margin: 30px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin-left: -4px;
+
+    .ant-card-body {
+      padding: 0px !important;
+      border-radius: 0 0 8px 8px;
+      .table_section {
+        overflow: scroll;
+        background-color: #fff;
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+          th {
+            background: #74766f;
+            color: #fff;
+            padding: 0 3px;
+            border-right: 1px solid #e8e8e8;
+            text-align: left;
+          }
+          tr {
+            border-right: 1px solid #e8e8e8;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .setting_main {
+    .setting_detail{
+        margin-left: 0px;
+    }
+    .ant-card-body {
+      padding: 0 5px;
+    }
+    .setting_data1 {
+      margin-left: unset;
+    }
+    .setting_data {
+      margin: 12px 13px 12px 0px;
+      padding: 16px 9px;
+      a,
+      p {
+        font-family: Arial;
+        font-weight: 600;
+        text-align: center;
+      }
+    }
+    .mob_setting{
+        margin-right: 0px;
+    }
+  }
+}

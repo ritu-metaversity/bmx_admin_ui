@@ -1,0 +1,54 @@
+.ledger_data {
+    .ant-card-head-title{
+
+        font-size: 16px !important;
+        font-weight: 400 !important;
+    }
+  .my_ledger {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+    h3 {
+      font-size: 18px;
+      font-family: Arial !important;
+      font-weight: 500;
+    }
+  }
+}
+.ledger_pagination{
+    li.ant-pagination-item-active {
+        line-height: 24px !important;
+        width: 23px !important;
+        min-width: 26px !important;
+        height: unset !important;
+        border-radius: 3px;
+        a {
+            padding: 0px !important;
+            color: #74766f !important;
+        }
+    }
+    li.ant-pagination-item{
+        line-height: 24px;
+        width: 23px !important;
+        min-width: 26px !important;
+        height: unset !important;
+    }
+   
+}
+.pagination_main{
+    span.anticon.anticon-left{
+        svg {
+            color: #74766fad !important;
+            font-size: 12px !important;
+            margin-right: -25px;
+        }
+    }
+    span.anticon.anticon-right{
+        svg {
+            color: #74766fad !important;
+            font-size: 12px !important;
+            margin-left: -25px;
+        }
+    }
+}

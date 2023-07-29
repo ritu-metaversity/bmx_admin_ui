@@ -1,0 +1,204 @@
+.sport_detail {
+  background-color: #fff !important;
+  margin: 30px 23px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 96%;
+  .rejected_row {
+    margin: 0px 0px 12px 30px;
+    .ant-select-selector {
+      width: 100%;
+    }
+  }
+  //   .ant-select-single {
+  //     font-size: 14px;
+  //     width: 100%;
+  //     margin: 7px 0px;
+  // }
+  .ant-card-head {
+    background-color: #74766f !important;
+    color: #fff !important;
+    border-radius: 2px 2px 0 0 !important;
+    // padding: 15px;
+    .ant-card-head-title {
+      font-size: 24px;
+      font-weight: 500 !important;
+      padding: 0px 0px;
+    }
+
+    .ant-card-extra button {
+      text-decoration: none !important;
+      background-image: none;
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+      border-radius: 2px;
+      color: #fff;
+      background-color: #5d7074;
+      padding: 10px;
+      font-weight: 600;
+      outline: unset;
+      border: unset;
+    }
+  }
+  .ant-card-body {
+    padding: 0px !important;
+    border-radius: 0 0 8px 8px;
+    // margin: 12px 0px;
+  }
+  .date_picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .ant-picker {
+      border: 1px solid #00000063 !important;
+      border-radius: 2px !important;
+      height: 40px;
+      padding-left: 51px !important;
+    }
+  }
+  .table_section {
+    overflow: scroll;
+    background: #fff;
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+      // margin-top: 12px;
+
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+      th {
+        background: #74766f;
+        color: #fff;
+        padding: 0 3px;
+      }
+      tr {
+        &:hover {
+          background-color: #a8b3b3 !important;
+        }
+        .setting_btn {
+          background: rgb(82, 196, 26) !important;
+          padding: 4px 7px;
+          border-radius: 2px;
+          color: #fff;
+          font-size: 12px;
+          border: unset;
+          outline: unset;
+        }
+        a.ant-dropdown-trigger.table_dropdown {
+          position: static;
+        }
+        .ant-space-item {
+          background: #5d7074;
+          color: #fff;
+          padding: 4px 0px;
+          // margin-left: -17px;
+          border-radius: 3px;
+          // margin-right: 7px;
+        }
+        .text-right {
+          text-align: right;
+        }
+        .text-left {
+          text-align: left;
+        }
+      }
+      tr:nth-child(even) {
+        background-color: #f1f1f1;
+      }
+    }
+    .ant-dropdown {
+      position: static !important;
+    }
+  }
+}
+
+.ant-modal-content {
+  border-radius: 2px !important;
+  padding: 24px 30px !important;
+
+  .ant-modal-confirm-title {
+    color: #535353 !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+  }
+  .ant-modal-confirm-btns {
+    margin-top: 23px;
+    .ant-btn-default {
+      background: #74766f !important;
+      color: #fff;
+      border-radius: 2px;
+      border: unset;
+      outline: unset;
+      margin-right: 14px;
+    }
+    .ant-btn-primary {
+      background: #5d7074 !important;
+      color: #fff;
+      border-radius: 2px;
+      border: unset;
+      outline: unset;
+    }
+  }
+}
+
+.title_section {
+  font-weight: 500 !important;
+}
+
+.pagination_main {
+  float: right;
+  font-size: 13px;
+  color: #545454 !important;
+  .ant-pagination-item-active {
+    font-weight: 500;
+    background-color: #ffffff !important;
+    border-color: #5d7074 !important;
+    color: #5d7074 !important;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .sport_detail {
+    margin: 0px;
+    margin-inline: 2%;
+    .rejected_row {
+      margin: 0px 0px 0px 0px;
+      .ant-select-selector {
+        width: 100%;
+      }
+      .ant-select-single {
+        font-size: 14px !important;
+        width: 94% !important;
+        margin: 7px 2% !important;
+      }
+    }
+    .ant-picker {
+      width: 96% !important;
+      margin-inline: 2%;
+    }
+    .ant-space-item {
+      margin-left: 0px !important;
+    }
+  }
+}
+.button.ant-pagination-item-link {
+  svg {
+    color: #000;
+  }
+}
+
+.sport_droupdown {
+  
+      .ant-space-item {
+        background: #5d7074;
+        color: #fff;
+        padding: 1px 6px !important;
+        border-radius: 3px;
+        margin-left: -12px;
+      }
+}

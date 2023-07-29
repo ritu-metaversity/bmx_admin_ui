@@ -1,0 +1,31 @@
+.run_amount_heading {
+  display: flex;
+  margin-top: 14px;
+  padding: 6px;
+  border-bottom: 1px solid #74766f !important;
+  h3 {
+    &:first-child {
+      width: 200px;
+    }
+    font-size: 16px;
+    color: #74766f;
+  }
+}
+.pnl {
+  display: flex;
+  border: 1px solid #74766f;
+//   padding: 4px;
+  border-top: unset;
+  height: 22px;
+  p {
+    &:first-child {
+      width: 200px;
+      border-right: 1px solid #74766f;
+      padding-left: 6px;
+
+    }
+    &:nth-child(even){
+        padding-left: 6px;
+      }
+  }
+}

@@ -1,0 +1,19 @@
+.show_bet {
+  .ant-card-head-title {
+    font-size: 17px !important;
+  }
+  .show_bet_table{
+    .bg-red {
+        background: red !important;
+        color: #fff;
+
+        &:hover {
+          background: red !important;
+        }
+        td{
+            padding: 5px;
+        }
+      }
+  }
+  
+}

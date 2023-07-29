@@ -1,0 +1,53 @@
+.main_acc_section {
+    background: #fff;
+    padding: 15px 0px;
+    .datepicker {
+        margin-left: 180px;
+    }
+    .ant-picker{
+        width: 40% !important;
+    }
+    .transtion_tab{
+        .ant-tabs-nav{
+            position: relative;
+            top: unset;
+            left: unset;
+            margin: 14px 189px;
+            .ant-tabs-tab {
+                padding: 5px 14px;
+            }
+        }
+        .ant-tabs-nav-more{
+            display: none;
+        }
+    }
+}
+
+
+@media screen and (max-width: 800px) {
+    .main_acc_section {
+        background: #fff;
+        padding: 15px 0px;
+        .datepicker {
+            margin-left: unset;
+        }
+        .ant-picker{
+            width: 100% !important;
+            margin-left: unset;
+        }
+        .transtion_tab{
+            .ant-tabs-nav{
+                position: relative;
+                top: unset;
+                left: unset;
+                margin: 14px 2px !important;
+                .ant-tabs-tab {
+                    padding: 5px 14px;
+                }
+            }
+            .ant-tabs-nav-more{
+                display: none;
+            }
+        }
+    }
+}

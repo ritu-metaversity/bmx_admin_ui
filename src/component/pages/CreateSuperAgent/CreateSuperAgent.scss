@@ -1,0 +1,30 @@
+.right_form_data{
+    .ant-form-item-explain {
+        margin-left: 32px;
+    }
+}
+.form_data{
+    .ant-row.ant-form-item-row.css-dev-only-do-not-override-12jzuas {
+        margin-bottom: 12px;
+    }
+}
+.ant-row.super_agent.css-dev-only-do-not-override-12jzuas {
+    margin-top: 22px;
+}
+.sub_super{
+    margin-left: 4px;
+}
+@media screen and (max-width: 800px) {
+    .right_form_data{
+        .ant-form-item-explain {
+            margin-left: 0px;
+        }
+    }
+}
+
+.ant-select-arrow{
+    color: #d9d9d9;
+    svg{
+        color: #d9d9d9;
+    }
+}

@@ -1,0 +1,28 @@
+.show_bet_table {
+  overflow: scroll;
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    th {
+      background: #74766f;
+      color: #fff;
+      padding: 0 3px;
+      border: 1px solid #dddddd;
+      text-align: left;
+    }
+    tr {
+      td {
+        text-align: left;
+        padding: 8px;
+        border-right: 1px solid #A9A9A9 !important;
+        border-bottom: 1px solid #A9A9A9 !important;
+    
+      }
+    }
+  }
+  .bg-green {
+    background-color: green !important;
+    color: #fff;
+  }
+}

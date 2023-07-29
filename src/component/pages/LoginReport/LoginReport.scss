@@ -1,0 +1,21 @@
+.login_report{
+    .team_name{
+        display: inline-block;
+        flex: 1 1;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .ant-card-head-title {
+        font-size: 24px !important;
+        font-weight: 500 !important;
+        padding: 9px 0px !important;
+    }
+    .ant-card{
+        border-radius: 3px;
+    }
+    span.ant-spin-dot.ant-spin-dot-spin {
+        height: 32px;
+        width: 32px;
+    }
+}
+

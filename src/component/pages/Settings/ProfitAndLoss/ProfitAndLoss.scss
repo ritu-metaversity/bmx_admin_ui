@@ -1,0 +1,54 @@
+.profit_apply {
+  //   display: flex;
+  align-items: center;
+  .profit_date {
+    margin: 18px 35px;
+    .ant-picker.ant-picker-range.css-dev-only-do-not-override-12jzuas {
+      width: 100%;
+    }
+  }
+  .apply_btn {
+    color: #fff;
+    background-color: #5d7074;
+    border-color: #5d7074;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+    color: #ffffff !important;
+    background-color: #5d7074 !important;
+    border-color: #5d7074 !important;
+    border-radius: 2px;
+    text-align: center;
+    font-weight: 600;
+  }
+  .text-center {
+    text-align: center;
+  }
+  .apply_btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px;
+    .search_icon {
+      margin-right: 5px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .profit_apply {
+    .text-center {
+      margin-bottom: 15px;
+      margin-top: -2px;
+    }
+
+    .btn_apply {
+      display: flex;
+      justify-content: center;
+    }
+    .mb-2{
+        margin-bottom: -6px;
+        margin-top: -20px;
+    }
+  }
+}
