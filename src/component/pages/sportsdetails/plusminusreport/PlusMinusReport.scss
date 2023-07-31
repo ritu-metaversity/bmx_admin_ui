@@ -1,100 +1,159 @@
-.live_report{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 35px;
-    button{
-        border: unset;
-        border-radius: unset;
-        outline: unset;
-        background: #5d7074;
-        color: #fff;
-        font-weight: bold;
-        padding: 10px 12px;
-    }
+.live_report {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 35px;
+  button {
+    border: unset;
+    border-radius: unset;
+    outline: unset;
+    background: #5d7074;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 12px;
+  }
 }
-._match{
+._match {
+  background: #fff;
+
+  .table_section {
+    margin: 23px;
     background: #fff;
-    
-    .table_section{
-        margin: 23px;
-        background: #fff;
-    }
-    .session_table{
-        margin-top: 41px;
+  }
+  .session_table {
+    margin-top: 41px;
     margin-bottom: 37px;
     th.ant-table-cell {
-        font-weight: 500 !important;
+      font-weight: 500 !important;
     }
-    }
-    .table1{
-        margin-right: 15px;
-    }
-    .table2{
-        margin-left: 15px;
-    }
-    .match_table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-         
-      td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
+  }
+  .table1 {
+    margin-right: 15px;
+    .ant-checkbox-input {
+      &::after {
+        border: 2px solid #74766f;
       }
-      thead{
-        background: #fafafa !important;
-        th{
-            padding: 14px 8px;
-    font-weight: 500;
+    }
+    .ant-checkbox-checked {
+      .ant-checkbox-inner {
+        background-color: #74766f;
+        border-color: #74766f;
+        &:hover {
+          background-color: #74766f !important;
         }
       }
-      tbody{
-        tr:nth-child(even) {
-            background-color: #dddddd;
+    }
+    .ant-checkbox-wrapper {
+      &:hover {
+        border-color: #74766f !important;
+      }
+    }
+
+    .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled) {
+      &:hover {
+        border-color: #74766f;
+      }
+    }
+    .ant-checkbox-inner,
+    :where(.css-dev-only-do-not-override-12jzuas).ant-checkbox-checked:not(
+        .ant-checkbox-disabled
+      ) {
+      &:hover {
+        .ant-checkbox-inner {
+          background-color: #74766f !important;
+        }
+      }
+    }
+    .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled) {
+      &:hover {
+        .ant-checkbox-checked:not(.ant-checkbox-disabled) {
+          &::after {
+            border-color: #74766f;
           }
-          .table_check{
-            padding: 5px;
-        }
-       .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
-            background-color: #5d7074 !important;
-            border-color: #5d7074;
-            border-radius: 2px;
+          border-color: #74766f;
         }
       }
-    
+    }
+    .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled) {
+      &:hover {
+        .ant-checkbox-inner,
+        .ant-checkbox:not(.ant-checkbox-disabled) {
+          &:hover {
+            .ant-checkbox-inner {
+              border-color: unset !important;
+            }
+          }
+        }
       }
+    }
+  }
+  .table2 {
+    margin-left: 15px;
+  }
+  .match_table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+
+    td,
+    th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    thead {
+      background: #fafafa !important;
+      th {
+        padding: 14px 8px;
+        font-weight: 500;
+      }
+    }
+    tbody {
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+      .table_check {
+        padding: 5px;
+      }
+      .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
+        .ant-checkbox-checked:not(.ant-checkbox-disabled)
+        .ant-checkbox-inner {
+        background-color: #5d7074 !important;
+        border-color: #5d7074;
+        border-radius: 2px;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 800px) {
-    .de_table{
-        display: block;
-        width: 100%;
-        min-width: 100%;
-        max-width: 100%;
-        .table1{
-            margin-right: 0px !important;
-        }
-        .table2{
-            margin-left: 0px !important;
-            .ant-table-content {
-                margin-bottom: 37px;
-            }
-        }
-        .ant-col.ant-col-12.css-dev-only-do-not-override-12jzuas {
-            width: 100%;
-            min-width: 100%;
-            max-width: 100%;
-        }
+  .de_table {
+    display: block;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    .table1 {
+      margin-right: 0px !important;
     }
-    
-    .live_report{
-        margin-top: 0px;
+    .table2 {
+      margin-left: 0px !important;
+      .ant-table-content {
+        margin-bottom: 37px;
+      }
     }
+    .ant-col.ant-col-12.css-dev-only-do-not-override-12jzuas {
+      width: 100%;
+      min-width: 100%;
+      max-width: 100%;
+    }
+  }
+
+  .live_report {
+    margin-top: 0px;
+  }
 }
 .team_name {
-    display: inline-block;
-    flex: 1 1;
-    overflow: hidden;
-    white-space: nowrap;
+  display: inline-block;
+  flex: 1 1;
+  overflow: hidden;
+  white-space: nowrap;
 }

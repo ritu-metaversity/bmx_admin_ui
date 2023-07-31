@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
-  const [trigger, { data: authData, error, isLoading, isError }] =
+  const [trigger, { data: authData, error, isLoading }] =
     useLoginMutation();
 
   const nav = useNavigate();
@@ -110,6 +110,7 @@ const Signin = () => {
                     },
                   ]}>
                   <Input
+                  type="password"
                     // onMouseLeave={onFinishFailed}
                     // onFocus={onFinishFailed}
                     onChange={onFinishFailed}

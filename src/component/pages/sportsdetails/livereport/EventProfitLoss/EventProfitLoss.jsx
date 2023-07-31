@@ -9,23 +9,23 @@ import { useProfitLossQuery } from "../../../../../store/service/ProfitLossServi
 const columns = [
   {
     title: "username",
-    dataIndex: "username",
-    key: "username",
+    dataIndex: "userid",
+    key: "userid",
   },
   {
     title: "Date",
-    dataIndex: "Date",
-    key: "Date",
+    dataIndex: "date",
+    key: "date",
   },
   {
     title: "Selection",
-    dataIndex: "Selection",
-    key: "Selection",
+    dataIndex: "selectionname",
+    key: "selectionname",
   },
   {
     title: "Result",
-    dataIndex: "Result",
-    key: "Result",
+    dataIndex: "result",
+    key: "result",
   },
 
   {
@@ -35,18 +35,18 @@ const columns = [
   },
   {
     title: "Value",
-    dataIndex: "Value",
-    key: "Value",
+    dataIndex: "pricevalue",
+    key: "pricevalue",
   },
   {
     title: "Stake",
-    dataIndex: "Value",
-    key: "Value",
+    dataIndex: "netpnl",
+    key: "netpnl",
   },
   {
     title: "pnl",
-    dataIndex: "Value",
-    key: "Value",
+    dataIndex: "netpnl",
+    key: "netpnl",
   },
 ];
 
@@ -69,7 +69,7 @@ const EventProfitLoss = () => {
   })
 
 
-  console.log(profitLoss?.data, "sadasdas")
+  console.log(profitLoss?.data?.data, "sadasdas")
   
   return (
     <>
@@ -104,7 +104,7 @@ const EventProfitLoss = () => {
               className="live_table limit_update"
               bordered
               columns={columns}
-              // dataSource={data}
+              dataSource={profitLoss?.data?.data}
             ></Table>
           </div>
         </div>

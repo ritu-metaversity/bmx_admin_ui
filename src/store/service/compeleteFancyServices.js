@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 export const completeFancyApi = createApi({
   reducerPath: "completeFancyApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BASE_URL_SHA,
+    baseUrl: import.meta.env.VITE_BASE_URL_SID,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       headers.set("Authorization", `Bearer ${token}`);

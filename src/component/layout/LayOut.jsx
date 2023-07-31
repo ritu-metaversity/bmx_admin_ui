@@ -113,7 +113,7 @@ const LayOut = () => {
               <Route path="/Events/ladger-details" element={<LadgerDetails />} />
               <Route path="/Events/sports-details" element={<SportsDetails />} />
               <Route path="/livereport" element={<LiveReport />} />
-              <Route path="/plus-minus-report" element={<PlusMinusReport />} />
+              <Route path="/plus-minus-report/:id" element={<PlusMinusReport />} />
               <Route path="/match-slips" element={<MatchSlips />} />
               <Route path="/fancy-slips" element={<FancySlips />} />
               <Route path="/completed-fancy-slips" element={<CompletedFancySlips />} />

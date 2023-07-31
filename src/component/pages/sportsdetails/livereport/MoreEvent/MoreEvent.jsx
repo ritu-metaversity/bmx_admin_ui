@@ -6,7 +6,6 @@ import { useActiveMatchQuery } from "../../../../../store/service/ActiveMatcheSe
 const MoreEvent = () => {
   const { data } = useActiveMatchQuery();
 
-  console.log(data?.data, "sdasdsa");
   const nav = useNavigate()
 
   const handleDetails = (id)=>{

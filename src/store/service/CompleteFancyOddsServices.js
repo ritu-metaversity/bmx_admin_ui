@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
-export const ttlBookApi = createApi({
-  reducerPath: "ttlBookApi",
+export const complteFancyOddsClientsApi = createApi({
+  reducerPath: "complteFancyOddsClientsApi",
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_BASE_URL_SID,
     prepareHeaders: (headers) => {
@@ -11,14 +11,14 @@ export const ttlBookApi = createApi({
     },
   }),
   endpoints: (build) => ({
-    ttlBook: build.query({
+    complteFancyOddsClients: build.query({
       query: (body) => ({
-        url: `/bmx/ttl-book`,
+        url: "/bmx/report/completed-fancy-odds-clients",
         method: "POST",
-        body
+        body,
       }),
-    }),
-  }),
+    })
+    })
 });
 
-export const {useTtlBookQuery} = ttlBookApi;
+export const {useComplteFancyOddsClientsQuery} = complteFancyOddsClientsApi;

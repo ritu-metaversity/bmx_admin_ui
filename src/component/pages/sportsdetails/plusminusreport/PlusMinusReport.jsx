@@ -2,45 +2,44 @@ import { React, useState } from "react";
 // import { Divider, Radio, Table } from "antd";
 import "./PlusMinusReport.scss";
 import { Checkbox, Col, Row, Table } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useComplteFancyOddsClientsQuery } from "../../../../store/service/CompleteFancyOddsServices";
+import { useSelector } from "react-redux";
+import { globalSelector } from "../../../../store/global/slice";
 
-const columns = [
+const column = [
   {
     title: "Session",
-    dataIndex: "Session",
+    dataIndex: "selectionname",
+    key:1
   },
   {
     title: "Declare",
-    dataIndex: "Declare",
+    dataIndex: "result",
+    key:2
   }
 ];
-const data = [
-//   {
-//     key: "1",
-//     name: "John Brown",
-   
-//   },
-//   {
-//     key: "2",
-//     name: "Jim Green",
-   
-//   },
-//   {
-//     key: "3",
-//     name: "Joe Black",
-    
-//   },
-//   {
-//     key: "4",
-//     name: "Disabled User",
-    
-//   },
+const columns = [
+  {
+    title: "Client",
+    dataIndex: "userid",
+    key:1
+  },
 ];
 
 const PlusMinusReport = () => {
+  const {id} = useParams()
   const onChange = (e) => {
     console.log(`checked = ${e.target.checked}`);
   };
+
+  const {data} = useComplteFancyOddsClientsQuery({
+    "eventId": id
+  }, {refetchOnMountOrArgChange: true}) 
+
+
+  const sportName = useSelector(globalSelector);
+
 
   const nav = useNavigate()
   const handleBackClick = ()=>{
@@ -56,8 +55,7 @@ const PlusMinusReport = () => {
             // style={{ marginTop: "35px" }}
             >
             <div style={{ padding: "5px 8px", fontSize: "22px" }} className="team_name">
-              Dindigul Dragons v Siechem Madurai Panther (Tamil Nadu Premier
-              League)
+             {sportName?.data}
             </div>
             <div className="show_btn">
               <button>Show</button>
@@ -93,16 +91,16 @@ const PlusMinusReport = () => {
                       type: "checkbox",
                     }}
                     bordered
-                    columns={columns}
+                    columns={column}
                     pagination={false}
-                    dataSource={data}
+                    dataSource={data?.data?.markets.filter(i=>!["match odds","bookmaker"].includes(i.marketname?.toLowerCase()))}
                   />
                 </div>
               </Col>
               <Col span={12}>
               <div>
                   <Table
-                  className="session_table
+                  className="session_table table1
                   table2"
                     rowSelection={{
                       type: "checkbox",
@@ -110,7 +108,7 @@ const PlusMinusReport = () => {
                     bordered
                     columns={columns}
                     pagination={false}
-                    dataSource={data}
+                    dataSource={data?.data?.users}
                   />
                 </div>
               </Col>

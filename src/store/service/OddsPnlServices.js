@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
-export const ttlBookApi = createApi({
-  reducerPath: "ttlBookApi",
+export const oddsPnlApi = createApi({
+  reducerPath: "oddsPnlApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BASE_URL_SID,
+    baseUrl: import.meta.env.VITE_BASE_URL,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       headers.set("Authorization", `Bearer ${token}`);
@@ -11,9 +11,16 @@ export const ttlBookApi = createApi({
     },
   }),
   endpoints: (build) => ({
-    ttlBook: build.query({
+    oddsPnl: build.mutation({
       query: (body) => ({
-        url: `/bmx/ttl-book`,
+        url: "/bets/odds-pnl",
+        method: "POST",
+        body
+      }),
+    }),
+    oddsQuPnl: build.query({
+      query: (body) => ({
+        url: "/bets/odds-pnl",
         method: "POST",
         body
       }),
@@ -21,4 +28,4 @@ export const ttlBookApi = createApi({
   }),
 });
 
-export const {useTtlBookQuery} = ttlBookApi;
+export const {useOddsPnlMutation, useOddsQuPnlQuery} = oddsPnlApi;

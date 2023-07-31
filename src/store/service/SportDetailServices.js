@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
-export const ttlBookApi = createApi({
-  reducerPath: "ttlBookApi",
+export const sportDetailsApi = createApi({
+  reducerPath: "sportDetailsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BASE_URL_SID,
+    baseUrl: import.meta.env.VITE_BASE_URL_IP,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       headers.set("Authorization", `Bearer ${token}`);
@@ -11,14 +11,14 @@ export const ttlBookApi = createApi({
     },
   }),
   endpoints: (build) => ({
-    ttlBook: build.query({
+    sportDetail: build.query({
       query: (body) => ({
-        url: `/bmx/ttl-book`,
+        url: "/bmx/report/sport-details",
         method: "POST",
-        body
+        body,
       }),
-    }),
-  }),
+    })
+    })
 });
 
-export const {useTtlBookQuery} = ttlBookApi;
+export const {useSportDetailQuery} = sportDetailsApi;

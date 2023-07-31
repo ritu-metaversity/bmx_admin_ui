@@ -199,7 +199,7 @@ const UserListTable = ({data: userList, userType}) => {
                   </td>
                   <td>{res?.matchCommission}</td>
                   <td>{res?.sessionCommission}</td>
-                  <td>{res?.availablebalance}popo</td>
+                  <td>{res?.availablebalance}</td>
                   <td>{res?.active === true ? "Active" : "inActive"}</td>
                 </tr>
               );

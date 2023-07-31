@@ -13,6 +13,9 @@ import { fancyBookApi } from "./service/FancyBookServices";
 import { ttlBookApi } from "./service/TtlBookServices";
 import global  from "./global/slice";
 import { profitLossApi } from "./service/ProfitLossServices";
+import { sportDetailsApi } from "./service/SportDetailServices";
+import { complteFancyOddsClientsApi } from "./service/CompleteFancyOddsServices";
+import { oddsPnlApi } from "./service/OddsPnlServices";
 // import { useAccountstatementQuery } from './service/supermasteAccountStatementServices'
 
 export const store = configureStore({
@@ -32,6 +35,9 @@ export const store = configureStore({
     [fancyBookApi.reducerPath]:fancyBookApi.reducer,
     [ttlBookApi.reducerPath]:ttlBookApi.reducer,
     [profitLossApi.reducerPath]:profitLossApi.reducer,
+    [sportDetailsApi.reducerPath]:sportDetailsApi.reducer,
+    [complteFancyOddsClientsApi.reducerPath]:complteFancyOddsClientsApi.reducer,
+    [oddsPnlApi.reducerPath]:oddsPnlApi.reducer,
   },
   middleware: (defaultMiddleware) =>
     defaultMiddleware()
@@ -48,4 +54,7 @@ export const store = configureStore({
       .concat(fancyBookApi.middleware)
       .concat(ttlBookApi.middleware)
       .concat(profitLossApi.middleware)
+      .concat(sportDetailsApi.middleware)
+      .concat(complteFancyOddsClientsApi.middleware)
+      .concat(oddsPnlApi.middleware)
 });

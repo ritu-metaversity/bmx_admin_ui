@@ -199,6 +199,22 @@
         color: #fff;
         padding: 1px 6px !important;
         border-radius: 3px;
-        margin-left: -12px;
+        // margin-left: -12px;
       }
+}
+
+.sport_list{
+    padding: 0px !important;
+
+.ant-dropdown-menu-item {
+  padding: 2px 11px !important;
+  border-radius: unset !important;
+  &:hover{
+    color: #fff !important;
+    background: #038fde !important;
+    border-radius: unset !important;
+  }
+
+}
+ 
 }

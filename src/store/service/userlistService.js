@@ -11,7 +11,7 @@ export const userlistApi = createApi({
     },
   }),
   endpoints: (build) => ({
-    userList: build.query({
+    userList: build.mutation({
       query: (body) => ({
         url: "/user/child-list-active-user",
         method: "POST",
@@ -20,19 +20,19 @@ export const userlistApi = createApi({
     }),
     odsPnl: build.query({
       query: (body) => ({
-        url: "/enduser/user-odds-pnl",
+        url: "/bets/odds-pnl",
         method: "POST",
         body
       }),
     }),
-    fancyPnl: build.query({
-      query: (body) => ({
-        url: "/enduser/user-fancy-pnl",
-        method: "POST",
-        body
-      }),
-    }),
+    // fancyPnl: build.query({
+    //   query: (body) => ({
+    //     url: "/enduser/user-fancy-pnl",
+    //     method: "POST",
+    //     body
+    //   }),
+    // }),
   }),
 });
 
-export const { useUserListQuery, useOdsPnlQuery, useFancyPnlQuery} = userlistApi;
+export const { useUserListQuery} = userlistApi;

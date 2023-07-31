@@ -1,7 +1,7 @@
 import { Card } from "antd";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { setData } from "../../../../../store/global/slice";
 
 const CompeleteFancy = ({completeFancy, id}) => {
@@ -14,8 +14,6 @@ const CompeleteFancy = ({completeFancy, id}) => {
     dispatch(setData(val))
     nav(`/Events/${id}/pl/live-report`)
   }
-
-  console.log(marketId, "fsfsdfsf")
 
   return (
     <>

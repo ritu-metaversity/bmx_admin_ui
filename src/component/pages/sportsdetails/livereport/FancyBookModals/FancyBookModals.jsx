@@ -3,8 +3,6 @@ import "./FancyBookModals.scss";
 import { useFancyBookQuery } from "../../../../../store/service/FancyBookServices";
 
 const FancyBookModals = ({ FancyId, id }) => {
-  console.log(FancyId, id);
-
   const { data } = useFancyBookQuery(
     {
       fancyId: FancyId,
