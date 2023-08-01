@@ -17,8 +17,15 @@ export const supermasteAccountStatementApi = createApi({
         method: "POST",
         body,
       }),
-    })
+    }),
+    ProfitLoss: build.query({
+      query: (body) => ({
+        url: "/report/profit-loss-match-wise",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
-export const {useAccountstatementQuery } = supermasteAccountStatementApi;
+export const {useAccountstatementQuery, useLazyProfitLossQuery } = supermasteAccountStatementApi;

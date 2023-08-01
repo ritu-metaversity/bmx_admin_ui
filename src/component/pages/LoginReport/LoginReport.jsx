@@ -52,7 +52,7 @@ const LoginReport = () => {
             margin: "0px",
             width: "100%",
           }}
-          className="sport_detail pnl team_name"
+          className="sport_detail  team_name"
           title="Login Report"
           extra={<button onClick={handleBackClick}>Back</button>}>
           <div className="table_section statement_tabs_data">

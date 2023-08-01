@@ -32,7 +32,7 @@ const AccountOperations = () => {
               margin: "0px",
               width: "100%",
             }}
-            className="sport_detail pnl"
+            className="sport_detail"
             title="List Of All Transactions ( 0 )"
             extra={<button onClick={handleBackClick}>Back</button>}>
             <div className="">

@@ -79,7 +79,7 @@ const CompletedFancySlips = () => {
               margin: "0px",
               width: "100%",
             }}
-            className="sport_detail pnl"
+            className="sport_detail "
             title="Fancy Profit and Loss"
             extra={<button onClick={handleBackClick}>Back</button>}>
             <div

@@ -121,9 +121,6 @@ const SportsDetails = () => {
     setTotalPage(sportDetail?.data?.totalPages);
   }, [sportDetail]);
 
-  console.log(totalPage, "sdadasd");
-
-  console.log(sportDetail, "dasdasdsd");
 
   return (
     <>
@@ -147,7 +144,7 @@ const SportsDetails = () => {
               <th>Name</th>
               <th>Setting</th>
               <th>Time</th>
-              <th>Competition</th>
+              {/* <th>Competition</th> */}
               <th>Declare</th>
               <th>Won by</th>
               <th className="text-right">Plus Minu</th>
@@ -191,7 +188,7 @@ const SportsDetails = () => {
                     )}
                   </td>
                   <td>{moment(res?.eventDate).format("DD-MM-YYYY, h:mm a")}</td>
-                  <td>{res?.competition}</td>
+                  {/* <td>{res?.competition}</td> */}
                   <td>{res?.winner === null?"":"YES"}</td>
                   <td>{res?.winner === null ? "" : res?.winner}</td>
                   <td className="text-right">

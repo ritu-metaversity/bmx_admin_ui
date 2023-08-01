@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
-export const ttlBookApi = createApi({
-  reducerPath: "ttlBookApi",
+export const createUserApi = createApi({
+  reducerPath: "createUserApi",
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_BASE_URL_SID,
     prepareHeaders: (headers) => {
@@ -11,21 +11,21 @@ export const ttlBookApi = createApi({
     },
   }),
   endpoints: (build) => ({
-    ttlBook: build.query({
-      query: (body) => ({
-        url: `/bmx/ttl-book`,
-        method: "POST",
-        body
-      }),
-    }),
-    // ttlMuBook: build.mutation({
+    // createUser: build.mutation({
     //   query: (body) => ({
-    //     url: `/bmx/ttl-book`,
+    //     url: "/bets/odds-pnl",
     //     method: "POST",
     //     body
     //   }),
     // }),
+    createUserData: build.query({
+      query: (body) => ({
+        url: "/bmx/user/get-user-data-for-create-user",
+        method: "POST",
+        body
+      }),
+    }),
   }),
 });
 
-export const {useLazyTtlBookQuery} = ttlBookApi;
+export const {useCreateUserDataQuery} = createUserApi;

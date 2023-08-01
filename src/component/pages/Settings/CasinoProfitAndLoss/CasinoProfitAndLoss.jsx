@@ -36,7 +36,7 @@ const CasinoProfitAndLoss = () => {
               margin: "0px",
               width: "100%",
             }}
-            className="sport_detail pnl"
+            className="sport_detail "
             title="Total Profit and Loss"
             extra={<button onClick={handleBackClick}>Back</button>}>
             <div>

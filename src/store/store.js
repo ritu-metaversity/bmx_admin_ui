@@ -16,7 +16,7 @@ import { profitLossApi } from "./service/ProfitLossServices";
 import { sportDetailsApi } from "./service/SportDetailServices";
 import { complteFancyOddsClientsApi } from "./service/CompleteFancyOddsServices";
 import { oddsPnlApi } from "./service/OddsPnlServices";
-// import { useAccountstatementQuery } from './service/supermasteAccountStatementServices'
+import { createUserApi } from "./service/createUserServices";
 
 export const store = configureStore({
   reducer: {
@@ -38,6 +38,7 @@ export const store = configureStore({
     [sportDetailsApi.reducerPath]:sportDetailsApi.reducer,
     [complteFancyOddsClientsApi.reducerPath]:complteFancyOddsClientsApi.reducer,
     [oddsPnlApi.reducerPath]:oddsPnlApi.reducer,
+    [createUserApi.reducerPath]:createUserApi.reducer,
   },
   middleware: (defaultMiddleware) =>
     defaultMiddleware()
@@ -57,4 +58,5 @@ export const store = configureStore({
       .concat(sportDetailsApi.middleware)
       .concat(complteFancyOddsClientsApi.middleware)
       .concat(oddsPnlApi.middleware)
+      .concat(createUserApi.middleware)
 });

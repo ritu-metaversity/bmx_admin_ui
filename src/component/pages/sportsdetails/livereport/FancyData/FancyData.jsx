@@ -54,9 +54,9 @@ const FancyData = ({ data, keyData }) => {
               </Row>
             </div>
             <div>
-              {data.map((res, id) => {
+              {data.map((res, index) => {
                 return (
-                  <Row key={id} className="scor fancy_all_data">
+                  <Row key={index} className="scor fancy_all_data">
                     <Col span={19} className="match_title">
                       <div className="title">{res?.nation}</div>
                       {keyData !== "Bookmaker" && (
@@ -72,7 +72,7 @@ const FancyData = ({ data, keyData }) => {
                             if(!res?.marketId?.includes("BM")) return <></>
                             return(
                               <div className="sub_title" key={id}>
-                              {res?.pnl1}
+                              {index === 0? res?.pnl1 : index === 1 ? res?.pnl2 : index === 3?res?.pnl3:""}
                             </div>
                             )
                           })

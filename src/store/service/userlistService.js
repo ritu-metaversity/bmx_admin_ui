@@ -25,13 +25,6 @@ export const userlistApi = createApi({
         body
       }),
     }),
-    // fancyPnl: build.query({
-    //   query: (body) => ({
-    //     url: "/enduser/user-fancy-pnl",
-    //     method: "POST",
-    //     body
-    //   }),
-    // }),
   }),
 });
 

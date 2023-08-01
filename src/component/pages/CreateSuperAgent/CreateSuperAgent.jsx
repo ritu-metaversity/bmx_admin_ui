@@ -1,8 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import "./CreateSuperAgent.scss";
 import { Button, Col, Form, Input, Row, Select } from "antd";
+import { useCreateUserDataQuery } from "../../../store/service/createUserServices";
+import { useEffect, useState } from "react";
+
+
 
 const CreateSuperAgent = () => {
+  const [userData, setUserData] = useState({})
   const onFinish = (values) => {
     console.log("Success:", values);
   };
@@ -17,13 +22,21 @@ const CreateSuperAgent = () => {
     nav("/client/list-super");
   };
 
+  const {data} = useCreateUserDataQuery();
+
+  useEffect(()=>{
+    setUserData(data?.data)
+  }, [data?.data])
+
+
+  console.log(data?.data?.myBalance, "dasdada")
+
   return (
     <>
       <div className="main_live_section">
         <div className="_match">
           <div
             className="sub_live_section live_report"
-            // style={{ marginTop: "35px" }}
           >
             <div
               style={{ padding: "5px 8px", fontSize: "22px" }}
@@ -43,7 +56,22 @@ const CreateSuperAgent = () => {
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
-          autoComplete="off">
+          autoComplete="off"
+          fields={[
+            {
+            name: "My Coins",
+            value:data?.data?.myBalance
+          },
+            {
+            name: "MyMatchShare",
+            value:data?.data?.myMatchCommission
+          },
+            {
+            name: "MyCasinoShare",
+            value:data?.data?.mySessionCommission
+          },
+          ]}
+          >
           <div>
             <Row className="super_agent">
               <Col span={12}>
@@ -76,8 +104,8 @@ const CreateSuperAgent = () => {
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="My Coins" name="My Coins" required={false}>
-                  <Input disabled />
+                <Form.Item label="My Coins" name="My Coins" value="heloo"  required={false}>
+                  <Input type="number" value="heloo" disabled />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -154,9 +182,10 @@ const CreateSuperAgent = () => {
               <Col span={12}>
                 <Form.Item
                   label="My Match Share(%)"
-                  name="My Match Share(%)"
-                  required={false}>
-                  <Input type="number" disabled />
+                  name="MyMatchShare"
+                  required={false}
+                  >
+                  <Input type="number" defaultChecked={userData && userData?.myMatchCommission} disabled />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -246,7 +275,7 @@ const CreateSuperAgent = () => {
               <Col span={12}>
                 <Form.Item
                   label="My Casino Share(%)"
-                  name="casinoShare"
+                  name="MyCasinoShare"
                   required={false}>
                   <Input type="number" disabled />
                 </Form.Item>

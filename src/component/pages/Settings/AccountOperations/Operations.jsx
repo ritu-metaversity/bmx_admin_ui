@@ -51,7 +51,7 @@ const Operations = () => {
               margin: "0px",
               width: "100%",
             }}
-            className="sport_detail pnl"
+            className="sport_detail "
             title="Operations ( 4 )"
             extra={<button onClick={handleBackClick}>Back</button>}>
             <div className="operation_date">

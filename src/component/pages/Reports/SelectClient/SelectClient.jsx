@@ -32,7 +32,7 @@ const SelectClient = () => {
               margin: "0px 0px 30px 0px",
               width: "100%",
             }}
-            className="sport_detail pnl"
+            className="sport_detail "
             title="Select Client"
             extra={<button onClick={handleBackClick}>Back</button>}>
             <div></div>
@@ -51,7 +51,7 @@ const SelectClient = () => {
               margin: "0px",
               width: "100%",
             }}
-            className="sport_detail pnl"
+            className="sport_detail "
             title="Mobile App Report"
             extra={<button onClick={handleBackClick}>Back</button>}>
             <div></div>

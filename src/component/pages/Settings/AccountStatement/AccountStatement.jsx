@@ -72,7 +72,7 @@ const AccountStatement = () => {
               margin: "0px",
               width: "100%",
             }}
-            className="sport_detail pnl"
+            className="sport_detail "
             title="Transactions ( 54 )"
             extra={<button onClick={handleBackClick}>Back</button>}>
             <div className="main_acc_section">

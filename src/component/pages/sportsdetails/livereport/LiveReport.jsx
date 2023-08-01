@@ -8,13 +8,15 @@ import ScoreCard from "./ScoreCard/ScoreCard";
 import React, { useEffect, useState } from "react";
 import FancyData from "./FancyData/FancyData";
 import { useCompleteFancyQuery } from "../../../../store/service/compeleteFancyServices";
-import { useTtlBookQuery } from "../../../../store/service/TtlBookServices";
+import { useLazyTtlBookQuery } from "../../../../store/service/TtlBookServices";
 import { useOddsPnlMutation } from "../../../../store/service/OddsPnlServices";
 
 const LiveReport = () => {
   const [oddsData, setOddsData] = useState([]);
   const [completeFancy, setCompleteFancy] = useState([]);
   const [ShowMyBook, setShowMyBook] = useState(0);
+  const [TtlBookData, setTtlBookData] = useState([]);
+  const [marketId, setMarketId] = useState("");
 
   const { id } = useParams();
 
@@ -32,12 +34,24 @@ const LiveReport = () => {
   useEffect(() => {
     setOddsData(data?.Odds[0]);
     data?.Odds?.map((res) => {
-      console.log(res, "dddsdasds");
+      setMarketId(res?.marketId);
     });
     setCompleteFancy(completeFancyData?.data);
   }, [data, completeFancyData]);
 
   const [trigger, { data: PnlOdds }] = useOddsPnlMutation();
+
+  const [getData, results] = useLazyTtlBookQuery();
+
+  useEffect(() => {
+    getData({
+      matchid: Number(id),
+      marketid: marketId,
+      subadminid: "avipsa6523",
+    });
+    setTtlBookData(results?.data);
+  }, [results?.data, marketId]);
+
 
   const handleMyBook = (val) => {
     setShowMyBook(val);
@@ -47,23 +61,18 @@ const LiveReport = () => {
     trigger(oddsPnl);
   };
 
-  useEffect(
-    () => {
-      // console.log(PnlOdds?.data, "sadasdasdas");
-    },
-    { PnlOdds }
-  );
 
-  const handleTtlBook = () => {};
 
-  const { data: ttlBook } = useTtlBookQuery(
-    {
+  const handleTtlBook = (val, mrktid) => {
+    setShowMyBook(val);
+    getData({
       matchid: Number(id),
-      marketid: 1.216347885,
+      marketid: mrktid,
       subadminid: "avipsa6523",
-    }
-    // {pollingInterval: 1000}
-  );
+    });
+    setTtlBookData(results?.data);
+  };
+
 
   return (
     <>
@@ -81,7 +90,7 @@ const LiveReport = () => {
                 <div className="match_section">
                   <Row>
                     <Col span={19} className="back-lay-bg">
-                      <button onClick={handleTtlBook}>Ttl Book</button>
+                      <button onClick={() => handleTtlBook(1, marketId)}>Ttl Book</button>
                       <button onClick={() => handleMyBook(2)}>My Book</button>
                     </Col>
                     <Col span={5}>
@@ -96,9 +105,9 @@ const LiveReport = () => {
                     </Col>
                   </Row>
                 </div>
-                {oddsData?.runners?.map((res, id) => {
+                {oddsData?.runners?.map((res, index) => {
                   return (
-                    <div key={id}>
+                    <div key={index}>
                       <Row className="scor">
                         <Col span={19} className="tital_sectin">
                           <div className="title">{res?.name}</div>
@@ -106,19 +115,30 @@ const LiveReport = () => {
                             if (res?.marketId?.includes("BM")) return <></>;
                             return (
                               <div className="sub_title" key={id}>
-                                {res?.pnl1}
+                                {ShowMyBook === 2 && (index === 0
+                                  ? res?.pnl1
+                                  : index === 1
+                                  ? res?.pnl2
+                                  : index === 2
+                                  ? "pnl3"
+                                  : "")}
                               </div>
                             );
                           })}
-
-                          <div className="sub_title">
-                            {ShowMyBook !== 2 &&
-                              (id === 0
-                                ? `${ttlBook?.data[0]?.pnl1}`
-                                : id === 1
-                                ? `${ttlBook?.data[0]?.pnl2}`
-                                : `${ttlBook?.data[0]?.pnl3}`)}
-                          </div>
+                          {TtlBookData?.data?.length !== 0 ? (
+                            <div className="sub_title">
+                              {ShowMyBook !== 2 &&
+                                (id === 0
+                                  ? `${TtlBookData?.data[0]?.pnl1}`
+                                  : id === 1
+                                  ? `${TtlBookData?.data[0]?.pnl2}`
+                                  : `${TtlBookData?.data[0]?.pnl3}`)}
+                            </div>
+                          ) : (
+                            <div className="sub_title">
+                              {ShowMyBook !== 2 && "0"}
+                            </div>
+                          )}
                         </Col>
                         <Col span={5}>
                           <Row>
@@ -137,7 +157,6 @@ const LiveReport = () => {
                                       className="lightback p-16"
                                       style={{ height: "47px" }}>
                                       <div>{backData?.price}</div>
-                                      {/* <div>0.00</div> */}
                                     </div>
                                   </Col>
                                 );
@@ -175,7 +194,7 @@ const LiveReport = () => {
               (key) =>
                 data[key].length !== 0 &&
                 key != "Odds" && (
-                  <FancyData key={key} data={data[key]} keyData={key}/>
+                  <FancyData key={key} data={data[key]} keyData={key} />
                 )
             )}
           <CompeleteFancy id={id} completeFancy={completeFancy} />
