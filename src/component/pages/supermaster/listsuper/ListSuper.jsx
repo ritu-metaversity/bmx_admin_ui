@@ -1,19 +1,9 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
 import "./ListSuper.Scss";
-// import { useRef, useState } from "react";
-import {
-  SearchOutlined,
-  CaretDownOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
-import { Dropdown, Form, Input, Modal, Space } from "antd";
-import ModalsData from "./ModalsData/ModalsData";
-import { useUserListQuery } from "../../../../store/service/userlistService";
-import menu from "./SearchModals/SearchModals";
 import { useSuperuserListQuery } from "../../../../store/service/superMasteruseListServices";
 import UserListTable from "../../../common/userListTable";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 const ListSuper = ({userTyep, Listname}) => {
  
@@ -27,11 +17,10 @@ const ListSuper = ({userTyep, Listname}) => {
   const handleCreate = () => {
     nav("/client/create-super");
   };
-  console.log(id,"id");
 
   const { data } = useSuperuserListQuery({
     userType: userTyep,
-    parentUserId: id || "10009",
+    parentUserId: id || null,
     noOfRecords:"100",
     index:"0"
 },{refetchOnMountOrArgChange:true});

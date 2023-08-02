@@ -44,7 +44,6 @@ const SportsDetails = () => {
     setInPlay(inPlay);
   };
 
-  console.log(paginationTotal);
 
   const items = [
     {

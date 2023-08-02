@@ -497,7 +497,6 @@ const AgentDetailMainPage = () => {
           <Form>
             <Form.Item
               name="number"
-             
               >
               <Input  placeholder="chips" type="number"/>
             </Form.Item>

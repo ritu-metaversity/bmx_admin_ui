@@ -1,14 +1,41 @@
 import { Button, Col, Form, Input, Row, Select } from "antd";
 import "./UpdateSuper.scss";
+import { useSelector } from "react-redux";
+import { globalSelector } from "../../../../store/global/slice";
+import { useUpdateUserMutation } from "../../../../store/service/createUserServices";
 
 const UpdateSuper = () => {
+  const [trigger, { data: updateData }] = useUpdateUserMutation();
+
   const onFinish = (values) => {
-    console.log("Success:", values);
+    const userData = {
+      userId: values?.name,
+      userName: values?.name,
+      phoneNumber: values?.number,
+      password: values?.password,
+      luPassword: "1111111",
+      status: false,
+      commType: values?.Status,
+      matchComm: values?.Supermatchcomm,
+      sessionComm: values?.SupperSessComm,
+      casinoComm: values?.Supercasinocomm,
+    };
+
+    trigger(userData)
   };
+
+  console.log(updateData, "asddsd")
+
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
   const { Option } = Select;
+
+  const userData = useSelector(globalSelector);
+
+  console.log(userData?.data, "dsfsdfefw");
+
   return (
     <>
       <div className="main_live_section">
@@ -29,18 +56,43 @@ const UpdateSuper = () => {
           </div>
         </div>
         <Form
-                className="form_data"
-                name="basic"
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 16 }}
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                autoComplete="off">
-        <div>
-          <Row className="super_agent  update_agent">
-            <Col span={12}>
-             
+          className="form_data"
+          name="basic"
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+          fields={[
+            {
+              name: "name",
+              value: userData?.data?.username,
+            },
+            {
+              name: "number",
+              value: userData?.data?.mobile,
+            },
+            {
+              name: "password",
+              value: userData?.data?.password,
+            },
+            {
+              name: "status",
+              value: userData?.data?.active ? "Active" : "InActive",
+            },
+            {
+              name: "Supermatchcomm",
+              value: userData?.data?.matchCommission,
+            },
+            {
+              name: "SupperSessComm",
+              value: userData?.data?.sessionCommission,
+            },
+          ]}>
+          <div>
+            <Row className="super_agent  update_agent">
+              <Col span={12}>
                 <Form.Item
                   label="Name"
                   name="name"
@@ -51,7 +103,7 @@ const UpdateSuper = () => {
                       message: "Please input your username!",
                     },
                   ]}>
-                  <Input />
+                  <Input disabled />
                 </Form.Item>
                 <Form.Item
                   label="Reference"
@@ -79,7 +131,7 @@ const UpdateSuper = () => {
                 </Form.Item>
                 <Form.Item
                   label="Password"
-                  name="Password"
+                  name="password"
                   required
                   rules={[
                     {
@@ -87,7 +139,7 @@ const UpdateSuper = () => {
                       message: "Please Enter Password!",
                     },
                   ]}>
-                  <Input type="password" placeholder="Password" />
+                  <Input type="text" placeholder="Password" />
                 </Form.Item>
                 <Form.Item
                   name="Status"
@@ -100,13 +152,15 @@ const UpdateSuper = () => {
                   <Select
                     // placeholder="Select a option and change input text above"
                     // onChange={onGenderChange}
-                    defaultValue="Active"
+                    defaultValue={
+                      userData.data?.active === true ? "Active" : "InActive"
+                    }
                     allowClear>
                     <Option value="active">Active</Option>
                     <Option value="inactive">InActive</Option>
                   </Select>
                 </Form.Item>
-                <Form.Item
+                {/* <Form.Item
                   name="share type"
                   label="Share type"
                   rules={[
@@ -117,31 +171,28 @@ const UpdateSuper = () => {
                   <Select
                     // placeholder="Select a option and change input text above"
                     // onChange={onGenderChange}
-                    defaultValue="Active"
+                    defaultValue="fixed"
                     allowClear>
                     <Option value="fixed">fixed</Option>
                     <Option value="change">change</Option>
                   </Select>
-                </Form.Item>
-            </Col>
-            <Col span={12}></Col>
-          </Row>
-          <div>
-            <h2 className="update_agent_text">Match Share and Comm</h2>
-          </div>
-          <Row className="super_agent  update_agent">
-            <Col span={12}>
+                </Form.Item> */}
+              </Col>
+              <Col span={12}></Col>
+            </Row>
+            <div>
+              <h2 className="update_agent_text">Match Share and Comm</h2>
+            </div>
+            <Row className="super_agent  update_agent">
+              <Col span={12}>
                 <Form.Item
                   label="MASTER Mobile Share(%)"
                   name="mobileshare"
                   required={false}>
-                  <Input type="number" disabled/>
+                  <Input type="number" disabled />
                 </Form.Item>
-                
-            
-            </Col>
-            <Col span={12}>
-             
+              </Col>
+              <Col span={12}>
                 <Form.Item
                   label="SUPER Mobile Share(%)"
                   name="superMobileShare"
@@ -154,24 +205,16 @@ const UpdateSuper = () => {
                   ]}>
                   <Input type="number" />
                 </Form.Item>
-                
-            
-            </Col>
-            <Col span={12}>
-             
-                
+              </Col>
+              <Col span={12}>
                 <Form.Item
                   label="MASTER Comm type"
                   name="commType"
                   required={false}>
                   <Input disabled />
                 </Form.Item>
-               
-            
-            </Col>
-            <Col span={12}>
-             
-                
+              </Col>
+              <Col span={12}>
                 <Form.Item
                   name="SupperCommType"
                   label="SUPER comm type"
@@ -190,26 +233,16 @@ const UpdateSuper = () => {
                     <Option value="Betbybet">Bet by bet</Option>
                   </Select>
                 </Form.Item>
-
-                
-            
-            </Col>
-            <Col span={12}>
-             
-                
+              </Col>
+              <Col span={12}>
                 <Form.Item
                   label="MASTER match comm(%)"
                   name="matchcomm"
                   required={false}>
-                  <Input type="number" disabled/>
+                  <Input type="number" disabled />
                 </Form.Item>
-                
-            
-            </Col>
-            <Col span={12}>
-             
-                
-
+              </Col>
+              <Col span={12}>
                 <Form.Item
                   label="SUPER match comm(%)"
                   name="Supermatchcomm"
@@ -222,23 +255,16 @@ const UpdateSuper = () => {
                   ]}>
                   <Input type="number" />
                 </Form.Item>
-                
-            
-            </Col>
-            <Col span={12}>
-             
-                
+              </Col>
+              <Col span={12}>
                 <Form.Item
                   label="MASTER sess comm(%)"
                   name="sesscomm"
                   required={false}>
-                  <Input type="number" disabled/>
+                  <Input type="number" disabled />
                 </Form.Item>
-            
-            </Col>
-            <Col span={12}>
-             
-                
+              </Col>
+              <Col span={12}>
                 <Form.Item
                   label="SUPER sess comm(%)"
                   name="SupperSessComm"
@@ -251,26 +277,21 @@ const UpdateSuper = () => {
                   ]}>
                   <Input type="number" />
                 </Form.Item>
-            
-            </Col>
-          </Row>
-          <div>
-            <h2 className="update_agent_text">Casino Share and Commission</h2>
-          </div>
-          <Row className="super_agent  update_agent">
-            <Col span={12}>
-             
+              </Col>
+            </Row>
+            <div>
+              <h2 className="update_agent_text">Casino Share and Commission</h2>
+            </div>
+            <Row className="super_agent  update_agent">
+              <Col span={12}>
                 <Form.Item
                   label="MASTER casino Share(%)"
                   name="casinoshare"
                   required={false}>
-                  <Input type="number" disabled/>
+                  <Input type="number" disabled />
                 </Form.Item>
-                
-            
-            </Col>
-            <Col span={12}>
-             
+              </Col>
+              <Col span={12}>
                 <Form.Item
                   label="SUPER casino Share(%)"
                   name="supercasinoShare"
@@ -283,23 +304,16 @@ const UpdateSuper = () => {
                   ]}>
                   <Input type="number" />
                 </Form.Item>
-            
-            </Col>
-            <Col span={12}>
-             
-               
+              </Col>
+              <Col span={12}>
                 <Form.Item
                   label="MASTER casino comm(%)"
                   name="casinoType"
                   required={false}>
-                  <Input  disabled/>
+                  <Input disabled />
                 </Form.Item>
-            
-            </Col>
-            <Col span={12}>
-             
-               
-
+              </Col>
+              <Col span={12}>
                 <Form.Item
                   label="SUPER casino comm(%)"
                   name="Supercasinocomm"
@@ -322,10 +336,9 @@ const UpdateSuper = () => {
                     Submit
                   </Button>
                 </Form.Item>
-            
-            </Col>
-          </Row>
-        </div>
+              </Col>
+            </Row>
+          </div>
         </Form>
       </div>
     </>

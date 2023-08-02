@@ -20,7 +20,7 @@
   }
   .live_table {
     margin-top: 20px;
-    a.ant-dropdown-trigger.droup_link.droup_menu {
+    p.ant-dropdown-trigger.droup_link.droup_menu {
       position: static;
       background: #5d7074;
       padding: 0px 6px;
@@ -188,7 +188,7 @@ ul.menu_data {
   .live_table {
     overflow: scroll;
   }
-  a.ant-dropdown-trigger.droup_link.droup_menu {
+  p.ant-dropdown-trigger.droup_link.droup_menu {
     position: static;
     background: #5d7074;
     padding: 4px 6px;
@@ -240,7 +240,7 @@ ul.menu_data {
 
 
 @media screen and (max-width: 800px) {
-  a.ant-dropdown-trigger.droup_link.droup_menu {
+  p.ant-dropdown-trigger.droup_link.droup_menu {
     position: static;
     background: #5d7074;
     padding: 5px 6px !important;

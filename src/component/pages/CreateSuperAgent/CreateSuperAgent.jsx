@@ -1,19 +1,55 @@
 import { useNavigate } from "react-router-dom";
 import "./CreateSuperAgent.scss";
 import { Button, Col, Form, Input, Row, Select } from "antd";
-import { useCreateUserDataQuery } from "../../../store/service/createUserServices";
+import {
+  useCreateUserDataQuery,
+  useCreateUserMutation,
+} from "../../../store/service/createUserServices";
 import { useEffect, useState } from "react";
 
-
-
 const CreateSuperAgent = () => {
-  const [userData, setUserData] = useState({})
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const [userData, setUserData] = useState({});
+  const [commiType, setCommiType] = useState("nocomm");
+
+  const commissionType = (value) => {
+    setCommiType(value);
   };
+
+  const passw=  /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,15}$/
+  var mobileNum = /^[6-9][0-9]{9}$/;
+
+  const [trigger, { data: UserList }] = useCreateUserMutation();
+
+  const onFinish = (values) => {
+    console.log(values, "dadasdas");
+    console.log("Success:", values);
+    const userData = {
+      userId: "",
+      username: values?.Name,
+      mobile: values?.mobile,
+      city: "",
+      userRole: 1,
+      password: values?.password,
+      sportPartnership: values?.matchShare,
+      oddLossCommission: commiType ==="nocomm"? "0": values?.Match_comm,
+      lupassword: "1111111",
+      liveCasinoLock: false,
+      casinoPartnership: 1.0,
+      fancyLossCommission: commiType ==="nocomm"? "0": values?.sess_comm ,
+      casinoCommission: values?.cassino_Comm,
+      commType: values?.Commtype,
+      appId: 1,
+      amount: values?.Coins,
+    };
+    trigger(userData);
+  };
+
+  console.log(UserList, "fghjkl");
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
   const { Option } = Select;
 
   const nav = useNavigate();
@@ -22,22 +58,17 @@ const CreateSuperAgent = () => {
     nav("/client/list-super");
   };
 
-  const {data} = useCreateUserDataQuery();
+  const { data } = useCreateUserDataQuery();
 
-  useEffect(()=>{
-    setUserData(data?.data)
-  }, [data?.data])
-
-
-  console.log(data?.data?.myBalance, "dasdada")
+  useEffect(() => {
+    setUserData(data?.data);
+  }, [data?.data]);
 
   return (
     <>
       <div className="main_live_section">
         <div className="_match">
-          <div
-            className="sub_live_section live_report"
-          >
+          <div className="sub_live_section live_report">
             <div
               style={{ padding: "5px 8px", fontSize: "22px" }}
               className="team_name">
@@ -59,24 +90,27 @@ const CreateSuperAgent = () => {
           autoComplete="off"
           fields={[
             {
-            name: "My Coins",
-            value:data?.data?.myBalance
-          },
+              name: "My Coins",
+              value: data?.data?.myBalance,
+            },
             {
-            name: "MyMatchShare",
-            value:data?.data?.myMatchCommission
-          },
+              name: "MyMatchShare",
+              value: data?.data?.myMatchCommission,
+            },
             {
-            name: "MyCasinoShare",
-            value:data?.data?.mySessionCommission
-          },
+              name: "MyCasinoShare",
+              value: data?.data?.mySessionCommission,
+            },
+            {
+              name: "MyCommtype",
+              value: (data?.data?.mySessionCommission === 0 && data?.data?.myMatchCommission)?'No Comm':"Bet by Bet",
+            },
           ]}
           >
           <div>
             <Row className="super_agent">
               <Col span={12}>
                 <Form.Item
-
                   label="Name"
                   name="Name"
                   required
@@ -104,8 +138,8 @@ const CreateSuperAgent = () => {
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="My Coins" name="My Coins" value="heloo"  required={false}>
-                  <Input type="number" value="heloo" disabled />
+                <Form.Item label="My Coins" name="My Coins" required={false}>
+                  <Input type="number" disabled />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -125,12 +159,19 @@ const CreateSuperAgent = () => {
               <Col span={12}>
                 <Form.Item
                   label="Contact No."
-                  name="matchcomm"
+                  name="mobile"
                   required
                   rules={[
                     {
                       required: true,
                       message: "Please contact number",
+                    },
+                    { 
+                      validator: async (_, names) => {
+                        if (!mobileNum.test(names) && names != "" && names != null  ) {
+                          return Promise.reject(new Error('Please contact number'));
+                        }
+                      },
                     },
                   ]}>
                   <Input type="number" />
@@ -139,33 +180,30 @@ const CreateSuperAgent = () => {
               <Col span={12}>
                 <Form.Item
                   label="Password"
-                  name="Password"
-                  required
+                  name="password"
                   rules={[
                     {
                       required: true,
-                      message: "Please Enter Password",
+                      message:'Please Enter Password'
+                    },
+                    { 
+                      validator: async (_, names) => {
+                        if (!passw.test(names) && names != "" && names != null  ) {
+                          return Promise.reject(new Error('Minimun 6 charecter, must contain letters and numbers'));
+                        }
+                      },
                     },
                   ]}>
-                  <Input type="text" placeholder="Password" />
+                  <Input type="password" placeholder="Password" />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item
-                  name="Share Type"
+                  name="ShareType"
                   label="Share Type"
                   className="share_type"
-                  rules={[
-                    {
-                      required: true,
-                      message: "",
-                    },
-                  ]}>
-                  <Select
-                    // placeholder="Select a option and change input text above"
-                    // onChange={onGenderChange}
-                    defaultValue="Select Share type"
-                    allowClear>
+                >
+                  <Select defaultValue="Select Share type" allowClear>
                     <Option value="Fixed">Fixed</Option>
                     <Option value="Change">Change</Option>
                   </Select>
@@ -183,9 +221,12 @@ const CreateSuperAgent = () => {
                 <Form.Item
                   label="My Match Share(%)"
                   name="MyMatchShare"
-                  required={false}
-                  >
-                  <Input type="number" defaultChecked={userData && userData?.myMatchCommission} disabled />
+                  required={false}>
+                  <Input
+                    type="number"
+                    defaultChecked={userData && userData?.myMatchCommission}
+                    disabled
+                  />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -203,23 +244,12 @@ const CreateSuperAgent = () => {
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form
-                  className="form_data"
-                  name="basic"
-                  labelCol={{ span: 8 }}
-                  wrapperCol={{ span: 16 }}
-                  style={{ maxWidth: 600 }}
-                  initialValues={{ remember: true }}
-                  onFinish={onFinish}
-                  onFinishFailed={onFinishFailed}
-                  autoComplete="off">
-                  <Form.Item
-                    label="My Mobile Share(%)"
-                    name="MobileShare"
-                    required={false}>
-                    <Input type="number" disabled />
-                  </Form.Item>
-                </Form>
+                <Form.Item
+                  label="My Mobile Share(%)"
+                  name="MobileShare"
+                  required={false}>
+                  <Input type="number" disabled />
+                </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item
@@ -243,6 +273,7 @@ const CreateSuperAgent = () => {
                   <Input type="text" disabled />
                 </Form.Item>
               </Col>
+
               <Col span={12}>
                 <Form.Item
                   name="Commtype"
@@ -255,15 +286,58 @@ const CreateSuperAgent = () => {
                     },
                   ]}>
                   <Select
-                    // placeholder="Select a option and change input text above"
-                    // onChange={onGenderChange}
+                    onChange={commissionType}
                     defaultValue="Commision Type"
                     allowClear>
-                    <Option value="Fixed">No Comm</Option>
-                    <Option value="Change">Bet by bet</Option>
+                    <Option value="nocomm">No Comm</Option>
+                    <Option value="bbb">Bet by bet</Option>
                   </Select>
                 </Form.Item>
               </Col>
+              {commiType === "bbb" && (
+                <>
+                  <Col span={12}>
+                    <Form.Item name="My_Match_comm" label="My Match comm(%)">
+                      <Input type="number" disabled />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item
+                      name="Match_comm"
+                      required
+                      label="Match comm(%)"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter odds commission",
+                        },
+                      ]}>
+                      <Input placeholder="Match commission" type="number" />
+                    </Form.Item>
+                  </Col>
+
+                  <Col span={12}>
+                    <Form.Item name="My_Sess_comm" label="My Sess comm(%)">
+                      <Input type="number" disabled />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item
+                      name="sess_comm"
+                      required
+                     
+                      label="Sess Comm(%)"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter session commission",
+                        },
+                      ]}>
+                      <Input  placeholder="session commission" type="number" />
+                    </Form.Item>
+                  </Col>
+                </>
+              )}
             </Row>
 
             <div>

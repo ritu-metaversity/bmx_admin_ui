@@ -11,13 +11,6 @@ export const createUserApi = createApi({
     },
   }),
   endpoints: (build) => ({
-    // createUser: build.mutation({
-    //   query: (body) => ({
-    //     url: "/bets/odds-pnl",
-    //     method: "POST",
-    //     body
-    //   }),
-    // }),
     createUserData: build.query({
       query: (body) => ({
         url: "/bmx/user/get-user-data-for-create-user",
@@ -25,7 +18,21 @@ export const createUserApi = createApi({
         body
       }),
     }),
+    createUser: build.mutation({
+      query: (body) => ({
+        url: "/bmx/user/create",
+        method: "POST",
+        body
+      }),
+    }),
+    updateUser: build.mutation({
+      query: (body) => ({
+        url: "/bmx/user/update",
+        method: "POST",
+        body
+      }),
+    }),
   }),
 });
 
-export const {useCreateUserDataQuery} = createUserApi;
+export const {useCreateUserDataQuery, useCreateUserMutation,useUpdateUserMutation} = createUserApi;

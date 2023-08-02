@@ -13,7 +13,7 @@ const ActiveMatch = () => {
   };
 
   return (
-    <div className="active_slip login_report">
+    <div className="active_slip login_report" style={{marginBottom:"12px"}}>
       <Card
         style={{
           margin: "0px",
@@ -32,7 +32,7 @@ const ActiveMatch = () => {
                 <th>S/N</th>
                 <th>Name</th>
                 <th>Open Date</th>
-                <th>Competition</th>
+                {/* <th>Competition</th> */}
                 <th>Inplay</th>
                 <th>Details</th>
               </tr>
@@ -42,7 +42,7 @@ const ActiveMatch = () => {
                     <td>{id + 1}</td>
                     <td>{res?.matchName}</td>
                     <td>{res?.openDate}</td>
-                    <td>??</td>
+                    {/* <td>??</td> */}
                     <td>
                       {res?.inPlay && (
                         <button className="inplay">INPLAY</button>

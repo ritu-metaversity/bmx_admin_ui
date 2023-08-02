@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Dropdown, Form, Input, Modal, Space } from "antd";
 import menu from "../pages/supermaster/listsuper/SearchModals/SearchModals";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
     SearchOutlined,
@@ -8,6 +9,7 @@ import {
     PlusOutlined,
   } from "@ant-design/icons";
 import ModalsData from "../pages/supermaster/listsuper/ModalsData/ModalsData";
+import { setData } from "../../store/global/slice";
 
 const routeFromUSerType={
     "0":"/client/list-agent/",
@@ -22,6 +24,8 @@ const UserListTable = ({data: userList, userType}) => {
   const [isDepositeModalOpen, SetisDepositeModalOpen] = useState(false);
   const [WithdrawnModal, SetWithdrawnModal] = useState(false);
   const [parentUserId, setParentUserId] = useState()
+
+  const dispatch = useDispatch();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -116,6 +120,10 @@ const UserListTable = ({data: userList, userType}) => {
   ];
 
 
+  const handleEditData = (val)=>{
+    dispatch(setData(val))
+  }
+
 
   return (
     <div>
@@ -129,7 +137,7 @@ const UserListTable = ({data: userList, userType}) => {
                 <div className="main_search_droup">
                   <p>Code</p>
                   <p>
-                    <Dropdown
+                    <Dropdown 
                       className="search_droup"
                       overlay={menu}
                       trigger={["click"]}>
@@ -161,9 +169,6 @@ const UserListTable = ({data: userList, userType}) => {
             </tr>
 
             {userList?.data?.users?.map((res, id) => {
-
-
-              console.log(res, "sadasd");
               return (
                 <tr key={id}>
                   <td>
@@ -176,13 +181,13 @@ const UserListTable = ({data: userList, userType}) => {
                       className="droup_menu"
                       menu={{ items, className: "menu_data" }}
                       trigger={["click"]}>
-                      <a
+                      <p
                         className="droup_link"
-                        onClick={(e) => e.preventDefault()}>
+                        onClick={()=> handleEditData(res)}>
                         <Space>
                           <CaretDownOutlined />
                         </Space>
-                      </a>
+                      </p>
                     </Dropdown>
                   </td>
                   <td>{res?.userid}</td>
