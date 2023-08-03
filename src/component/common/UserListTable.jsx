@@ -4,26 +4,25 @@ import menu from "../pages/supermaster/listsuper/SearchModals/SearchModals";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
-    SearchOutlined,
-    CaretDownOutlined,
-    PlusOutlined,
-  } from "@ant-design/icons";
+  SearchOutlined,
+  CaretDownOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import ModalsData from "../pages/supermaster/listsuper/ModalsData/ModalsData";
 import { setData } from "../../store/global/slice";
 
-const routeFromUSerType={
-    "0":"/client/list-agent/",
-    "1":"/client/list-dealer/",
-    "2":"/client/list-clent/"
-    
-}
-const UserListTable = ({data: userList, userType}) => {
+const routeFromUSerType = {
+  0: "/client/list-agent/",
+  1: "/client/list-dealer/",
+  2: "/client/list-clent/",
+};
+const UserListTable = ({ data: userList, userType, Listname }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [Active, setActive] = useState("inActive");
   const [inActive, setInActive] = useState(true);
   const [isDepositeModalOpen, SetisDepositeModalOpen] = useState(false);
   const [WithdrawnModal, SetWithdrawnModal] = useState(false);
-  const [parentUserId, setParentUserId] = useState()
+  const [parentUserId, setParentUserId] = useState();
 
   const dispatch = useDispatch();
 
@@ -67,11 +66,9 @@ const UserListTable = ({data: userList, userType}) => {
     }
   };
 
-
-
-  const handleParentId = (val)=>{
-    setParentUserId(val)
-  }
+  const handleParentId = (val) => {
+    setParentUserId(val);
+  };
 
   const items = [
     {
@@ -94,7 +91,20 @@ const UserListTable = ({data: userList, userType}) => {
       type: "divider",
     },
     {
-      label: <Link to="/client/update-super">Edit</Link>,
+      label: (
+        <Link
+          to={`${
+            Listname === "Super Agent"
+              ? "/client/update-super"
+              : Listname === "Master"
+              ? "/client/update-agent"
+              : Listname === "Dealer"
+              ? "/client/update-dealer"
+              : "/client/update-client"
+          }`}>
+          Edit
+        </Link>
+      ),
       key: "3",
     },
     {
@@ -110,7 +120,9 @@ const UserListTable = ({data: userList, userType}) => {
       key: "6",
     },
     {
-      label: <Link to={routeFromUSerType[userType]+parentUserId}>Downline</Link>,
+      label: (
+        <Link to={routeFromUSerType[userType] + parentUserId}>Downline</Link>
+      ),
       key: "7",
     },
     {
@@ -119,11 +131,9 @@ const UserListTable = ({data: userList, userType}) => {
     },
   ];
 
-
-  const handleEditData = (val)=>{
-    dispatch(setData(val))
-  }
-
+  const handleEditData = (val) => {
+    dispatch(setData(val));
+  };
 
   return (
     <div>
@@ -137,7 +147,7 @@ const UserListTable = ({data: userList, userType}) => {
                 <div className="main_search_droup">
                   <p>Code</p>
                   <p>
-                    <Dropdown 
+                    <Dropdown
                       className="search_droup"
                       overlay={menu}
                       trigger={["click"]}>
@@ -176,14 +186,14 @@ const UserListTable = ({data: userList, userType}) => {
                       <PlusOutlined />
                     </div>
                   </td>
-                  <td onClick={()=>handleParentId(res?.id)}>
+                  <td onClick={() => handleParentId(res?.id)}>
                     <Dropdown
                       className="droup_menu"
                       menu={{ items, className: "menu_data" }}
                       trigger={["click"]}>
                       <p
                         className="droup_link"
-                        onClick={()=> handleEditData(res)}>
+                        onClick={() => handleEditData(res)}>
                         <Space>
                           <CaretDownOutlined />
                         </Space>

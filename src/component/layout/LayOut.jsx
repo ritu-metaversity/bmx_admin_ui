@@ -23,15 +23,15 @@ import AccountOperations from "../pages/supermaster/accountOperations/AccountOpe
 import LoginReport from "../pages/LoginReport/LoginReport";
 import CreateSuperAgent from "../pages/CreateSuperAgent/CreateSuperAgent";
 import SuperAgentLimitDetails from "../pages/supermaster/SuperAgentLimitDetails/SuperAgentLimitDetails";
-import AgentDetailMainPage from "../pages/AgentDetail/AgentDetailMainPage/AgentDetailMainPage";
+// import AgentDetailMainPage from "../pages/AgentDetail/AgentDetailMainPage/AgentDetailMainPage";
 import AgentLimitDetails from "../pages/AgentDetail/AgentLimitDetails/AgentLimitDetails";
-import SelectUpline from "../pages/AgentDetail/SelectUpline/SelectUpline";
-import ClientMaster from "../pages/ClientMaster/ClientMaster";
-import ClientUpline from "../pages/ClientMaster/CreateUpline/ClientUpline";
+// import SelectUpline from "../pages/AgentDetail/SelectUpline/SelectUpline";
+// import ClientMaster from "../pages/ClientMaster/ClientMaster";
+// import ClientUpline from "../pages/ClientMaster/CreateUpline/ClientUpline";
 import ClientLimitDetails from "../pages/ClientMaster/ClientLimitDetails/ClientLimitDetails";
 import Signin from "../common/signin/Signin";
-import UpdateAgent from "../pages/AgentDetail/UpdateAgent/UpdateAgent";
-import UpdateClient from "../pages/ClientMaster/UpdateClient/UpdateClient";
+// import UpdateAgent from "../pages/AgentDetail/UpdateAgent/UpdateAgent";
+// import UpdateClient from "../pages/ClientMaster/UpdateClient/UpdateClient";
 import UpdateSuper from "../pages/supermaster/updateSuper/UpdateSuper";
 import MyLedger from "../pages/ladgerdetail/MyLedger/MyLedger";
 import SuperAgentLedger from "../pages/ladgerdetail/SuperAgentLedger/SuperAgentLedger";
@@ -117,7 +117,7 @@ const LayOut = () => {
               <Route path="/match-slips" element={<MatchSlips />} />
               <Route path="/fancy-slips" element={<FancySlips />} />
               <Route path="/completed-fancy-slips" element={<CompletedFancySlips />} />
-              <Route path="/rejectedBetsByEvent" element={<RejectedBetsByEvent />} />
+              <Route path="/rejectedBetsByEvent/:id" element={<RejectedBetsByEvent />} />
 
               <Route path="/client/list-super" element={<ListSuper userTyep={0} Listname={"Super Agent"}/>} />
               <Route path="/client/list-agent" element={<ListSuper userTyep={1} Listname={"Master"} /> } />
@@ -129,19 +129,22 @@ const LayOut = () => {
               <Route path="/client/list-dealer/:id" element={<ListSuper userTyep={2} Listname={"Dealer"}/> } />
               <Route path="/client/list-clent/:id" element={<ListSuper userTyep={3} Listname={"Client"}/> } />
 
-              <Route path="/client/update-super" element={<UpdateSuper />} />
+              <Route path="/client/update-super" element={<UpdateSuper updateName={"Super Agent"}/>} />
+              <Route path="/client/update-agent" element={<UpdateSuper updateName={"Master"}/>} />
+              <Route path="/client/update-client" element={<UpdateSuper updateName={"Client"}/>} />
+              <Route path="/client/update-dealer" element={<UpdateSuper updateName={"Dealer"}/>} />
+
               <Route path="/client/statement" element={<Statement />} />
               <Route path="/client/account-operations" element={<AccountOperations />} />
               <Route path="/client/login-report" element={<LoginReport />} />
-              <Route path="/client/create-super" element={<CreateSuperAgent />} />
+              <Route path="/client/create-super" element={<CreateSuperAgent createName={"Super Agent"}/>}/>
+              <Route path="/client/create-agent" element={<CreateSuperAgent createName={"Master"}/>}/>
+              <Route path="/client/create-dealer" element={<CreateSuperAgent createName={"Dealer"}/>} />
+              <Route path="/client/create-client" element={<CreateSuperAgent createName={"Client"}/>} />
               <Route path="/client/limitplusminus-super" element={<SuperAgentLimitDetails />} />
               {/* <Route path="/client/list-agent" element={<AgentDetailMainPage />} /> */}
               <Route path="/client/limitplusminus-agent" element={<AgentLimitDetails />} />
-              <Route path="/client/create-agent" element={<SelectUpline />} />
-              {/* <Route path="/client/list-client" element={<ClientMaster />} /> */}
-              <Route path="/client/create-client" element={<ClientUpline/>} />
-              <Route path="/client/update-agent" element={<UpdateAgent/>} />
-              <Route path="/client/update-client" element={<UpdateClient/>} />
+             
               <Route path="/client/limitplusminus-client" element={<ClientLimitDetails />}/>
               <Route path="/client/my-ledger" element={<MyLedger />}/>
               <Route path="/client/ledger-super" element={<SuperAgentLedger/>}/>

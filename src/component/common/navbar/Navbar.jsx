@@ -48,6 +48,9 @@ const Navbar = () => {
     setIsModalOpen(false);
   };
 
+  const userData = JSON.parse(localStorage.getItem("userId"))
+
+  console.log(userData?.userId, "dssfdss")
   return (
     <>
       <div className="nav1"></div>
@@ -69,7 +72,7 @@ const Navbar = () => {
           trigger={["click"]}>
           <a onClick={(e) => e.preventDefault()}>
             <Space className="">
-              {localStorage.getItem("userId")}
+            {userData?.userId}
               <DownOutlined />
             </Space>
           </a>

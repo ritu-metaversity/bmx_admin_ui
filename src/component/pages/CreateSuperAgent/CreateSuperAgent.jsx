@@ -1,19 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import "./CreateSuperAgent.scss";
-import { Button, Col, Form, Input, Row, Select } from "antd";
+import { Button, Col, Form, Input, InputNumber, Row, Select } from "antd";
 import {
   useCreateUserDataQuery,
   useCreateUserMutation,
 } from "../../../store/service/createUserServices";
 import { useEffect, useState } from "react";
 
-const CreateSuperAgent = () => {
+const CreateSuperAgent = ({createName}) => {
   const [userData, setUserData] = useState({});
   const [commiType, setCommiType] = useState("nocomm");
 
   const commissionType = (value) => {
     setCommiType(value);
   };
+
+  // console.log(createName, "adadadada")
 
   const passw=  /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,15}$/
   var mobileNum = /^[6-9][0-9]{9}$/;
@@ -72,7 +74,7 @@ const CreateSuperAgent = () => {
             <div
               style={{ padding: "5px 8px", fontSize: "22px" }}
               className="team_name">
-              Create Super Agent
+              Create {createName}
             </div>
             <div className="show_btn">
               <button onClick={handleBackClick}>Back</button>
@@ -153,7 +155,7 @@ const CreateSuperAgent = () => {
                       message: "Please enter valid Coins",
                     },
                   ]}>
-                  <Input type="number" placeholder="Super Agent Coins" />
+                  <InputNumber className="number_field" min={0} placeholder="Super Agent Coins" />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -174,7 +176,7 @@ const CreateSuperAgent = () => {
                       },
                     },
                   ]}>
-                  <Input type="number" />
+                  <InputNumber className="number_field" min={0} type="number" />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -197,23 +199,11 @@ const CreateSuperAgent = () => {
                   <Input type="password" placeholder="Password" />
                 </Form.Item>
               </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="ShareType"
-                  label="Share Type"
-                  className="share_type"
-                >
-                  <Select defaultValue="Select Share type" allowClear>
-                    <Option value="Fixed">Fixed</Option>
-                    <Option value="Change">Change</Option>
-                  </Select>
-                </Form.Item>
-              </Col>
             </Row>
 
             <div>
               <h2 className="match_share">
-                Super Agent Match Share and Commission
+              {createName} Match Share and Commission
               </h2>
             </div>
             <Row className="super_agent sub_super">
@@ -222,8 +212,7 @@ const CreateSuperAgent = () => {
                   label="My Match Share(%)"
                   name="MyMatchShare"
                   required={false}>
-                  <Input
-                    type="number"
+                  <InputNumber className="number_field" min={0}
                     defaultChecked={userData && userData?.myMatchCommission}
                     disabled
                   />
@@ -240,29 +229,7 @@ const CreateSuperAgent = () => {
                       message: "Invalid Match Share",
                     },
                   ]}>
-                  <Input type="number" placeholder="Super Agent Match Share" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="My Mobile Share(%)"
-                  name="MobileShare"
-                  required={false}>
-                  <Input type="number" disabled />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Mobile Share(%)"
-                  name="agentMobileShare"
-                  required
-                  rules={[
-                    {
-                      required: true,
-                      message: "Invalid Mobile Share",
-                    },
-                  ]}>
-                  <Input type="number" placeholder="Super Agent Mobile Share" />
+                  <InputNumber className="number_field" min={0} step="0.1" placeholder="Super Agent Match Share" />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -298,7 +265,7 @@ const CreateSuperAgent = () => {
                 <>
                   <Col span={12}>
                     <Form.Item name="My_Match_comm" label="My Match comm(%)">
-                      <Input type="number" disabled />
+                      <InputNumber className="number_field" min={0} step="0.1" disabled />
                     </Form.Item>
                   </Col>
                   <Col span={12}>
@@ -312,13 +279,13 @@ const CreateSuperAgent = () => {
                           message: "Please enter odds commission",
                         },
                       ]}>
-                      <Input placeholder="Match commission" type="number" />
+                      <InputNumber className="number_field" min={0} step="0.1" placeholder="Match commission"/>
                     </Form.Item>
                   </Col>
 
                   <Col span={12}>
                     <Form.Item name="My_Sess_comm" label="My Sess comm(%)">
-                      <Input type="number" disabled />
+                      <InputNumber className="number_field" min={0} step="0.1" disabled />
                     </Form.Item>
                   </Col>
                   <Col span={12}>
@@ -333,7 +300,7 @@ const CreateSuperAgent = () => {
                           message: "Please enter session commission",
                         },
                       ]}>
-                      <Input  placeholder="session commission" type="number" />
+                      <InputNumber className="number_field" min={0} step="0.1"  placeholder="session commission"/>
                     </Form.Item>
                   </Col>
                 </>
@@ -342,7 +309,7 @@ const CreateSuperAgent = () => {
 
             <div>
               <h2 className="match_share">
-                Super Agent Casino Share and Commission
+              {createName} Casino Share and Commission
               </h2>
             </div>
             <Row className="super_agent sub_super">
@@ -351,7 +318,7 @@ const CreateSuperAgent = () => {
                   label="My Casino Share(%)"
                   name="MyCasinoShare"
                   required={false}>
-                  <Input type="number" disabled />
+                  <InputNumber className="number_field" min={0} step="0.1" disabled />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -365,7 +332,7 @@ const CreateSuperAgent = () => {
                       message: "Invalid Casino Share",
                     },
                   ]}>
-                  <Input type="number" placeholder="Super Agent Casino Share" />
+                  <InputNumber className="number_field" min={0} step="0.1" placeholder="Super Agent Casino Share" />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -387,7 +354,7 @@ const CreateSuperAgent = () => {
                       message: "Please enter valid Casino commission",
                     },
                   ]}>
-                  <Input type="number" placeholder="Casino Copmmission" />
+                  <InputNumber className="number_field" min={0} step="0.1" placeholder="Casino Copmmission" />
                 </Form.Item>
                 <Form.Item
                   wrapperCol={{

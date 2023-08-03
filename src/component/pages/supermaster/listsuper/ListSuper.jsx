@@ -15,7 +15,16 @@ const ListSuper = ({userTyep, Listname}) => {
   };
 
   const handleCreate = () => {
-    nav("/client/create-super");
+    if(Listname === "Super Agent"){
+      nav("/client/create-super");
+    }else if(Listname === "Master"){
+      nav("/client/create-agent");
+    }else if(Listname === "Dealer"){
+      nav("/client/create-dealer");
+    }
+    else{
+      nav("/client/create-client")
+    }
   };
 
   const { data } = useSuperuserListQuery({
@@ -63,7 +72,7 @@ const ListSuper = ({userTyep, Listname}) => {
             </div>
           </div>
           <div className="table_section sport_detail m-0">
-             <UserListTable data = {data} userType={userTyep}/>
+             <UserListTable data ={data} Listname={Listname} userType={userTyep}/>
           </div>
         </div>
       </div>

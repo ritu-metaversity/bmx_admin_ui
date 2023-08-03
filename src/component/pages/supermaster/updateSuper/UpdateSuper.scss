@@ -1,7 +1,7 @@
 .form_data {
   padding: 3px;
   color: #535353;
-  
+
   .ant-form-item {
     label {
       color: #535353 !important;
@@ -38,15 +38,15 @@
   }
 }
 
-.main_live_section{
-    .match_share{
-      font-size: 22px;
-      font-weight: 500;
-      color: #262626;
-      margin-left: 4px;
-      margin-bottom: 13px;
-      margin-top: 6px;
-    }
+.main_live_section {
+  .match_share {
+    font-size: 22px;
+    font-weight: 500;
+    color: #262626;
+    margin-left: 4px;
+    margin-bottom: 13px;
+    margin-top: 6px;
+  }
 }
 
 .update_agent_text {
@@ -58,34 +58,44 @@
 }
 
 @media screen and (max-width: 800px) {
-  .form_data{
+  .form_data {
     padding: 0px 6px 0px 6px;
   }
-    .super_agent{
-        .ant-col.ant-col-12.css-dev-only-do-not-override-12jzuas {
-            width: 100%;
-            min-width: 100%;
-            max-width: 100%;
-        }
-       .ant-input {
-            width: 100% !important;
-            margin-inline:0 !important;
-        }
-        .ant-select {           
-            width: 100% !important;
-            margin-left: 0% !important;
+  .super_agent {
+    .ant-col.ant-col-12.css-dev-only-do-not-override-12jzuas {
+      width: 100%;
+      min-width: 100%;
+      max-width: 100%;
+    }
+    .ant-input {
+      width: 100% !important;
+      margin-inline: 0 !important;
+    }
+    .ant-select {
+      width: 100% !important;
+      margin-left: 0% !important;
+    }
+    .ant-form-item.css-dev-only-do-not-override-12jzuas {
+      margin-bottom: 7px;
+    }
+    button.ant-btn.ant-btn-primary {
+      margin-left: -29px;
+      margin-top: 12px;
+    }
+  }
+  .update_agent_text {
+    margin: 3px 3px !important;
+  }
+}
 
-          }
-          .ant-form-item.css-dev-only-do-not-override-12jzuas {
-            margin-bottom: 7px;
-        }
-        button.ant-btn.ant-btn-primary {
-            margin-left: -29px;
-            margin-top: 12px;
-        }
-    }
-    .update_agent_text {
-      margin: 3px 3px !important;
-    }
-   
+.number_field {
+  width: 90%;
+  border-radius: 2px;
+  height: 36px;
+  padding-top: 2px;
+  &:focus {
+    border-color: #d9d9d9 !important;
+    outline: unset;
+    box-shadow: unset;
+  }
 }

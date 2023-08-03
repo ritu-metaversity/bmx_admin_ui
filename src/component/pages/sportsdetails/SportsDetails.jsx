@@ -91,7 +91,7 @@ const SportsDetails = () => {
     },
     {
       label: (
-        <Link className="title_section" to="/rejectedBetsByEvent">
+        <Link className="title_section" to={`/rejectedBetsByEvent/${matchId}`}>
           Rejected Bet
         </Link>
       ),

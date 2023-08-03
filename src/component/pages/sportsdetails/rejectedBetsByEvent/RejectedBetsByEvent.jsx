@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card, Space, Select, Row, Col, Table } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useRejectedBetDetailQuery } from '../../../../store/service/SportDetailServices';
 
 // import "./MatchSlips.scss";
 
@@ -12,13 +13,13 @@ const handleChange = (value) => {
 const columns = [
     {
       title: 'Rate',
-      dataIndex: 'rate',
-      key: 'rate',
+      dataIndex: 'pricevalue',
+      key: 'pricevalue',
     },
     {
       title: 'Amount',
-      dataIndex: 'amount',
-      key: 'amount',
+      dataIndex: 'stake',
+      key: 'stake',
     },
     {
       title: 'Type',
@@ -28,18 +29,18 @@ const columns = [
     ,
     {
       title: 'Team',
-      dataIndex: 'team',
-      key: 'team',
+      dataIndex: 'matchname',
+      key: 'matchname',
     },
     {
       title: 'Client',
-      dataIndex: 'client',
-      key: 'client',
+      dataIndex: 'userid',
+      key: 'userid',
     },
     {
       title: 'Agent',
-      dataIndex: 'agent',
-      key: 'agent',
+      dataIndex: 'dealerid',
+      key: 'dealerid',
     }
     ,
     {
@@ -62,19 +63,30 @@ const columns = [
     ,
     {
       title:'bet_status',
-      dataIndex: 'bet_status',
-      key: 'bet_status',
+      dataIndex: 'isactive',
+      key: 'isactive',
     }
   ];
-  const data = [
+  // const data = [
     
-  ];
+  // ];
 
 const RejectedBetsByEvent = () => {
     const nav = useNavigate()
     const handleBackClick = () =>{
       nav("/Events/sports-details")
     }
+
+    const {id} = useParams()
+
+
+    const {data} = useRejectedBetDetailQuery({
+      matchid:32503518
+    }, {refetchOnMountOrArgChange: true})
+
+
+    console.log(data?.data, "dssfdss")
+
   return (
     <>
        <div className="match_slip">
@@ -130,7 +142,7 @@ const RejectedBetsByEvent = () => {
             </Row>
 
             <div className="table_section" style={{marginBottom:"100px"}}>
-            <Table columns={columns} dataSource={data} />
+            <Table columns={columns} dataSource={data?.data} />
             </div>
           </Card>
         </div>

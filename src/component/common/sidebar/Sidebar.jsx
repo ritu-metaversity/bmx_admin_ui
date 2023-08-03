@@ -9,7 +9,7 @@ import "./Sidebar.scss";
 import { Button } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import Sider from "antd/es/layout/Sider";
-import { Link } from "react-router-dom";
+import { Link, json } from "react-router-dom";
 
 const Sidebar = (props) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -23,37 +23,36 @@ const Sidebar = (props) => {
   const onClose = () => {
     setOpen(false);
   };
-  
+
   // const handleDashBoard = (e)=>{
   //   e.preventDefault()
   //   console.log("helooo")
   // }
 
+  const userTypeData = JSON.parse(localStorage.getItem("userId"));
+
   return (
     <>
-     <div className={collapsed ? "logo_icon" : "logo_icon coll_btn"}>
-          <Button
-            type="text"
-            className="clolapsedd"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: "16px",
-              width: 81,
-              height: 71,
-              border: "unset",
-              textDecoration: "none",
-              outline: "unset",
-              color: "#fff",
-            }}
-          />
-          <div className={`bm_side_logo ${collapsed ? "d-none" : ""}`}>
-            <img
-              src="/Images/logo.png"
-              alt=""
-            />
-          </div>
+      <div className={collapsed ? "logo_icon" : "logo_icon coll_btn"}>
+        <Button
+          type="text"
+          className="clolapsedd"
+          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          onClick={() => setCollapsed(!collapsed)}
+          style={{
+            fontSize: "16px",
+            width: 81,
+            height: 71,
+            border: "unset",
+            textDecoration: "none",
+            outline: "unset",
+            color: "#fff",
+          }}
+        />
+        <div className={`bm_side_logo ${collapsed ? "d-none" : ""}`}>
+          <img src="/Images/logo.png" alt="" />
         </div>
+      </div>
       <Sider
         trigger={null}
         width="275"
@@ -69,7 +68,7 @@ const Sidebar = (props) => {
             {
               key: "1",
               icon: <AiOutlineHome />,
-              label: <Link to='/dashboard'>Dashboard</Link>,
+              label: <Link to="/dashboard">Dashboard</Link>,
               // onClick:{handleDashBoard}
             },
             {
@@ -78,13 +77,32 @@ const Sidebar = (props) => {
               label: "Master Details",
               children: [
                 {
+                  className: `${userTypeData?.userType != "5" ? "d-none" : ""}`,
                   label: <Link to="/client/list-super">Super Master</Link>,
                 },
                 {
-                  label: <Link to="/client/list-agent">Agent Master</Link>,
+                  className: `${
+                    userTypeData?.userType === "0"
+                      ? ""
+                      : "d-none"
+                  }`,
+                  label: <Link to="/client/list-agent">Master</Link>,
                 },
                 {
-                  label: <Link to="client/list-client">Client Master</Link>,
+                  className:`${
+                    userTypeData?.userType === "1"
+                      ? ""
+                      : "d-none"
+                  }`,
+                  label: (
+                    <Link
+                      to="/client/list-agent">
+                      Dealer
+                    </Link>
+                  ),
+                },
+                {
+                  label: <Link to="client/list-client">Client</Link>,
                 },
               ],
             },
@@ -97,13 +115,21 @@ const Sidebar = (props) => {
                   label: <Link to="/Events/sports-details">Sports Detail</Link>,
                 },
                 {
-                  label:  <Link to="/Casino/roulette-details">Roulette Detail</Link> ,
+                  label: (
+                    <Link to="/Casino/roulette-details">Roulette Detail</Link>
+                  ),
                 },
                 {
-                  label: <Link to="/Casino/dus-ka-dum-details">DusKaDum Detail</Link>,
+                  label: (
+                    <Link to="/Casino/dus-ka-dum-details">DusKaDum Detail</Link>
+                  ),
                 },
                 {
-                  label: <Link to="/Casino/andar-bahar-details">AndarBahar Detail</Link> ,
+                  label: (
+                    <Link to="/Casino/andar-bahar-details">
+                      AndarBahar Detail
+                    </Link>
+                  ),
                 },
                 {
                   label: <Link to="/Casino/casino-details">Casino Detail</Link>,
@@ -138,13 +164,19 @@ const Sidebar = (props) => {
               label: "Cash Transanction",
               children: [
                 {
-                  label: <Link to="/client/txn-client">Debit/Credit Entry(C)</Link>,
+                  label: (
+                    <Link to="/client/txn-client">Debit/Credit Entry(C)</Link>
+                  ),
                 },
                 {
-                  label: <Link to="/client/txn-agent">Debit/Credit Entry(A)</Link>,
+                  label: (
+                    <Link to="/client/txn-agent">Debit/Credit Entry(A)</Link>
+                  ),
                 },
                 {
-                  label: <Link to="/client/txn-super">Debit/Credit Entry(SA)</Link>,
+                  label: (
+                    <Link to="/client/txn-super">Debit/Credit Entry(SA)</Link>
+                  ),
                 },
               ],
             },
@@ -157,10 +189,18 @@ const Sidebar = (props) => {
                   label: <Link to="/client/login-report">Login Report</Link>,
                 },
                 {
-                  label: <Link to="/client/mobile-app-report">Mobile App Report</Link>,
+                  label: (
+                    <Link to="/client/mobile-app-report">
+                      Mobile App Report
+                    </Link>
+                  ),
                 },
                 {
-                  label: <Link to="/client/secure-code-report">Secure Code Report</Link>,
+                  label: (
+                    <Link to="/client/secure-code-report">
+                      Secure Code Report
+                    </Link>
+                  ),
                 },
               ],
             },
@@ -171,7 +211,6 @@ const Sidebar = (props) => {
             },
           ]}
         />
-       
       </Sider>
 
       <div className="mob_side">
@@ -182,7 +221,7 @@ const Sidebar = (props) => {
         </Space>
 
         <Drawer
-          title={<img onClick={()=>setOpen(false)} src="/Images/logo.png"/>}
+          title={<img onClick={() => setOpen(false)} src="/Images/logo.png" />}
           className="drawer_main"
           placement="left"
           closable={false}
@@ -199,7 +238,11 @@ const Sidebar = (props) => {
               {
                 key: "1",
                 icon: <AiOutlineHome />,
-                label: <Link to='/dashboard' onClick={()=>setOpen(false)}>Dashboard</Link> ,
+                label: (
+                  <Link to="/dashboard" onClick={() => setOpen(false)}>
+                    Dashboard
+                  </Link>
+                ),
               },
               {
                 key: "2",
@@ -207,13 +250,32 @@ const Sidebar = (props) => {
                 label: "Master Details",
                 children: [
                   {
+                    className: `${userTypeData?.userType != "5" ? "d-none" : ""}`,
                     label: <Link to="/client/list-super" onClick={()=>setOpen(false)}>Super Master</Link>,
                   },
                   {
-                    label:<Link to="/client/list-agent" onClick={()=>setOpen(false)}>Agent Master</Link>,
+                    className: `${
+                      userTypeData?.userType === "0"
+                        ? ""
+                        : "d-none"
+                    }`,
+                    label: <Link to="/client/list-agent" onClick={()=>setOpen(false)} >Master</Link>,
                   },
                   {
-                    label: <Link to="client/list-client" onClick={()=>setOpen(false)}>Client Master</Link>,
+                    className:`${
+                      userTypeData?.userType === "1"
+                        ? ""
+                        : "d-none"
+                    }`,
+                    label: (
+                      <Link
+                        to="/client/list-agent" onClick={()=>setOpen(false)}> 
+                        Dealer
+                      </Link>
+                    ),
+                  },
+                  {
+                    label: <Link to="client/list-client" onClick={()=>setOpen(false)}>Client</Link>,
                   },
                 ],
               },
@@ -223,19 +285,45 @@ const Sidebar = (props) => {
                 label: "Sports-Betting",
                 children: [
                   {
-                    label:<Link to="/Events/sports-details" onClick={()=>setOpen(false)}>Sports Detail</Link>,
+                    label: (
+                      <Link
+                        to="/Events/sports-details"
+                        onClick={() => setOpen(false)}>
+                        Sports Detail
+                      </Link>
+                    ),
                   },
                   {
-                    label: <Link to="/Casino/roulette-details" onClick={()=>setOpen(false)}>Roulette Detail</Link>,
+                    label: (
+                      <Link
+                        to="/Casino/roulette-details"
+                        onClick={() => setOpen(false)}>
+                        Roulette Detail
+                      </Link>
+                    ),
                   },
                   {
-                    label: <Link to="/Casino/dus-ka-dum-details" onClick={()=>setOpen(false)}>DusKaDum Detail</Link>,
+                    label: (
+                      <Link
+                        to="/Casino/dus-ka-dum-details"
+                        onClick={() => setOpen(false)}>
+                        DusKaDum Detail
+                      </Link>
+                    ),
                   },
                   {
-                    label: <Link to="/Casino/andar-bahar-details" onClick={()=>setOpen(false)}>AndarBahar Detail</Link>,
+                    label: (
+                      <Link
+                        to="/Casino/andar-bahar-details"
+                        onClick={() => setOpen(false)}>
+                        AndarBahar Detail
+                      </Link>
+                    ),
                   },
                   {
-                    label: <Link to="/Casino/casino-details">Casino Detail</Link>,
+                    label: (
+                      <Link to="/Casino/casino-details">Casino Detail</Link>
+                    ),
                   },
                 ],
               },
@@ -245,19 +333,49 @@ const Sidebar = (props) => {
                 label: "Ledger",
                 children: [
                   {
-                    label: <Link to="/Events/matchledger" onClick={()=>setOpen(false)}>Profit/Loss</Link>,
+                    label: (
+                      <Link
+                        to="/Events/matchledger"
+                        onClick={() => setOpen(false)}>
+                        Profit/Loss
+                      </Link>
+                    ),
                   },
                   {
-                    label: <Link to="/client/my-ledger" onClick={()=>setOpen(false)}>My Ledger</Link>,
+                    label: (
+                      <Link
+                        to="/client/my-ledger"
+                        onClick={() => setOpen(false)}>
+                        My Ledger
+                      </Link>
+                    ),
                   },
                   {
-                    label: <Link to="/client/ledger-super" onClick={()=>setOpen(false)}>Super Ledger</Link>,
+                    label: (
+                      <Link
+                        to="/client/ledger-super"
+                        onClick={() => setOpen(false)}>
+                        Super Ledger
+                      </Link>
+                    ),
                   },
                   {
-                    label: <Link to="/client/ledger-agent" onClick={()=>setOpen(false)}>Agent Ledger</Link>,
+                    label: (
+                      <Link
+                        to="/client/ledger-agent"
+                        onClick={() => setOpen(false)}>
+                        Agent Ledger
+                      </Link>
+                    ),
                   },
                   {
-                    label: <Link to="/client/ledger-client" onClick={()=>setOpen(false)}>Client Ledger</Link>,
+                    label: (
+                      <Link
+                        to="/client/ledger-client"
+                        onClick={() => setOpen(false)}>
+                        Client Ledger
+                      </Link>
+                    ),
                   },
                 ],
               },
@@ -267,13 +385,31 @@ const Sidebar = (props) => {
                 label: "Cash Transanction",
                 children: [
                   {
-                    label: <Link to="/client/txn-client" onClick={()=>setOpen(false)}>Debit/Credit Entry(C)</Link>,
+                    label: (
+                      <Link
+                        to="/client/txn-client"
+                        onClick={() => setOpen(false)}>
+                        Debit/Credit Entry(C)
+                      </Link>
+                    ),
                   },
                   {
-                    label: <Link to="/client/txn-agent" onClick={()=>setOpen(false)}>Debit/Credit Entry(A)</Link>,
+                    label: (
+                      <Link
+                        to="/client/txn-agent"
+                        onClick={() => setOpen(false)}>
+                        Debit/Credit Entry(A)
+                      </Link>
+                    ),
                   },
                   {
-                    label: <Link to="/client/txn-super" onClick={()=>setOpen(false)}>Debit/Credit Entry(SA)</Link>,
+                    label: (
+                      <Link
+                        to="/client/txn-super"
+                        onClick={() => setOpen(false)}>
+                        Debit/Credit Entry(SA)
+                      </Link>
+                    ),
                   },
                 ],
               },
@@ -283,20 +419,42 @@ const Sidebar = (props) => {
                 label: "Reports",
                 children: [
                   {
-                    label: <Link to="/client/login-report" onClick={()=>setOpen(false)}>Login Report</Link>,
+                    label: (
+                      <Link
+                        to="/client/login-report"
+                        onClick={() => setOpen(false)}>
+                        Login Report
+                      </Link>
+                    ),
                   },
                   {
-                    label: <Link to="/client/mobile-app-report" onClick={()=>setOpen(false)}>Mobile App Report</Link>,
+                    label: (
+                      <Link
+                        to="/client/mobile-app-report"
+                        onClick={() => setOpen(false)}>
+                        Mobile App Report
+                      </Link>
+                    ),
                   },
                   {
-                    label: <Link to="/client/secure-code-report" onClick={()=>setOpen(false)}>Secure Code Report</Link>,
+                    label: (
+                      <Link
+                        to="/client/secure-code-report"
+                        onClick={() => setOpen(false)}>
+                        Secure Code Report
+                      </Link>
+                    ),
                   },
                 ],
               },
               {
                 key: "7",
                 icon: <SlDiamond />,
-                label: <Link to="/markets" onClick={()=>setOpen(false)}>WBT Setting</Link>,
+                label: (
+                  <Link to="/markets" onClick={() => setOpen(false)}>
+                    WBT Setting
+                  </Link>
+                ),
               },
             ]}
           />

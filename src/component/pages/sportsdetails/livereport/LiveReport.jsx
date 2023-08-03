@@ -125,7 +125,7 @@ const LiveReport = () => {
                               </div>
                             );
                           })}
-                          {TtlBookData?.data?.length !== 0 ? (
+                          {(TtlBookData?.data?.length !== 0 && TtlBookData?.data != undefined) ? (
                             <div className="sub_title">
                               {ShowMyBook !== 2 &&
                                 (id === 0
@@ -136,7 +136,7 @@ const LiveReport = () => {
                             </div>
                           ) : (
                             <div className="sub_title">
-                              {ShowMyBook !== 2 && "0"}
+                              {ShowMyBook !== 2 && "0.0"}
                             </div>
                           )}
                         </Col>

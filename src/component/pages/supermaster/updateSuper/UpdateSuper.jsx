@@ -1,11 +1,14 @@
-import { Button, Col, Form, Input, Row, Select } from "antd";
+import { Button, Col, Form, Input, InputNumber, Row, Select } from "antd";
 import "./UpdateSuper.scss";
 import { useSelector } from "react-redux";
 import { globalSelector } from "../../../../store/global/slice";
 import { useUpdateUserMutation } from "../../../../store/service/createUserServices";
 
-const UpdateSuper = () => {
+const UpdateSuper = ({updateName}) => {
   const [trigger, { data: updateData }] = useUpdateUserMutation();
+
+  const mobileNum = /^[6-9][0-9]{9}$/;
+  const passw=  /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,}$/
 
   const onFinish = (values) => {
     const userData = {
@@ -47,7 +50,7 @@ const UpdateSuper = () => {
             <div
               style={{ padding: "5px 8px", fontSize: "22px" }}
               className="team_name">
-              Update Super Agent
+              Update {updateName}
             </div>
             {/* <div className="show_btn">
               <button>Show</button>
@@ -63,7 +66,7 @@ const UpdateSuper = () => {
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
-          autoComplete="off"
+          onFocus={onFinishFailed}
           fields={[
             {
               name: "name",
@@ -126,8 +129,11 @@ const UpdateSuper = () => {
                       required: true,
                       message: "Invalid Contact NO!",
                     },
+                    { pattern:mobileNum,
+                      message: "Invalid Contact NO!",
+                    }
                   ]}>
-                  <Input type="number" placeholder="Enter Reference" />
+                  <InputNumber className="number_field" min={0} width={"100%"} type="number" placeholder="Enter Reference" />
                 </Form.Item>
                 <Form.Item
                   label="Password"
@@ -138,6 +144,9 @@ const UpdateSuper = () => {
                       required: true,
                       message: "Please Enter Password!",
                     },
+                    { pattern:passw,
+                      message: "Minimun 6 charecter, must contain letters and numbers!",
+                    }
                   ]}>
                   <Input type="text" placeholder="Password" />
                 </Form.Item>
@@ -147,6 +156,7 @@ const UpdateSuper = () => {
                   rules={[
                     {
                       required: true,
+                      message:""
                     },
                   ]}>
                   <Select
@@ -184,28 +194,6 @@ const UpdateSuper = () => {
               <h2 className="update_agent_text">Match Share and Comm</h2>
             </div>
             <Row className="super_agent  update_agent">
-              <Col span={12}>
-                <Form.Item
-                  label="MASTER Mobile Share(%)"
-                  name="mobileshare"
-                  required={false}>
-                  <Input type="number" disabled />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="SUPER Mobile Share(%)"
-                  name="superMobileShare"
-                  required
-                  rules={[
-                    {
-                      required: true,
-                      message: "Invalid Mobile Share",
-                    },
-                  ]}>
-                  <Input type="number" />
-                </Form.Item>
-              </Col>
               <Col span={12}>
                 <Form.Item
                   label="MASTER Comm type"
@@ -253,7 +241,7 @@ const UpdateSuper = () => {
                       message: "Please enter odds commission",
                     },
                   ]}>
-                  <Input type="number" />
+                  <InputNumber className="number_field" min={0} step="0.1"  />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -275,7 +263,7 @@ const UpdateSuper = () => {
                       message: "Please enter session commission",
                     },
                   ]}>
-                  <Input type="number" />
+                  <InputNumber className="number_field" min={0} step="0.1"/>
                 </Form.Item>
               </Col>
             </Row>
@@ -302,7 +290,7 @@ const UpdateSuper = () => {
                       message: "Invalid Casino Share",
                     },
                   ]}>
-                  <Input type="number" />
+                  <InputNumber className="number_field" min={0} step="0.1"/>
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -324,7 +312,7 @@ const UpdateSuper = () => {
                       message: "Please enter valid Casino commission",
                     },
                   ]}>
-                  <Input type="number" />
+                   <InputNumber className="number_field" min={0} step="0.1"/>
                 </Form.Item>
 
                 <Form.Item

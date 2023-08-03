@@ -3,7 +3,7 @@ import { Button, Form, Input, message } from "antd";
 import axios from "axios";
 import { useLoginMutation } from "../../../store/service/authService";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 
 const Signin = () => {
   const [trigger, { data: authData, error, isLoading }] =
@@ -16,7 +16,7 @@ const Signin = () => {
       message.error(authData?.message || error.data?.message);
     } else if (authData?.token !== null && authData?.token !== undefined) {
       localStorage.setItem("token", authData?.token);
-      localStorage.setItem("userId", authData?.userId);
+      localStorage.setItem("userId", JSON.stringify([authData]));
       nav("/dashboard");
     }
   }, [authData, error]);
@@ -84,7 +84,7 @@ const Signin = () => {
                 }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
-                autoComplete="off">
+                >
                 <Form.Item
                   name="username"
                   rules={[
