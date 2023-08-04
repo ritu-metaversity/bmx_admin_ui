@@ -1,5 +1,5 @@
-import { Card, Empty, Pagination, Spin, Table } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Card,  Table } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
 import "./LoginReport.scss";
 import { useLoginReportQuery } from "../../../store/service/loginReportServices";
 import moment from "moment";
@@ -9,15 +9,19 @@ const LoginReport = () => {
   const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
   const time = moment().format("YYYY-MM-DD");
 
+  const {id} = useParams()
+
   const nav = useNavigate();
   const handleBackClick = () => {
     nav("/Events/sports-details");
   };
 
+  // const userId =  JSON.parse(localStorage.getItem("userId")) 
+
   const { data, isLoading, isFetching } = useLoginReportQuery({
     fromDate: time,
     toDate: timeBefore,
-    userId: localStorage.getItem("userId"),
+    userId: id || "",
   });
 
   const columns = [

@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { Pagination, Table } from "antd";
+import React, { useState } from "react";
+import { Table } from "antd";
 import { useAccountstatementQuery } from "../../../../../store/service/supermasteAccountStatementServices";
+import { useParams } from "react-router-dom";
 
 const AllStatement = ({dateData, gameType}) => {
 
   const [newData, setNewData] = useState({})
+
+  const {id} = useParams()
 
   const {data} = useAccountstatementQuery({
     index:"0",
     noOfRecords:"200",
     fromDate:dateData[0],
     toDate:dateData[1],
-    userid:localStorage.getItem("userId"),
+    userid:id || "",
     type:gameType
   },{refetchOnMountOrArgChange:true})
 

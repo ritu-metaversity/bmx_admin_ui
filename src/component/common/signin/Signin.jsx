@@ -16,20 +16,18 @@ const Signin = () => {
       message.error(authData?.message || error.data?.message);
     } else if (authData?.token !== null && authData?.token !== undefined) {
       localStorage.setItem("token", authData?.token);
-      localStorage.setItem("userId", JSON.stringify([authData]));
+      localStorage.setItem("userId", JSON.stringify(authData));
       nav("/dashboard");
     }
   }, [authData, error]);
 
   const onFinish = (values) => {
-    // console.log("Success:", values?.username);
     const authData = {
       userId: values?.username,
       password: values?.password,
       appUrl: "subadmin.localhost",
     };
     trigger(authData);
-    // message.error(authData?.message)
   };
 
   const onFinishFailed = (errorInfo) => {

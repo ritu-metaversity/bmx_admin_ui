@@ -69,7 +69,7 @@ const Statement = () => {
               margin: "0px",
               width: "100%",
             }}
-            className="sport_detail "
+            className="sport_detail acc_name"
             title="List Of All Transactions ( 9 )"
             extra={<button onClick={handleBackClick}>Back</button>}>
             <div className="">

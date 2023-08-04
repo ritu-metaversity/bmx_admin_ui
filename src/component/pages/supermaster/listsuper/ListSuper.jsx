@@ -30,12 +30,9 @@ const ListSuper = ({userTyep, Listname}) => {
   const { data } = useSuperuserListQuery({
     userType: userTyep,
     parentUserId: id || null,
-    noOfRecords:"100",
+    noOfRecords:"400",
     index:"0"
 },{refetchOnMountOrArgChange:true});
-
-
-
   return (
     <>
       <div className="main_live_section list_supers">

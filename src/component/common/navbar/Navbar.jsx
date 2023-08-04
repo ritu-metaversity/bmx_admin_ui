@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Navbar.scss";
 // import { AiOutlineDown } from "react-icons/ai";
 import { Dropdown, Input, Space, Modal } from "antd";
@@ -12,6 +12,7 @@ import ChangePassword from "../ChangePassword/ChangePassword";
 const Navbar = () => {
   const [trigger, { error, isLoading, isError }] = useLogoutMutation()
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState();
   const nav = useNavigate()
   const handleLogout = ()=>{
     localStorage.clear()
@@ -35,7 +36,6 @@ const Navbar = () => {
     // e.preventDefault();
     if (e.key == 0) {
       setIsModalOpen(true);
-      console.log(e.key, "Hello");
     } else {
       console.log("hii");
     }
@@ -48,9 +48,14 @@ const Navbar = () => {
     setIsModalOpen(false);
   };
 
-  const userData = JSON.parse(localStorage.getItem("userId"))
+  useEffect(()=>{
+    const userData = JSON.parse(localStorage.getItem("userId"));
+    setUserInfo(userData)
 
-  console.log(userData?.userId, "dssfdss")
+  }, [localStorage.getItem("userId")])
+
+
+  console.log(userInfo?.userId, "dssfdss")
   return (
     <>
       <div className="nav1"></div>
@@ -72,7 +77,7 @@ const Navbar = () => {
           trigger={["click"]}>
           <a onClick={(e) => e.preventDefault()}>
             <Space className="">
-            {userData?.userId}
+            {userInfo?.userId}
               <DownOutlined />
             </Space>
           </a>

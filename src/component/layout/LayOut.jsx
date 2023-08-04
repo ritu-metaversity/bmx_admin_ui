@@ -129,20 +129,19 @@ const LayOut = () => {
               <Route path="/client/list-dealer/:id" element={<ListSuper userTyep={2} Listname={"Dealer"}/> } />
               <Route path="/client/list-clent/:id" element={<ListSuper userTyep={3} Listname={"Client"}/> } />
 
-              <Route path="/client/update-super" element={<UpdateSuper updateName={"Super Agent"}/>} />
-              <Route path="/client/update-agent" element={<UpdateSuper updateName={"Master"}/>} />
-              <Route path="/client/update-client" element={<UpdateSuper updateName={"Client"}/>} />
-              <Route path="/client/update-dealer" element={<UpdateSuper updateName={"Dealer"}/>} />
-
-              <Route path="/client/statement" element={<Statement />} />
-              <Route path="/client/account-operations" element={<AccountOperations />} />
+              <Route path="/client/update-super/:id" element={<UpdateSuper updateName={"Super Agent"}/>} />
+              <Route path="/client/update-agent/:id" element={<UpdateSuper updateName={"Master"}/>} />
+              <Route path="/client/update-client/:id" element={<UpdateSuper updateName={"Client"}/>} />
+              <Route path="/client/update-dealer/:id" element={<UpdateSuper updateName={"Dealer"}/>} />
+              <Route path="/client/account-operations/:id" element={<AccountOperations />} />
+              <Route path="/account-operation" element={<AccountOperations />} />
               <Route path="/client/login-report" element={<LoginReport />} />
+              <Route path="/client/login-report/:id" element={<LoginReport />} />
               <Route path="/client/create-super" element={<CreateSuperAgent createName={"Super Agent"}/>}/>
               <Route path="/client/create-agent" element={<CreateSuperAgent createName={"Master"}/>}/>
               <Route path="/client/create-dealer" element={<CreateSuperAgent createName={"Dealer"}/>} />
               <Route path="/client/create-client" element={<CreateSuperAgent createName={"Client"}/>} />
               <Route path="/client/limitplusminus-super" element={<SuperAgentLimitDetails />} />
-              {/* <Route path="/client/list-agent" element={<AgentDetailMainPage />} /> */}
               <Route path="/client/limitplusminus-agent" element={<AgentLimitDetails />} />
              
               <Route path="/client/limitplusminus-client" element={<ClientLimitDetails />}/>
@@ -157,7 +156,7 @@ const LayOut = () => {
               <Route path="/client/txn-client" element={<ClientTransactions/>}/>
               <Route path="/markets" element={<Settings/>}/>
               <Route path="/account-statement" element={<AccountStatement/>}/>
-              <Route path="/account-operation" element={<Operations/>}/>
+              <Route path="/account-statement/:id" element={<AccountStatement/>}/>
               <Route path="/profitandloss" element={<ProfitAndLoss/>}/>
               <Route path="/casinoprofitandloss" element={<CasinoProfitAndLoss/>}/>
               <Route path="/Casino/today-pandl" element={<TodayProfitLoss/>}/>

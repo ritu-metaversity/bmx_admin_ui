@@ -1,6 +1,9 @@
-import { Card, DatePicker, Empty, Pagination } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Card, DatePicker, Empty, Pagination, Table } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
 import './AccountOperations.scss'
+import { useAccountOprationQuery } from "../../../../store/service/createUserServices";
+import moment from "moment";
+import React, { useState } from "react";
 
 // const handleChange = (value) => {
 //   console.log(`selected ${value}`);
@@ -8,20 +11,59 @@ import './AccountOperations.scss'
 
 const { RangePicker } = DatePicker;
 
-const data = [
-  
-];
-
-console.log(data?.length)
 
 const AccountOperations = () => {
+
+  
+  const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
+  const time = moment().format("YYYY-MM-DD");
+  
+  const [dateData, setDateData] = useState([timeBefore,time])
+  const onChange = (date,dateString) => {
+    setDateData(dateString);
+  };
+
+  const {id} = useParams()
+
   const nav = useNavigate();
   const handleBackClick = () => {
     nav("/Events/sports-details");
   };
-//   const onChange = (key) => {
-//     console.log(key);
-//   };
+
+  const {data, isFetching, isLoading} = useAccountOprationQuery({
+    index: 0,
+    noOfRecords: 500,
+    userId: id || "anku121",
+    startDate: dateData[0],
+    endDate: dateData[1],
+
+  }, {refetchOnMountOrArgChange:true})
+
+  console.log(data?.data?.data?.length, "dfsfewr")
+
+  const columns = [
+    {
+      title: "Date",
+      dataIndex: "createdon",
+      key: "createdon",
+    },
+    {
+      title: "Operation",
+      dataIndex: "action",
+      key: "action",
+    },
+    {
+      title: "Done By",
+      dataIndex: "actionby",
+      key: "actionby",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+      width: "5%",
+    },
+  ];
 
   return (
     <>
@@ -32,14 +74,26 @@ const AccountOperations = () => {
               margin: "0px",
               width: "100%",
             }}
-            className="sport_detail"
-            title="List Of All Transactions ( 0 )"
+            className="sport_detail acc_name"
+            title={`List Of All Transactions ( ${data?.data?.data?.length} )`}
             extra={<button onClick={handleBackClick}>Back</button>}>
             <div className="">
-              <RangePicker />
+              <RangePicker onChange={onChange}/>
             </div>
 
+
             <div className="table_section statement_tabs_data">
+              <div className="table_section">
+                <Table
+                  className="live_table agent_master" 
+                  bordered
+                  columns={columns}
+                  dataSource={data?.data?.data || []}
+                  loading={isLoading||isFetching}></Table>
+              </div>
+          </div>
+
+            {/* <div className="table_section statement_tabs_data">
             <table className="">
               <tr>
                 <th>Date</th>
@@ -54,7 +108,7 @@ const AccountOperations = () => {
                     <td>{res?.Description}</td>
                     <td>{res?.PrevBal}</td>
                     <td className="text_success">{res?.CR}</td>
-                    {/* <td>{res?.wonby}</td> */}
+                   
                   </tr>
                 );
               })}
@@ -64,9 +118,7 @@ const AccountOperations = () => {
                 <Pagination  className="pagination_main ledger_pagination"  defaultCurrent={1} total={5} />
               </div>
               }
-
-            
-          </div>
+          </div> */}
           </Card>
           
         </div>

@@ -32,7 +32,28 @@ export const createUserApi = createApi({
         body
       }),
     }),
+    getUser: build.query({
+      query: (body) => ({
+        url: "/bmx/user/get-user-for-update",
+        method: "POST",
+        body
+      }),
+    }),
+    accountOpration: build.query({
+      query: (body) => ({
+        url: "/bmx/report/action-logs",
+        method: "POST",
+        body
+      }),
+    }),
+    upDateStatus: build.mutation({
+      query: (body) => ({
+        url: "/bmx/user/update-status",
+        method: "POST",
+        body
+      }),
+    }),
   }),
 });
 
-export const {useCreateUserDataQuery, useCreateUserMutation,useUpdateUserMutation} = createUserApi;
+export const {useCreateUserDataQuery, useCreateUserMutation,useUpdateUserMutation, useGetUserQuery, useAccountOprationQuery, useUpDateStatusMutation} = createUserApi;

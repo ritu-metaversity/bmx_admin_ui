@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown, Form, Input, Modal, Space } from "antd";
 import menu from "../pages/supermaster/listsuper/SearchModals/SearchModals";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   SearchOutlined,
@@ -9,7 +8,7 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 import ModalsData from "../pages/supermaster/listsuper/ModalsData/ModalsData";
-import { setData } from "../../store/global/slice";
+import { useUpDateStatusMutation } from "../../store/service/createUserServices";
 
 const routeFromUSerType = {
   0: "/client/list-agent/",
@@ -17,14 +16,14 @@ const routeFromUSerType = {
   2: "/client/list-clent/",
 };
 const UserListTable = ({ data: userList, userType, Listname }) => {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [Active, setActive] = useState("inActive");
   const [inActive, setInActive] = useState(true);
   const [isDepositeModalOpen, SetisDepositeModalOpen] = useState(false);
   const [WithdrawnModal, SetWithdrawnModal] = useState(false);
   const [parentUserId, setParentUserId] = useState();
-
-  const dispatch = useDispatch();
+  const [data, setData] = useState();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -56,18 +55,32 @@ const UserListTable = ({ data: userList, userType, Listname }) => {
     SetisDepositeModalOpen(true);
   };
 
+
+  const [activeData, {data: status}] = useUpDateStatusMutation()
+
   const handleActive = () => {
-    if (Active === "inActive") {
-      setActive("Active");
-      setInActive(false);
-    } else {
-      setActive("inActive");
-      setInActive(true);
-    }
+    activeData({
+      userId:data
+    })
+    // if (Active === "inActive") {
+    //   setActive("Active");
+    //   setInActive(false);
+    // } else {
+    //   setActive("inActive");
+    //   setInActive(true);
+    // }
   };
+
+  useEffect(()=>{
+    setActive("Active");
+  },[status?.data])
 
   const handleParentId = (val) => {
     setParentUserId(val);
+  };
+
+  const handleEditData = (val) => {
+   setData(val);
   };
 
   const items = [
@@ -95,12 +108,12 @@ const UserListTable = ({ data: userList, userType, Listname }) => {
         <Link
           to={`${
             Listname === "Super Agent"
-              ? "/client/update-super"
+              ? `/client/update-super/${data}`
               : Listname === "Master"
-              ? "/client/update-agent"
+              ? `/client/update-agent/${data}`
               : Listname === "Dealer"
-              ? "/client/update-dealer"
-              : "/client/update-client"
+              ? `/client/update-dealer/${data}`
+              : `/client/update-client/${data}`
           }`}>
           Edit
         </Link>
@@ -108,15 +121,15 @@ const UserListTable = ({ data: userList, userType, Listname }) => {
       key: "3",
     },
     {
-      label: <Link to="/client/statement">Statement</Link>,
+      label: <Link to={`/account-statement/${data}`}>Statement</Link>,
       key: "4",
     },
     {
-      label: <Link to="/client/account-operations">Account Operations</Link>,
+      label: <Link to={`/client/account-operations/${data}`}>Account Operations</Link>,
       key: "5",
     },
     {
-      label: <Link to="/client/login-report">Login Report</Link>,
+      label: <Link to={`/client/login-report/${data}`}>Login Report</Link>,
       key: "6",
     },
     {
@@ -131,9 +144,7 @@ const UserListTable = ({ data: userList, userType, Listname }) => {
     },
   ];
 
-  const handleEditData = (val) => {
-    dispatch(setData(val));
-  };
+  
 
   return (
     <div>
@@ -193,7 +204,7 @@ const UserListTable = ({ data: userList, userType, Listname }) => {
                       trigger={["click"]}>
                       <p
                         className="droup_link"
-                        onClick={() => handleEditData(res)}>
+                        onClick={() => handleEditData(res?.userid)}>
                         <Space>
                           <CaretDownOutlined />
                         </Space>

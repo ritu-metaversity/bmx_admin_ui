@@ -1,33 +1,65 @@
-import { Button, Col, Form, Input, InputNumber, Row, Select } from "antd";
+import React, { useEffect } from "react";
+import { Button, Col, Form, Input, InputNumber, Row, Select, Spin, notification } from "antd";
 import "./UpdateSuper.scss";
 import { useSelector } from "react-redux";
 import { globalSelector } from "../../../../store/global/slice";
-import { useUpdateUserMutation } from "../../../../store/service/createUserServices";
+import { useGetUserQuery, useUpdateUserMutation } from "../../../../store/service/createUserServices";
+import { useParams } from "react-router-dom";
 
 const UpdateSuper = ({updateName}) => {
-  const [trigger, { data: updateData }] = useUpdateUserMutation();
+
+  const [api, contextHolder] = notification.useNotification();
+
+  const {id} = useParams()
+  const [trigger, { data: updateData, isLoading, error }] = useUpdateUserMutation();
+
+
+
+  const openNotification = (mess) => {
+    api.success({
+      message: mess,
+      description: "Success",
+      closeIcon: false,
+      placement: "top",
+    });
+  };
+
+  const openNotificationError = (mess) => {
+    api.error({
+      message: mess,
+      closeIcon: false,
+      placement: "top",
+    });
+  };
 
   const mobileNum = /^[6-9][0-9]{9}$/;
   const passw=  /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,}$/
 
   const onFinish = (values) => {
     const userData = {
-      userId: values?.name,
+      userId: id,
       userName: values?.name,
       phoneNumber: values?.number,
       password: values?.password,
       luPassword: "1111111",
-      status: false,
-      commType: values?.Status,
+      status: values?.Status,
+      commType: values?.comm_type == "Bet by bet"?"bbb":"nocomm",
       matchComm: values?.Supermatchcomm,
-      sessionComm: values?.SupperSessComm,
+      sessionComm: values?.sess_comm,
       casinoComm: values?.Supercasinocomm,
+      reference: values?.reference,
     };
 
     trigger(userData)
   };
 
-  console.log(updateData, "asddsd")
+  useEffect(() => {
+    if (updateData?.status === true) {
+      openNotification(updateData?.message);
+    } else if (updateData?.status === false || error?.data?.message) {
+      openNotificationError(updateData?.message || error?.data?.message);
+    }
+  }, [updateData, error]);
 
 
   const onFinishFailed = (errorInfo) => {
@@ -37,10 +69,21 @@ const UpdateSuper = ({updateName}) => {
 
   const userData = useSelector(globalSelector);
 
-  console.log(userData?.data, "dsfsdfefw");
+
+
+  const {data} = useGetUserQuery({
+    userId:id,
+  })
+
+
+
+
+
+  console.log(data?.data, "dsfsdfefw");
 
   return (
     <>
+    {contextHolder}
       <div className="main_live_section">
         <div className="_match">
           <div
@@ -58,6 +101,14 @@ const UpdateSuper = ({updateName}) => {
             </div> */}
           </div>
         </div>
+        <div className="ant-spin-nested-loading">
+          {isLoading ? (
+            <div className="spin_icon">
+              <Spin size="large" />
+            </div>
+          ) : (
+            ""
+          )}
         <Form
           className="form_data"
           name="basic"
@@ -70,27 +121,75 @@ const UpdateSuper = ({updateName}) => {
           fields={[
             {
               name: "name",
-              value: userData?.data?.username,
+              value: data?.data?.userName,
             },
             {
               name: "number",
-              value: userData?.data?.mobile,
+              value: data?.data?.mobileNumber,
             },
             {
               name: "password",
-              value: userData?.data?.password,
+              value: data?.data?.password,
             },
             {
               name: "status",
-              value: userData?.data?.active ? "Active" : "InActive",
+              value: data?.data?.status ? "Active" : "InActive",
             },
             {
               name: "Supermatchcomm",
               value: userData?.data?.matchCommission,
             },
             {
-              name: "SupperSessComm",
-              value: userData?.data?.sessionCommission,
+              name: "sess_comm",
+              value: userData?.data?.sessionComm,
+            },
+            {
+              name: "matchcomm",
+              value: data?.data?.parentMatchComm,
+            },
+            {
+              name: "sesscomm",
+              value: data?.data?.parentSessionComm,
+            },
+            {
+              name: "casinoshare",
+              value: data?.data?.parentCasinoShare,
+            },
+            {
+              name: "casinoComm",
+              value: data?.data?.parentCasinoComm,
+            },
+            {
+              name: "reference",
+              value: data?.data?.reference,
+            },
+            {
+              name: "Supermatchcomm",
+              value: data?.data?.matchComm,
+            },
+            {
+              name: "sess_comm",
+              value: data?.data?.sessionComm,
+            },
+            {
+              name: "supercasinoShare",
+              value: data?.data?.casinoShare,
+            },
+            {
+              name: "Supercasinocomm",
+              value: data?.data?.casinoComm,
+            },
+            {
+              name: "commType",
+              value: data?.data?.parentMatchComm == 0 || data?.data?.parentSessionComm == 0?"No Comm":"Bet by bet",
+            },
+            {
+              name: "comm_type",
+              value: data?.data?.matchComm == 0 || data?.data?.sessionComm == 0?"No Comm":"Bet by bet",
+            },
+            {
+              name: "status",
+              value: data?.data?.status?"active":"inactive",
             },
           ]}>
           <div>
@@ -151,7 +250,7 @@ const UpdateSuper = ({updateName}) => {
                   <Input type="text" placeholder="Password" />
                 </Form.Item>
                 <Form.Item
-                  name="Status"
+                  name="status"
                   label="Status"
                   rules={[
                     {
@@ -162,31 +261,14 @@ const UpdateSuper = ({updateName}) => {
                   <Select
                     // placeholder="Select a option and change input text above"
                     // onChange={onGenderChange}
-                    defaultValue={
-                      userData.data?.active === true ? "Active" : "InActive"
+                    defaultValuevalue={
+                      data?.data?.status? "Active" : "InActive"
                     }
                     allowClear>
-                    <Option value="active">Active</Option>
-                    <Option value="inactive">InActive</Option>
+                    <Option value={true}>Active</Option>
+                    <Option value={false}>InActive</Option>
                   </Select>
                 </Form.Item>
-                {/* <Form.Item
-                  name="share type"
-                  label="Share type"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}>
-                  <Select
-                    // placeholder="Select a option and change input text above"
-                    // onChange={onGenderChange}
-                    defaultValue="fixed"
-                    allowClear>
-                    <Option value="fixed">fixed</Option>
-                    <Option value="change">change</Option>
-                  </Select>
-                </Form.Item> */}
               </Col>
               <Col span={12}></Col>
             </Row>
@@ -204,7 +286,7 @@ const UpdateSuper = ({updateName}) => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  name="SupperCommType"
+                  name="comm_type"
                   label="SUPER comm type"
                   rules={[
                     {
@@ -214,11 +296,13 @@ const UpdateSuper = ({updateName}) => {
                   ]}>
                   <Select
                     // placeholder="Select a option and change input text above"
-                    // onChange={onGenderChange}
-                    defaultValue="Bet by bet"
+                    // onChange={onCommissionType}
+                    defaultValue={
+                      data?.data?.matchComm === 0 ||data?.data?.sessionComm === 0 ? "No Comm" : "Bet by bet"
+                    }
                     allowClear>
-                    <Option value="NoComm">No Comm</Option>
-                    <Option value="Betbybet">Bet by bet</Option>
+                    <Option value="nocomm">No Comm</Option>
+                    <Option value="bbb">Bet by bet</Option>
                   </Select>
                 </Form.Item>
               </Col>
@@ -255,7 +339,7 @@ const UpdateSuper = ({updateName}) => {
               <Col span={12}>
                 <Form.Item
                   label="SUPER sess comm(%)"
-                  name="SupperSessComm"
+                  name="sess_comm"
                   required
                   rules={[
                     {
@@ -296,7 +380,7 @@ const UpdateSuper = ({updateName}) => {
               <Col span={12}>
                 <Form.Item
                   label="MASTER casino comm(%)"
-                  name="casinoType"
+                  name="casinoComm"
                   required={false}>
                   <Input disabled />
                 </Form.Item>
@@ -328,6 +412,7 @@ const UpdateSuper = ({updateName}) => {
             </Row>
           </div>
         </Form>
+        </div>
       </div>
     </>
   );

@@ -1,18 +1,9 @@
 import "./AccountStatement.scss";
 import { Card, Tabs,  DatePicker} from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AllStatement from "./AllStatement/AllStatement";
 import moment from "moment";
 import {React, useMemo, useState } from "react";
-// import AllData from "./All/AllData";
-// import ProfitLoss from "./P&L/ProfitLoss";
-// import PDC from "./pdc/PDC";
-// import Comm from "./Comm/Comm";
-// import Account from "./Account/Account";
-
-// const handleChange = (value) => {
-//   console.log(`selected ${value}`);
-// };
 
 const { RangePicker } = DatePicker;
 
@@ -22,8 +13,9 @@ const AccountStatement = () => {
 
   const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
   const time = moment().format("YYYY-MM-DD");
-  const [dateData, setDateData] = useState([timeBefore,time])
-  // const [gameType, setGameType] = useState("")
+  const [dateData, setDateData] = useState([timeBefore,time]);
+
+  const {id} = useParams()
 
   const nav = useNavigate();
   const handleBackClick = () => {
