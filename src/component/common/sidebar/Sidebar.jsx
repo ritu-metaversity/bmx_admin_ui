@@ -29,7 +29,7 @@ const Sidebar = (props) => {
   //   console.log("helooo")
   // }
 
-  const userTypeData = JSON.parse(localStorage.getItem("userId"));
+  const userType = localStorage.getItem("userType");
 
   return (
     <>
@@ -59,7 +59,7 @@ const Sidebar = (props) => {
         collapsible
         collapsed={collapsed}
         className={`side_bar coll desk_side`}
-        style={{ background: "#74766f" }}>
+        style={{ background: "#74766f",height: "100vh" ,minHeight: "100vh" ,maxHeight: "100vh", overflowY: "auto" }}>
         <Menu
           theme=""
           mode="inline"
@@ -77,12 +77,12 @@ const Sidebar = (props) => {
               label: "Master Details",
               children: [
                 {
-                  className: `${userTypeData?.userType != "5" ? "d-none" : ""}`,
+                  className: `${userType != "5" ? "d-none" : ""}`,
                   label: <Link to="/client/list-super">Super Master</Link>,
                 },
                 {
                   className: `${
-                    userTypeData?.userType === "0"
+                    userType === "0"
                       ? ""
                       : "d-none"
                   }`,
@@ -90,7 +90,7 @@ const Sidebar = (props) => {
                 },
                 {
                   className:`${
-                    userTypeData?.userType === "1"
+                    userType === "1"
                       ? ""
                       : "d-none"
                   }`,
@@ -250,12 +250,12 @@ const Sidebar = (props) => {
                 label: "Master Details",
                 children: [
                   {
-                    className: `${userTypeData?.userType != "5" ? "d-none" : ""}`,
+                    className: `${userType != "5" ? "d-none" : ""}`,
                     label: <Link to="/client/list-super" onClick={()=>setOpen(false)}>Super Master</Link>,
                   },
                   {
                     className: `${
-                      userTypeData?.userType === "0"
+                      userType === "0"
                         ? ""
                         : "d-none"
                     }`,
@@ -263,7 +263,7 @@ const Sidebar = (props) => {
                   },
                   {
                     className:`${
-                      userTypeData?.userType === "1"
+                      userType === "1"
                         ? ""
                         : "d-none"
                     }`,

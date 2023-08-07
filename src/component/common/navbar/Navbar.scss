@@ -270,3 +270,14 @@ svg {
   }
  
 }
+
+
+ul.nav_droupdown{
+  margin: -25px 2px !important;
+}
+
+@media screen and (max-width: 800px) {
+  p.user_deatils{
+    margin-right: 6px !important;
+}
+}

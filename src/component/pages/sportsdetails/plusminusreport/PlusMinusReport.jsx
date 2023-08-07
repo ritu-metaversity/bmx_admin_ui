@@ -33,7 +33,7 @@ const PlusMinusReport = () => {
     console.log(`checked = ${e.target.checked}`);
   };
 
-  const {data} = useComplteFancyOddsClientsQuery({
+  const {data, isFetching, isLoading} = useComplteFancyOddsClientsQuery({
     "eventId": id
   }, {refetchOnMountOrArgChange: true}) 
 
@@ -44,6 +44,10 @@ const PlusMinusReport = () => {
   const nav = useNavigate()
   const handleBackClick = ()=>{
     nav("/Events/sports-details")
+  }
+
+  const handleShowBtn = ()=>{
+    nav(`/Events/${id}/plus-minus-report`)
   }
 
   return (
@@ -58,7 +62,7 @@ const PlusMinusReport = () => {
              {sportName?.data}
             </div>
             <div className="show_btn">
-              <button>Show</button>
+              <button onClick={handleShowBtn}>Show</button>
               <button onClick={handleBackClick}>Back</button>
             </div>
           </div>
@@ -92,6 +96,7 @@ const PlusMinusReport = () => {
                     }}
                     bordered
                     columns={column}
+                    loading={isFetching||isLoading}
                     pagination={false}
                     dataSource={data?.data?.markets.filter(i=>!["match odds","bookmaker"].includes(i.marketname?.toLowerCase()))}
                   />
@@ -106,6 +111,7 @@ const PlusMinusReport = () => {
                       type: "checkbox",
                     }}
                     bordered
+                    loading={isFetching||isLoading}
                     columns={columns}
                     pagination={false}
                     dataSource={data?.data?.users}

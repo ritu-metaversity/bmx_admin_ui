@@ -1,39 +1,41 @@
-import { Card, Col, Divider, Pagination, Row } from "antd";
+import { Card, Col, Divider, Pagination, Row, Table } from "antd";
 import "./SuperAgentLedger.scss";
+import { useDownlineLedgerQuery } from "../../../../store/service/ledgerServices";
+import React, { useState } from "react";
 
-const data = [
+
+const columns = [
   {
-    key: 1,
-    user_detail: "sup1 (SA152471)",
-    Balance: "18.99",
+    title: "User Detail",
+    dataIndex: "userId",
+    key: "userId",
   },
   {
-    key: 2,
-    user_detail: "sup2 (SA154400)",
-    Balance: "37.6",
-  },
-  {
-    key: 3,
-    user_detail: "super2 (SA154549)",
-    Balance: "106.8",
-  },
-  {
-    key: 4,
-    user_detail: "AnkitTest (SA155948)",
-    Balance: "12.6",
-  },
+    title: "Balance",
+    dataIndex: "balance",
+    key: "balance",
+  }
 ];
 
-const SuperAgentLedger = () => {
+const SuperAgentLedger = ({userTyep, Listname}) => {
+
+  const [leneData, setLenaData] = useState({})
+
   const handleBackbtn = () => {
     console.log("heloo");
   };
+
+  const {data: ledger, isFetching, isLoading} = useDownlineLedgerQuery({
+    userType:userTyep
+  })
+
+  console.log(leneData, "edweded")
 
   return (
     <>
       <Card
         className="sport_detail ledger_data"
-        title="Super Agent Ledger"
+        title={`${Listname} Ledger`}
         extra={<button onClick={handleBackbtn}>Back</button>}>
         <Row className="main_super_super_ledger">
           <Col span={8}>
@@ -43,20 +45,14 @@ const SuperAgentLedger = () => {
             </div>
             <div>
               <div className="table_section">
-                <table className="">
-                  <tr>
-                    <th>User Detail</th>
-                    <th>Balance</th>
-                  </tr>
-                  {data?.map((res) => {
-                    return (
-                      <tr key={res?.key}>
-                        <td>{res?.user_detail}</td>
-                        <td>{res?.Balance}</td>
-                      </tr>
-                    );
-                  })}
-                </table>
+              <Table
+              className="live_table limit_update"
+              bordered
+              pagination={false}
+              columns={columns}
+              loading={isLoading||isFetching}
+              dataSource={ledger?.data?.lena}>
+            </Table>
               </div>
             </div>
           </Col>
@@ -67,20 +63,14 @@ const SuperAgentLedger = () => {
             </div>
             <div>
               <div className="table_section">
-                <table className="">
-                  <tr>
-                    <th>User Detail</th>
-                    <th>Balance</th>
-                  </tr>
-                  {data?.map((res) => {
-                    return (
-                      <tr key={res?.key}>
-                        <td>{res?.user_detail}</td>
-                        <td>{res?.Balance}</td>
-                      </tr>
-                    );
-                  })}
-                </table>
+              <Table
+              className="live_table limit_update"
+              bordered
+              pagination={false}
+              columns={columns}
+              loading={isLoading||isFetching}
+              dataSource={ledger?.data?.dena}>
+            </Table>
               </div>
             </div>
           </Col>
@@ -91,32 +81,18 @@ const SuperAgentLedger = () => {
             </div>
             <div>
               <div className="table_section">
-                <table className="">
-                  <tr>
-                    <th>User Detail</th>
-                    <th>Balance</th>
-                  </tr>
-                  {data?.map((res) => {
-                    return (
-                      <tr key={res?.key}>
-                        <td>{res?.user_detail}</td>
-                        <td>{res?.Balance}</td>
-                      </tr>
-                    );
-                  })}
-                </table>
+              <Table
+              className="live_table limit_update"
+              bordered
+              pagination={false}
+              columns={columns}
+              loading={isLoading||isFetching}
+              dataSource={ledger?.data?.clear}>
+            </Table>
               </div>
             </div>
           </Col>
         </Row>
-
-        <Divider />
-
-        <Pagination
-          className="pagination_main ledger_pagination"
-          defaultCurrent={1}
-          total={50}
-        />
       </Card>
     </>
   );

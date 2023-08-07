@@ -1,13 +1,11 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
 import "./ListSuper.Scss";
-import { useSuperuserListQuery } from "../../../../store/service/superMasteruseListServices";
 import UserListTable from "../../../common/userListTable";
-import React, { useEffect } from "react";
 
 const ListSuper = ({userTyep, Listname}) => {
  
-  const {id} = useParams()
 
   const nav = useNavigate();
   const handleBackClick = () => {
@@ -27,12 +25,7 @@ const ListSuper = ({userTyep, Listname}) => {
     }
   };
 
-  const { data } = useSuperuserListQuery({
-    userType: userTyep,
-    parentUserId: id || null,
-    noOfRecords:"400",
-    index:"0"
-},{refetchOnMountOrArgChange:true});
+
   return (
     <>
       <div className="main_live_section list_supers">
@@ -69,7 +62,7 @@ const ListSuper = ({userTyep, Listname}) => {
             </div>
           </div>
           <div className="table_section sport_detail m-0">
-             <UserListTable data ={data} Listname={Listname} userType={userTyep}/>
+             <UserListTable Listname={Listname} userType={userTyep}/>
           </div>
         </div>
       </div>

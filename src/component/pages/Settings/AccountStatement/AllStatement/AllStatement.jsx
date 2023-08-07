@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import { useAccountstatementQuery } from "../../../../../store/service/supermasteAccountStatementServices";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setData } from "../../../../../store/global/slice";
 
 const AllStatement = ({dateData, gameType}) => {
 
-  const [newData, setNewData] = useState({})
-
   const {id} = useParams()
 
-  const {data} = useAccountstatementQuery({
+  const {data, isFetching, isLoading} = useAccountstatementQuery({
     index:"0",
     noOfRecords:"200",
     fromDate:dateData[0],
@@ -17,6 +17,13 @@ const AllStatement = ({dateData, gameType}) => {
     userid:id || "",
     type:gameType
   },{refetchOnMountOrArgChange:true})
+
+
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+    dispatch(setData(data?.data?.dataList?.length));
+  }, [data?.data])
 
   const columns = [
     {
@@ -89,6 +96,7 @@ const AllStatement = ({dateData, gameType}) => {
             <Table
               className="live_table agent_master"
               bordered
+              loading={isFetching||isLoading}
               columns={columns}
               dataSource={data?.data?.dataList?.map((res)=>({...res, commPlus:0, commMinus:0, prevBal:0, balance:0})) || []}></Table>
           </div>

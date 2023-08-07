@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
-export const superUserListApi = createApi({
-  reducerPath: "superUserListApi",
+export const ledgerApi = createApi({
+  reducerPath: "ledgerApi",
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_BASE_URL_SID,
     prepareHeaders: (headers) => {
@@ -11,14 +11,21 @@ export const superUserListApi = createApi({
     },
   }),
   endpoints: (build) => ({
-    SuperuserList: build.query({
+    myLedger: build.query({
       query: (body) => ({
-        url: "/bmx/user/get-user-list",
+        url: "/bmx/report/get-my-ledger",
         method: "POST",
         body
       }),
-    })
+    }),
+    downlineLedger: build.query({
+      query: (body) => ({
+        url: "/bmx/report/get-ledger-by-user-type",
+        method: "POST",
+        body
+      }),
+    }),
   }),
 });
 
-export const {useLazySuperuserListQuery} = superUserListApi;
+export const {useMyLedgerQuery,useDownlineLedgerQuery} = ledgerApi;

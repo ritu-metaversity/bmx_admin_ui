@@ -23,20 +23,12 @@ import AccountOperations from "../pages/supermaster/accountOperations/AccountOpe
 import LoginReport from "../pages/LoginReport/LoginReport";
 import CreateSuperAgent from "../pages/CreateSuperAgent/CreateSuperAgent";
 import SuperAgentLimitDetails from "../pages/supermaster/SuperAgentLimitDetails/SuperAgentLimitDetails";
-// import AgentDetailMainPage from "../pages/AgentDetail/AgentDetailMainPage/AgentDetailMainPage";
 import AgentLimitDetails from "../pages/AgentDetail/AgentLimitDetails/AgentLimitDetails";
-// import SelectUpline from "../pages/AgentDetail/SelectUpline/SelectUpline";
-// import ClientMaster from "../pages/ClientMaster/ClientMaster";
-// import ClientUpline from "../pages/ClientMaster/CreateUpline/ClientUpline";
 import ClientLimitDetails from "../pages/ClientMaster/ClientLimitDetails/ClientLimitDetails";
 import Signin from "../common/signin/Signin";
-// import UpdateAgent from "../pages/AgentDetail/UpdateAgent/UpdateAgent";
-// import UpdateClient from "../pages/ClientMaster/UpdateClient/UpdateClient";
 import UpdateSuper from "../pages/supermaster/updateSuper/UpdateSuper";
 import MyLedger from "../pages/ladgerdetail/MyLedger/MyLedger";
 import SuperAgentLedger from "../pages/ladgerdetail/SuperAgentLedger/SuperAgentLedger";
-import AgentLedger from "../pages/ladgerdetail/AgentLedger/AgentLedger";
-import ClientLedger from "../pages/ladgerdetail/ClientLedger/ClientLedger";
 import MatchLedger from "../pages/ladgerdetail/MatchLedger/MatchLedger";
 import CashTransanction from "../pages/CashTransanction/CashTransanction";
 import SuperAgentTransactions from "../pages/CashTransanction/SuperAgentTransactions/SuperAgentTransactions";
@@ -62,16 +54,12 @@ import AnderBaharShowBets from "../pages/AndarBaharDetail/AnderBaharShowBets/And
 import CasinoDetail from "../pages/CasinoDetail/CasinoDetail";
 import RouletteBook from "../pages/CasinoDetail/CasinoBook/RouletteBook/RouletteBook";
 import EventProfitLoss from "../pages/sportsdetails/livereport/EventProfitLoss/EventProfitLoss";
+import PlusMinusDetails from "../pages/sportsdetails/plusminusreport/plusMinusDetails/plusMinusDetails";
+import CompeleteFancy from "../pages/sportsdetails/livereport/compeleteFancy/CompeleteFancy";
 
 const LayOut = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [open, setOpen] = useState(false);
-
-  // const {
-  //   token: { colorBgContainer },
-  // } = theme.useToken();
-
-
   const collll = (val) => {
     setCollapsed(val);
   };
@@ -114,9 +102,10 @@ const LayOut = () => {
               <Route path="/Events/sports-details" element={<SportsDetails />} />
               <Route path="/livereport" element={<LiveReport />} />
               <Route path="/plus-minus-report/:id" element={<PlusMinusReport />} />
+              <Route path="/Events/:id/plus-minus-report" element={<PlusMinusDetails />} />
               <Route path="/match-slips" element={<MatchSlips />} />
               <Route path="/fancy-slips" element={<FancySlips />} />
-              <Route path="/completed-fancy-slips" element={<CompletedFancySlips />} />
+              <Route path="/completed-fancy-slips/:id" element={<CompletedFancySlips/>} />
               <Route path="/rejectedBetsByEvent/:id" element={<RejectedBetsByEvent />} />
 
               <Route path="/client/list-super" element={<ListSuper userTyep={0} Listname={"Super Agent"}/>} />
@@ -146,9 +135,11 @@ const LayOut = () => {
              
               <Route path="/client/limitplusminus-client" element={<ClientLimitDetails />}/>
               <Route path="/client/my-ledger" element={<MyLedger />}/>
-              <Route path="/client/ledger-super" element={<SuperAgentLedger/>}/>
-              <Route path="/client/ledger-agent" element={<AgentLedger/>}/>
-              <Route path="/client/ledger-client" element={<ClientLedger/>}/>
+
+              <Route path="/client/ledger-super" element={<SuperAgentLedger userTyep={0} Listname={"Super Agent"}/>}/>
+              <Route path="/client/ledger-agent" element={<SuperAgentLedger userTyep={1} Listname={"Agent"}/>}/>
+              <Route path="/client/ledger-client" element={<SuperAgentLedger userTyep={3} Listname={"Client"}/>}/>
+
               <Route path="/Events/matchledger" element={<MatchLedger/>}/>
               <Route path="/client/cash-transanction" element={<CashTransanction/>}/>
               <Route path="/client/txn-super" element={<SuperAgentTransactions/>}/>

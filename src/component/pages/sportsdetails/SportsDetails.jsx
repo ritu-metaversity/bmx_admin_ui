@@ -1,5 +1,5 @@
 import "./SportsDetails.scss";
-import { Card, DatePicker, Divider, Modal, Pagination } from "antd";
+import { Card, DatePicker, Divider, Modal, Pagination, Spin } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { CaretDownOutlined } from "@ant-design/icons";
@@ -83,7 +83,7 @@ const SportsDetails = () => {
     },
     {
       label: (
-        <Link className="title_section" to="/completed-fancy-slips">
+        <Link className="title_section" to={`/completed-fancy-slips/${matchId}`}>
           Completed Fancies
         </Link>
       ),
@@ -106,7 +106,7 @@ const SportsDetails = () => {
   const onChange = (data, dateString) => {
     setDateData(dateString);
   };
-  const { data: sportDetail } = useSportDetailQuery(
+  const { data: sportDetail, isFetching, isLoading } = useSportDetailQuery(
     {
       startDate: dateData[0],
       endDate: dateData[1],
@@ -136,7 +136,7 @@ const SportsDetails = () => {
         </div>
         <div className="table_section">
           {/* <Table columns={columns} dataSource={data} /> */}
-          <table className="">
+          <table className="ant-spin-nested-loading">
             <tr>
               <th></th>
               <th>Code</th>
@@ -148,6 +148,14 @@ const SportsDetails = () => {
               <th>Won by</th>
               <th className="text-right">Plus Minu</th>
             </tr>
+            {isLoading || isFetching ? (
+                <div className="spin_icon comp_spin">
+                  <Spin size="large" />
+                </div>
+              ) : (
+                ""
+              )}
+
             {sportDetail?.data?.data?.map((res) => {
               return (
                 <tr key={res?.key}>

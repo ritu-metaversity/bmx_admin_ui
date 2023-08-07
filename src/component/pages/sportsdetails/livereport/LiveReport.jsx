@@ -7,13 +7,11 @@ import { useEventDetailQuery } from "../../../../store/service/eventDetailServic
 import ScoreCard from "./ScoreCard/ScoreCard";
 import React, { useEffect, useState } from "react";
 import FancyData from "./FancyData/FancyData";
-import { useCompleteFancyQuery } from "../../../../store/service/compeleteFancyServices";
 import { useLazyTtlBookQuery } from "../../../../store/service/TtlBookServices";
 import { useOddsPnlMutation } from "../../../../store/service/OddsPnlServices";
 
 const LiveReport = () => {
   const [oddsData, setOddsData] = useState([]);
-  const [completeFancy, setCompleteFancy] = useState([]);
   const [ShowMyBook, setShowMyBook] = useState(0);
   const [TtlBookData, setTtlBookData] = useState([]);
   const [marketId, setMarketId] = useState("");
@@ -27,17 +25,12 @@ const LiveReport = () => {
     // }
   );
 
-  const { data: completeFancyData } = useCompleteFancyQuery({
-    matchid: Number(id),
-  });
-
   useEffect(() => {
     setOddsData(data?.Odds[0]);
     data?.Odds?.map((res) => {
       setMarketId(res?.marketId);
     });
-    setCompleteFancy(completeFancyData?.data);
-  }, [data, completeFancyData]);
+  }, [data]);
 
   const [trigger, { data: PnlOdds }] = useOddsPnlMutation();
 
@@ -52,7 +45,6 @@ const LiveReport = () => {
     setTtlBookData(results?.data);
   }, [results?.data, marketId]);
 
-
   const handleMyBook = (val) => {
     setShowMyBook(val);
     const oddsPnl = {
@@ -60,8 +52,6 @@ const LiveReport = () => {
     };
     trigger(oddsPnl);
   };
-
-
 
   const handleTtlBook = (val, mrktid) => {
     setShowMyBook(val);
@@ -72,7 +62,6 @@ const LiveReport = () => {
     });
     setTtlBookData(results?.data);
   };
-
 
   return (
     <>
@@ -90,7 +79,9 @@ const LiveReport = () => {
                 <div className="match_section">
                   <Row>
                     <Col span={19} className="back-lay-bg">
-                      <button onClick={() => handleTtlBook(1, marketId)}>Ttl Book</button>
+                      <button onClick={() => handleTtlBook(1, marketId)}>
+                        Ttl Book
+                      </button>
                       <button onClick={() => handleMyBook(2)}>My Book</button>
                     </Col>
                     <Col span={5}>
@@ -115,17 +106,19 @@ const LiveReport = () => {
                             if (res?.marketId?.includes("BM")) return <></>;
                             return (
                               <div className="sub_title" key={id}>
-                                {ShowMyBook === 2 && (index === 0
-                                  ? res?.pnl1
-                                  : index === 1
-                                  ? res?.pnl2
-                                  : index === 2
-                                  ? "pnl3"
-                                  : "")}
+                                {ShowMyBook === 2 &&
+                                  (index === 0
+                                    ? res?.pnl1
+                                    : index === 1
+                                    ? res?.pnl2
+                                    : index === 2
+                                    ? "pnl3"
+                                    : "")}
                               </div>
                             );
                           })}
-                          {(TtlBookData?.data?.length !== 0 && TtlBookData?.data != undefined) ? (
+                          {TtlBookData?.data?.length !== 0 &&
+                          TtlBookData?.data != undefined ? (
                             <div className="sub_title">
                               {ShowMyBook !== 2 &&
                                 (id === 0
@@ -197,7 +190,7 @@ const LiveReport = () => {
                   <FancyData key={key} data={data[key]} keyData={key} />
                 )
             )}
-          <CompeleteFancy id={id} completeFancy={completeFancy} />
+          <CompeleteFancy />
           <MoreEvent />
         </div>
       )}

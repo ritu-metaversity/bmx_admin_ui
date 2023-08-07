@@ -37,11 +37,12 @@
    
 }
 .pagination_main{
+    margin-bottom: 7px;
+    margin-right: 11px;
     span.anticon.anticon-left{
         svg {
             color: #74766fad !important;
             font-size: 12px !important;
-            margin-right: -25px;
         }
     }
     span.anticon.anticon-right{
@@ -50,4 +51,22 @@
             font-size: 12px !important;
         }
     }
+}
+
+
+.ant-pagination-item-active {
+    font-weight: 500;
+    background-color: #ffffff !important;
+    border-color: #74766f !important;
+}
+.ant-pagination-item-active {a {
+    color: #74766f !important;
+}}
+
+li.ant-pagination-item {
+    height: 25px !important;
+    width: 25px !important;
+    min-width: 25px !important;
+    line-height: unset !important;
+    border-radius: 2px !important;
 }

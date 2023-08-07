@@ -1,53 +1,57 @@
-import { Card, Divider, Pagination } from "antd";
+import { Card, Table } from "antd";
 import "./MyLedger.scss";
+import { useMyLedgerQuery } from "../../../../store/service/ledgerServices";
 
-const data = [
+const columns = [
   {
-    key: 1,
-    date: "26-06-2023",
-    Collection_Name: "",
-    Debit: "5.82",
-    Credit: "0.00",
-    Balance: "27.09",
-    Payment_Type: "Zimbabwe v USA",
-    Remark: "Master minus",
+    title: "Date",
+    dataIndex: "date",
+    key: "code",
   },
   {
-    key: 2,
-    date: "26-06-2023",
-    Collection_Name: "",
-    Debit: "5.82",
-    Credit: "0.00",
-    Balance: "27.09",
-    Payment_Type: "Zimbabwe v USA",
-    Remark: "Master minus",
+    title: "Collection Name",
+    dataIndex: "collectionName",
+    key: "collectionName",
   },
   {
-    key: 3,
-    date: "26-06-2023",
-    Collection_Name: "",
-    Debit: "5.82",
-    Credit: "0.00",
-    Balance: "27.09",
-    Payment_Type: "Zimbabwe v USA",
-    Remark: "Master minus",
+    title: "Debit",
+    dataIndex: "debit",
+    key: "debit",
+    align: "right",
   },
   {
-    key: 4,
-    date: "26-06-2023",
-    Collection_Name: "",
-    Debit: "5.82",
-    Credit: "0.00",
-    Balance: "27.09",
-    Payment_Type: "Zimbabwe v USA",
-    Remark: "Master minus",
+    title: "Credit",
+    dataIndex: "credit",
+    key: "credit",
+    align: "right",
+  },
+
+  {
+    title: "Balance",
+    dataIndex: "balance",
+    key: "balance",
+    align: "right",
+  },
+  {
+    title: "Payment Type",
+    dataIndex: "paymentType",
+    key: "paymentType",
+  },
+  {
+    title: "Remark",
+    dataIndex: "remarks",
+    key: "remarks",
   },
 ];
 
 const MyLedger = () => {
   const handleBackbtn = () => {
-    console.log("heloo");
+    console.log("/");
   };
+
+  const { data, isLoading, isFetching } = useMyLedgerQuery();
+
+  console.log(data?.data, "dcdsfsdf")
 
   return (
     <>
@@ -57,44 +61,29 @@ const MyLedger = () => {
         extra={<button onClick={handleBackbtn}>Back</button>}>
         <div className="my_ledger">
           <div>
-            <h3 style={{padding: "5px",color: "rgb(51, 181, 28)"}}>Lena : 47.72</h3>
+            <h3 style={{ padding: "5px", color: "rgb(51, 181, 28)" }}>
+              Lena : 47.72
+            </h3>
           </div>
           <div>
-            <h3 style={{padding: "5px",color: "rgb(214, 75, 75)"}}>Dena : -74.81</h3>
+            <h3 style={{ padding: "5px", color: "rgb(214, 75, 75)" }}>
+              Dena : -74.81
+            </h3>
           </div>
           <div>
-            <h3 style={{padding: "5px",color: "rgb(214, 75, 75)"}}>Balance: -27.09 ( Dena )</h3>
+            <h3 style={{ padding: "5px", color: "rgb(214, 75, 75)" }}>
+              Balance: -27.09 ( Dena )
+            </h3>
           </div>
         </div>
         <div className="table_section">
-          <table className="">
-            <tr>
-              <th>Date</th>
-              <th>Collection Name</th>
-              <th className="text-right">Debit</th>
-              <th className="text-right">Credit</th>
-              <th className="text-right">Balance</th>
-              <th>Payment Type</th>
-              <th>Remark</th>
-            </tr>
-            {data?.map((res) => {
-              return (
-                <tr key={res?.key}>
-                  <td>{res?.date}</td>
-                  <td>{res?.Collection_Name}</td>
-                  <td className="text-right">{res?.Debit}</td>
-                  <td className="text-right">{res?.Credit}</td>
-                  <td className="text-right">{res?.Balance}</td>
-                  <td>{res?.Payment_Type}</td>
-                  <td>{res?.Remark}</td>
-                </tr>
-              );
-            })}
-          </table>
-        </div>
-        <Divider />
-
-        <Pagination className="pagination_main ledger_pagination" defaultCurrent={1} total={50} />
+          <Table
+            className="live_table limit_update"
+            bordered
+            columns={columns}
+            loading={isFetching||isLoading}
+            dataSource={data?.data}/>
+        </div> 
       </Card>
     </>
   );

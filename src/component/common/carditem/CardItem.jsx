@@ -3,6 +3,7 @@ import { Card } from "antd";
 import "./CardItem.scss"
 import { Link } from "react-router-dom";
 
+
 const gridStyle = {
   width: "23%",
   background: "#74766f",
@@ -13,14 +14,12 @@ const gridStyle = {
 const CardItem = ({ data }) => {
 
 
- 
-
   return (
     <>
     <Card>
       {data.map((res, id) => {
         return (
-          <Card.Grid key={id} hoverable={false} style={gridStyle}>
+          <Card.Grid key={id} hoverable={false} className="" style={gridStyle}>
               <Link to={res?.path}>
             <div className="main_card_section">
               <div className="icon_card_section">{res?.image}</div>

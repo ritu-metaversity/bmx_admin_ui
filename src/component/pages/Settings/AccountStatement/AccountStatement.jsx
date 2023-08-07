@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import AllStatement from "./AllStatement/AllStatement";
 import moment from "moment";
 import {React, useMemo, useState } from "react";
+import { useSelector } from "react-redux";
+import { globalSelector } from "../../../../store/global/slice";
 
 const { RangePicker } = DatePicker;
 
@@ -55,6 +57,10 @@ const AccountStatement = () => {
     },
   ], [dateData])
 
+  const data = useSelector(globalSelector)
+
+  console.log(data?.data, "sdasdsd")
+
   return (
     <>
       <div className="match_slip">
@@ -65,7 +71,7 @@ const AccountStatement = () => {
               width: "100%",
             }}
             className="sport_detail "
-            title="Transactions ( 54 )"
+            title={`Transactions (${data?.data === undefined?0:data?.data})`}
             extra={<button onClick={handleBackClick}>Back</button>}>
             <div className="main_acc_section">
               <div className="datepicker">

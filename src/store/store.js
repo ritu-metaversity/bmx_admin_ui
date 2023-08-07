@@ -17,6 +17,7 @@ import { sportDetailsApi } from "./service/SportDetailServices";
 import { complteFancyOddsClientsApi } from "./service/CompleteFancyOddsServices";
 import { oddsPnlApi } from "./service/OddsPnlServices";
 import { createUserApi } from "./service/createUserServices";
+import { ledgerApi } from "./service/ledgerServices";
 
 export const store = configureStore({
   reducer: {
@@ -39,6 +40,7 @@ export const store = configureStore({
     [complteFancyOddsClientsApi.reducerPath]:complteFancyOddsClientsApi.reducer,
     [oddsPnlApi.reducerPath]:oddsPnlApi.reducer,
     [createUserApi.reducerPath]:createUserApi.reducer,
+    [ledgerApi.reducerPath]:ledgerApi.reducer,
   },
   middleware: (defaultMiddleware) =>
     defaultMiddleware()
@@ -59,4 +61,5 @@ export const store = configureStore({
       .concat(complteFancyOddsClientsApi.middleware)
       .concat(oddsPnlApi.middleware)
       .concat(createUserApi.middleware)
+      .concat(ledgerApi.middleware)
 });

@@ -47,15 +47,6 @@ const Navbar = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
-  useEffect(()=>{
-    const userData = JSON.parse(localStorage.getItem("userId"));
-    setUserInfo(userData)
-
-  }, [localStorage.getItem("userId")])
-
-
-  console.log(userInfo?.userId, "dssfdss")
   return (
     <>
       <div className="nav1"></div>
@@ -71,16 +62,17 @@ const Navbar = () => {
         </div>
         <Dropdown
           menu={{
+            className:"nav_droupdown",
             items,
             onClick: handleModal,
           }}
           trigger={["click"]}>
-          <a onClick={(e) => e.preventDefault()}>
+          <p className="user_deatils" onClick={(e) => e.preventDefault()}>
             <Space className="">
-            {userInfo?.userId}
+            {localStorage.getItem("userId")}
               <DownOutlined />
             </Space>
-          </a>
+          </p>
         </Dropdown>
       </div>
       }
