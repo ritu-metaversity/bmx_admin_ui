@@ -1,7 +1,7 @@
 import { Card, Col, Divider, Pagination, Row, Table } from "antd";
 import "./SuperAgentLedger.scss";
 import { useDownlineLedgerQuery } from "../../../../store/service/ledgerServices";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 
 const columns = [
@@ -20,6 +20,9 @@ const columns = [
 const SuperAgentLedger = ({userTyep, Listname}) => {
 
   const [leneData, setLenaData] = useState({})
+  const [leneBalance, setLenaBalance] = useState(0)
+  const [denaData, setDenaBalance] = useState(0)
+  const [clearData, setClearData] = useState(0)
 
   const handleBackbtn = () => {
     console.log("heloo");
@@ -27,7 +30,22 @@ const SuperAgentLedger = ({userTyep, Listname}) => {
 
   const {data: ledger, isFetching, isLoading} = useDownlineLedgerQuery({
     userType:userTyep
-  })
+  }, {refetchOnMountOrArgChange:true})
+
+
+  useEffect(()=>{
+    const lenaData = ledger?.data?.lena?.map((res)=>res?.balance).reduce((prev, curr) => Number(prev) + Number(curr), 0);
+    const denaData = ledger?.data?.dena?.map((res)=>res?.balance).reduce((prev, curr) => Number(prev) + Number(curr), 0);
+    const clearData = ledger?.data?.clear?.map((res)=>res?.balance).reduce((prev, curr) => Number(prev) + Number(curr), 0);
+    setLenaBalance(lenaData);
+    setDenaBalance(denaData);
+    setClearData(clearData)
+  }, [ledger?.data])
+
+
+  console.log(ledger?.data?.lena, "dadada")
+
+  
 
   console.log(leneData, "edweded")
 
@@ -41,7 +59,7 @@ const SuperAgentLedger = ({userTyep, Listname}) => {
           <Col span={8}>
             <div className="super_ledger item1">
               <div>Lena</div>
-              <div>175.99</div>
+              <div>{leneBalance}</div>
             </div>
             <div>
               <div className="table_section">
@@ -59,7 +77,7 @@ const SuperAgentLedger = ({userTyep, Listname}) => {
           <Col span={8}>
             <div className="super_ledger item2">
               <div>Dena</div>
-              <div>280.59</div>
+              <div>{denaData}</div>
             </div>
             <div>
               <div className="table_section">
@@ -77,7 +95,7 @@ const SuperAgentLedger = ({userTyep, Listname}) => {
           <Col span={8}>
             <div className="super_ledger item3">
               <div>Clear</div>
-              <div>0</div>
+              <div>{clearData}</div>
             </div>
             <div>
               <div className="table_section">

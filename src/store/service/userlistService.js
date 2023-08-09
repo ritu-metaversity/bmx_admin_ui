@@ -1,15 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import { createApi } from "@reduxjs/toolkit/dist/query/react";
+import { dynamicBaseQuery } from "./dynamicBaseQuery";
 
 export const userlistApi = createApi({
   reducerPath: "userlistApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BASE_URL,
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem("token");
-      headers.set("Authorization", `Bearer ${token}`);
-      return headers;
-    },
-  }),
+  baseQuery: dynamicBaseQuery,
   endpoints: (build) => ({
     userList: build.mutation({
       query: (body) => ({
@@ -28,4 +22,4 @@ export const userlistApi = createApi({
   }),
 });
 
-export const { useUserListQuery} = userlistApi;
+export const {useUserListQuery} = userlistApi;

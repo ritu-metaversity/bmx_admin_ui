@@ -28,6 +28,7 @@ const Signin = () => {
       userId: values?.username,
       password: values?.password,
       appUrl: "subadmin.localhost",
+      // appUrl: window.location.appUrl,
     };
     trigger(authData);
   };
@@ -35,6 +36,13 @@ const Signin = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
+  useEffect(()=>{
+    if(localStorage.getItem("token") !== null){
+      nav('/dashboard')
+    }
+  }, [])
+
   return (
     <>
       <div className="gx-app-login-wrap">

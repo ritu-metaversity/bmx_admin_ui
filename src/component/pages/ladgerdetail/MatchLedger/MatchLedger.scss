@@ -34,9 +34,9 @@
 @media screen and (max-width: 800px) {
     .match_ladger{
         .ant-picker.ant-picker-range.css-dev-only-do-not-override-12jzuas {
-            width: 100%;
+            width: 99% !important;
             margin-inline: 2px;
-            margin: 12px
+            // margin: 12px
         }
     
     }

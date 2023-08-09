@@ -1,15 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import { createApi } from "@reduxjs/toolkit/dist/query/react";
+import { dynamicBaseQuery } from "./dynamicBaseQuery";
 
 export const superUserListApi = createApi({
   reducerPath: "superUserListApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BASE_URL_SID,
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem("token");
-      headers.set("Authorization", `Bearer ${token}`);
-      return headers;
-    },
-  }),
+  baseQuery: dynamicBaseQuery,
   endpoints: (build) => ({
     SuperuserList: build.query({
       query: (body) => ({

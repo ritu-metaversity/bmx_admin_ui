@@ -1,17 +1,17 @@
 import { createApi } from "@reduxjs/toolkit/dist/query/react";
 import { dynamicBaseQuery } from "./dynamicBaseQuery";
 
-export const dashboardApi = createApi({
-  reducerPath: "dashboardApi",
+export const jwtApi = createApi({
+  reducerPath: "jwtApi",
   baseQuery: dynamicBaseQuery,
   endpoints: (build) => ({
-    dashboard: build.query({
+    jwtToken: build.query({
       query: () => ({
-        url: "/bmx/user/bmx-dashboard",
+        url: `/util/validate-jwt-token`,
         method: "POST",
       }),
     }),
   }),
 });
 
-export const {useDashboardQuery } = dashboardApi;
+export const {useJwtTokenQuery} = jwtApi;

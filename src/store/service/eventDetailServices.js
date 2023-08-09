@@ -1,15 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import { createApi } from "@reduxjs/toolkit/dist/query/react";
+import { dynamicBaseQuery } from "./dynamicBaseQuery";
 
 export const eventDerailApi = createApi({
   reducerPath: "eventDerailApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BASE_URL_DIA,
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem("token");
-      headers.set("Authorization", `Bearer ${token}`);
-      return headers;
-    },
-  }),
+  baseQuery: dynamicBaseQuery,
   endpoints: (build) => ({
     eventDetail: build.query({
       query: (id) => ({

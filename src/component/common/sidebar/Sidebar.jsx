@@ -114,23 +114,23 @@ const Sidebar = (props) => {
                 {
                   label: <Link to="/Events/sports-details">Sports Detail</Link>,
                 },
-                {
-                  label: (
-                    <Link to="/Casino/roulette-details">Roulette Detail</Link>
-                  ),
-                },
-                {
-                  label: (
-                    <Link to="/Casino/dus-ka-dum-details">DusKaDum Detail</Link>
-                  ),
-                },
-                {
-                  label: (
-                    <Link to="/Casino/andar-bahar-details">
-                      AndarBahar Detail
-                    </Link>
-                  ),
-                },
+                // {
+                //   label: (
+                //     <Link to="/Casino/roulette-details">Roulette Detail</Link>
+                //   ),
+                // },
+                // {
+                //   label: (
+                //     <Link to="/Casino/dus-ka-dum-details">DusKaDum Detail</Link>
+                //   ),
+                // },
+                // {
+                //   label: (
+                //     <Link to="/Casino/andar-bahar-details">
+                //       AndarBahar Detail
+                //     </Link>
+                //   ),
+                // },
                 {
                   label: <Link to="/Casino/casino-details">Casino Detail</Link>,
                 },
@@ -188,20 +188,20 @@ const Sidebar = (props) => {
                 {
                   label: <Link to="/client/login-report">Login Report</Link>,
                 },
-                {
-                  label: (
-                    <Link to="/client/mobile-app-report">
-                      Mobile App Report
-                    </Link>
-                  ),
-                },
-                {
-                  label: (
-                    <Link to="/client/secure-code-report">
-                      Secure Code Report
-                    </Link>
-                  ),
-                },
+                // {
+                //   label: (
+                //     <Link to="/client/mobile-app-report">
+                //       Mobile App Report
+                //     </Link>
+                //   ),
+                // },
+                // {
+                //   label: (
+                //     <Link to="/client/secure-code-report">
+                //       Secure Code Report
+                //     </Link>
+                //   ),
+                // },
               ],
             },
             {
@@ -293,33 +293,33 @@ const Sidebar = (props) => {
                       </Link>
                     ),
                   },
-                  {
-                    label: (
-                      <Link
-                        to="/Casino/roulette-details"
-                        onClick={() => setOpen(false)}>
-                        Roulette Detail
-                      </Link>
-                    ),
-                  },
-                  {
-                    label: (
-                      <Link
-                        to="/Casino/dus-ka-dum-details"
-                        onClick={() => setOpen(false)}>
-                        DusKaDum Detail
-                      </Link>
-                    ),
-                  },
-                  {
-                    label: (
-                      <Link
-                        to="/Casino/andar-bahar-details"
-                        onClick={() => setOpen(false)}>
-                        AndarBahar Detail
-                      </Link>
-                    ),
-                  },
+                  // {
+                  //   label: (
+                  //     <Link
+                  //       to="/Casino/roulette-details"
+                  //       onClick={() => setOpen(false)}>
+                  //       Roulette Detail
+                  //     </Link>
+                  //   ),
+                  // },
+                  // {
+                  //   label: (
+                  //     <Link
+                  //       to="/Casino/dus-ka-dum-details"
+                  //       onClick={() => setOpen(false)}>
+                  //       DusKaDum Detail
+                  //     </Link>
+                  //   ),
+                  // },
+                  // {
+                  //   label: (
+                  //     <Link
+                  //       to="/Casino/andar-bahar-details"
+                  //       onClick={() => setOpen(false)}>
+                  //       AndarBahar Detail
+                  //     </Link>
+                  //   ),
+                  // },
                   {
                     label: (
                       <Link to="/Casino/casino-details">Casino Detail</Link>
@@ -427,24 +427,24 @@ const Sidebar = (props) => {
                       </Link>
                     ),
                   },
-                  {
-                    label: (
-                      <Link
-                        to="/client/mobile-app-report"
-                        onClick={() => setOpen(false)}>
-                        Mobile App Report
-                      </Link>
-                    ),
-                  },
-                  {
-                    label: (
-                      <Link
-                        to="/client/secure-code-report"
-                        onClick={() => setOpen(false)}>
-                        Secure Code Report
-                      </Link>
-                    ),
-                  },
+                  // {
+                  //   label: (
+                  //     <Link
+                  //       to="/client/mobile-app-report"
+                  //       onClick={() => setOpen(false)}>
+                  //       Mobile App Report
+                  //     </Link>
+                  //   ),
+                  // },
+                  // {
+                  //   label: (
+                  //     <Link
+                  //       to="/client/secure-code-report"
+                  //       onClick={() => setOpen(false)}>
+                  //       Secure Code Report
+                  //     </Link>
+                  //   ),
+                  // },
                 ],
               },
               {

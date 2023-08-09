@@ -1,18 +1,18 @@
 import { createApi } from "@reduxjs/toolkit/dist/query/react";
 import { dynamicBaseQuery } from "./dynamicBaseQuery";
 
-export const profitLossApi = createApi({
-  reducerPath: "profitLossApi",
+export const transectionApi = createApi({
+  reducerPath: "transectionApi",
   baseQuery: dynamicBaseQuery,
   endpoints: (build) => ({
-    profitLoss: build.query({
+    filterbyClient: build.query({
       query: (body) => ({
-        url: `/bmx/profit-loss`,
+        url: `/bmx/filter-by-client-cash-transection`,
         method: "POST",
         body
       }),
-    })
+    }),
   }),
 });
 
-export const {useProfitLossQuery} = profitLossApi;
+export const {useFilterbyClientQuery} = transectionApi;

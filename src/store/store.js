@@ -18,6 +18,8 @@ import { complteFancyOddsClientsApi } from "./service/CompleteFancyOddsServices"
 import { oddsPnlApi } from "./service/OddsPnlServices";
 import { createUserApi } from "./service/createUserServices";
 import { ledgerApi } from "./service/ledgerServices";
+import { jwtApi } from "./service/jwtTokenServices";
+import { transectionApi } from "./service/transactionServices";
 
 export const store = configureStore({
   reducer: {
@@ -41,6 +43,8 @@ export const store = configureStore({
     [oddsPnlApi.reducerPath]:oddsPnlApi.reducer,
     [createUserApi.reducerPath]:createUserApi.reducer,
     [ledgerApi.reducerPath]:ledgerApi.reducer,
+    [jwtApi.reducerPath]:jwtApi.reducer,
+    [transectionApi.reducerPath]:transectionApi.reducer,
   },
   middleware: (defaultMiddleware) =>
     defaultMiddleware()
@@ -62,4 +66,6 @@ export const store = configureStore({
       .concat(oddsPnlApi.middleware)
       .concat(createUserApi.middleware)
       .concat(ledgerApi.middleware)
+      .concat(jwtApi.middleware)
+      .concat(transectionApi.middleware)
 });

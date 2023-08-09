@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Divider, Dropdown, Empty, Form,  Input, Modal, Pagination, Space, Spin} from "antd";
+import {Divider, Dropdown, Empty, Form,  Input, Modal, Pagination, Space, Spin, notification} from "antd";
 import menu from "../pages/supermaster/listsuper/SearchModals/SearchModals";
 import { Link, useParams } from "react-router-dom";
 import {
@@ -26,7 +26,9 @@ const UserListTable = ({ userType, Listname }) => {
   const [data, setData] = useState();
   const [paginationTotal, setPaginationTotal] = useState(10);
   const [totalPage, setTotalPage] = useState();
-  const [indexData, setIndexData] = useState(1);
+  const [indexData, setIndexData] = useState(0);
+  const [api, contextHolder] = notification.useNotification();
+
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -60,6 +62,8 @@ const UserListTable = ({ userType, Listname }) => {
 
   const { id } = useParams();
 
+  // console.log(id, "dfsdfgsdgfd")
+
   const [getData, results, { isLoading }] = useLazySuperuserListQuery();
 
   useEffect(() => {
@@ -69,7 +73,7 @@ const UserListTable = ({ userType, Listname }) => {
       noOfRecords: paginationTotal,
       index: indexData,
     });
-  }, []);
+  }, [id, userType]);
 
   const [activeData, { data: Activestatus }] = useUpDateStatusMutation();
 
@@ -167,8 +171,32 @@ const UserListTable = ({ userType, Listname }) => {
     },
   ];
 
+  const openNotification = (mess) => {
+    api.success({
+      message: mess,
+      closeIcon: false,
+      placement: "top",
+    });
+  };
+
+  // const openNotificationError = (mess) => {
+  //   api.error({
+  //     message: mess,
+  //     closeIcon: false,
+  //     placement: "top",
+  //   });
+  // };
+
+  useEffect(()=>{
+    if(Activestatus?.status === true){
+      openNotification(Activestatus?.message)
+    }
+  }, [Activestatus?.status])
+
+
   return (
     <div>
+      {contextHolder}
       <div className="table_section sport_detail m-0">
         {
           <div className="table_section statement_tabs_data ant-spin-nested-loading">
@@ -230,7 +258,7 @@ const UserListTable = ({ userType, Listname }) => {
                         className="droup_menu"
                         menu={{ items, className: "menu_data" }}
                         trigger={["click"]}>
-                        <p
+                        <div
                           className="droup_link"
                           onClick={() =>
                             handleEditData(res?.userid, res?.active)
@@ -238,7 +266,7 @@ const UserListTable = ({ userType, Listname }) => {
                           <Space>
                             <CaretDownOutlined />
                           </Space>
-                        </p>
+                        </div>
                       </Dropdown>
                     </td>
                     <td>{res?.userid}</td>

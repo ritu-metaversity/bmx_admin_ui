@@ -26,6 +26,8 @@ const CreateSuperAgent = ({ createName }) => {
     setCommiType(value);
   };
 
+  // console.log(window.location.pathname.slice(8).includes("client"), "sdasdad")
+
   const openNotification = (mess) => {
     api.success({
       message: mess,
@@ -55,11 +57,11 @@ const CreateSuperAgent = ({ createName }) => {
       username: values?.Name,
       mobile: values?.mobile,
       city: "",
-      userRole: 1,
+      userRole: window.location.pathname.includes("list-client") ? 2 : 1,
       password: values?.password,
       sportPartnership: values?.matchShare,
       oddLossCommission: commiType === "nocomm" ? "0" : values?.Match_comm,
-      lupassword: "1111111",
+      lupassword: values?.lupassword,
       liveCasinoLock: false,
       casinoPartnership: 1.0,
       fancyLossCommission: commiType === "nocomm" ? "0" : values?.sess_comm,
@@ -67,7 +69,7 @@ const CreateSuperAgent = ({ createName }) => {
       commType: values?.Commtype,
       appId: 1,
       amount: values?.Coins,
-      reference:values?.reference,
+      reference: values?.reference,
     };
     trigger(userData);
   };
@@ -138,7 +140,7 @@ const CreateSuperAgent = ({ createName }) => {
               },
               {
                 name: "MyMatchShare",
-                value: data?.data?.myMatchCommission,
+                value: data?.data?.myShare,
               },
               {
                 name: "MyCasinoShare",
@@ -151,6 +153,18 @@ const CreateSuperAgent = ({ createName }) => {
                   data?.data?.myMatchCommission
                     ? "No Comm"
                     : "Bet by Bet",
+              },
+              {
+                name: "cassinoComm",
+                value: data?.data?.myCasinoCommission,
+              },
+              {
+                name: "My_Match_comm",
+                value: data?.data?.myMatchCommission,
+              },
+              {
+                name: "My_sess_comm",
+                value: data?.data?.mySessionCommission,
               },
             ]}>
             <div>
@@ -265,6 +279,19 @@ const CreateSuperAgent = ({ createName }) => {
                     <Input type="password" placeholder="Password" />
                   </Form.Item>
                 </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label="Lu Password"
+                    name="lupassword"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please Enter Password",
+                      },
+                    ]}>
+                    <Input type="password" placeholder="Password" />
+                  </Form.Item>
+                </Col>
               </Row>
 
               <div>
@@ -273,38 +300,47 @@ const CreateSuperAgent = ({ createName }) => {
                 </h2>
               </div>
               <Row className="super_agent sub_super">
-                <Col span={12}>
-                  <Form.Item
-                    label="My Match Share(%)"
-                    name="MyMatchShare"
-                    required={false}>
-                    <InputNumber
-                      className="number_field"
-                      min={0}
-                      defaultChecked={userData && userData?.myMatchCommission}
-                      disabled
-                    />
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item
-                    label="Match Share(%)"
-                    name="matchShare"
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: "Invalid Match Share",
-                      },
-                    ]}>
-                    <InputNumber
-                      className="number_field"
-                      min={0}
-                      step="0.1"
-                      placeholder="Super Agent Match Share"
-                    />
-                  </Form.Item>
-                </Col>
+                {window.location.pathname.includes("list-client") ? (
+                  <></>
+                ) : (
+                  <>
+                    <Col span={12}>
+                      <Form.Item
+                        label="My Match Share(%)"
+                        name="MyMatchShare"
+                        required={false}>
+                        <InputNumber
+                          className="number_field"
+                          min={0}
+                          defaultChecked={
+                            userData && userData?.myMatchCommission
+                          }
+                          disabled
+                        />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item
+                        label="Match Share(%)"
+                        name="matchShare"
+                        required
+                        rules={[
+                          {
+                            required: true,
+                            message: "Invalid Match Share",
+                          },
+                        ]}>
+                        <InputNumber
+                          className="number_field"
+                          min={0}
+                          step="0.1"
+                          placeholder="Super Agent Match Share"
+                        />
+                      </Form.Item>
+                    </Col>
+                  </>
+                )}
+
                 <Col span={12}>
                   <Form.Item
                     label="My Comm type"
@@ -367,7 +403,7 @@ const CreateSuperAgent = ({ createName }) => {
                     </Col>
 
                     <Col span={12}>
-                      <Form.Item name="My_Sess_comm" label="My Sess comm(%)">
+                      <Form.Item name="My_sess_comm" label="My Sess comm(%)">
                         <InputNumber
                           className="number_field"
                           min={0}
@@ -400,12 +436,10 @@ const CreateSuperAgent = ({ createName }) => {
               </Row>
 
               <div>
-                <h2 className="match_share">
-                  {createName} Casino Share and Commission
-                </h2>
+                <h2 className="match_share">{createName} Casino Commission</h2>
               </div>
               <Row className="super_agent sub_super">
-                <Col span={12}>
+                {/* <Col span={12}>
                   <Form.Item
                     label="My Casino Share(%)"
                     name="MyCasinoShare"
@@ -436,7 +470,7 @@ const CreateSuperAgent = ({ createName }) => {
                       placeholder="Super Agent Casino Share"
                     />
                   </Form.Item>
-                </Col>
+                </Col> */}
                 <Col span={12}>
                   <Form.Item
                     label="My Casino comm(%)"

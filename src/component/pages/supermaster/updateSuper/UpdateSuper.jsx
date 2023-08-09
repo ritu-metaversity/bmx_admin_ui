@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Col,
@@ -14,13 +14,14 @@ import "./UpdateSuper.scss";
 import { useSelector } from "react-redux";
 import { globalSelector } from "../../../../store/global/slice";
 import {
-  useGetUserQuery,
+  useLazyGetUserQuery,
   useUpdateUserMutation,
 } from "../../../../store/service/createUserServices";
 import { useParams } from "react-router-dom";
 
 const UpdateSuper = ({ updateName }) => {
   const [api, contextHolder] = notification.useNotification();
+  const [data, setData] = useState()
 
   const { id } = useParams();
   const [trigger, { data: updateData, isLoading, error }] =
@@ -52,7 +53,7 @@ const UpdateSuper = ({ updateName }) => {
       userName: values?.name,
       phoneNumber: values?.number,
       password: values?.password,
-      luPassword: "1111111",
+      luPassword: values?.lupassword,
       status: values?.Status,
       commType: values?.comm_type == "Bet by bet" ? "bbb" : "nocomm",
       matchComm: values?.Supermatchcomm,
@@ -64,9 +65,14 @@ const UpdateSuper = ({ updateName }) => {
     trigger(userData);
   };
 
+
   useEffect(() => {
     if (updateData?.status === true) {
+      getData({
+        userId: id
+      })
       openNotification(updateData?.message);
+
     } else if (updateData?.status === false || error?.data?.message) {
       openNotificationError(updateData?.message || error?.data?.message);
     }
@@ -79,11 +85,21 @@ const UpdateSuper = ({ updateName }) => {
 
   const userData = useSelector(globalSelector);
 
-  const { data } = useGetUserQuery({
-    userId: id,
-  });
 
-  console.log(data?.data, "dsfsdfefw");
+  const [getData, resuilt ] = useLazyGetUserQuery();
+
+  useEffect(()=>{
+    getData({
+      userId: id
+    })
+  }, [resuilt?.data, id])
+
+  useEffect(()=>{
+    if(resuilt?.data?.status === true)
+    setData(resuilt?.data?.data)
+  }, [resuilt?.data?.data])
+
+  console.log(data, "dsfsdfefw");
 
   return (
     <>
@@ -125,84 +141,85 @@ const UpdateSuper = ({ updateName }) => {
             fields={[
               {
                 name: "name",
-                value: data?.data?.userName,
+                value: resuilt?.data?.data.userName,
               },
               {
                 name: "number",
-                value: data?.data?.mobileNumber,
+                value: resuilt?.data?.data.mobileNumber,
               },
               {
                 name: "password",
-                value: data?.data?.password,
+                value: resuilt?.data?.data.password,
               },
               {
                 name: "status",
-                value: data?.data?.status ? "Active" : "InActive",
+                value: resuilt?.data?.data.status ? "Active" : "InActive",
               },
               {
                 name: "Supermatchcomm",
-                value: userData?.data?.matchCommission,
+                value: resuilt?.data?.data.matchCommission,
               },
               {
                 name: "sess_comm",
-                value: userData?.data?.sessionComm,
+                value: resuilt?.data?.data.sessionComm,
               },
               {
                 name: "matchcomm",
-                value: data?.data?.parentMatchComm,
+                value: resuilt?.data?.data.parentMatchComm,
               },
               {
                 name: "sesscomm",
-                value: data?.data?.parentSessionComm,
+                value: resuilt?.data?.data.parentSessionComm,
               },
               {
                 name: "casinoshare",
-                value: data?.data?.parentCasinoShare,
+                value:resuilt?.data?.data.parentCasinoShare,
               },
               {
                 name: "casinoComm",
-                value: data?.data?.parentCasinoComm,
+                value: resuilt?.data?.data.parentCasinoComm,
               },
               {
                 name: "reference",
-                value: data?.data?.reference,
+                value: resuilt?.data?.data.reference,
               },
               {
                 name: "Supermatchcomm",
-                value: data?.data?.matchComm,
+                value: resuilt?.data?.data.matchComm,
               },
               {
                 name: "sess_comm",
-                value: data?.data?.sessionComm,
+                value: resuilt?.data?.data.sessionComm,
               },
               {
                 name: "supercasinoShare",
-                value: data?.data?.casinoShare,
+                value: resuilt?.data?.data.casinoShare,
               },
               {
                 name: "Supercasinocomm",
-                value: data?.data?.casinoComm,
+                value: resuilt?.data?.data.casinoComm,
               },
               {
                 name: "commType",
                 value:
-                  data?.data?.parentMatchComm == 0 ||
-                  data?.data?.parentSessionComm == 0
+                resuilt?.data?.data.parentMatchComm == 0 ||
+                resuilt?.data?.data.parentSessionComm == 0
                     ? "No Comm"
                     : "Bet by bet",
               },
               {
                 name: "comm_type",
                 value:
-                  data?.data?.matchComm == 0 || data?.data?.sessionComm == 0
+                resuilt?.data?.data.matchComm == 0 || resuilt?.data?.data.sessionComm == 0
                     ? "No Comm"
                     : "Bet by bet",
               },
               {
                 name: "status",
-                value: data?.data?.status ? "active" : "inactive",
+                value: resuilt?.data?.data.status ? "active" : "inactive",
               },
-            ]}>
+            ]}
+            >
             <div>
               <Row className="super_agent  update_agent">
                 <Col span={12}>
@@ -263,6 +280,18 @@ const UpdateSuper = ({ updateName }) => {
                         message:
                           "Minimun 6 charecter, must contain letters and numbers!",
                       },
+                    ]}>
+                    <Input type="text" placeholder="Password" />
+                  </Form.Item>
+                  <Form.Item
+                    label="Lu Password"
+                    name="lupassword"
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please Enter Password!",
+                      }
                     ]}>
                     <Input type="text" placeholder="Password" />
                   </Form.Item>
