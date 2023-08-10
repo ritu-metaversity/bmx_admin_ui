@@ -2,6 +2,7 @@ import { Card,} from "antd";
 import "./ShowBets.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import {LeftOutlined} from '@ant-design/icons'
+import moment from "moment";
 
 const data = [
   {
@@ -71,7 +72,7 @@ const ShowBets = () => {
         <tbody>
           {data.map((res) => (
             <tr key={res.key} className="bg-red">
-              <td>{res.date}</td>
+              <td>{moment(res?.date).format("DD-MM-YYYY, h:mm a")}</td>
               <td>{res.client}</td>
               <td>{res.market}</td>
               <td>{res.rate}</td>

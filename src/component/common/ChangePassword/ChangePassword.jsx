@@ -18,7 +18,6 @@ const ChangePassword = ({setIsModalOpen}) => {
         }else if(chnagePassdata?.status === false){
             message.error(chnagePassdata?.message)
         }
-        console.log(chnagePassdata, "sadasd")
         // console.log(chnagePassdata, "adadasda");
       }, [chnagePassdata, error]);
 

@@ -46,6 +46,7 @@ import RouletteBook from "../../pages/CasinoDetail/CasinoBook/RouletteBook/Roule
 import EventProfitLoss from "../../pages/sportsdetails/livereport/EventProfitLoss/EventProfitLoss";
 import Signin from "../signin/Signin";
 import LayOut from "../../layout/LayOut";
+import DeletedLenden from "../../pages/CashTransanction/DeletedLenden/DeletedLenden";
 
 
 const Main = () => {
@@ -63,7 +64,7 @@ const Main = () => {
               <Route path="/plus-minus-report/:id" element={<PlusMinusReport />} />
               <Route path="/Events/:id/plus-minus-report" element={<PlusMinusDetails />} />
               <Route path="/match-slips" element={<MatchSlips />} />
-              <Route path="/fancy-slips" element={<FancySlips />} />
+              <Route path="/fancy-slips/:id" element={<FancySlips />} />
               <Route path="/completed-fancy-slips/:id" element={<CompletedFancySlips/>} />
               <Route path="/rejectedBetsByEvent/:id" element={<RejectedBetsByEvent />} />
 
@@ -96,14 +97,18 @@ const Main = () => {
               <Route path="/client/my-ledger" element={<MyLedger />}/>
 
               <Route path="/client/ledger-super" element={<SuperAgentLedger userTyep={0} Listname={"Super Agent"}/>}/>
-              <Route path="/client/ledger-agent" element={<SuperAgentLedger userTyep={1} Listname={"Agent"}/>}/>
+              <Route path="/client/ledger-master" element={<SuperAgentLedger userTyep={1} Listname={"Master"}/>}/>
+              <Route path="/client/ledger-agent" element={<SuperAgentLedger userTyep={2} Listname={"Delear"}/>}/>
               <Route path="/client/ledger-client" element={<SuperAgentLedger userTyep={3} Listname={"Client"}/>}/>
 
               <Route path="/Events/matchledger" element={<MatchLedger/>}/>
               <Route path="/client/cash-transanction" element={<CashTransanction/>}/>
-              <Route path="/client/txn-super" element={<SuperAgentTransactions/>}/>
-              <Route path="/client/txn-agent" element={<AgentTransactions/>}/>
-              <Route path="/client/txn-client" element={<ClientTransactions/>}/>
+              {/* <Route path="/client/txn-super" element={<SuperAgentTransactions/>}/> */}
+              <Route path="/client/txn-super" element={<AgentTransactions  userType={0}/>}/>
+              <Route path="/client/txn-agent" element={<AgentTransactions userType={2}/>}/>
+              <Route path="/client/txn-client" element={<AgentTransactions userType={3}/>}/>
+              <Route path="/client/txn-master" element={<AgentTransactions userType={2}/>}/>
+              {/* <Route path="/client/txn-client" element={<ClientTransactions/>}/> */}
               <Route path="/markets" element={<Settings/>}/>
               <Route path="/account-statement" element={<AccountStatement/>}/>
               <Route path="/account-statement/:id" element={<AccountStatement/>}/>
@@ -125,6 +130,7 @@ const Main = () => {
               <Route path="/Casino/roulette-book" element={<RouletteBook/>}/>
               <Route path="/Events/:id/live-report" element={<LiveReport/>}/>
               <Route path="/Events/:id/pl/live-report" element={<EventProfitLoss/>}/>
+              <Route path="/client/deletedlenden/:id" element={<DeletedLenden/>}/>
               </Route>
 
             </Routes>

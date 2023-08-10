@@ -49,9 +49,12 @@ const MyLedger = () => {
     console.log("/");
   };
 
-  const { data, isLoading, isFetching } = useMyLedgerQuery();
-
-  console.log(data?.data, "dcdsfsdf")
+  const { data, isLoading, isFetching } = useMyLedgerQuery({
+    startDate: "2023-06-01",
+    endDate: "2023-09-10",
+    index: 0,
+    noOfRecords:100
+  });
 
   return (
     <>
@@ -62,17 +65,17 @@ const MyLedger = () => {
         <div className="my_ledger">
           <div>
             <h3 style={{ padding: "5px", color: "rgb(51, 181, 28)" }}>
-              Lena : 47.72
+              Lena : {data?.data?.data?.credit}
             </h3>
           </div>
           <div>
             <h3 style={{ padding: "5px", color: "rgb(214, 75, 75)" }}>
-              Dena : -74.81
+              Dena : {data?.data?.data?.debit}
             </h3>
           </div>
           <div>
             <h3 style={{ padding: "5px", color: "rgb(214, 75, 75)" }}>
-              Balance: -27.09 ( Dena )
+              Balance: {data?.data?.data?.balance}  {data?.data?.data?.balance>0?"( Dena )":"( Lena )"} 
             </h3>
           </div>
         </div>
@@ -82,7 +85,7 @@ const MyLedger = () => {
             bordered
             columns={columns}
             loading={isFetching||isLoading}
-            dataSource={data?.data}/>
+            dataSource={data?.data?.list}/>
         </div> 
       </Card>
     </>

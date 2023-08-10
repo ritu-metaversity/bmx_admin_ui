@@ -1,4 +1,5 @@
 import { Card, Empty } from 'antd';
+import moment from 'moment';
 
 
 const data = []
@@ -22,7 +23,7 @@ const Roulette = () => {
           {data?.map((res) => {
             return (
               <tr key={res?.key}>
-                <td>{res?.date}</td>
+                <td>{moment(res?.date).format("DD-MM-YYYY, h:mm a")}</td>
                 <td>{res?.Collection_Name}</td>
                 <td>{res?.Debit}</td>
               </tr>

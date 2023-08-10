@@ -8,6 +8,7 @@ import {
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import './SelectClient.scss'
+import moment from "moment";
 
 // const handleChange = (value) => {
 //   console.log(`selected ${value}`);
@@ -16,7 +17,6 @@ import './SelectClient.scss'
 const { RangePicker } = DatePicker;
 
 const data = [];
-console.log(data?.length);
 const SelectClient = () => {
   const nav = useNavigate();
   const handleBackClick = () => {
@@ -67,7 +67,7 @@ const SelectClient = () => {
                 {data?.map((res) => {
                   return (
                     <tr key={res?.key}>
-                      <td>{res?.date}</td>
+                      <td>{moment(res?.date).format("DD-MM-YYYY, h:mm a")} </td>
                       <td>{res?.operation}</td>
                       <td>{res?.description}</td>
                     </tr>

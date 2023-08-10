@@ -101,7 +101,7 @@ const MatchSlips = () => {
               width: "100%",
             }}
             className="sport_detail"
-            title="Completed fancy"
+            title="Match Bets"
             extra={<button onClick={handleBackClick}>Back</button>}>
             
             <Row  style={{ margin: "10px 18px" }}>

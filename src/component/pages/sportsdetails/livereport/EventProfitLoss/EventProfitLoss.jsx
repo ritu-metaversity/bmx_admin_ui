@@ -54,7 +54,6 @@ const EventProfitLoss = () => {
   const nav = useNavigate();
 
   const { id } = useParams();
-  console.log(id, "dasdad");
 
   const handleBackClick = () => {
     nav("/");
@@ -69,7 +68,6 @@ const EventProfitLoss = () => {
   })
 
 
-  console.log(profitLoss?.data?.data, "sadasdas")
   
   return (
     <>

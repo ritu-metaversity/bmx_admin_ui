@@ -1,31 +1,24 @@
-import {
-  Button,
-  Card,
-  Col,
-  DatePicker,
-  Divider,
-  Form,
-  Input,
-  Pagination,
-  Row,
-  Select,
-} from "antd";
+import { Button, Card, Col, DatePicker, Form, Input, Row, Select, notification } from "antd";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
-import { useFilterbyClientQuery } from "../../../../store/service/transactionServices";
+import {
+  useCreateTransactionMutation,
+  useLazyFilterbyClientQuery,
+  useLazyUserListQuery,
+} from "../../../../store/service/transactionServices";
 import TransactionTable from "../TransactionTable";
+import { useEffect, useState } from "react";
 
 const dateFormat = "YYYY/MM/DD";
 
-const AgentTransactions = () => {
+const AgentTransactions = ({ userType }) => {
+  const [api, contextHolder] = notification.useNotification();
+  const [userTranstionData, setUserTranstionData] = useState([]);
+
   const nav = useNavigate();
 
   const handleBackbtn = () => {
     nav("/client/cash-transanction");
-  };
-
-  const onFinish = (values) => {
-    console.log("Success:", values);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -34,13 +27,100 @@ const AgentTransactions = () => {
 
   const { Option } = Select;
 
-  const { data } = useFilterbyClientQuery({
-    // userId: localStorage.getItem("userId"),
-    userId: "sumana6748",
-  }, {refetchOnMountOrArgChange: true});
+  const [getClient, result] = useLazyFilterbyClientQuery();
+  const [clientId, setClientId] = useState("");
+  
+  // useEffect(() => {
+  //   getClient({
+  //     userId: localStorage.getItem("userId"),
+  //   });
+  // }, [result?.data]);
+
+  const [createTran, { data: createTranstions, error }] =
+    useCreateTransactionMutation();
+
+
+
+    const openNotification = (mess) => {
+      api.success({
+        message: mess,
+        description: "Success",
+        closeIcon: false,
+        placement: "top",
+      });
+    };
+  
+    const openNotificationError = (mess) => {
+      api.error({
+        message: mess,
+        closeIcon: false,
+        placement: "top",
+      });
+    };
+
+  const onFinish = (values) => {
+    const createTranstions = {
+      userId: values?.client,
+      collection: values?.collection,
+      amount: Number(values?.amount),
+      paymenttype: values?.payment_type,
+      remarks: values?.remark,
+    };
+    createTran(createTranstions);
+  };
+
+
+  
+
+  const [userList, resultData] = useLazyUserListQuery();
+
+  const handleChange = (value) => {
+    userList({
+      userType: userType,
+      userName: value,
+    });
+    getClient({
+      userId: value,
+    });
+  };
+  const handleSelect = (value) => {
+    setClientId(value);
+  };
+
+  useEffect(() => {
+    getClient({
+      userId: clientId,
+    });
+  }, [clientId, result?.data]);
+
+
+  useEffect(()=>{
+    if (createTranstions?.status === true) {
+      getClient({
+        userId: clientId,
+      });
+      openNotification(createTranstions?.message);
+    } else if (createTranstions?.status === false || error?.data?.message) {
+      openNotificationError(createTranstions?.message || error?.data?.message);
+    }
+
+  }, [createTranstions, error])
+
+  console.log(result?.data?.results?.length, "dasdsad")
+
+  useEffect(()=>{
+    if(result?.data?.data !== undefined){
+    const useData = JSON.parse(result?.data?.data);
+    setUserTranstionData(useData?.results)
+  }
+  }, [result?.data])
+  
+
+  console.log(userTranstionData, "dsadasdas")
 
   return (
     <>
+    {contextHolder}
       <Card
         className="sport_detail ledger_data"
         title="Agent Transactions"
@@ -59,7 +139,7 @@ const AgentTransactions = () => {
               <Col span={8}>
                 <Form.Item
                   label="Client"
-                  name="Client"
+                  name="client"
                   required
                   rules={[
                     {
@@ -67,17 +147,28 @@ const AgentTransactions = () => {
                       message: "Please select Client",
                     },
                   ]}>
-                  <Select placeholder="Select Client" allowClear>
-                    {/* <Option value="male">male</Option>
-                  <Option value="female">female</Option>
-                  <Option value="other">other</Option> */}
+                  <Select
+                    placeholder="Select Client"
+                    options={
+                      resultData.data?.data.map((i) => ({
+                        label: i,
+                        value: i,
+                      })) || []
+                    }
+                    showSearch
+                    allowClear
+                    onSelect={handleSelect}
+                    // defaultValue={}
+
+                    onSearch={handleChange}>
+                    {/* <Option value="sumana6748">sumana6748</Option> */}
                   </Select>
                 </Form.Item>
               </Col>
               <Col span={8}>
                 <Form.Item
                   label="Collection"
-                  name="Collection"
+                  name="collection"
                   required
                   rules={[
                     {
@@ -86,7 +177,7 @@ const AgentTransactions = () => {
                     },
                   ]}>
                   <Select defaultValue="Cash A/C" allowClear>
-                    <Option value="cashac">Cash A/C</Option>
+                    <Option value="CASH">Cash A/C</Option>
                   </Select>
                 </Form.Item>
               </Col>
@@ -111,7 +202,7 @@ const AgentTransactions = () => {
               <Col span={8}>
                 <Form.Item
                   label="Amount"
-                  name="Amount"
+                  name="amount"
                   required
                   rules={[
                     {
@@ -125,7 +216,7 @@ const AgentTransactions = () => {
               <Col span={8}>
                 <Form.Item
                   label="Payment Type"
-                  name="Payment_Type"
+                  name="payment_type"
                   required
                   rules={[
                     {
@@ -134,15 +225,15 @@ const AgentTransactions = () => {
                     },
                   ]}>
                   <Select placeholder="Payment Type" allowClear>
-                    <Option value="payment_diya">PAYMENT - DIYA</Option>
-                    <Option value="payment_liya">PAYMENT - LIYA</Option>
+                    <Option value="Diya">PAYMENT - DIYA</Option>
+                    <Option value="Liya">PAYMENT - LIYA</Option>
                   </Select>
                 </Form.Item>
               </Col>
               <Col span={8}>
                 <Form.Item
                   label="Remark"
-                  name="Remark"
+                  name="remark"
                   required
                   rules={[
                     {
@@ -164,7 +255,9 @@ const AgentTransactions = () => {
       </Card>
 
       <Card className="sport_detail ledger_data">
-        <TransactionTable data={data}/>
+        {userTranstionData?.length != 0  && (
+          <TransactionTable clientId={clientId} data={userTranstionData} />
+        )}
       </Card>
     </>
   );

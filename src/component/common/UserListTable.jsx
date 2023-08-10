@@ -10,6 +10,8 @@ import {
 import ModalsData from "../pages/supermaster/listsuper/ModalsData/ModalsData";
 import { useUpDateStatusMutation } from "../../store/service/createUserServices";
 import { useLazySuperuserListQuery } from "../../store/service/superMasteruseListServices";
+import { usePartnershipMutation } from "../../store/service/partnershipServices";
+import moment from "moment";
 
 const routeFromUSerType = {
   0: "/client/list-agent/",
@@ -27,12 +29,29 @@ const UserListTable = ({ userType, Listname }) => {
   const [paginationTotal, setPaginationTotal] = useState(10);
   const [totalPage, setTotalPage] = useState();
   const [indexData, setIndexData] = useState(0);
+  const [partnershipDetails, setPartnershipDetails] = useState({});
+  const [userIds, setUserIds] = useState("");
   const [api, contextHolder] = notification.useNotification();
 
 
-  const showModal = () => {
+
+  const [partnerShipData, {data: partnerShipDetail}] = usePartnershipMutation();
+  
+  
+  const showModal = (val) => {
+    setUserIds(val)
+    const partnerShipDetail = {
+      userId:val
+    }
+    partnerShipData(partnerShipDetail);
     setIsModalOpen(true);
   };
+
+  useEffect(()=>{
+    setPartnershipDetails(partnerShipDetail?.data);
+  }, [partnerShipDetail?.data])
+
+
 
   const handleWithdrawnOk = () => {
     SetWithdrawnModal(false);
@@ -165,10 +184,10 @@ const UserListTable = ({ userType, Listname }) => {
       ),
       key: "7",
     },
-    {
-      label: <Link to="https://www.aliyun.com">Send Login Details</Link>,
-      key: "8",
-    },
+    // {
+    //   label: <Link to="https://www.aliyun.com">Send Login Details</Link>,
+    //   key: "8",
+    // },
   ];
 
   const openNotification = (mess) => {
@@ -249,7 +268,7 @@ const UserListTable = ({ userType, Listname }) => {
                 return (
                   <tr key={id}>
                     <td>
-                      <div onClick={showModal} className="plus_btn">
+                      <div onClick={()=>showModal(res?.userid)} className="plus_btn">
                         <PlusOutlined />
                       </div>
                     </td>
@@ -273,7 +292,7 @@ const UserListTable = ({ userType, Listname }) => {
                     <td>{res?.username}</td>
                     <td>{res?.parent}</td>
                     <td>{res?.mobile}</td>
-                    <td>{res?.dateOfJoining}</td>
+                    <td>{moment(res?.dateOfJoining).format("DD-MM-YYYY, h:mm a")}</td>
                     <td>{res?.partnerShip}</td>
                     <td>{res?.password}</td>
                     <td>
@@ -309,11 +328,11 @@ const UserListTable = ({ userType, Listname }) => {
         }
 
         <Modal
-          title="Partnership Info - SA152471"
+          title={`Partnership Info - ${userIds}`}
           open={isModalOpen}
           onCancel={handleCancel}
           okButtonProps={{ style: { display: "none" } }}>
-          <ModalsData />
+          <ModalsData partnershipDetails={partnershipDetails}/>
         </Modal>
       </div>
 

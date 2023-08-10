@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Space, Select, Row, Col, Table } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSessionFancyBetDetailQuery } from "../../../../store/service/SportDetailServices";
 
 // import "./MatchSlips.scss";
 
@@ -11,13 +12,13 @@ const handleChange = (value) => {
 const columns = [
   {
     title: "Rate",
-    dataIndex: "rate",
-    key: "rate",
+    dataIndex: "stake",
+    key: "stake",
   },
   {
     title: "Amount",
-    dataIndex: "amount",
-    key: "amount",
+    dataIndex: "stake",
+    key: "stake",
   },
   {
     title: "Type",
@@ -26,18 +27,18 @@ const columns = [
   },
   {
     title: "Team",
-    dataIndex: "team",
-    key: "team",
+    dataIndex: "matchname",
+    key: "matchname",
   },
   {
     title: "Client",
-    dataIndex: "client",
-    key: "client",
+    dataIndex: "userid",
+    key: "userid",
   },
   {
     title: "Agent",
-    dataIndex: "agent",
-    key: "agent",
+    dataIndex: "dealerid",
+    key: "dealerid",
   },
   {
     title: "Date",
@@ -45,28 +46,33 @@ const columns = [
     key: "date",
   },
   {
-    title: "Loss",
-    dataIndex: "loss",
-    key: "loss",
+    title: "Profit/Loss",
+    dataIndex: "netpnl",
+    key: "netpnl",
   },
-  {
-    title: "Profit",
-    dataIndex: "profit",
-    key: "profit",
-  },
+  // {
+  //   title: "Profit",
+  //   dataIndex: "profit",
+  //   key: "profit",
+  // },
   {
     title: "Volume",
     dataIndex: "volume",
     key: "volume",
   },
 ];
-const data = [];
 
 const FancySlips = () => {
   const nav = useNavigate();
   const handleBackClick = () => {
     nav("/Events/sports-details");
   };
+
+  const {id} = useParams()
+
+  const {data, isFetching, isLoading} = useSessionFancyBetDetailQuery({
+    matchId:id
+  })
 
   return (
     <>
@@ -78,7 +84,7 @@ const FancySlips = () => {
               width: "100%",
             }}
             className="sport_detail"
-            title="Fancy Bets"
+            title="Session Bet"
             extra={<button onClick={handleBackClick}>Back</button>}>
             <Row className="rejected_row" style={{ margin: "2px 0px 25px 28px" }}>
               <Col xs={24} md={24} lg={5} xl={5}>
@@ -120,7 +126,10 @@ const FancySlips = () => {
             </Row>
 
             <div className="table_section" style={{ marginBottom: "100px" }}>
-              <Table columns={columns} dataSource={data} />
+              <Table columns={columns}
+               dataSource={data?.data} 
+               loading={isFetching || isLoading}
+               />
             </div>
           </Card>
         </div>

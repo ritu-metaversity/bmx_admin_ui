@@ -20,6 +20,7 @@ import { createUserApi } from "./service/createUserServices";
 import { ledgerApi } from "./service/ledgerServices";
 import { jwtApi } from "./service/jwtTokenServices";
 import { transectionApi } from "./service/transactionServices";
+import { partnershipApi } from "./service/partnershipServices";
 
 export const store = configureStore({
   reducer: {
@@ -45,6 +46,7 @@ export const store = configureStore({
     [ledgerApi.reducerPath]:ledgerApi.reducer,
     [jwtApi.reducerPath]:jwtApi.reducer,
     [transectionApi.reducerPath]:transectionApi.reducer,
+    [partnershipApi.reducerPath]:partnershipApi.reducer,
   },
   middleware: (defaultMiddleware) =>
     defaultMiddleware()
@@ -68,4 +70,5 @@ export const store = configureStore({
       .concat(ledgerApi.middleware)
       .concat(jwtApi.middleware)
       .concat(transectionApi.middleware)
+      .concat(partnershipApi.middleware)
 });

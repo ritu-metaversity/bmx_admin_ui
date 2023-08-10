@@ -85,7 +85,6 @@ const RejectedBetsByEvent = () => {
     }, {refetchOnMountOrArgChange: true})
 
 
-    console.log(data?.data, "dssfdss")
 
   return (
     <>

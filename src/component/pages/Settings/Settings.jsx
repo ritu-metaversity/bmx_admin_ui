@@ -3,6 +3,7 @@ import "./Settings.scss";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import ChangePassword from "../../common/ChangePassword/ChangePassword";
+import moment from "moment";
 
 const data = [];
 
@@ -58,7 +59,7 @@ const Settings = () => {
                 data?.map((res) => {
                   return (
                     <tr key={res?.key}>
-                      <td>{res?.date}</td>
+                      <td>{moment(res?.date).format("DD-MM-YYYY, h:mm a")}</td>
                       <td>{res?.Collection_Name}</td>
                       <td className="text-right">{res?.Debit}</td>
                       <td className="text-right">{res?.Credit}</td>

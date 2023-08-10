@@ -14,13 +14,13 @@ import {
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./SecureCodeReport.scss";
+import moment from "moment";
 
 // const handleChange = (value) => {
 //   console.log(`selected ${value}`);
 // };
 
 const data = [];
-console.log(data?.length);
 const SecureCodeReport = () => {
   const onFinish = (values) => {
     console.log("Success:", values?.username);
@@ -83,7 +83,7 @@ const SecureCodeReport = () => {
                 {data?.map((res) => {
                   return (
                     <tr key={res?.key}>
-                      <td>{res?.date}</td>
+                      <td>{moment(res?.date).format("DD-MM-YYYY, h:mm a")}</td>
                       <td>{res?.operation}</td>
                       <td>{res?.description}</td>
                     </tr>

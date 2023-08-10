@@ -19,7 +19,14 @@ export const sportDetailsApi = createApi({
         body,
       }),
     }),
+    sessionFancyBetDetail: build.query({
+      query: (body) => ({
+        url: "/bmx/fancy-fetch-by-match-id",
+        method: "POST",
+        body,
+      }),
+    }),
     })
 });
 
-export const {useSportDetailQuery,useRejectedBetDetailQuery} = sportDetailsApi;
+export const {useSportDetailQuery,useRejectedBetDetailQuery,useSessionFancyBetDetailQuery} = sportDetailsApi;

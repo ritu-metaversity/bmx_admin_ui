@@ -43,12 +43,6 @@ const SuperAgentLedger = ({userTyep, Listname}) => {
   }, [ledger?.data])
 
 
-  console.log(ledger?.data?.lena, "dadada")
-
-  
-
-  console.log(leneData, "edweded")
-
   return (
     <>
       <Card

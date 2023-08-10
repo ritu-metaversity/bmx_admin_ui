@@ -1,4 +1,5 @@
 import { Pagination } from "antd";
+import moment from "moment";
 
 const data = [
   {
@@ -76,7 +77,7 @@ const AccountsStatement = () => {
           {data?.map((res) => {
             return (
               <tr key={res?.key}>
-                <td>{res?.Date}</td>
+                <td>{moment(res?.Date).format("DD-MM-YYYY, h:mm a")}</td>
                 <td>{res?.Description}</td>
                 <td>{res?.PrevBal}</td>
                 <td className="text_success">{res?.CR}</td>

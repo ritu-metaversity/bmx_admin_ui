@@ -75,7 +75,7 @@ const SportsDetails = () => {
     },
     {
       label: (
-        <Link className="title_section" to="/fancy-slips">
+        <Link className="title_section" to={`/fancy-slips/${matchId}`}>
           Display Session Bets
         </Link>
       ),

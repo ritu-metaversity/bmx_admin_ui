@@ -1,26 +1,47 @@
 import { Button, Col, Divider, Dropdown, Pagination, Row, Select, Space } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
+import { useDeleteByUserIDMutation } from "../../../store/service/transactionServices";
+import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const dateFormat = "YYYY/MM/DD";
 
-const TransactionTable = ({ data }) => {
+const TransactionTable = ({ data, clientId }) => {
     const [debitCal, setDebitCal] = useState(0);
     const [creditCal, setCreditCal] = useState(0);
+    const nav = useNavigate()
+
   const onFinish = (values) => {
     console.log("Success:", values);
   };
 
   const { Option } = Select;
 
-  console.log(data?.data, "dsdsadswd");
+
+  console.log(data, "dasdasdas")
+
 
   useEffect(()=>{
-    const debitCal = data?.data?.map((res)=>res?.debit).reduce((prev, curr) => Number(prev) + Number(curr), 0);
-    const creditCal = data?.data?.map((res)=>res?.credit).reduce((prev, curr) => Number(prev) + Number(curr), 0);
+    const debitCal = data?.map((res)=>res?.debit).reduce((prev, curr) => Number(prev) + Number(curr), 0);
+    const creditCal = data?.map((res)=>res?.credit).reduce((prev, curr) => Number(prev) + Number(curr), 0);
     setDebitCal(debitCal);
     setCreditCal(creditCal);
-  }, [data?.data])
+  }, [data])
+
+  const [DeleteByUserId , {data:deletedData}] = useDeleteByUserIDMutation();
+
+
+  const fetchDeletedTran = ()=>{
+    nav(`/client/deletedlenden/${clientId}`)
+  }
+
+  const handelDeleteUser = (val)=>{
+    DeleteByUserId({
+      _id:val
+    })
+  }
+  
 
 
   const items = [
@@ -46,17 +67,17 @@ const TransactionTable = ({ data }) => {
          
           <div>
             <h3 style={{ padding: "5px", color: "rgb(51, 181, 28)" }}>
-              Balance: -27.09 ( Dena )
+              Balance: {(debitCal - creditCal)?.toFixed(2)}  {debitCal - creditCal>0?"( Dena )":"( Lena )"}
             </h3>
           </div>
           <div>
-            <Button>Deleted</Button>
+            <Button onClick={fetchDeletedTran}>Deleted</Button>
           </div>
         </div>
-      <div className="table_section">
+      <div className="table_section" style={{paddingBottom: "20px"}}>
         <table className="">
           <tr>
-            <th></th>
+            <th className="text-right">#</th>
             <th>Date</th>
             <th>Post Date</th>
             <th>Collection Name </th>
@@ -67,15 +88,19 @@ const TransactionTable = ({ data }) => {
             <th>Remark</th>
             <th>Done By</th>
           </tr>
-          {data?.data?.map((res) => {
+          {data?.length != 0 && data?.map((res) => {
+            // console.log(res?._id?.$oid, "dfsfdsfs")
             return (
               <tr key={res?.key}>
-                <td>
+                <td 
+                // onClick={()=>handelDeleteUser(res?._id?.$oid)}
+                >
                   <Dropdown
                     className="table_dropdown sport_droupdown"
                     menu={{
                       items,
                       className: "trans",
+                      onClick:()=>handelDeleteUser(res?._id?.$oid),
                     }}
                     trigger={["click"]}>
                     <p
@@ -88,8 +113,8 @@ const TransactionTable = ({ data }) => {
                     </p>
                   </Dropdown>
                 </td>
-                <td>{res?.date}</td>
-                <td>{res?.post_data}</td>
+                <td>{moment(res?.date?.$date).format("DD-MM-YYYY, h:mm a")}</td>
+                <td>{moment(res?.date?.$date).format("DD-MM-YYYY, h:mm a")}</td>
                 <td>{res?.collectionName}</td>
                 <td className="text-right">{res?.debit}</td>
                 <td className="text-right">{res?.credit}</td>
@@ -102,12 +127,12 @@ const TransactionTable = ({ data }) => {
           })}
         </table>
       </div>
-      <Divider />
+      {/* <Divider />
       <Pagination
         className="pagination_main ledger_pagination"
         defaultCurrent={1}
         total={50}
-      />
+      /> */}
     </>
   );
 };

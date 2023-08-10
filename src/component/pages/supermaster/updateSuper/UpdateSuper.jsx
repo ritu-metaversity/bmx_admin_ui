@@ -99,7 +99,6 @@ const UpdateSuper = ({ updateName }) => {
     setData(resuilt?.data?.data)
   }, [resuilt?.data?.data])
 
-  console.log(data, "dsfsdfefw");
 
   return (
     <>

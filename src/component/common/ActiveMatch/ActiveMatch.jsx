@@ -3,6 +3,7 @@ import React from "react";
 import { useActiveMatchQuery } from "../../../store/service/ActiveMatcheService";
 import "./ActiveMatch.scss";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const ActiveMatch = () => {
   const { data, isLoading } = useActiveMatchQuery();
@@ -38,10 +39,10 @@ const ActiveMatch = () => {
               </tr>
               {data?.data?.map((res, id) => {
                 return (
-                  <tr key={id}>
+                  <tr key={id} onClick={() => handleDetails(res?.matchId)} style={{cursor:"pointer"}}>
                     <td>{id + 1}</td>
                     <td>{res?.matchName}</td>
-                    <td>{res?.openDate}</td>
+                    <td>{moment(res?.openDate).format("DD-MM-YYYY, h:mm a")}</td>
                     {/* <td>??</td> */}
                     <td>
                       {res?.inPlay && (
@@ -51,7 +52,7 @@ const ActiveMatch = () => {
                     <td>
                       <p
                         style={{ cursor: "pointer" }}
-                        onClick={() => handleDetails(res?.matchId)}>
+                        >
                         Details
                       </p>
                     </td>

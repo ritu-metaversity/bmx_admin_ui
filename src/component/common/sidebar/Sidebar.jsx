@@ -9,7 +9,7 @@ import "./Sidebar.scss";
 import { Button } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import Sider from "antd/es/layout/Sider";
-import { Link, json } from "react-router-dom";
+import { Link, json, useNavigate } from "react-router-dom";
 
 const Sidebar = (props) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -28,6 +28,9 @@ const Sidebar = (props) => {
   //   e.preventDefault()
   //   console.log("helooo")
   // }
+
+
+  const nav = useNavigate()
 
   const userType = localStorage.getItem("userType");
 
@@ -49,7 +52,7 @@ const Sidebar = (props) => {
             color: "#fff",
           }}
         />
-        <div className={`bm_side_logo ${collapsed ? "d-none" : ""}`}>
+        <div onClick={()=>nav("/dashboard")} className={`bm_side_logo ${collapsed ? "d-none" : ""}`}>
           <img src="/Images/logo.png" alt="" />
         </div>
       </div>
@@ -148,10 +151,24 @@ const Sidebar = (props) => {
                   label: <Link to="/client/my-ledger">My Ledger</Link>,
                 },
                 {
-                  label: <Link to="/client/ledger-super">Super Ledger</Link>,
+                  className: `${userType != "5" ? "d-none" : ""}`,
+                  label: <Link  to="/client/ledger-super">Super Ledger</Link>,
                 },
                 {
-                  label: <Link to="/client/ledger-agent">Agent Ledger</Link>,
+                  className: `${
+                    userType === "0"
+                      ? ""
+                      : "d-none"
+                  }`,
+                  label: <Link to="/client/ledger-master">Master Ledger</Link>,
+                },
+                {
+                  className:`${
+                    userType === "1"
+                      ? ""
+                      : "d-none"
+                  }`,
+                  label: <Link to="/client/ledger-agent">Deler Ledger</Link>,
                 },
                 {
                   label: <Link to="/client/ledger-client">Client Ledger</Link>,
@@ -169,13 +186,29 @@ const Sidebar = (props) => {
                   ),
                 },
                 {
+                  className:`${
+                    userType === "1"
+                      ? ""
+                      : "d-none"
+                  }`,
                   label: (
                     <Link to="/client/txn-agent">Debit/Credit Entry(A)</Link>
                   ),
                 },
                 {
+                  lassName: `${userType != "5" ? "d-none" : ""}`,
                   label: (
                     <Link to="/client/txn-super">Debit/Credit Entry(SA)</Link>
+                  ),
+                },
+                {
+                  className: `${
+                    userType === "0"
+                      ? ""
+                      : "d-none"
+                  }`,
+                  label: (
+                    <Link to="/client/txn-master">Debit/Credit Entry(M)</Link>
                   ),
                 },
               ],
@@ -333,49 +366,33 @@ const Sidebar = (props) => {
                 label: "Ledger",
                 children: [
                   {
-                    label: (
-                      <Link
-                        to="/Events/matchledger"
-                        onClick={() => setOpen(false)}>
-                        Profit/Loss
-                      </Link>
-                    ),
+                    label: <Link onClick={() => setOpen(false)} to="/Events/matchledger">Profit/Loss</Link>,
                   },
                   {
-                    label: (
-                      <Link
-                        to="/client/my-ledger"
-                        onClick={() => setOpen(false)}>
-                        My Ledger
-                      </Link>
-                    ),
+                    label: <Link onClick={() => setOpen(false)} to="/client/my-ledger">My Ledger</Link>,
                   },
                   {
-                    label: (
-                      <Link
-                        to="/client/ledger-super"
-                        onClick={() => setOpen(false)}>
-                        Super Ledger
-                      </Link>
-                    ),
+                    className: `${userType != "5" ? "d-none" : ""}`,
+                    label: <Link onClick={() => setOpen(false)}  to="/client/ledger-super">Super Ledger</Link>,
                   },
                   {
-                    label: (
-                      <Link
-                        to="/client/ledger-agent"
-                        onClick={() => setOpen(false)}>
-                        Agent Ledger
-                      </Link>
-                    ),
+                    className: `${
+                      userType === "0"
+                        ? ""
+                        : "d-none"
+                    }`,
+                    label: <Link onClick={() => setOpen(false)} to="/client/ledger-master">Master Ledger</Link>,
                   },
                   {
-                    label: (
-                      <Link
-                        to="/client/ledger-client"
-                        onClick={() => setOpen(false)}>
-                        Client Ledger
-                      </Link>
-                    ),
+                    className:`${
+                      userType === "1"
+                        ? ""
+                        : "d-none"
+                    }`,
+                    label: <Link onClick={() => setOpen(false)} to="/client/ledger-agent">Deler Ledger</Link>,
+                  },
+                  {
+                    label: <Link onClick={() => setOpen(false)} to="/client/ledger-client">Client Ledger</Link>,
                   },
                 ],
               },
@@ -385,6 +402,7 @@ const Sidebar = (props) => {
                 label: "Cash Transanction",
                 children: [
                   {
+                    
                     label: (
                       <Link
                         to="/client/txn-client"
@@ -394,6 +412,11 @@ const Sidebar = (props) => {
                     ),
                   },
                   {
+                    className:`${
+                      userType === "1"
+                        ? ""
+                        : "d-none"
+                    }`,
                     label: (
                       <Link
                         to="/client/txn-agent"
@@ -403,11 +426,26 @@ const Sidebar = (props) => {
                     ),
                   },
                   {
+                    lassName: `${userType != "5" ? "d-none" : ""}`,
                     label: (
                       <Link
                         to="/client/txn-super"
                         onClick={() => setOpen(false)}>
                         Debit/Credit Entry(SA)
+                      </Link>
+                    ),
+                  },
+                  {
+                      className: `${
+                        userType === "0"
+                          ? ""
+                          : "d-none"
+                      }`,
+                    label: (
+                      <Link
+                        to="/client/txn-master"
+                        onClick={() => setOpen(false)}>
+                        Debit/Credit Entry(M)
                       </Link>
                     ),
                   },

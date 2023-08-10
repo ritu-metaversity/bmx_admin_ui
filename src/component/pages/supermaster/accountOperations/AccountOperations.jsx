@@ -39,7 +39,6 @@ const AccountOperations = () => {
 
   }, {refetchOnMountOrArgChange:true})
 
-  console.log(data?.data?.data?.length, "dfsfewr")
 
   const columns = [
     {

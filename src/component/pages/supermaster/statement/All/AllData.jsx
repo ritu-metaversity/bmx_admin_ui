@@ -1,6 +1,7 @@
 import { Pagination } from "antd";
 import { useAccountstatementQuery } from "../../../../../store/service/supermasteAccountStatementServices";
 import React,{ useEffect } from "react";
+import moment from "moment";
 
 
 const AllData = ({dateData}) => {
@@ -33,7 +34,7 @@ const AllData = ({dateData}) => {
           {data?.data?.dataList?.map((res) => {
             return (
               <tr key={res?.key}>
-                <td>{res?.date}</td>
+                <td>{moment(res?.date).format("DD-MM-YYYY, h:mm a")}</td>
                 <td>{res?.remark}</td>
                 <td>??</td>
                 <td className="text_success">{res?.credit}</td>

@@ -31,7 +31,6 @@ const CompeleteFancy = () => {
     nav(`/Events/${id}/pl/live-report`);
   };
 
-  console.log(completeFancy?.length, "sdfsdfd");
 
   return (
     <>
