@@ -33,7 +33,7 @@ const SportsDetails = () => {
   const [InPlay, setInPlay] = useState();
   const [totalPage, setTotalPage] = useState();
   const [paginationTotal, setPaginationTotal] = useState(10);
-  const [indexData, setIndexData] = useState(1);
+  const [indexData, setIndexData] = useState(0);
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -67,7 +67,7 @@ const SportsDetails = () => {
     },
     {
       label: (
-        <Link className="title_section" to="/match-slips">
+        <Link className="title_section" to={`/match-slips/${matchId}`}>
           Display Match Bets
         </Link>
       ),

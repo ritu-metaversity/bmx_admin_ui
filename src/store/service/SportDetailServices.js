@@ -29,4 +29,4 @@ export const sportDetailsApi = createApi({
     })
 });
 
-export const {useSportDetailQuery,useRejectedBetDetailQuery,useSessionFancyBetDetailQuery} = sportDetailsApi;
+export const {useSportDetailQuery,useRejectedBetDetailQuery,useLazySessionFancyBetDetailQuery} = sportDetailsApi;

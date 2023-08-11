@@ -25,7 +25,7 @@ const ProfitAndLoss = () => {
   const [ProfitLossData, setProfitLossData] = useState([]);
   const [totalPage, setTotalPage] = useState();
   const [paginationTotal, setPaginationTotal] = useState(10);
-  const [indexData, setIndexData] = useState(1);
+  const [indexData, setIndexData] = useState(0);
   const nav = useNavigate();
 
   const handleBackClick = () => {

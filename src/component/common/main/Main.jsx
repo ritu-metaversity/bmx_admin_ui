@@ -47,6 +47,7 @@ import EventProfitLoss from "../../pages/sportsdetails/livereport/EventProfitLos
 import Signin from "../signin/Signin";
 import LayOut from "../../layout/LayOut";
 import DeletedLenden from "../../pages/CashTransanction/DeletedLenden/DeletedLenden";
+import Rulespage from "../../pages/RulesPage/Rulespage";
 
 
 const Main = () => {
@@ -63,8 +64,8 @@ const Main = () => {
               <Route path="/livereport" element={<LiveReport />} />
               <Route path="/plus-minus-report/:id" element={<PlusMinusReport />} />
               <Route path="/Events/:id/plus-minus-report" element={<PlusMinusDetails />} />
-              <Route path="/match-slips" element={<MatchSlips />} />
-              <Route path="/fancy-slips/:id" element={<FancySlips />} />
+              <Route path="/match-slips/:id" element={<FancySlips  type={2} name={"Match Bets"}/> } />
+              <Route path="/fancy-slips/:id" element={<FancySlips type={1} name={"Session Bet"}/>} />
               <Route path="/completed-fancy-slips/:id" element={<CompletedFancySlips/>} />
               <Route path="/rejectedBetsByEvent/:id" element={<RejectedBetsByEvent />} />
 
@@ -131,8 +132,8 @@ const Main = () => {
               <Route path="/Events/:id/live-report" element={<LiveReport/>}/>
               <Route path="/Events/:id/pl/live-report" element={<EventProfitLoss/>}/>
               <Route path="/client/deletedlenden/:id" element={<DeletedLenden/>}/>
+              <Route path="/rules" element={<Rulespage/>}/>
               </Route>
-
             </Routes>
     </>
   );

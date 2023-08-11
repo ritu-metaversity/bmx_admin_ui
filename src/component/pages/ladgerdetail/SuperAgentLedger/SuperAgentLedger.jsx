@@ -39,7 +39,7 @@ const SuperAgentLedger = ({userTyep, Listname}) => {
     const clearData = ledger?.data?.clear?.map((res)=>res?.balance).reduce((prev, curr) => Number(prev) + Number(curr), 0);
     setLenaBalance(lenaData);
     setDenaBalance(denaData);
-    setClearData(clearData)
+    setClearData(clearData);
   }, [ledger?.data])
 
 

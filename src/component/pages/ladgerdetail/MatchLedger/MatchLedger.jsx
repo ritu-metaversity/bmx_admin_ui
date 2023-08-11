@@ -1,82 +1,133 @@
-import { Card, Col, DatePicker, Divider, Pagination, Row, Select } from "antd";
+import {
+  Card,
+  Col,
+  DatePicker,
+  Divider,
+  Empty,
+  Pagination,
+  Row,
+  Select,
+  Spin,
+  Table,
+} from "antd";
 import "./MatchLedger.scss";
+import { useLazyProfitAndLossLedgerQuery } from "../../../../store/service/ledgerServices";
+import { useEffect, useState } from "react";
+import moment from "moment";
 
-const data = [
+const columns = [
   {
-    key: 1,
-    date: "sup2 (SA154400)",
-    title: "37.6",
-    cr:"40.20",
-    dr:"0"
+    title: "Date",
+    dataIndex: "date",
+    key: "date",
   },
   {
-    key: 2,
-    date: "sup2 (SA154400)",
-    title: "37.6",
-    cr:"40.20",
-    dr:"0"
+    title: "Title",
+    dataIndex: "matchName",
+    key: "matchName",
   },
   {
-    key: 3,
-    date: "sup2 (SA154400)",
-    title: "37.6",
-    cr:"40.20",
-    dr:"0"
+    title: "CR",
+    dataIndex: "netPnl",
+    key: "netPnl",
   },
   {
-    key: 4,
-    date: "sup2 (SA154400)",
-    title: "37.6",
-    cr:"40.20",
-    dr:"0"
+    title: "DR",
+    dataIndex: "netPnl",
+    key: "netPnl",
   },
 ];
 
-const MatchLedger = () => (
-  <Card className="sport_detail main_match_ledger" title="Match Ledger" extra={<button onClick={() => console.log("hello")}>Back</button>}>
-    <Row className="main_super_super_ledger">
-      <Col span={8} className="match_ladger">
-        <DatePicker.RangePicker />
-      </Col>
-      <Col span={8} className="selected_ledger">
+const MatchLedger = () => {
+  const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
+  const time = moment().format("YYYY-MM-DD");
+  const [dateData, setDateData] = useState([timeBefore,time]);
+  const [totalPage, setTotalPage] = useState();
+  const [paginationTotal, setPaginationTotal] = useState(10);
+  const [indexData, setIndexData] = useState(0);
+
+  const onChange = (date,dateString) => {
+    setDateData(dateString);
+  };
+
+  // const [data, setData] = useState({});
+  const [trigger, {data,  isLoading }] =useLazyProfitAndLossLedgerQuery();
+
+  useEffect(() => {
+    trigger({
+      startDate: dateData[0],
+      endDate: dateData[1],
+      index: indexData < 0 ? 0 : indexData,
+      noOfRecords: paginationTotal,
+    });
+    setTotalPage(data?.data?.totalPages);
+  }, [data?.data, dateData, paginationTotal, indexData]);
+
+
+  console.log(data?.data?.total, "dasdawd");
+
+
+  return (
+    <Card
+      className="sport_detail main_match_ledger"
+      title="Match Ledger"
+      extra={<button onClick={() => console.log("hello")}>Back</button>}>
+      <Row className="main_super_super_ledger">
+        <Col span={8} className="match_ladger">
+          <DatePicker.RangePicker  onChange={onChange}/>
+        </Col>
+        {/* <Col span={8} className="selected_ledger">
         <Select defaultValue="lucy" style={{ width: 120 }} onChange={(value) => console.log(`selected ${value}`)}>
           <Select.Option value="jack" label="Jack" />
           <Select.Option value="lucy" label="Lucy" />
           <Select.Option value="Yiminghe" label="yiminghe" />
           <Select.Option value="disabled" label="Disabled" disabled />
         </Select>
-      </Col>
-      <Col span={6}>
-        <div className="matchladger_total">
-          <p style={{fontSize: "20px"}}>Total : <span style={{color: "rgb(82, 196, 26)"}}>11.74</span></p>
-        </div>
-      </Col>
-    </Row>
-    <div className="table_section">
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Title</th>
-            <th>CR</th>
-            <th>DR</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((res) => (
-            <tr key={res.key}>
-              <td>{res.date}</td>
-              <td>{res.title}</td>
-              <td>{res.cr}</td>
-              <td>{res.dr}</td>
+      </Col> */}
+        <Col span={6}>
+          <div className="matchladger_total">
+            <p style={{ fontSize: "20px" }}>
+              Total : <span style={{ color: "rgb(82, 196, 26)" }}>{data?.data?.total}</span>
+            </p>
+          </div>
+        </Col>
+      </Row>
+      {isLoading ? (
+        <Spin className="loading_active" tip="Loading..." size="large">
+          <div className="content" />
+        </Spin>
+      ) : (
+        <div className="table_section statement_tabs_data">
+          <table className="">
+            <tr>
+              <th>Date</th>
+              <th>Title</th>
+              <th>CR</th>
+              <th>DR</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-    <Divider />
-    <Pagination className="pagination_main ledger_pagination" defaultCurrent={1} total={50} />
-  </Card>
-);
+            {data?.data?.list?.map((res, id) => {
+              return (
+                <tr key={id} style={{ cursor: "pointer" }}>
+                  <td>{moment(res?.date).format("DD-MM-YYYY")}</td>
+                  <td>{res?.matchName}</td>
+                  <td>{res?.netPnl < 0 ? res?.netPnl:0}</td>
+                  <td>{res?.netPnl > 0 ? res?.netPnl:0}</td>
+                </tr>
+              );
+            })}
+          </table>
+          {data?.list?.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> : ""}
+        </div>
+      )}
+      <Divider />
+      <Pagination
+        className="pagination_main ledger_pagination"
+        onShowSizeChange={(c, s) => setPaginationTotal(s)}
+        total={totalPage && totalPage * paginationTotal}
+        onChange={(e) => setIndexData(e - 1)}
+      />
+    </Card>
+  );
+};
 
 export default MatchLedger;

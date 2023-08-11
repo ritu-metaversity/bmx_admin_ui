@@ -19,7 +19,14 @@ export const ledgerApi = createApi({
         body
       }),
     }),
+    profitAndLossLedger: build.query({
+      query: (body) => ({
+        url: "/bmx/report/bmx-ledger-profit-loss",
+        method: "POST",
+        body
+      }),
+    }),
   }),
 });
 
-export const {useMyLedgerQuery,useDownlineLedgerQuery} = ledgerApi;
+export const {useMyLedgerQuery,useDownlineLedgerQuery, useLazyProfitAndLossLedgerQuery} = ledgerApi;

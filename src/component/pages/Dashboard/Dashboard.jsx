@@ -13,7 +13,7 @@ import CardItem from "../../common/carditem/CardItem";
 import CardItemWithDes from "../../common/cordItemWithdes/CardItemWithDes";
 import { useDashboardQuery } from "../../../store/service/dashboardServices";
 import ActiveMatch from "../../common/ActiveMatch/ActiveMatch";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../../../store/service/authService";
 
 const gridStyle = {
@@ -24,6 +24,13 @@ const gridStyle = {
 };
 
 const Dashboard = () => {
+
+  const nav = useNavigate()
+
+  const handleRules = ()=>{
+    nav('/rules')
+  }
+
   const data = [
     {
       image: <BiUserCircle />,
@@ -191,7 +198,7 @@ const handleLogout = ()=>{
             <div className="icon_card_section">
               <IoMdInformationCircle />
             </div>
-            <div className="tital_card_section f-w">
+            <div onClick={handleRules} className="tital_card_section f-w">
               <h2>Rules</h2>
             </div>
           </div>

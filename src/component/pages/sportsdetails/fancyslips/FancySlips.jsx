@@ -1,13 +1,18 @@
-import React from "react";
-import { Card, Space, Select, Row, Col, Table } from "antd";
+import React, { useEffect } from "react";
+import {
+  Card,
+  Space,
+  Select,
+  Row,
+  Col,
+  Table,
+  Input,
+  Form,
+  Button,
+} from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSessionFancyBetDetailQuery } from "../../../../store/service/SportDetailServices";
+import { useLazySessionFancyBetDetailQuery } from "../../../../store/service/SportDetailServices";
 
-// import "./MatchSlips.scss";
-
-const handleChange = (value) => {
-  console.log(`selected ${value}`);
-};
 
 const columns = [
   {
@@ -22,8 +27,8 @@ const columns = [
   },
   {
     title: "Type",
-    dataIndex: "type",
-    key: "type",
+    dataIndex: "marketname",
+    key: "marketname",
   },
   {
     title: "Team",
@@ -50,11 +55,7 @@ const columns = [
     dataIndex: "netpnl",
     key: "netpnl",
   },
-  // {
-  //   title: "Profit",
-  //   dataIndex: "profit",
-  //   key: "profit",
-  // },
+
   {
     title: "Volume",
     dataIndex: "volume",
@@ -62,17 +63,42 @@ const columns = [
   },
 ];
 
-const FancySlips = () => {
+const FancySlips = ({ type, name }) => {
   const nav = useNavigate();
   const handleBackClick = () => {
     nav("/Events/sports-details");
   };
 
-  const {id} = useParams()
+  const { id } = useParams();
 
-  const {data, isFetching, isLoading} = useSessionFancyBetDetailQuery({
-    matchId:id
-  })
+  const [trigger, {isLoading, data:result,isFetching }]= useLazySessionFancyBetDetailQuery();
+
+  useEffect(()=>{
+    trigger(
+      {
+        matchId: id,
+        type: type,
+        userId: "",
+      }
+    )
+  }, [type])
+
+  // console.log(result?.data?.data)
+
+  const onFinish = (values) => {
+    trigger(
+      {
+        matchId: id,
+        type: type,
+        userId: values?.username,
+      }
+    )
+  };
+
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
 
   return (
     <>
@@ -84,34 +110,39 @@ const FancySlips = () => {
               width: "100%",
             }}
             className="sport_detail"
-            title="Session Bet"
+            title={name}
             extra={<button onClick={handleBackClick}>Back</button>}>
-            <Row className="rejected_row" style={{ margin: "2px 0px 25px 28px" }}>
-              <Col xs={24} md={24} lg={5} xl={5}>
-                <Select
-                  defaultValue="Select Super"
-                  onChange={handleChange}
-                  options={[
-                    {
-                      value: "All Supers",
-                      label: "Jack",
-                    },
-                  ]}
-                />
-              </Col>
-              <Col xs={24} md={24} lg={5} xl={5}>
-                <Select
-                  defaultValue="Select Agent"
-                  onChange={handleChange}
-                  options={[
-                    {
-                      value: "All Agents",
-                      label: "All Agents",
-                    },
-                  ]}
-                />
-              </Col>
-              <Col xs={24} md={24} lg={5} xl={5}>
+            <Form
+              name="basic"
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete="off"
+              className="form_data"
+              >
+              <Row
+                className="rejected_row"
+                style={{ margin: "2px 0px 25px 28px" }}>
+                <Col xs={24} md={24} lg={6} xl={6}>
+                  <Form.Item
+                    name="username"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter user ID!",
+                      },
+                    ]}>
+                    <Input placeholder="Enter User Id"/>
+                  </Form.Item>
+                  
+                </Col>
+                <Col xs={24} md={24} lg={5} xl={5}>
+                <Form.Item>
+                    <Button type="primary" loading={isFetching} htmlType="submit">
+                      Submit
+                    </Button>
+                  </Form.Item>
+                </Col>
+                {/* <Col xs={24} md={24} lg={5} xl={5}>
                 <Select
                   defaultValue="Select Client"
                   onChange={handleChange}
@@ -122,14 +153,16 @@ const FancySlips = () => {
                     },
                   ]}
                 />
-              </Col>
-            </Row>
+              </Col> */}
+              </Row>
+            </Form>
 
-            <div className="table_section" style={{ marginBottom: "100px" }}>
-              <Table columns={columns}
-               dataSource={data?.data} 
-               loading={isFetching || isLoading}
-               />
+            <div className="table_section">
+              <Table
+                columns={columns}
+                dataSource={result?.data}
+                loading={isLoading}
+              />
             </div>
           </Card>
         </div>

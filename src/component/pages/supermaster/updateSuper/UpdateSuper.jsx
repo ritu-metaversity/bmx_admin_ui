@@ -405,15 +405,15 @@ const UpdateSuper = ({ updateName }) => {
                 </h2>
               </div>
               <Row className="super_agent  update_agent">
-                <Col span={12}>
+                {/* <Col span={12}>
                   <Form.Item
                     label="MASTER casino Share(%)"
                     name="casinoshare"
                     required={false}>
                     <Input type="number" disabled />
                   </Form.Item>
-                </Col>
-                <Col span={12}>
+                </Col> */}
+                {/* <Col span={12}>
                   <Form.Item
                     label="SUPER casino Share(%)"
                     name="supercasinoShare"
@@ -426,7 +426,7 @@ const UpdateSuper = ({ updateName }) => {
                     ]}>
                     <InputNumber className="number_field" min={0} step="0.1" />
                   </Form.Item>
-                </Col>
+                </Col> */}
                 <Col span={12}>
                   <Form.Item
                     label="MASTER casino comm(%)"
