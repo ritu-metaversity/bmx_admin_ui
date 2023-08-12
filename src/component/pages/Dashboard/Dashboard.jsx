@@ -52,7 +52,7 @@ const Dashboard = () => {
     },
     {
       image: <BiUserCircle />,
-      name: "Cash Transanction",
+      name: "Cash Transaction",
       path: "/client/cash-transanction",
       size: "14",
     },
@@ -169,7 +169,7 @@ const handleLogout = ()=>{
             <div className="icon_card_section"></div>
             <div className="tital_card_section f-w">
               <h2>{dataDes?.data?.matchcomminssion}%</h2>
-              <p>Match Comminssion</p>
+              <p>Match Commission</p>
             </div>
           </div>
         </Card.Grid>
@@ -178,7 +178,7 @@ const handleLogout = ()=>{
             <div className="icon_card_section"></div>
             <div className="tital_card_section f-w">
               <h2>{dataDes?.data?.sessioncomminssion}%</h2>
-              <p>Session Comminssion</p>
+              <p>Session Commission</p>
             </div>
           </div>
         </Card.Grid>
@@ -194,11 +194,11 @@ const handleLogout = ()=>{
           </div>
         </Card.Grid>
         <Card.Grid hoverable={false} style={gridStyle}>
-          <div className="main_card_section">
+          <div onClick={handleRules} style={{cursor:"pointer"}} className="main_card_section">
             <div className="icon_card_section">
               <IoMdInformationCircle />
             </div>
-            <div onClick={handleRules} className="tital_card_section f-w">
+            <div  className="tital_card_section f-w">
               <h2>Rules</h2>
             </div>
           </div>

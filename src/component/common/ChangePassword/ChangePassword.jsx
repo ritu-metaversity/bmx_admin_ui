@@ -30,7 +30,7 @@ const ChangePassword = ({setIsModalOpen}) => {
     trigger(chnagePassdata);
   };
 
-
+  const passw = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,15}$/;
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -63,6 +63,7 @@ const ChangePassword = ({setIsModalOpen}) => {
               required: true,
               message: "Please input your new password!",
             },
+            { pattern: passw, message: "Minimun 6 charecter, must contain letters and numbers" },
           ]}>
           <Input.Password placeholder="Enter New Password" />
         </Form.Item>

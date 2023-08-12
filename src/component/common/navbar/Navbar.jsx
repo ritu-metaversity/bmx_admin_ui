@@ -7,25 +7,23 @@ import { Form, Link, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../../../store/service/authService";
 import ChangePassword from "../ChangePassword/ChangePassword";
 
-
-
 const Navbar = () => {
-  const [trigger, { error, isLoading, isError }] = useLogoutMutation()
+  const [trigger, { error, isLoading, isError }] = useLogoutMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInfo, setUserInfo] = useState();
-  const nav = useNavigate()
-  const handleLogout = ()=>{
-    localStorage.clear()
-    nav('/')
-    trigger()
-  }
+  const nav = useNavigate();
+  const handleLogout = () => {
+    localStorage.clear();
+    nav("/");
+    trigger();
+  };
 
   const items = [
     {
       label: "Change Password",
       key: "0",
     },
-  
+
     {
       label: <p onClick={handleLogout}>Logout</p>,
       key: "1",
@@ -50,42 +48,38 @@ const Navbar = () => {
   return (
     <>
       <div className="nav1"></div>
-      {
-        localStorage.getItem("token") !== null &&  <div className="nav">
-        <div>
-          <Link to='/'>
-          <img
-            src="/Images/logo.png"
-            alt=""
-          />
-          </Link>
+      {localStorage.getItem("token") !== null && (
+        <div style={{cursor:"pointer"}} className="nav">
+          <div>
+            <Link to="/">
+              <img src="/Images/logo.png" alt="" />
+            </Link>
+          </div>
+          <Dropdown
+            menu={{
+              className: "nav_droupdown",
+              items,
+              onClick: handleModal,
+            }}
+            trigger={["click"]}>
+            <p className="user_deatils" style={{cursor:"pointer"}} onClick={(e) => e.preventDefault()}>
+              <Space className="">
+                {localStorage.getItem("userId")}
+                <DownOutlined />
+              </Space>
+            </p>
+          </Dropdown>
         </div>
-        <Dropdown
-          menu={{
-            className:"nav_droupdown",
-            items,
-            onClick: handleModal,
-          }}
-          trigger={["click"]}>
-          <p className="user_deatils" onClick={(e) => e.preventDefault()}>
-            <Space className="">
-            {localStorage.getItem("userId")}
-              <DownOutlined />
-            </Space>
-          </p>
-        </Dropdown>
-      </div>
-      }
-     
+      )}
+
       <Modal
         className="change_pass"
         title="Change Password"
         open={isModalOpen}
         onCancel={handleCancel}
-        footer={false}
-        >
+        footer={false}>
         <div className="ch_pass">
-          <ChangePassword setIsModalOpen={setIsModalOpen}/>
+          <ChangePassword setIsModalOpen={setIsModalOpen} />
         </div>
       </Modal>
     </>

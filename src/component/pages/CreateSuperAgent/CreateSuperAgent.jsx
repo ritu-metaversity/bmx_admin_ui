@@ -20,13 +20,19 @@ import { useEffect, useState } from "react";
 const CreateSuperAgent = ({ createName }) => {
   const [userData, setUserData] = useState({});
   const [commiType, setCommiType] = useState("nocomm");
+  const [LuPassword, setLuPassword] = useState("");
   const [api, contextHolder] = notification.useNotification();
 
   const commissionType = (value) => {
     setCommiType(value);
   };
 
-  // console.log(window.location.pathname.slice(8).includes("client"), "sdasdad")
+
+  const handleLupassword = (e)=>{
+    setLuPassword(e.target.value)
+  }
+
+  // const userNameRegex = /^[a-zA-Z][a-zA-Z ]+[a-zA-Z]$/;
 
   const openNotification = (mess) => {
     api.success({
@@ -52,8 +58,9 @@ const CreateSuperAgent = ({ createName }) => {
     useCreateUserMutation();
 
   const onFinish = (values) => {
+    setLuPassword("");
     const userData = {
-      userId: "",
+      userId: values?.Name,
       username: values?.Name,
       mobile: values?.mobile,
       city: "",
@@ -65,7 +72,7 @@ const CreateSuperAgent = ({ createName }) => {
       liveCasinoLock: false,
       casinoPartnership: 1.0,
       fancyLossCommission: commiType === "nocomm" ? "0" : values?.sess_comm,
-      casinoCommission: values?.cassino_Comm,
+      casinoCommission: values?.cassino_Comm || 0,
       commType: values?.Commtype,
       appId: 1,
       amount: values?.Coins,
@@ -73,6 +80,7 @@ const CreateSuperAgent = ({ createName }) => {
     };
     trigger(userData);
   };
+
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -178,7 +186,7 @@ const CreateSuperAgent = ({ createName }) => {
                       {
                         required: true,
                         message: "Please enter name",
-                      },
+                      }
                     ]}>
                     <Input type="text" placeholder="Enter full name" />
                   </Form.Item>
@@ -212,10 +220,25 @@ const CreateSuperAgent = ({ createName }) => {
                         required: true,
                         message: "Please enter valid Coins",
                       },
+                      {
+                        validator: async (_, values) => {
+                          console.log(values, "sdsadas");
+                          if (
+                            data?.data?.myBalance < values &&
+                            values != "" &&
+                            values != null
+                          ) {
+                            return Promise.reject(
+                              new Error("Please enter valid Coins")
+                            );
+                          }
+                        },
+                      },
                     ]}>
                     <InputNumber
                       className="number_field"
                       min={0}
+                      type="number"
                       placeholder="Super Agent Coins"
                     />
                   </Form.Item>
@@ -228,7 +251,7 @@ const CreateSuperAgent = ({ createName }) => {
                     rules={[
                       {
                         required: true,
-                        message: "Please contact number",
+                        message: "Please Enter Valid Mobile Number",
                       },
                       {
                         validator: async (_, names) => {
@@ -238,7 +261,7 @@ const CreateSuperAgent = ({ createName }) => {
                             names != null
                           ) {
                             return Promise.reject(
-                              new Error("Please contact number")
+                              new Error("Please Enter Valid Mobile Number")
                             );
                           }
                         },
@@ -289,7 +312,7 @@ const CreateSuperAgent = ({ createName }) => {
                         message: "Please Enter Password",
                       },
                     ]}>
-                    <Input type="password" placeholder="Password" />
+                    <Input value={LuPassword} type="password" onChange={(e)=>handleLupassword(e)} placeholder="Password" />
                   </Form.Item>
                 </Col>
               </Row>
@@ -323,17 +346,34 @@ const CreateSuperAgent = ({ createName }) => {
                       <Form.Item
                         label="Match Share(%)"
                         name="matchShare"
-                        required
                         rules={[
                           {
                             required: true,
                             message: "Invalid Match Share",
                           },
+                          {
+                            validator: async (_, values) => {
+                              if (
+                                data?.data?.myShare < values &&
+                                values != "" &&
+                                values != null
+                              ) {
+                                return Promise.reject(
+                                  new Error(
+                                    "Match share can not be more than" +
+                                      " " +
+                                      `${data?.data?.myShare}`
+                                  )
+                                );
+                              }
+                            },
+                          },
                         ]}>
                         <InputNumber
                           className="number_field"
                           min={0}
-                          step="0.1"
+                          step="1"
+                          type="number"
                           placeholder="Super Agent Match Share"
                         />
                       </Form.Item>
@@ -358,7 +398,7 @@ const CreateSuperAgent = ({ createName }) => {
                     rules={[
                       {
                         required: true,
-                        message: "",
+                        message: "Please select commission type",
                       },
                     ]}>
                     <Select
@@ -392,11 +432,25 @@ const CreateSuperAgent = ({ createName }) => {
                             required: true,
                             message: "Please enter odds commission",
                           },
+                          {
+                            validator: async (_, values) => {
+                              if (
+                                data?.data?.myMatchCommission < values &&
+                                values != "" &&
+                                values != null
+                              ) {
+                                return Promise.reject(
+                                  new Error("Please enter odds commission")
+                                );
+                              }
+                            },
+                          },
                         ]}>
                         <InputNumber
                           className="number_field"
                           min={0}
                           step="0.1"
+                          type="number"
                           placeholder="Match commission"
                         />
                       </Form.Item>
@@ -422,24 +476,48 @@ const CreateSuperAgent = ({ createName }) => {
                             required: true,
                             message: "Please enter session commission",
                           },
+                          {
+                            validator: async (_, values) => {
+                              if (
+                                data?.data?.mySessionCommission < values &&
+                                values != "" &&
+                                values != null
+                              ) {
+                                return Promise.reject(
+                                  new Error("Please enter session commission")
+                                );
+                              }
+                            },
+                          },
                         ]}>
                         <InputNumber
                           className="number_field"
                           min={0}
                           step="0.1"
+                          type="number"
                           placeholder="session commission"
                         />
                       </Form.Item>
                     </Col>
                   </>
                 )}
+                <Col span={12}>
+                </Col>
+                <Col span={12}>
+                  <Form.Item 
+                    wrapperCol={{offset:19 ,span: 24}}>
+                    <Button type="primary" htmlType="submit">
+                      Submit
+                    </Button>
+                  </Form.Item>
+                </Col>
               </Row>
 
-              <div>
+              {/* <div>
                 <h2 className="match_share">{createName} Casino Commission</h2>
               </div>
               <Row className="super_agent sub_super">
-                {/* <Col span={12}>
+                <Col span={12}>
                   <Form.Item
                     label="My Casino Share(%)"
                     name="MyCasinoShare"
@@ -470,7 +548,7 @@ const CreateSuperAgent = ({ createName }) => {
                       placeholder="Super Agent Casino Share"
                     />
                   </Form.Item>
-                </Col> */}
+                </Col>
                 <Col span={12}>
                   <Form.Item
                     label="My Casino comm(%)"
@@ -507,7 +585,7 @@ const CreateSuperAgent = ({ createName }) => {
                     </Button>
                   </Form.Item>
                 </Col>
-              </Row>
+              </Row> */}
             </div>
           </Form>
         </div>

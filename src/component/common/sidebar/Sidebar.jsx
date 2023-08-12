@@ -178,7 +178,7 @@ const Sidebar = (props) => {
             {
               key: "5",
               icon: <BiUserCircle />,
-              label: "Cash Transanction",
+              label: "Cash Transaction",
               children: [
                 {
                   label: (
@@ -399,7 +399,7 @@ const Sidebar = (props) => {
               {
                 key: "5",
                 icon: <BiUserCircle />,
-                label: "Cash Transanction",
+                label: "Cash Transaction",
                 children: [
                   {
                     

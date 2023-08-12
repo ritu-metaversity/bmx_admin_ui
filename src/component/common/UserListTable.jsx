@@ -12,6 +12,8 @@ import { useUpDateStatusMutation } from "../../store/service/createUserServices"
 import { useLazySuperuserListQuery } from "../../store/service/superMasteruseListServices";
 import { usePartnershipMutation } from "../../store/service/partnershipServices";
 import moment from "moment";
+import Deposit from "./Deposit";
+import Withdraw from "./Withdraw";
 
 const routeFromUSerType = {
   0: "/client/list-agent/",
@@ -23,6 +25,7 @@ const UserListTable = ({ userType, Listname }) => {
   const [activeStatus, setActiveStatus] = useState();
   const [isDepositeModalOpen, SetisDepositeModalOpen] = useState(false);
   const [WithdrawnModal, SetWithdrawnModal] = useState(false);
+  const [balance, setBalance] = useState();
   const [parentUserId, setParentUserId] = useState();
   const [userList, setUserList] = useState([]);
   const [data, setData] = useState();
@@ -116,8 +119,13 @@ const UserListTable = ({ userType, Listname }) => {
     setTotalPage(results?.data?.data?.totalPages);
   }, [results?.data, paginationTotal, indexData]);
 
-  const handleParentId = (val) => {
+
+  const [userIdData, setUserIdData] = useState("")
+
+  const handleParentId = (val, bal, user) => {
     setParentUserId(val);
+    setBalance(bal)
+    setUserIdData(user)
   };
 
   const handleEditData = (val, active) => {
@@ -272,13 +280,15 @@ const UserListTable = ({ userType, Listname }) => {
                         <PlusOutlined />
                       </div>
                     </td>
-                    <td onClick={() => handleParentId(res?.id)}>
+                    <td onClick={() => handleParentId(res?.id, res?.availablebalance, res?.userid)}>
                       <Dropdown
                         className="droup_menu"
+                        
                         menu={{ items, className: "menu_data" }}
                         trigger={["click"]}>
                         <div
                           className="droup_link"
+                          style={{cursor:"pointer"}}
                           onClick={() =>
                             handleEditData(res?.userid, res?.active)
                           }>
@@ -340,26 +350,17 @@ const UserListTable = ({ userType, Listname }) => {
         className="modal_deposit"
         title={
           <h1>
-            WBT99 <span>Deposite Chips</span>
+            Deposite Chips
           </h1>
         }
         open={isDepositeModalOpen}
         onOk={handleDepositeOk}
         onCancel={handleDepositeCancel}
-        okText="Submit"
-        cancelText="Return">
-        <div>
-          <p>Curr Coins : 2000</p>
-        </div>
-        <div className="form_modals">
-          <Form>
-            <Form.Item
-              name="number"
-            >
-              <Input type="number" />
-            </Form.Item>
-          </Form>
-        </div>
+        okButtonProps={{ style: { display: 'none' } }}
+        cancelButtonProps={{ style: { display: 'none' } }}
+        footer={null}
+        >
+        <Deposit handleClose={()=>SetisDepositeModalOpen(false)} userIdData={userIdData} balance={balance}/>
       </Modal>
 
       <Modal
@@ -370,20 +371,12 @@ const UserListTable = ({ userType, Listname }) => {
           </h1>
         }
         open={WithdrawnModal}
-        onOk={handleWithdrawnOk}
-        onCancel={handleWithdrawnCancel}
-        okText="Submit"
-        cancelText="Return">
-        <div>
-          <p>Curr. Coins 2000</p>
-        </div>
-        <div className="form_modals">
-          <Form>
-            <Form.Item name="number">
-              <Input placeholder="chips" type="number" />
-            </Form.Item>
-          </Form>
-        </div>
+        onOk={handleDepositeOk}
+        onCancel={handleDepositeCancel}
+        okButtonProps={{ style: { display: 'none' } }}
+        cancelButtonProps={{ style: { display: 'none' } }}
+        footer={null}>
+       <Withdraw userIdData={userIdData} handleClose={()=>SetWithdrawnModal(false)} balance={balance}/>
       </Modal>
     </div>
   );
