@@ -91,7 +91,7 @@ const Main = () => {
               <Route path="/client/create-agent" element={<CreateSuperAgent createName={"Master"}/>}/>
               <Route path="/client/create-dealer" element={<CreateSuperAgent createName={"Dealer"}/>} />
               <Route path="/client/create-client" element={<CreateSuperAgent createName={"Client"}/>} />
-              <Route path="/client/limitplusminus-super" element={<SuperAgentLimitDetails />} />
+              <Route path="/client/limitplusminus-super/:id" element={<SuperAgentLimitDetails />} />
               <Route path="/client/limitplusminus-agent" element={<AgentLimitDetails />} />
              
               <Route path="/client/limitplusminus-client" element={<ClientLimitDetails />}/>

@@ -171,6 +171,10 @@ const UserListTable = ({ userType, Listname }) => {
       key: "3",
     },
     {
+      label: <Link to={`/client/limitplusminus-super/${data}`}>Update Limit</Link>,
+      key: "4",
+    },
+    {
       label: <Link to={`/account-statement/${data}`}>Statement</Link>,
       key: "4",
     },

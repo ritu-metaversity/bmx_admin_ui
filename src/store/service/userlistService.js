@@ -35,7 +35,21 @@ export const userlistApi = createApi({
     }),
     depositAndWithdraw: build.query({
       query: (body) => ({
-        url: "dwc/depositwithdrawdata",
+        url: "/dwc/depositwithdrawdata",
+        method: "POST",
+        body
+      }),
+    }),
+    addLimit: build.mutation({
+      query: (body) => ({
+        url: "/dwc/deposit-chips-pnl",
+        method: "POST",
+        body
+      }),
+    }),
+    minusLimit: build.mutation({
+      query: (body) => ({
+        url: "/dwc/withdraw-chips-pnl",
         method: "POST",
         body
       }),
@@ -43,4 +57,4 @@ export const userlistApi = createApi({
   }),
 });
 
-export const {useUserListQuery, useOdsPnlQuery,useDepositMutation, useWithdrawMutation, useDepositAndWithdrawQuery} = userlistApi;
+export const {useUserListQuery, useOdsPnlQuery,useDepositMutation, useWithdrawMutation, useDepositAndWithdrawQuery,useAddLimitMutation,useMinusLimitMutation} = userlistApi;
