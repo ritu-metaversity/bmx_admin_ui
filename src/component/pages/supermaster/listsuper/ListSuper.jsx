@@ -55,11 +55,7 @@ const ListSuper = ({userTyep, Listname}) => {
                 </Link>
               </p>
             </div>
-            <div>
-              <p>
-                <Link to="/client/limitplusminus-super">Update Limit</Link>
-              </p>
-            </div>
+            <div></div>
           </div>
           <div className="table_section sport_detail m-0">
              <UserListTable Listname={Listname} userType={userTyep}/>

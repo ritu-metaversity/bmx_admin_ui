@@ -10,8 +10,8 @@ function App() {
   return (
     <Provider store={store}>
       <div>
-
-<Main/>      </div>
+        <Main />{" "}
+      </div>
     </Provider>
   );
 }
