@@ -34,16 +34,19 @@ const SportsDetails = () => {
   const [totalPage, setTotalPage] = useState();
   const [paginationTotal, setPaginationTotal] = useState(10);
   const [indexData, setIndexData] = useState(0);
+  const [dataNameee, setDataNameee] = useState("");
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
   const getMatchId = (matchId, inPlay, sportName) => {
     setMatchId(matchId);
+    setDataNameee(sportName)
     dispatch(setData(sportName));
     setInPlay(inPlay);
   };
 
+  const nav = useNavigate()
 
   const items = [
     {
@@ -59,9 +62,9 @@ const SportsDetails = () => {
     },
     {
       label: (
-        <Link className="title_section" to={`/plus-minus-report/${matchId}`}>
+        <p className="title_section" onClick={() => nav(`/plus-minus-report/${matchId}`, { state: { dataNameee } })}>
           Match and Session Plus Minus
-        </Link>
+        </p>
       ),
       key: "1",
     },

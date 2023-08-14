@@ -65,4 +65,20 @@ table {
   width: 100%;
   min-width: 100%;
   max-width: 100%;
+  overflow-x:scroll;
 }
+.match_table {
+  .ant-checkbox-checked{
+    .ant-checkbox-inner {
+      background-color: #74766f !important;
+      border-color: #74766f !important;
+    }
+  }
+  
+ 
+}
+
+.ant-checkbox-inner{&::after{
+  background-color: #74766f !important;
+  
+}}

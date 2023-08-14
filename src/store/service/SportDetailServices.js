@@ -26,7 +26,14 @@ export const sportDetailsApi = createApi({
         body,
       }),
     }),
-    })
+    sportPlusMinus: build.query({
+      query: (body) => ({
+        url: "/bmx/report/match-and-fancy-plus-minus",
+        method: "POST",
+        body,
+      }),
+    }),
+  })
 });
 
-export const {useSportDetailQuery,useRejectedBetDetailQuery,useLazySessionFancyBetDetailQuery} = sportDetailsApi;
+export const { useSportDetailQuery, useRejectedBetDetailQuery, useLazySessionFancyBetDetailQuery, useSportPlusMinusQuery } = sportDetailsApi;
