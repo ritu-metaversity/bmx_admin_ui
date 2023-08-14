@@ -23,9 +23,10 @@ const UpdateSuper = ({ updateName }) => {
   const [api, contextHolder] = notification.useNotification();
   const [commType, setCommType] = useState("");
 
+  const [form]= Form.useForm();
   const [data, setData] = useState();
 
-  console.log(commType, "commType")
+ 
 
   const { id } = useParams();
   const [trigger, { data: updateData, isLoading, error }] =
@@ -52,14 +53,14 @@ const UpdateSuper = ({ updateName }) => {
   const passw = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,}$/;
 
   const onFinish = (values) => {
-    console.log(values?.comm_type, "dfdsfsd");
+    // console.log(values?.comm_type, "dfdsfsd");
     const userData = {
       userId: id,
       userName: values?.name,
       phoneNumber: values?.number,
       password: values?.password,
       luPassword: values?.lupassword,
-      status: values?.status == "inActive" ? false: true,
+      status: values?.status == "inActive" ? false : true,
       commType: values?.comm_type == "bbb" ? "bbb" : "no-comm",
       matchComm: values?.Supermatchcomm || 0,
       sessionComm: values?.sess_comm || 0,
@@ -68,17 +69,16 @@ const UpdateSuper = ({ updateName }) => {
     };
 
     trigger(userData);
+    form?.resetFields();
+
   };
-
-
-  console.log(commType, "dsds")
-
   useEffect(() => {
     if (updateData?.status === true) {
       getData({
         userId: id,
       });
       openNotification(updateData?.message);
+      form?.resetFields();
     } else if (updateData?.status === false || error?.data?.message) {
       openNotificationError(updateData?.message || error?.data?.message);
     }
@@ -88,8 +88,6 @@ const UpdateSuper = ({ updateName }) => {
     console.log("Failed:", errorInfo);
   };
   const { Option } = Select;
-
-  const userData = useSelector(globalSelector);
 
   const [getData, resuilt] = useLazyGetUserQuery();
 
@@ -110,7 +108,6 @@ const UpdateSuper = ({ updateName }) => {
 
   const onCommissionType = (e) => {
     setCommType(e);
-
   };
 
   return (
@@ -138,11 +135,12 @@ const UpdateSuper = ({ updateName }) => {
             ""
           )}
           <Form
+            form={form}
             className="form_data"
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
+            // initialValues={{ remember: true }} 
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             onFocus={onFinishFailed}
@@ -209,15 +207,15 @@ const UpdateSuper = ({ updateName }) => {
               },
               {
                 name: "commType",
-                value: commType
+                value:
+                  data?.data?.parentMatchComm == 0 ||
+                  data?.data?.parentSessionComm == 0
+                    ? "no-comm"
+                    : "bbb",
               },
               {
                 name: "comm_type",
-                value:
-                  resuilt?.data?.data.matchComm == 0 ||
-                  resuilt?.data?.data.sessionComm == 0
-                    ? "No Comm"
-                    : "Bet by bet",
+                value: commType,
               },
               {
                 name: "status",
@@ -291,13 +289,14 @@ const UpdateSuper = ({ updateName }) => {
                     label="Lu Password"
                     name="lupassword"
                     required
+                    
                     rules={[
                       {
                         required: true,
                         message: "Please Enter Password!",
                       },
                     ]}>
-                    <Input type="text" placeholder="Password" />
+                    <Input type="text" autoComplete="off" placeholder="Password" />
                   </Form.Item>
                   <Form.Item
                     name="status"
@@ -311,9 +310,7 @@ const UpdateSuper = ({ updateName }) => {
                     <Select
                       // placeholder="Select a option and change input text above"
                       // onChange={onGenderChange}
-                      value={
-                        data?.data?.status ? "active" : "inActive"
-                      }
+                      value={data?.data?.status ? "active" : "inActive"}
                       allowClear>
                       <Option value={"active"}>Active</Option>
                       <Option value={"inActive"}>InActive</Option>
@@ -323,7 +320,9 @@ const UpdateSuper = ({ updateName }) => {
                 <Col span={12}></Col>
               </Row>
               <div>
-                <h2 style={{marginLeft:"0px"}} className="update_agent_text">Match Share and Comm</h2>
+                <h2 style={{ marginLeft: "0px" }} className="update_agent_text">
+                  Match Share and Comm
+                </h2>
               </div>
               <Row className="super_agent  update_agent">
                 <Col span={12}>
@@ -416,7 +415,8 @@ const UpdateSuper = ({ updateName }) => {
                           {
                             validator: async (_, values) => {
                               if (
-                                resuilt?.data?.data.parentSessionComm < values &&
+                                resuilt?.data?.data.parentSessionComm <
+                                  values &&
                                 values != "" &&
                                 values != null
                               ) {
@@ -424,7 +424,8 @@ const UpdateSuper = ({ updateName }) => {
                                   new Error("Please enter session commission")
                                 );
                               }
-                            }},
+                            },
+                          },
                         ]}>
                         <InputNumber
                           type="number"
@@ -435,8 +436,9 @@ const UpdateSuper = ({ updateName }) => {
                       </Form.Item>
                     </Col>
                   </>
-                ):""
-              }
+                ) : (
+                  ""
+                )}
 
                 <Col span={12}></Col>
                 <Col span={12}>

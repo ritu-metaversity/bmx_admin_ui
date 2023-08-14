@@ -11,8 +11,11 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import Sider from "antd/es/layout/Sider";
 import { Link, json, useNavigate } from "react-router-dom";
 
+const rootSubmenuKeys = ["1", "2", "3", "4", "5", "6", "7"];
+
 const Sidebar = (props) => {
   const [collapsed, setCollapsed] = useState(false);
+  const [openKeys, setOpenKeys] = useState(["1"]);
 
   props.collll(collapsed);
 
@@ -29,10 +32,19 @@ const Sidebar = (props) => {
   //   console.log("helooo")
   // }
 
-
-  const nav = useNavigate()
+  const nav = useNavigate();
 
   const userType = localStorage.getItem("userType");
+
+  const onOpenChange = (keys) => {
+    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+      setOpenKeys(keys);
+    } else {
+      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+    }
+  };
+  // console.log(openKeys, "fafasda")
 
   return (
     <>
@@ -52,7 +64,9 @@ const Sidebar = (props) => {
             color: "#fff",
           }}
         />
-        <div onClick={()=>nav("/dashboard")} className={`bm_side_logo ${collapsed ? "d-none" : ""}`}>
+        <div
+          onClick={() => nav("/dashboard")}
+          className={`bm_side_logo ${collapsed ? "d-none" : ""}`}>
           <img src="/Images/logo.png" alt="" />
         </div>
       </div>
@@ -62,16 +76,24 @@ const Sidebar = (props) => {
         collapsible
         collapsed={collapsed}
         className={`side_bar coll desk_side`}
-        style={{ background: "#74766f",height: "100vh" ,minHeight: "100vh" ,maxHeight: "100vh", overflowY: "auto" }}>
+        style={{
+          background: "#74766f",
+          height: "100vh",
+          minHeight: "100vh",
+          maxHeight: "100vh",
+          overflowY: "auto",
+        }}>
         <Menu
           theme=""
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          openKeys={openKeys}
+          onOpenChange={onOpenChange}
+          defaultSelectedKeys={openKeys}
           items={[
             {
               key: "1",
               icon: <AiOutlineHome />,
-              label: <Link to="/dashboard">Dashboard</Link>,
+              label: <Link to="/dashboard" onClick={()=>setOpenKeys([])}>Dashboard</Link>,
               // onClick:{handleDashBoard}
             },
             {
@@ -84,25 +106,12 @@ const Sidebar = (props) => {
                   label: <Link to="/client/list-super">Super Master</Link>,
                 },
                 {
-                  className: `${
-                    userType === "0"
-                      ? ""
-                      : "d-none"
-                  }`,
+                  className: `${userType === "0" ? "" : "d-none"}`,
                   label: <Link to="/client/list-agent">Master</Link>,
                 },
                 {
-                  className:`${
-                    userType === "1"
-                      ? ""
-                      : "d-none"
-                  }`,
-                  label: (
-                    <Link
-                      to="/client/list-agent">
-                      Dealer
-                    </Link>
-                  ),
+                  className: `${userType === "1" ? "" : "d-none"}`,
+                  label: <Link to="/client/list-agent">Dealer</Link>,
                 },
                 {
                   label: <Link to="client/list-client">Client</Link>,
@@ -152,22 +161,14 @@ const Sidebar = (props) => {
                 },
                 {
                   className: `${userType != "5" ? "d-none" : ""}`,
-                  label: <Link  to="/client/ledger-super">Super Ledger</Link>,
+                  label: <Link to="/client/ledger-super">Super Ledger</Link>,
                 },
                 {
-                  className: `${
-                    userType === "0"
-                      ? ""
-                      : "d-none"
-                  }`,
+                  className: `${userType === "0" ? "" : "d-none"}`,
                   label: <Link to="/client/ledger-master">Master Ledger</Link>,
                 },
                 {
-                  className:`${
-                    userType === "1"
-                      ? ""
-                      : "d-none"
-                  }`,
+                  className: `${userType === "1" ? "" : "d-none"}`,
                   label: <Link to="/client/ledger-agent">Deler Ledger</Link>,
                 },
                 {
@@ -186,11 +187,7 @@ const Sidebar = (props) => {
                   ),
                 },
                 {
-                  className:`${
-                    userType === "1"
-                      ? ""
-                      : "d-none"
-                  }`,
+                  className: `${userType === "1" ? "" : "d-none"}`,
                   label: (
                     <Link to="/client/txn-agent">Debit/Credit Entry(A)</Link>
                   ),
@@ -202,11 +199,7 @@ const Sidebar = (props) => {
                   ),
                 },
                 {
-                  className: `${
-                    userType === "0"
-                      ? ""
-                      : "d-none"
-                  }`,
+                  className: `${userType === "0" ? "" : "d-none"}`,
                   label: (
                     <Link to="/client/txn-master">Debit/Credit Entry(M)</Link>
                   ),
@@ -240,7 +233,7 @@ const Sidebar = (props) => {
             {
               key: "7",
               icon: <SlDiamond />,
-              label: <Link to="/markets">WBT Setting</Link>,
+              label: <Link to="/markets" onClick={()=>setOpenKeys([])}>WBT Setting</Link>,
             },
           ]}
         />
@@ -266,13 +259,15 @@ const Sidebar = (props) => {
           <Menu
             theme=""
             mode="inline"
-            defaultSelectedKeys={["1"]}
+            openKeys={openKeys}
+            onOpenChange={onOpenChange}
+            defaultSelectedKeys={openKeys}
             items={[
               {
                 key: "1",
                 icon: <AiOutlineHome />,
                 label: (
-                  <Link to="/dashboard" onClick={() => setOpen(false)}>
+                  <Link to="/dashboard" onClick={(() => {setOpen(false); setOpenKeys([])})}>
                     Dashboard
                   </Link>
                 ),
@@ -284,31 +279,42 @@ const Sidebar = (props) => {
                 children: [
                   {
                     className: `${userType != "5" ? "d-none" : ""}`,
-                    label: <Link to="/client/list-super" onClick={()=>setOpen(false)}>Super Master</Link>,
-                  },
-                  {
-                    className: `${
-                      userType === "0"
-                        ? ""
-                        : "d-none"
-                    }`,
-                    label: <Link to="/client/list-agent" onClick={()=>setOpen(false)} >Master</Link>,
-                  },
-                  {
-                    className:`${
-                      userType === "1"
-                        ? ""
-                        : "d-none"
-                    }`,
                     label: (
                       <Link
-                        to="/client/list-agent" onClick={()=>setOpen(false)}> 
+                        to="/client/list-super"
+                        onClick={() => setOpen(false)}>
+                        Super Master
+                      </Link>
+                    ),
+                  },
+                  {
+                    className: `${userType === "0" ? "" : "d-none"}`,
+                    label: (
+                      <Link
+                        to="/client/list-agent"
+                        onClick={() => setOpen(false)}>
+                        Master
+                      </Link>
+                    ),
+                  },
+                  {
+                    className: `${userType === "1" ? "" : "d-none"}`,
+                    label: (
+                      <Link
+                        to="/client/list-agent"
+                        onClick={() => setOpen(false)}>
                         Dealer
                       </Link>
                     ),
                   },
                   {
-                    label: <Link to="client/list-client" onClick={()=>setOpen(false)}>Client</Link>,
+                    label: (
+                      <Link
+                        to="client/list-client"
+                        onClick={() => setOpen(false)}>
+                        Client
+                      </Link>
+                    ),
                   },
                 ],
               },
@@ -366,33 +372,61 @@ const Sidebar = (props) => {
                 label: "Ledger",
                 children: [
                   {
-                    label: <Link onClick={() => setOpen(false)} to="/Events/matchledger">Profit/Loss</Link>,
+                    label: (
+                      <Link
+                        onClick={() => setOpen(false)}
+                        to="/Events/matchledger">
+                        Profit/Loss
+                      </Link>
+                    ),
                   },
                   {
-                    label: <Link onClick={() => setOpen(false)} to="/client/my-ledger">My Ledger</Link>,
+                    label: (
+                      <Link
+                        onClick={() => setOpen(false)}
+                        to="/client/my-ledger">
+                        My Ledger
+                      </Link>
+                    ),
                   },
                   {
                     className: `${userType != "5" ? "d-none" : ""}`,
-                    label: <Link onClick={() => setOpen(false)}  to="/client/ledger-super">Super Ledger</Link>,
+                    label: (
+                      <Link
+                        onClick={() => setOpen(false)}
+                        to="/client/ledger-super">
+                        Super Ledger
+                      </Link>
+                    ),
                   },
                   {
-                    className: `${
-                      userType === "0"
-                        ? ""
-                        : "d-none"
-                    }`,
-                    label: <Link onClick={() => setOpen(false)} to="/client/ledger-master">Master Ledger</Link>,
+                    className: `${userType === "0" ? "" : "d-none"}`,
+                    label: (
+                      <Link
+                        onClick={() => setOpen(false)}
+                        to="/client/ledger-master">
+                        Master Ledger
+                      </Link>
+                    ),
                   },
                   {
-                    className:`${
-                      userType === "1"
-                        ? ""
-                        : "d-none"
-                    }`,
-                    label: <Link onClick={() => setOpen(false)} to="/client/ledger-agent">Deler Ledger</Link>,
+                    className: `${userType === "1" ? "" : "d-none"}`,
+                    label: (
+                      <Link
+                        onClick={() => setOpen(false)}
+                        to="/client/ledger-agent">
+                        Deler Ledger
+                      </Link>
+                    ),
                   },
                   {
-                    label: <Link onClick={() => setOpen(false)} to="/client/ledger-client">Client Ledger</Link>,
+                    label: (
+                      <Link
+                        onClick={() => setOpen(false)}
+                        to="/client/ledger-client">
+                        Client Ledger
+                      </Link>
+                    ),
                   },
                 ],
               },
@@ -402,7 +436,6 @@ const Sidebar = (props) => {
                 label: "Cash Transaction",
                 children: [
                   {
-                    
                     label: (
                       <Link
                         to="/client/txn-client"
@@ -412,11 +445,7 @@ const Sidebar = (props) => {
                     ),
                   },
                   {
-                    className:`${
-                      userType === "1"
-                        ? ""
-                        : "d-none"
-                    }`,
+                    className: `${userType === "1" ? "" : "d-none"}`,
                     label: (
                       <Link
                         to="/client/txn-agent"
@@ -436,11 +465,7 @@ const Sidebar = (props) => {
                     ),
                   },
                   {
-                      className: `${
-                        userType === "0"
-                          ? ""
-                          : "d-none"
-                      }`,
+                    className: `${userType === "0" ? "" : "d-none"}`,
                     label: (
                       <Link
                         to="/client/txn-master"
@@ -489,7 +514,7 @@ const Sidebar = (props) => {
                 key: "7",
                 icon: <SlDiamond />,
                 label: (
-                  <Link to="/markets" onClick={() => setOpen(false)}>
+                  <Link to="/markets" onClick={() => {setOpen(false); setOpenKeys([])}}>
                     WBT Setting
                   </Link>
                 ),

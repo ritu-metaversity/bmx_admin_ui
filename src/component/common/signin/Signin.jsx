@@ -1,9 +1,8 @@
 import "./Signin.scss";
 import { Button, Form, Input, message } from "antd";
-import axios from "axios";
 import { useLoginMutation } from "../../../store/service/authService";
 import { useEffect } from "react";
-import { json, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
   const [trigger, { data: authData, error, isLoading }] =
@@ -17,6 +16,7 @@ const Signin = () => {
     } else if (authData?.token !== null && authData?.token !== undefined) {
       localStorage.setItem("token", authData?.token);
       // localStorage.setItem("userId", JSON.stringify(authData));
+      localStorage.setItem("rulesStatus", true)
       localStorage.setItem("userId", authData?.userId);
       localStorage.setItem("userType", authData?.userType);
       nav("/dashboard");

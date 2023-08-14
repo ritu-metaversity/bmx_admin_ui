@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 const dateFormat = "YYYY/MM/DD";
 
-const AgentTransactions = ({ userType }) => {
+const AgentTransactions = ({ userType, Listname }) => {
   const [api, contextHolder] = notification.useNotification();
   const [userTranstionData, setUserTranstionData] = useState([]);
 
@@ -36,7 +36,7 @@ const AgentTransactions = ({ userType }) => {
   //   });
   // }, [result?.data]);
 
-  const [createTran, { data: createTranstions, error }] =
+  const [createTran, { data: createTranstions, error, isLoading }] =
     useCreateTransactionMutation();
 
 
@@ -106,7 +106,6 @@ const AgentTransactions = ({ userType }) => {
 
   }, [createTranstions, error])
 
-  console.log(result?.data?.results?.length, "dasdsad")
 
   useEffect(()=>{
     if(result?.data?.data !== undefined){
@@ -116,14 +115,12 @@ const AgentTransactions = ({ userType }) => {
   }, [result?.data])
   
 
-  console.log(userTranstionData, "dsadasdas")
-
   return (
     <>
     {contextHolder}
       <Card
         className="sport_detail ledger_data"
-        title="Agent Transactions"
+        title={`${Listname} Transactions`}
         extra={<button onClick={handleBackbtn}>Back</button>}>
         <div className="my_ledger">
           <Form
@@ -246,7 +243,7 @@ const AgentTransactions = ({ userType }) => {
               </Col>
             </Row>
             <Form.Item wrapperCol={{ span: 24 }}>
-              <Button type="primary" htmlType="submit">
+              <Button loading={isLoading} type="primary" htmlType="submit">
                 Submit
               </Button>
             </Form.Item>

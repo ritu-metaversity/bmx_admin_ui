@@ -19,10 +19,10 @@ const LiveReport = () => {
   const { id } = useParams();
 
   const { data, isLoading } = useEventDetailQuery(
-    id
-    //   {
-    //   pollingInterval: 1000,
-    // }
+    id,
+      {
+      pollingInterval: 1000,
+    }
   );
 
   useEffect(() => {

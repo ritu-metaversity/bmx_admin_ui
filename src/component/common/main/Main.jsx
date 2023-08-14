@@ -50,7 +50,7 @@ import DeletedLenden from "../../pages/CashTransanction/DeletedLenden/DeletedLen
 import Rulespage from "../../pages/RulesPage/Rulespage";
 
 
-const Main = () => {
+const Main = ({setOpenRules}) => {
   return (
     <>
        <Routes>
@@ -91,7 +91,7 @@ const Main = () => {
               <Route path="/client/create-agent" element={<CreateSuperAgent createName={"Master"}/>}/>
               <Route path="/client/create-dealer" element={<CreateSuperAgent createName={"Dealer"}/>} />
               <Route path="/client/create-client" element={<CreateSuperAgent createName={"Client"}/>} />
-              <Route path="/client/limitplusminus-super" element={<SuperAgentLimitDetails />} />
+              <Route path="/client/limitplusminus-super/:id" element={<SuperAgentLimitDetails />} />
               <Route path="/client/limitplusminus-agent" element={<AgentLimitDetails />} />
              
               <Route path="/client/limitplusminus-client" element={<ClientLimitDetails />}/>
@@ -105,10 +105,10 @@ const Main = () => {
               <Route path="/Events/matchledger" element={<MatchLedger/>}/>
               <Route path="/client/cash-transanction" element={<CashTransanction/>}/>
               {/* <Route path="/client/txn-super" element={<SuperAgentTransactions/>}/> */}
-              <Route path="/client/txn-super" element={<AgentTransactions  userType={0}/>}/>
-              <Route path="/client/txn-agent" element={<AgentTransactions userType={2}/>}/>
-              <Route path="/client/txn-client" element={<AgentTransactions userType={3}/>}/>
-              <Route path="/client/txn-master" element={<AgentTransactions userType={2}/>}/>
+              <Route path="/client/txn-super" element={<AgentTransactions  userType={0} Listname={"Super Agent"}/>}/>
+              <Route path="/client/txn-agent" element={<AgentTransactions userType={2} Listname={"Delear"}/>}/>
+              <Route path="/client/txn-client" element={<AgentTransactions userType={3} Listname={"Client"}/>}/>
+              <Route path="/client/txn-master" element={<AgentTransactions userType={1} Listname={"Master"}/>}/>
               {/* <Route path="/client/txn-client" element={<ClientTransactions/>}/> */}
               <Route path="/markets" element={<Settings/>}/>
               <Route path="/account-statement" element={<AccountStatement/>}/>

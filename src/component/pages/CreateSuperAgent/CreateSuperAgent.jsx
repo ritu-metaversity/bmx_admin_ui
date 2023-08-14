@@ -12,8 +12,8 @@ import {
   notification,
 } from "antd";
 import {
-  useCreateUserDataQuery,
   useCreateUserMutation,
+  useLazyCreateUserDataQuery,
 } from "../../../store/service/createUserServices";
 import { useEffect, useState } from "react";
 
@@ -22,11 +22,13 @@ const CreateSuperAgent = ({ createName }) => {
   const [commiType, setCommiType] = useState("nocomm");
   const [LuPassword, setLuPassword] = useState("");
   const [api, contextHolder] = notification.useNotification();
+  const [form]= Form.useForm();
+
+  // console.log(form, "ddssdds")
 
   const commissionType = (value) => {
     setCommiType(value);
   };
-
 
   const handleLupassword = (e)=>{
     setLuPassword(e.target.value)
@@ -54,13 +56,18 @@ const CreateSuperAgent = ({ createName }) => {
   const passw = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,15}$/;
   var mobileNum = /^[6-9][0-9]{9}$/;
 
-  const [trigger, { data: UserList, error, isLoading }] =
-    useCreateUserMutation();
+  const [createUser, { data: UserList, error, isLoading }] =useCreateUserMutation();
+  const [trigger, {data}] = useLazyCreateUserDataQuery();
+
+
+  useEffect(() => {
+   trigger();
+ }, [data?.data]);
 
   const onFinish = (values) => {
     setLuPassword("");
     const userData = {
-      userId: values?.Name,
+      userId: "",
       username: values?.Name,
       mobile: values?.mobile,
       city: "",
@@ -78,7 +85,7 @@ const CreateSuperAgent = ({ createName }) => {
       amount: values?.Coins,
       reference: values?.reference,
     };
-    trigger(userData);
+    createUser(userData);
   };
 
 
@@ -87,8 +94,11 @@ const CreateSuperAgent = ({ createName }) => {
   };
 
   useEffect(() => {
+    console.log(UserList,"afdasdfasdf");
     if (UserList?.status === true) {
       openNotification(UserList?.message);
+      form?.resetFields();
+      trigger();
     } else if (UserList?.status === false || error?.data?.message) {
       openNotificationError(UserList?.message || error?.data?.message);
     }
@@ -102,11 +112,11 @@ const CreateSuperAgent = ({ createName }) => {
     nav("/client/list-super");
   };
 
-  const { data } = useCreateUserDataQuery();
+
 
   useEffect(() => {
     setUserData(data?.data);
-  }, [data?.data]);
+  }, [data?.data, UserList?.status]);
 
   return (
     <>
@@ -134,10 +144,11 @@ const CreateSuperAgent = ({ createName }) => {
           )}
           <Form
             className="form_data"
+            form={form}
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
+            // initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
@@ -188,7 +199,11 @@ const CreateSuperAgent = ({ createName }) => {
                         message: "Please enter name",
                       }
                     ]}>
-                    <Input type="text" placeholder="Enter full name" />
+                    <Input type="text" placeholder="Enter full name" onKeyDown={e=>{
+                      if(!e.key.match(/^[a-zA-z ]$/) && e.key.length===1){
+                        e.preventDefault()
+                      }
+                    }}   />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -271,6 +286,11 @@ const CreateSuperAgent = ({ createName }) => {
                       className="number_field"
                       min={0}
                       type="number"
+                      onKeyDown={e=>{
+                        if(!e.key.match(/^[0-9]$/) && e.key.length===1){
+                          e.preventDefault()
+                        }
+                      }}
                     />
                   </Form.Item>
                 </Col>

@@ -4,7 +4,7 @@ import { useChangePasswordMutation } from "../../../store/service/changePassword
 import { useNavigate } from "react-router-dom";
 
 const ChangePassword = ({setIsModalOpen}) => {
-  const [trigger, { data: chnagePassdata, error, isLoading, isError }] =
+  const [trigger, { data: chnagePassdata, error, isLoading}] =
     useChangePasswordMutation();
 
     const nav = useNavigate()
@@ -18,7 +18,6 @@ const ChangePassword = ({setIsModalOpen}) => {
         }else if(chnagePassdata?.status === false){
             message.error(chnagePassdata?.message)
         }
-        // console.log(chnagePassdata, "adadasda");
       }, [chnagePassdata, error]);
 
   const onFinish = (values) => {
@@ -75,7 +74,7 @@ const ChangePassword = ({setIsModalOpen}) => {
             </Button>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button loading={isLoading} type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>

@@ -6,6 +6,7 @@ import { DownOutlined } from "@ant-design/icons";
 import { Form, Link, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../../../store/service/authService";
 import ChangePassword from "../ChangePassword/ChangePassword";
+import { useForm } from "antd/es/form/Form";
 
 const Navbar = () => {
   const [trigger, { error, isLoading, isError }] = useLogoutMutation();
@@ -77,6 +78,7 @@ const Navbar = () => {
         title="Change Password"
         open={isModalOpen}
         onCancel={handleCancel}
+        destroyOnClose
         footer={false}>
         <div className="ch_pass">
           <ChangePassword setIsModalOpen={setIsModalOpen} />

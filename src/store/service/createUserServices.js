@@ -50,4 +50,4 @@ export const createUserApi = createApi({
   }),
 });
 
-export const {useCreateUserDataQuery, useCreateUserMutation,useUpdateUserMutation, useLazyGetUserQuery, useAccountOprationQuery, useUpDateStatusMutation} = createUserApi;
+export const {useLazyCreateUserDataQuery, useCreateUserMutation,useUpdateUserMutation, useLazyGetUserQuery, useAccountOprationQuery, useUpDateStatusMutation} = createUserApi;

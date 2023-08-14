@@ -1,17 +1,19 @@
 import "./App.scss";
-import Routesss from "./Routesss";
-import LayOut from "./component/layout/Layout";
-import Signin from "./component/common/signin/Signin";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import Main from "./component/common/main/Main";
+import { useEffect } from "react";
 
 function App() {
+
+  useEffect(() => {
+    document.title = window.location.hostname;
+  }, []);
   return (
     <Provider store={store}>
       <div>
-
-<Main/>      </div>
+        <Main />{" "}
+      </div>
     </Provider>
   );
 }
