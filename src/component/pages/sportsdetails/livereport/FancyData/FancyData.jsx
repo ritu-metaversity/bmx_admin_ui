@@ -1,19 +1,22 @@
 import { Button, Col, Modal, Row } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FancyBets from "../fancyBets/FancyBets";
 import FancyBookModals from "../FancyBookModals/FancyBookModals";
 import { useParams } from "react-router-dom";
-import { useOddsQuPnlQuery } from "../../../../../store/service/OddsPnlServices";
+import { useOddsPnlMutation, useOddsQuPnlQuery } from "../../../../../store/service/OddsPnlServices";
+import { useLazyTtlBookQuery } from "../../../../../store/service/TtlBookServices";
 
 const FancyData = ({ data, keyData }) => {
   const [FancyId, setFancyID] = useState("");
   const [open, setOpen] = useState(false);
+  const [matchid, setMatchID] = useState("");
+  const [TtlBookData, setTtlBookData] = useState([]);
 
   const { id } = useParams();
 
-  const {data:PnlOdds} = useOddsQuPnlQuery({
-    matchId: Number(id)
-  })
+  // const { data: PnlOdds } = useOddsQuPnlQuery({
+  //   matchId: Number(id),
+  // });
 
   const hanldeBookSection = (val) => {
     setOpen(true);
@@ -22,6 +25,42 @@ const FancyData = ({ data, keyData }) => {
   const handleCancel = () => {
     setOpen(false);
   };
+  const [showMyBook, setShowMyBook] = useState(1);
+  const [getData, { data: results }] = useLazyTtlBookQuery();
+
+  useEffect(() => {
+    console.log(data, "dsfsdfsd");
+
+    data?.map((res) => {
+      if (!res?.mid.includes("BM")) return <></>;
+      setMatchID(res?.mid);
+    });
+  }, [data]);
+
+  const [trigger, { data: PnlOdds }] = useOddsPnlMutation();
+
+
+  const handleMyBook = (e, val) => {
+    e.preventDefault();
+    setShowMyBook(val);
+    const oddsPnl = {
+      matchId: Number(id),
+    };
+    trigger(oddsPnl);
+  };
+
+  const handleTtlBook = (e, val) => {
+    e.preventDefault();
+    setShowMyBook(val);
+    getData({
+      matchid: Number(id),
+      marketid: matchid,
+      subadminid: localStorage.getItem("userId"),
+    });
+    setTtlBookData(results?.data);
+  };
+
+  // console.log(TtlBookData?.length, "fsdfsdfd");
 
   return (
     <>
@@ -35,7 +74,19 @@ const FancyData = ({ data, keyData }) => {
               <Row>
                 <Col span={19} className="back-lay-bg">
                   <div className="fancy_data">
-                    <div className="sub_fancy">{keyData}</div>
+                    <div className="sub_fancy">
+                      <p>{keyData}</p>
+                    </div>
+                    {keyData === "Bookmaker" && (
+                      <Col span={19} className="back-lay-bg bookData">
+                        <button onClick={(e) => handleTtlBook(e, 1)}>
+                          Ttl Book
+                        </button>
+                        <button onClick={(e) => handleMyBook(e, 2)}>
+                          My Book
+                        </button>
+                      </Col>
+                    )}
                     <div>
                       <span className="fancy_icon">i</span>
                     </div>
@@ -43,7 +94,7 @@ const FancyData = ({ data, keyData }) => {
                 </Col>
                 <Col className="b-bottom" span={5}>
                   <Row>
-                    <Col span={12} className="lay lagai">
+                    <Col span={12} className="lay lagai lagai1">
                       <div>No</div>
                     </Col>
                     <Col span={12} className="back khai">
@@ -54,7 +105,7 @@ const FancyData = ({ data, keyData }) => {
               </Row>
             </div>
             <div>
-              {data.map((res, index) => {
+              {data?.map((res, index) => {
                 return (
                   <Row key={index} className="scor fancy_all_data">
                     <Col span={19} className="match_title">
@@ -66,21 +117,68 @@ const FancyData = ({ data, keyData }) => {
                           Book
                         </span>
                       )}
-                      {
-                        keyData === "Bookmaker" && 
-                          PnlOdds?.data?.map((res, id)=>{
-                            if(!res?.marketId?.includes("BM")) return <></>
-                            return(
-                              <div className="sub_title" key={id}>
-                              {index === 0? res?.pnl1 : index === 1 ? res?.pnl2 : index === 3?res?.pnl3:""}
-                            </div>
-                            )
-                          })
-                        
-                      }
-                      <div>
-                        
-                        </div>
+                      {keyData === "Bookmaker" &&
+                        PnlOdds?.data?.map((res, id) => {
+                          if (!res?.marketId?.includes("BM")) return <></>;
+                          return (
+                            <>
+                              {showMyBook === 1 ? (
+                                <div className="sub_title" key={id}>
+                                  heloo
+                                  {index === 0 ? (
+                                    <span
+                                      className={
+                                        res?.pnl1 < 0
+                                          ? "text_danger"
+                                          : "text_success"
+                                      }>
+                                      {res?.pnl1 || 0}
+                                    </span>
+                                  ) : index === 1 ? (
+                                    <span
+                                      className={
+                                        res?.pnl2 < 0
+                                          ? "text_danger"
+                                          : "text_success"
+                                      }>
+                                      {res?.pnl2 || 0}
+                                    </span>
+                                  ) : index === 3 ? (
+                                    <span
+                                      className={
+                                        res?.pnl3 < 0
+                                          ? "text_danger"
+                                          : "text_success"
+                                      }>
+                                      {res?.pnl3 || 0}
+                                    </span>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              ) : (
+                                <>
+                                  {TtlBookData?.length !== 0 &&
+                          TtlBookData?.data != undefined? (
+                                    <div className="sub_title">
+                                      {showMyBook !== 2 &&
+                                        (id === 0
+                                          ? `${TtlBookData?.data[0]?.pnl1}`
+                                          : id === 1
+                                          ? `${TtlBookData?.data[0]?.pnl2}`
+                                          : `${TtlBookData?.data[0]?.pnl3}`)}
+                                    </div>
+                                  ) : (
+                                    <div className="sub_title">
+                                      {showMyBook !== 2 && "0.0"}
+                                    </div>
+                                  )}
+                                </>
+                              )}
+                            </>
+                          );
+                        })}
+                      <div></div>
                     </Col>
                     <Col
                       data-before-content={res?.gstatus}

@@ -82,6 +82,8 @@ const Dashboard = () => {
   const [logOut, {data:logOutData}] = useLogoutMutation()
 
 const handleLogout = ()=>{
+  localStorage.clear();
+  nav('/')
   logOut()
 }
 
@@ -95,7 +97,7 @@ const handleLogout = ()=>{
               hoverable={false}
               className=""
               style={gridStyle}>
-              <Link to={res?.path} onClick={res?.path == "/"?handleLogout:""}>
+              <Link to={res?.path} onClick={res?.path == "/"? handleLogout: ""}>
                 <div className="main_card_section">
                   <div className="icon_card_section">{res?.image}</div>
                   <div className="tital_card_section">

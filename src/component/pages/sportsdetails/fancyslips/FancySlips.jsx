@@ -1,19 +1,11 @@
-import React, { useEffect } from "react";
-import {
-  Card,
-  Space,
-  Select,
-  Row,
-  Col,
-  Table,
-  Input,
-  Form,
-  Button,
-} from "antd";
+import React, { useEffect, useState } from "react";
+import { Card, Select, Row, Col, Table, Form, Button } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import { useLazySessionFancyBetDetailQuery } from "../../../../store/service/SportDetailServices";
-
-
+import {
+  useLazySearchUserDownlineQuery,
+  useLazySessionFancyBetDetailQuery,
+} from "../../../../store/service/SportDetailServices";
+import "./FancySlips.scss";
 const columns = [
   {
     title: "Rate",
@@ -64,6 +56,7 @@ const columns = [
 ];
 
 const FancySlips = ({ type, name }) => {
+  const [clientId, setClientId] = useState("");
   const nav = useNavigate();
   const handleBackClick = () => {
     nav("/Events/sports-details");
@@ -71,33 +64,41 @@ const FancySlips = ({ type, name }) => {
 
   const { id } = useParams();
 
-  const [trigger, {isLoading, data:result,isFetching }]= useLazySessionFancyBetDetailQuery();
-
-  useEffect(()=>{
-    trigger(
-      {
-        matchId: id,
-        type: type,
-        userId: "",
-      }
-    )
-  }, [type])
+  const [trigger, { isLoading, data: result, isFetching }] = useLazySessionFancyBetDetailQuery();
+  useEffect(() => {
+    trigger({
+      matchId: id,
+      type: type,
+      userId: "",
+    });
+  }, [type]);
 
   // console.log(result?.data?.data)
 
   const onFinish = (values) => {
-    trigger(
-      {
-        matchId: id,
-        type: type,
-        userId: values?.username,
-      }
-    )
+    trigger({
+      matchId: id,
+      type: type,
+      userId: values?.username,
+    });
   };
-
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
+  };
+
+  const handleSelect = (value) => {
+    setClientId(value);
+  };
+
+  const [userList, resultData] = useLazySearchUserDownlineQuery();
+
+  const handleChange = (value) => {
+    userList({
+      term: value,
+      _type: value,
+      q: value,
+    });
   };
 
   return (
@@ -117,13 +118,35 @@ const FancySlips = ({ type, name }) => {
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               autoComplete="off"
-              className="form_data"
-              >
+              className="form_data">
               <Row
-                className="rejected_row"
+                className="rejected_row fancy_data_sess"
                 style={{ margin: "2px 0px 25px 28px" }}>
                 <Col xs={24} md={24} lg={6} xl={6}>
                   <Form.Item
+                    // label="Client"
+                    name="username"
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please Select User",
+                      },
+                    ]}>
+                    <Select
+                      placeholder="Select User"
+                      options={
+                        resultData.data?.data?.map((i) => ({
+                          label: i,
+                          value: i,
+                        })) || []
+                      }
+                      showSearch
+                      allowClear
+                      onSelect={handleSelect}
+                      onSearch={handleChange}></Select>
+                  </Form.Item>
+                  {/* <Form.Item
                     name="username"
                     rules={[
                       {
@@ -132,28 +155,19 @@ const FancySlips = ({ type, name }) => {
                       },
                     ]}>
                     <Input placeholder="Enter User Id"/>
-                  </Form.Item>
-                  
+                  </Form.Item> */}
                 </Col>
                 <Col xs={24} md={24} lg={5} xl={5}>
-                <Form.Item>
-                    <Button type="primary" loading={isFetching} htmlType="submit">
+                  <Form.Item>
+                    <Button
+                      type="primary"
+                      loading={isFetching}
+                      htmlType="submit">
                       Submit
                     </Button>
                   </Form.Item>
                 </Col>
-                {/* <Col xs={24} md={24} lg={5} xl={5}>
-                <Select
-                  defaultValue="Select Client"
-                  onChange={handleChange}
-                  options={[
-                    {
-                      value: "All Users",
-                      label: "All Users",
-                    },
-                  ]}
-                />
-              </Col> */}
+               
               </Row>
             </Form>
 

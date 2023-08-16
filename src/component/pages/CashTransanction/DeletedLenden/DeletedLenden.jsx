@@ -18,13 +18,7 @@ import moment from "moment";
   const {data, isError} =useFetchDeleteTransectionQuery({
     userId:id
   }, {refetchOnMountOrArgChange:true});
-
-
-  // console.log(data?.data, "fetchDeletedUser");
-
-
-    
-
+  
     return (
       <>
         <Card

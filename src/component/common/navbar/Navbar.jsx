@@ -13,10 +13,11 @@ const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInfo, setUserInfo] = useState();
   const nav = useNavigate();
+  
   const handleLogout = () => {
+    trigger();
     localStorage.clear();
     nav("/");
-    trigger();
   };
 
   const items = [

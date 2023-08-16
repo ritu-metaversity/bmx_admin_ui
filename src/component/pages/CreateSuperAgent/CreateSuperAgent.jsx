@@ -71,9 +71,9 @@ const CreateSuperAgent = ({ createName }) => {
       username: values?.Name,
       mobile: values?.mobile,
       city: "",
-      userRole: window.location.pathname.includes("list-client") ? 2 : 1,
+      userRole: window.location.pathname.includes("create-client") ? 2 : 1,
       password: values?.password,
-      sportPartnership: values?.matchShare,
+      sportPartnership: values?.matchShare || 0,
       oddLossCommission: commiType === "nocomm" ? "0" : values?.Match_comm,
       lupassword: values?.lupassword,
       liveCasinoLock: false,
@@ -322,28 +322,15 @@ const CreateSuperAgent = ({ createName }) => {
                     <Input type="password" placeholder="Password" />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
-                  <Form.Item
-                    label="Lu Password"
-                    name="lupassword"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please Enter Password",
-                      },
-                    ]}>
-                    <Input value={LuPassword} type="password" onChange={(e)=>handleLupassword(e)} placeholder="Password" />
-                  </Form.Item>
-                </Col>
+                
               </Row>
-
               <div>
                 <h2 className="match_share">
                   {createName} Match Share and Commission
                 </h2>
               </div>
               <Row className="super_agent sub_super">
-                {window.location.pathname.includes("list-client") ? (
+                {window.location.pathname.includes("create-client") ? (
                   <></>
                 ) : (
                   <>
@@ -522,6 +509,17 @@ const CreateSuperAgent = ({ createName }) => {
                   </>
                 )}
                 <Col span={12}>
+                  <Form.Item
+                    label="Transaction Password"
+                    name="lupassword"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please Enter Transaction Password",
+                      },
+                    ]}>
+                    <Input value={LuPassword} type="password" onChange={(e)=>handleLupassword(e)} placeholder="Transaction Password" />
+                  </Form.Item>
                 </Col>
                 <Col span={12}>
                   <Form.Item 
@@ -533,6 +531,7 @@ const CreateSuperAgent = ({ createName }) => {
                 </Col>
               </Row>
 
+              
               {/* <div>
                 <h2 className="match_share">{createName} Casino Commission</h2>
               </div>

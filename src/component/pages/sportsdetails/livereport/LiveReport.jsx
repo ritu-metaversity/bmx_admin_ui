@@ -19,11 +19,7 @@ const LiveReport = () => {
   const { id } = useParams();
 
   const { data, isLoading } = useEventDetailQuery(
-    id,
-      {
-      pollingInterval: 1000,
-    }
-  );
+    id,{pollingInterval: 1000,});
 
   useEffect(() => {
     setOddsData(data?.Odds[0]);
@@ -32,18 +28,21 @@ const LiveReport = () => {
     });
   }, [data]);
 
+
+  console.log(marketId, "dadadwd")
+
   const [trigger, { data: PnlOdds }] = useOddsPnlMutation();
 
-  const [getData, results] = useLazyTtlBookQuery();
+  const [getData, {data:results}] = useLazyTtlBookQuery();
 
   useEffect(() => {
     getData({
       matchid: Number(id),
       marketid: marketId,
-      subadminid: "avipsa6523",
+      subadminid: localStorage.getItem("userId"),
     });
     setTtlBookData(results?.data);
-  }, [results?.data, marketId]);
+  }, [marketId, results?.data]);
 
   const handleMyBook = (val) => {
     setShowMyBook(val);
@@ -53,12 +52,15 @@ const LiveReport = () => {
     trigger(oddsPnl);
   };
 
+  console.log(results, "fsdfsdf")
+
+
   const handleTtlBook = (val, mrktid) => {
     setShowMyBook(val);
     getData({
       matchid: Number(id),
       marketid: mrktid,
-      subadminid: "avipsa6523",
+      subadminid: localStorage.getItem("userId"),
     });
     setTtlBookData(results?.data);
   };
@@ -72,7 +74,6 @@ const LiveReport = () => {
       ) : (
         <div className="main_live_section1">
           <ScoreCard mid={id} />
-
           <div>
             <Row gutter={[16, 24]}>
               <Col className="gutter-row" span={20}>
@@ -117,7 +118,7 @@ const LiveReport = () => {
                               </div>
                             );
                           })}
-                          {TtlBookData?.data?.length !== 0 &&
+                          {TtlBookData?.length !== 0 &&
                           TtlBookData?.data != undefined ? (
                             <div className="sub_title">
                               {ShowMyBook !== 2 &&

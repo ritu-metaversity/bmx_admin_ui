@@ -376,7 +376,7 @@ const UserListTable = ({ userType, Listname }) => {
         }
         open={WithdrawnModal}
         onOk={handleDepositeOk}
-        onCancel={handleDepositeCancel}
+        onCancel={()=>SetWithdrawnModal(false)}
         okButtonProps={{ style: { display: 'none' } }}
         cancelButtonProps={{ style: { display: 'none' } }}
         footer={null}>

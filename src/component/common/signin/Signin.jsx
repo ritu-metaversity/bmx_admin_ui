@@ -27,11 +27,13 @@ const Signin = () => {
     const authData = {
       userId: values?.username,
       password: values?.password,
+      // appUrl: "subadmin.localhost",
       appUrl: "subadmin.localhost",
-      // appUrl: window.location.appUrl,
+      // appUrl: window.location.hostname,
     };
     trigger(authData);
   };
+
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);

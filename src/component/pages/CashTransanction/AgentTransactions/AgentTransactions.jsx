@@ -155,8 +155,6 @@ const AgentTransactions = ({ userType, Listname }) => {
                     showSearch
                     allowClear
                     onSelect={handleSelect}
-                    // defaultValue={}
-
                     onSearch={handleChange}>
                     {/* <Option value="sumana6748">sumana6748</Option> */}
                   </Select>

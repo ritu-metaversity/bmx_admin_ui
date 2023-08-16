@@ -33,7 +33,22 @@ export const sportDetailsApi = createApi({
         body,
       }),
     }),
-  })
+    searchUserDownline: build.query({
+      query: (args) => {
+        const { term } = args;
+        return {
+          url: `/user/search-user-downline?term=${term}&_type=${term}&q=${term}`,
+          method: "POST",
+        }
+      },
+    }),
+  }),
 });
 
-export const { useSportDetailQuery, useRejectedBetDetailQuery, useLazySessionFancyBetDetailQuery, useSportPlusMinusQuery } = sportDetailsApi;
+export const {
+  useSportDetailQuery,
+  useRejectedBetDetailQuery,
+  useLazySessionFancyBetDetailQuery,
+  useSportPlusMinusQuery,
+  useLazySearchUserDownlineQuery
+} = sportDetailsApi;

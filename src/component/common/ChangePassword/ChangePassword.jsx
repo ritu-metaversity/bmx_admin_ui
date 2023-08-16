@@ -3,22 +3,12 @@ import React, { useEffect } from "react";
 import { useChangePasswordMutation } from "../../../store/service/changePasswordService";
 import { useNavigate } from "react-router-dom";
 
-const ChangePassword = ({setIsModalOpen}) => {
-  const [trigger, { data: chnagePassdata, error, isLoading}] =
-    useChangePasswordMutation();
+const ChangePassword = ({ setIsModalOpen }) => {
+  const [trigger, { data: chnagePassdata, error, isLoading }] = useChangePasswordMutation();
 
-    const nav = useNavigate()
+  const nav = useNavigate();
 
-    useEffect(() => {
-        if(chnagePassdata?.status === true){
-            localStorage.clear();
-            nav('/')
-            message.success(chnagePassdata?.message);
-            setIsModalOpen(false)
-        }else if(chnagePassdata?.status === false){
-            message.error(chnagePassdata?.message)
-        }
-      }, [chnagePassdata, error]);
+ 
 
   const onFinish = (values) => {
     const chnagePassdata = {
@@ -28,6 +18,20 @@ const ChangePassword = ({setIsModalOpen}) => {
     };
     trigger(chnagePassdata);
   };
+
+  useEffect(() => {
+    if (chnagePassdata?.status === true) {
+      message.success(chnagePassdata?.message);
+      // localStorage.clear();
+      setIsModalOpen(false);
+      // nav("/");
+    } else if (chnagePassdata?.status === false) {
+      message.error(chnagePassdata?.message);
+    }
+  }, [chnagePassdata, error]);
+
+
+  console.log(chnagePassdata?.message, "Dfdsfds")
 
   const passw = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,15}$/;
 
@@ -62,14 +66,20 @@ const ChangePassword = ({setIsModalOpen}) => {
               required: true,
               message: "Please input your new password!",
             },
-            { pattern: passw, message: "Minimun 6 charecter, must contain letters and numbers" },
+            {
+              pattern: passw,
+              message: "Minimun 6 charecter, must contain letters and numbers",
+            },
           ]}>
           <Input.Password placeholder="Enter New Password" />
         </Form.Item>
 
         <div className="change_button">
           <Form.Item>
-            <Button onClick={()=>setIsModalOpen(false)} className="return" type="primary">
+            <Button
+              onClick={() => setIsModalOpen(false)}
+              className="return"
+              type="primary">
               Return
             </Button>
           </Form.Item>

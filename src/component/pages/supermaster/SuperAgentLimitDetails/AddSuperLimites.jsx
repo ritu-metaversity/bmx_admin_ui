@@ -71,7 +71,7 @@ const AddSuperLimites = ({ data }) => {
                 <th width="10%">C. Chips</th>
                 <th width="30%">Add limit </th>
                 <th width="5%">Total Limit</th>
-                <th width="30%">Lu Password</th>
+                <th width="30%">Transaction Password</th>
                 <th width="5%">Action</th>
               </tr>
 
@@ -112,7 +112,7 @@ const AddSuperLimites = ({ data }) => {
                       <Input
                         onChange={(e) => handelPassword(e)}
                         type="password"
-                        placeholder="Enter Password"
+                        placeholder="Enter Transaction Password"
                       />
                     </Form.Item>
                   </div>

@@ -9,15 +9,15 @@ const HomeRules = () => {
         <p>
           {" "}
           आपसे अनुरोध है हमारी कोई डुप्लीकेट साइट नही है हमारी आधिकारिक साइट
-          'BMX99.in, BMXBET99.IN , BMXPRO.IN' से लॉगिन करें। लॉगइन करने से पहले
-          साइट का नाम जरूर देख लें। आपके समर्थन के लिए धन्यवाद। टीम BMX99
+          {" '"}{window.location.hostname}{"' "} से लॉगिन करें। लॉगइन करने से पहले
+          साइट का नाम जरूर देख लें। आपके समर्थन के लिए धन्यवाद। टीम {" '"}{window.location.hostname}{"' "}
         </p>
         <h2>Dear Client,</h2>
         <p>
           {" "}
           We don't have any duplicate site , You are requested to login with our
-          official site 'BMX99.in, BMXBET99.IN , BMXPRO.I only. Please check the
-          site name before you login. Thanks for your support. Team BMX99
+          official site {" '"}{window.location.hostname}{"' "}.I only. Please check the
+          site name before you login. Thanks for your support. Team {" '"}{window.location.hostname}{"' "}
         </p>
       </div>
     </>

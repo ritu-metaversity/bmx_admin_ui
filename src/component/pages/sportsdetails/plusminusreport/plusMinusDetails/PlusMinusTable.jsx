@@ -10,16 +10,7 @@ const PlusMinusTable = () => {
     marketId: state?.first,
     userId: state?.secondUserid
 
-  })
-// console.log(,"sdfsdfdfs")
-  //   {
-  //     "eventId": 32498837 **
-  //     "marketId" : ["4.2036001304-F2"], (Optional)
-  //     "userId" : ["Ujala016"] (Optional)
-  // }
-
-  console.log(state?.state?.dataNameee, "dsfsddfsfsd")
-
+  }) 
 
   return (
     <>

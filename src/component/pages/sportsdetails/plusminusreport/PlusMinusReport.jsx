@@ -35,7 +35,6 @@ const PlusMinusReport = () => {
   const [showOdds, setShowOdds] = useState(true)
   const [api, contextHolder] = notification.useNotification();
   const { state } = useLocation()
-  console.log(state?.dataNameee, "fsdfsdfsd")
 
   const onChange = (e) => {
     let checked = e.target.checked
@@ -48,11 +47,7 @@ const PlusMinusReport = () => {
   }, { refetchOnMountOrArgChange: true })
 
 
-  const sportName = useSelector(globalSelector);
-  // useEffect(() => {
-  //   matchIdData(first)
-  //   UserIdData(first)
-  // }, [first, secondUserid])
+
 
 
   const nav = useNavigate()

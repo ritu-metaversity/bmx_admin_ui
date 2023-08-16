@@ -23,10 +23,8 @@ const UpdateSuper = ({ updateName }) => {
   const [api, contextHolder] = notification.useNotification();
   const [commType, setCommType] = useState("");
 
-  const [form]= Form.useForm();
+  const [form] = Form.useForm();
   const [data, setData] = useState();
-
- 
 
   const { id } = useParams();
   const [trigger, { data: updateData, isLoading, error }] =
@@ -70,7 +68,6 @@ const UpdateSuper = ({ updateName }) => {
 
     trigger(userData);
     form?.resetFields();
-
   };
   useEffect(() => {
     if (updateData?.status === true) {
@@ -140,7 +137,7 @@ const UpdateSuper = ({ updateName }) => {
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            // initialValues={{ remember: true }} 
+            // initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             onFocus={onFinishFailed}
@@ -285,19 +282,7 @@ const UpdateSuper = ({ updateName }) => {
                     ]}>
                     <Input type="text" placeholder="Password" />
                   </Form.Item>
-                  <Form.Item
-                    label="Lu Password"
-                    name="lupassword"
-                    required
-                    
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please Enter Password!",
-                      },
-                    ]}>
-                    <Input type="text" autoComplete="off" placeholder="Password" />
-                  </Form.Item>
+
                   <Form.Item
                     name="status"
                     label="Status"
@@ -440,7 +425,25 @@ const UpdateSuper = ({ updateName }) => {
                   ""
                 )}
 
-                <Col span={12}></Col>
+
+                <Col span={12}>
+                <Form.Item
+                  label="Transaction Password"
+                  name="lupassword"
+                  required
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Enter Transaction Password!",
+                    },
+                  ]}>
+                  <Input
+                    type="password"
+                    autoComplete="off"
+                    placeholder="Transaction Password"
+                  />
+                </Form.Item>
+                </Col>
                 <Col span={12}>
                   <Form.Item
                     wrapperCol={{
