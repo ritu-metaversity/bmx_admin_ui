@@ -94,7 +94,6 @@ const CreateSuperAgent = ({ createName }) => {
   };
 
   useEffect(() => {
-    console.log(UserList,"afdasdfasdf");
     if (UserList?.status === true) {
       openNotification(UserList?.message);
       form?.resetFields();

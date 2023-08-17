@@ -14,6 +14,7 @@ import "./MatchLedger.scss";
 import { useLazyProfitAndLossLedgerQuery } from "../../../../store/service/ledgerServices";
 import { useEffect, useState } from "react";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   {
@@ -64,14 +65,14 @@ const MatchLedger = () => {
   }, [data?.data, dateData, paginationTotal, indexData]);
 
 
-  console.log(data?.data?.total, "dasdawd");
+  const nav = useNavigate()
 
 
   return (
     <Card
       className="sport_detail main_match_ledger"
       title="Match Ledger"
-      extra={<button onClick={() => console.log("hello")}>Back</button>}>
+      extra={<button onClick={() => nav(-1)}>Back</button>}>
       <Row className="main_super_super_ledger">
         <Col span={8} className="match_ladger">
           <DatePicker.RangePicker  onChange={onChange}/>

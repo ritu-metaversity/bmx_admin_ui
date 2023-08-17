@@ -12,8 +12,8 @@ import { useOddsPnlMutation } from "../../../../store/service/OddsPnlServices";
 
 const LiveReport = () => {
   const [oddsData, setOddsData] = useState([]);
-  const [ShowMyBook, setShowMyBook] = useState(0);
-  const [TtlBookData, setTtlBookData] = useState([]);
+  const [ShowMyBook, setShowMyBook] = useState(1);
+  // const [TtlBookData, setTtlBookData] = useState([]);
   const [marketId, setMarketId] = useState("");
 
   const { id } = useParams();
@@ -33,19 +33,19 @@ const LiveReport = () => {
 
   const [trigger, { data: PnlOdds }] = useOddsPnlMutation();
 
-  const [getData, {data:results}] = useLazyTtlBookQuery();
+  const [getData, {data: results}] = useLazyTtlBookQuery();
 
   useEffect(() => {
-    getData({
+   marketId&& id &&getData({
       matchid: Number(id),
       marketid: marketId,
       subadminid: localStorage.getItem("userId"),
     });
-    setTtlBookData(results?.data);
-  }, [marketId, results?.data]);
+    // setTtlBookData(results?.data);
+  }, [marketId]);
 
-  const handleMyBook = (val) => {
-    setShowMyBook(val);
+  const handleMyBook = () => {
+    setShowMyBook(2);
     const oddsPnl = {
       matchId: Number(id),
     };
@@ -55,16 +55,22 @@ const LiveReport = () => {
   console.log(results, "fsdfsdf")
 
 
-  const handleTtlBook = (val, mrktid) => {
-    setShowMyBook(val);
+  const handleTtlBook = (mrktid) => {
+    setShowMyBook(1);
     getData({
       matchid: Number(id),
       marketid: mrktid,
       subadminid: localStorage.getItem("userId"),
     });
-    setTtlBookData(results?.data);
+    // setTtlBookData(results?.data);
   };
 
+  const ttl = results?.data?.[0] ?({
+    [results?.data?.[0].selection1]:results?.data?.[0].pnl1,
+    [results?.data?.[0].selection2]:results?.data?.[0].pnl2,
+    [results?.data?.[0].selection3]:results?.data?.[0].pnl3,
+    
+  }):({})
   return (
     <>
       {isLoading ? (
@@ -80,10 +86,10 @@ const LiveReport = () => {
                 <div className="match_section">
                   <Row>
                     <Col span={19} className="back-lay-bg">
-                      <button onClick={() => handleTtlBook(1, marketId)}>
+                      <button onClick={() => handleTtlBook(marketId)}>
                         Ttl Book
                       </button>
-                      <button onClick={() => handleMyBook(2)}>My Book</button>
+                      <button onClick={() => handleMyBook()}>My Book</button>
                     </Col>
                     <Col span={5}>
                       <Row>
@@ -103,36 +109,37 @@ const LiveReport = () => {
                       <Row className="scor">
                         <Col span={19} className="tital_sectin">
                           <div className="title">{res?.name}</div>
+                          {ShowMyBook===1 && <span className={ttl[res.selectionId] < 0 ?"text_danger":"text_success"}>{ttl[res.selectionId]||"0.0"}</span>}
                           {PnlOdds?.data?.map((res, id) => {
                             if (res?.marketId?.includes("BM")) return <></>;
                             return (
                               <div className="sub_title" key={id}>
                                 {ShowMyBook === 2 &&
                                   (index === 0
-                                    ? res?.pnl1
+                                    ? <span className={res?.pnl1 < 0 ?"text_danger":"text_success"}>{res?.pnl1}</span> 
                                     : index === 1
-                                    ? res?.pnl2
+                                    ? <span className={res?.pnl2 < 0 ?"text_danger":"text_success"}>{res?.pnl2}</span>
                                     : index === 2
-                                    ? "pnl3"
+                                    ? <span className={res?.pnl3 < 0 ?"text_danger":"text_success"}>{res?.pnl3}</span>
                                     : "")}
                               </div>
                             );
                           })}
-                          {TtlBookData?.length !== 0 &&
-                          TtlBookData?.data != undefined ? (
+                          {/* {results?.data?.length !== 0 &&
+                          results?.data != undefined ? (
                             <div className="sub_title">
                               {ShowMyBook !== 2 &&
                                 (id === 0
-                                  ? `${TtlBookData?.data[0]?.pnl1}`
+                                  ? `${results?.data?.[0]?.pnl1}`
                                   : id === 1
-                                  ? `${TtlBookData?.data[0]?.pnl2}`
-                                  : `${TtlBookData?.data[0]?.pnl3}`)}
+                                  ? `${results?.data?.[0]?.pnl2}`
+                                  : `${results?.data?.[0]?.pnl3}`)}
                             </div>
                           ) : (
                             <div className="sub_title">
                               {ShowMyBook !== 2 && "0.0"}
                             </div>
-                          )}
+                          )} */}
                         </Col>
                         <Col span={5}>
                           <Row>

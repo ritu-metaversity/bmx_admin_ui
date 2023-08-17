@@ -96,16 +96,16 @@ const UpdateSuper = ({ updateName }) => {
 
   useEffect(() => {
     if (resuilt?.data?.status === true) setData(resuilt?.data?.data);
-    setCommType(
-      data?.data?.matchComm == 0 || data?.data?.sessionComm == 0
-        ? "no-comm"
-        : "bbb"
-    );
+    setCommType(Number(data?.data?.matchComm) == 0 || Number(data?.data?.sessionComm) == 0? "no-comm": "bbb");
+    console.log(data?.data?.matchComm == 0 || data?.data?.sessionComm == 0, "dsfsfs")
   }, [resuilt?.data?.data]);
 
   const onCommissionType = (e) => {
     setCommType(e);
   };
+
+  // console.log(commType, "Fsfdfdsfs")
+
 
   return (
     <>

@@ -36,11 +36,9 @@ const data = [
 const Operations = () => {
   const nav = useNavigate();
   const handleBackClick = () => {
-    nav("/markets");
+    nav(-1);
   };
-  //   const onChange = (key) => {
-  //     console.log(key);
-  //   };
+
 
   return (
     <>

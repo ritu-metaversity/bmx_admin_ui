@@ -3,14 +3,14 @@ import {
   } from "antd";
   import React from "react";
 import { useFetchDeleteTransectionQuery } from "../../../../store/service/transactionServices";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 
   
   const DeletedLenden = () => {
-
+    const nav = useNavigate()
     const handleBackbtn = ()=>{
-
+      nav(-1)
     }
 
     const {id} = useParams()

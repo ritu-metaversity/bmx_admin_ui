@@ -1,0 +1,9 @@
+.main_pl {
+  .table_section {
+    table {
+      tr:nth-child(even) {
+        background-color:green !important;
+      }
+    }
+  }
+}

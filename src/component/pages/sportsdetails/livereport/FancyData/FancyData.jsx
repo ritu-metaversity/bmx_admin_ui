@@ -3,14 +3,17 @@ import React, { useEffect, useState } from "react";
 import FancyBets from "../fancyBets/FancyBets";
 import FancyBookModals from "../FancyBookModals/FancyBookModals";
 import { useParams } from "react-router-dom";
-import { useOddsPnlMutation, useOddsQuPnlQuery } from "../../../../../store/service/OddsPnlServices";
+import {
+  useOddsPnlMutation,
+  useOddsQuPnlQuery,
+} from "../../../../../store/service/OddsPnlServices";
 import { useLazyTtlBookQuery } from "../../../../../store/service/TtlBookServices";
 
 const FancyData = ({ data, keyData }) => {
   const [FancyId, setFancyID] = useState("");
   const [open, setOpen] = useState(false);
   const [matchid, setMatchID] = useState("");
-  const [TtlBookData, setTtlBookData] = useState([]);
+  const [showMyBook, setShowMyBook] = useState(1);
 
   const { id } = useParams();
 
@@ -25,12 +28,10 @@ const FancyData = ({ data, keyData }) => {
   const handleCancel = () => {
     setOpen(false);
   };
-  const [showMyBook, setShowMyBook] = useState(1);
+  
   const [getData, { data: results }] = useLazyTtlBookQuery();
 
   useEffect(() => {
-    console.log(data, "dsfsdfsd");
-
     data?.map((res) => {
       if (!res?.mid.includes("BM")) return <></>;
       setMatchID(res?.mid);
@@ -39,29 +40,38 @@ const FancyData = ({ data, keyData }) => {
 
   const [trigger, { data: PnlOdds }] = useOddsPnlMutation();
 
-
-  const handleMyBook = (e, val) => {
+  const handleMyBook = (e) => {
     e.preventDefault();
-    setShowMyBook(val);
+    setShowMyBook(2);
     const oddsPnl = {
       matchId: Number(id),
     };
     trigger(oddsPnl);
   };
 
-  const handleTtlBook = (e, val) => {
+  useEffect(()=>{
+   id && matchid&& getData({
+      matchid: Number(id),
+      marketid: matchid,
+      subadminid: localStorage.getItem("userId"),
+    });
+  }, [ matchid])
+
+  const handleTtlBook = (e) => {
     e.preventDefault();
-    setShowMyBook(val);
+    setShowMyBook(1);
     getData({
       matchid: Number(id),
       marketid: matchid,
       subadminid: localStorage.getItem("userId"),
     });
-    setTtlBookData(results?.data);
   };
-
-  // console.log(TtlBookData?.length, "fsdfsdfd");
-
+  const ttl = results?.data?.[0] ?({
+    [results?.data?.[0].selection1]:results?.data?.[0].pnl1,
+    [results?.data?.[0].selection2]:results?.data?.[0].pnl2,
+    [results?.data?.[0].selection3]:results?.data?.[0].pnl3,
+    
+  }):({})
   return (
     <>
       <div className="fancy_section">
@@ -69,7 +79,6 @@ const FancyData = ({ data, keyData }) => {
           <Col className="gutter-row" span={21}>
             <div
               className="fancy_data_main"
-              //  style={{marginTop:"12px"}}
             >
               <Row>
                 <Col span={19} className="back-lay-bg">
@@ -79,10 +88,10 @@ const FancyData = ({ data, keyData }) => {
                     </div>
                     {keyData === "Bookmaker" && (
                       <Col span={19} className="back-lay-bg bookData">
-                        <button onClick={(e) => handleTtlBook(e, 1)}>
+                        <button onClick={(e) => handleTtlBook(e)}>
                           Ttl Book
                         </button>
-                        <button onClick={(e) => handleMyBook(e, 2)}>
+                        <button onClick={(e) => handleMyBook(e)}>
                           My Book
                         </button>
                       </Col>
@@ -118,13 +127,14 @@ const FancyData = ({ data, keyData }) => {
                         </span>
                       )}
                       {keyData === "Bookmaker" &&
-                        PnlOdds?.data?.map((res, id) => {
+                      <>
+                       {showMyBook===1&&<span className={ttl[res.sid] < 0 ?"text_danger":"text_success"}>{ttl[res.sid]||"0.0"}</span>}
+                        {PnlOdds?.data?.map((res, id) => {
                           if (!res?.marketId?.includes("BM")) return <></>;
                           return (
                             <>
-                              {showMyBook === 1 ? (
+                              {showMyBook === 2 && (
                                 <div className="sub_title" key={id}>
-                                  heloo
                                   {index === 0 ? (
                                     <span
                                       className={
@@ -156,28 +166,12 @@ const FancyData = ({ data, keyData }) => {
                                     ""
                                   )}
                                 </div>
-                              ) : (
-                                <>
-                                  {TtlBookData?.length !== 0 &&
-                          TtlBookData?.data != undefined? (
-                                    <div className="sub_title">
-                                      {showMyBook !== 2 &&
-                                        (id === 0
-                                          ? `${TtlBookData?.data[0]?.pnl1}`
-                                          : id === 1
-                                          ? `${TtlBookData?.data[0]?.pnl2}`
-                                          : `${TtlBookData?.data[0]?.pnl3}`)}
-                                    </div>
-                                  ) : (
-                                    <div className="sub_title">
-                                      {showMyBook !== 2 && "0.0"}
-                                    </div>
-                                  )}
-                                </>
                               )}
                             </>
                           );
                         })}
+                      </>}
+
                       <div></div>
                     </Col>
                     <Col

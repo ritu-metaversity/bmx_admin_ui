@@ -20,7 +20,8 @@ const columns = [
     }
   ];
 
-const SuperAgentProfitLoss = ({name}) => {
+const SuperAgentProfitLoss = ({name, data}) => {
+  console.log(data)
   return (
     <>
       <div className="main_live_section">
@@ -39,7 +40,7 @@ const SuperAgentProfitLoss = ({name}) => {
                   className="live_table limit_update"
                   bordered
                   columns={columns}
-                  // dataSource={data}
+                  dataSource={data}
                 ></Table>
               </div>
             </div>

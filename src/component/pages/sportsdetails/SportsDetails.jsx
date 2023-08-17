@@ -103,7 +103,7 @@ const SportsDetails = () => {
   ];
 
   const handleBackbtn = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   const onChange = (data, dateString) => {

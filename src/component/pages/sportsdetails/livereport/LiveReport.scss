@@ -441,6 +441,15 @@
     }
   }
   .lagai1 {
-    padding: 23px;
+    height: 64px;
+}
+}
+
+
+@media screen and (max-width: 800px) {
+  .ant-col.ant-col-21{
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
 }
 }

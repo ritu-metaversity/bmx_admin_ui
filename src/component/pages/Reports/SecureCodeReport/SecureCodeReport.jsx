@@ -32,7 +32,7 @@ const SecureCodeReport = () => {
 
   const nav = useNavigate();
   const handleBackClick = () => {
-    nav("/markets");
+    nav(-1);
   };
 
   return (

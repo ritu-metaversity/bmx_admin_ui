@@ -30,7 +30,7 @@ const DusKaDumDetail = () => {
   const navigate = useNavigate();
 
   const handleBackbtn = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   return (

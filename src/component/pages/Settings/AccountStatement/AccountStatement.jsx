@@ -21,7 +21,7 @@ const AccountStatement = () => {
 
   const nav = useNavigate();
   const handleBackClick = () => {
-    nav("/Events/sports-details");
+    nav(-1);
   };
   const onChange = (date,dateString) => {
     setDateData(dateString);

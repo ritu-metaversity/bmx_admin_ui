@@ -27,9 +27,9 @@ const Signin = () => {
     const authData = {
       userId: values?.username,
       password: values?.password,
+      // appUrl: "subadmin.247idhub.com",
       // appUrl: "subadmin.localhost",
-      appUrl: "subadmin.localhost",
-      // appUrl: window.location.hostname,
+      appUrl: window.location.hostname,
     };
     trigger(authData);
   };

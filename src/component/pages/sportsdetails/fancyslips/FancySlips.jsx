@@ -59,7 +59,7 @@ const FancySlips = ({ type, name }) => {
   const [clientId, setClientId] = useState("");
   const nav = useNavigate();
   const handleBackClick = () => {
-    nav("/Events/sports-details");
+    nav(-1);
   };
 
   const { id } = useParams();
@@ -92,7 +92,7 @@ const FancySlips = ({ type, name }) => {
   };
 
   const [userList, resultData] = useLazySearchUserDownlineQuery();
-
+console.log(resultData?.data?.data,"resultdata");
   const handleChange = (value) => {
     userList({
       term: value,
@@ -136,9 +136,9 @@ const FancySlips = ({ type, name }) => {
                     <Select
                       placeholder="Select User"
                       options={
-                        resultData.data?.data?.map((i) => ({
-                          label: i,
-                          value: i,
+                        resultData.isError ?[] :resultData.data?.data?.map((i) => ({
+                          label: i.text,
+                          value: i.id,
                         })) || []
                       }
                       showSearch

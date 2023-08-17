@@ -3,11 +3,13 @@ import "./RouletteBook.scss";
 import { Card, Col, Empty, Row } from "antd";
 import Bets from "./Bets/Bets";
 import Roulette from "./Roulette/Roulette";
+import { useNavigate } from "react-router-dom";
 
 const RouletteBook = () => {
   const [counter, setCounter] = useState(0);
+  const nav = useNavigate()
   const handleBackbtn = () => {
-    console.log("helllo");
+    nav(-1)
   };
 
 

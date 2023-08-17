@@ -4,7 +4,7 @@ import './Deposit.scss'
 import { useDepositMutation } from "../../store/service/userlistService";
 
 const Deposit = ({balance, userIdData, handleClose}) => {
-
+  const [form]= Form.useForm();
   const [api, contextHolder] = notification.useNotification();
 
 
@@ -36,14 +36,14 @@ const Deposit = ({balance, userIdData, handleClose}) => {
         userId:userIdData
     }
     trigger(depositData)
-    console.log("Success:", values);
+    form?.resetFields();
   };
 
 
 useEffect(()=>{
-    console.log(data, "sdsdsd")
     if(data?.status === true){
         openNotification(data?.message);
+        form?.resetFields();
         handleClose()
     }else if(data?.status === false || error?.data?.message){
         openNotificationError(data?.message || error?.data?.message);
@@ -70,6 +70,7 @@ useEffect(()=>{
       <div className="form_modals">
         <Form
           onFinish={onFinish}
+          form={form}
           onFinishFailed={onFinishFailed}
           autoComplete="off">
           <Form.Item

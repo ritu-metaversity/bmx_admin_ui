@@ -13,7 +13,7 @@ const LoginReport = () => {
 
   const nav = useNavigate();
   const handleBackClick = () => {
-    nav("/Events/sports-details");
+    nav(-1);
   };
 
   // const userId =  JSON.parse(localStorage.getItem("userId")) 

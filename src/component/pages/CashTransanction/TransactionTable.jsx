@@ -29,6 +29,8 @@ const TransactionTable = ({ data, clientId }) => {
     setCreditCal(creditCal);
   }, [data])
 
+  // console.log(data[data?.length-1], "dfssdfdsgfd")
+
   const [DeleteByUserId , {data:deletedData}] = useDeleteByUserIDMutation();
 
 
@@ -89,13 +91,14 @@ const TransactionTable = ({ data, clientId }) => {
             <th>Done By</th>
           </tr>
           {data?.length != 0 && data?.map((res) => {
-            // console.log(res?._id?.$oid, "dfsfdsfs")
+            console.log(res, "dfsdfsdf")
             return (
               <tr key={res?.key}>
                 <td 
                 // onClick={()=>handelDeleteUser(res?._id?.$oid)}
                 >
-                  <Dropdown
+                  {
+                    res?.doneBy &&  <Dropdown
                     className="table_dropdown sport_droupdown"
                     menu={{
                       items,
@@ -112,6 +115,8 @@ const TransactionTable = ({ data, clientId }) => {
                       </Space>
                     </p>
                   </Dropdown>
+                  }
+                 
                 </td>
                 <td>{moment(res?.date?.$date).format("DD-MM-YYYY, h:mm a")}</td>
                 <td>{moment(res?.date?.$date).format("DD-MM-YYYY, h:mm a")}</td>
@@ -121,7 +126,7 @@ const TransactionTable = ({ data, clientId }) => {
                 <td className="text-right">{res?.balance}</td>
                 <td>{res?.paymentType}</td>
                 <td>{res?.remarks}</td>
-                <td>{res?.parentId}</td>
+                <td>{res?.doneBy}</td>
               </tr>
             );
           })}

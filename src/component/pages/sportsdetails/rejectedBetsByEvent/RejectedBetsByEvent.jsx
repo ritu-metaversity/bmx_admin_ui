@@ -74,7 +74,7 @@ const columns = [
 const RejectedBetsByEvent = () => {
     const nav = useNavigate()
     const handleBackClick = () =>{
-      nav("/Events/sports-details")
+      nav(-1)
     }
 
     const {id} = useParams()

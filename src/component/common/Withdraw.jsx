@@ -8,6 +8,8 @@ import {
 
 const Withdraw = ({ balance, userIdData, handleClose }) => {
   const [api, contextHolder] = notification.useNotification();
+  const [form]= Form.useForm();
+
 
   const [trigger, { data, error, isLoading }] = useWithdrawMutation();
 
@@ -19,7 +21,7 @@ const Withdraw = ({ balance, userIdData, handleClose }) => {
       userId: userIdData,
     };
     trigger(withdrawData);
-    console.log("Success:", values);
+    form?.resetFields();
   };
 
   const openNotification = (mess) => {
@@ -42,11 +44,13 @@ const Withdraw = ({ balance, userIdData, handleClose }) => {
   useEffect(() => {
     if (data?.status === true) {
       openNotification(data?.message);
+      form?.resetFields();
       handleClose();
     } else if (data?.status === false || error?.data?.message) {
       openNotificationError(data?.message || error?.data?.message);
+      handleClose();
     }
-  }, [data?.data]);
+  }, [data?.data, error]);
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -68,6 +72,7 @@ const Withdraw = ({ balance, userIdData, handleClose }) => {
        
         <Form
           onFinish={onFinish}
+          form={form}
           onFinishFailed={onFinishFailed}
           autoComplete="off">
           <Form.Item

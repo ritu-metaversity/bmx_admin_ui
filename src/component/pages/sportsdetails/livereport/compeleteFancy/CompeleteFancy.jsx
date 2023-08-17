@@ -28,7 +28,7 @@ const CompeleteFancy = () => {
   const handleShowBets = (val) => {
     setMarketId(val);
     dispatch(setData(val));
-    nav(`/Events/${id}/pl/live-report`);
+    nav(`/Events/${id}/pl/live-report`, { state: {id: val} });
   };
 
 

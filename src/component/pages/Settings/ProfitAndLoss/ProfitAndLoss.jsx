@@ -29,7 +29,7 @@ const ProfitAndLoss = () => {
   const nav = useNavigate();
 
   const handleBackClick = () => {
-    nav("/markets");
+    nav(-1);
   };
 
   const [getProftLossData, results, { isLoading }] = useLazyProfitLossQuery();

@@ -18,7 +18,7 @@ const AgentTransactions = ({ userType, Listname }) => {
   const nav = useNavigate();
 
   const handleBackbtn = () => {
-    nav("/client/cash-transanction");
+    nav(-1);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -133,7 +133,7 @@ const AgentTransactions = ({ userType, Listname }) => {
             onFinishFailed={onFinishFailed}
             autoComplete="off">
             <Row>
-              <Col span={8}>
+              <Col xl={8} lg={8} md={24} xs={24} >
                 <Form.Item
                   label="Client"
                   name="client"
@@ -160,7 +160,7 @@ const AgentTransactions = ({ userType, Listname }) => {
                   </Select>
                 </Form.Item>
               </Col>
-              <Col span={8}>
+              <Col xl={8} lg={8} md={24} xs={24} >
                 <Form.Item
                   label="Collection"
                   name="collection"
@@ -176,7 +176,7 @@ const AgentTransactions = ({ userType, Listname }) => {
                   </Select>
                 </Form.Item>
               </Col>
-              <Col span={8}>
+              <Col xl={8} lg={8} md={24} xs={24} >
                 <Form.Item
                   label="Date"
                   name="Date"
@@ -194,7 +194,7 @@ const AgentTransactions = ({ userType, Listname }) => {
                   />
                 </Form.Item>
               </Col>
-              <Col span={8}>
+              <Col xl={8} lg={8} md={24} xs={24} >
                 <Form.Item
                   label="Amount"
                   name="amount"
@@ -208,7 +208,7 @@ const AgentTransactions = ({ userType, Listname }) => {
                   <Input type="number" placeholder="Enter Amount" />
                 </Form.Item>
               </Col>
-              <Col span={8}>
+              <Col xl={8} lg={8} md={24} xs={24} >
                 <Form.Item
                   label="Payment Type"
                   name="payment_type"
@@ -225,7 +225,7 @@ const AgentTransactions = ({ userType, Listname }) => {
                   </Select>
                 </Form.Item>
               </Col>
-              <Col span={8}>
+              <Col xl={8} lg={8} md={24} xs={24} >
                 <Form.Item
                   label="Remark"
                   name="remark"
