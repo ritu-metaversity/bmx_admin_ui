@@ -25,8 +25,8 @@ const ChangePassword = ({ setIsModalOpen }) => {
       // localStorage.clear();
       setIsModalOpen(false);
       // nav("/");
-    } else if (chnagePassdata?.status === false) {
-      message.error(chnagePassdata?.message);
+    } else if (chnagePassdata?.status === false || error?.status === 401) {
+      message.error(chnagePassdata?.message || error?.data?.message);
     }
   }, [chnagePassdata, error]);
 

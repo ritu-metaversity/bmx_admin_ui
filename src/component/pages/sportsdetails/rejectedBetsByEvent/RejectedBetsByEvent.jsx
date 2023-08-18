@@ -21,12 +21,12 @@ const columns = [
       dataIndex: 'stake',
       key: 'stake',
     },
-    {
-      title: 'Type',
-      dataIndex: 'type',
-      key: 'type',
-    }
-    ,
+    // {
+    //   title: 'Type',
+    //   dataIndex: 'type',
+    //   key: 'type',
+    // }
+    // ,
     {
       title: 'Team',
       dataIndex: 'matchname',
@@ -51,20 +51,20 @@ const columns = [
     ,
     {
       title: 'Loss',
-      dataIndex: 'loss',
-      key: 'loss',
+      dataIndex: 'stake',
+      key: 'stake',
     }
     ,
     {
       title: 'Profit',
-      dataIndex: 'profit',
-      key: 'profit',
+      dataIndex: 'pnl',
+      key: 'pnl',
     }
     ,
     {
-      title:'bet_status',
-      dataIndex: 'isactive',
-      key: 'isactive',
+      title:'Bet Status',
+      dataIndex: 'bet_status',
+      key: 'bet_status',
     }
   ];
   // const data = [
@@ -81,7 +81,7 @@ const RejectedBetsByEvent = () => {
 
 
     const {data} = useRejectedBetDetailQuery({
-      matchid:32503518
+      matchid:Number(id)
     }, {refetchOnMountOrArgChange: true})
 
 
@@ -99,7 +99,7 @@ const RejectedBetsByEvent = () => {
             title="REJECTED And CANCELLED Bets"
             extra={<button onClick={handleBackClick}>Back</button>}>
             
-            <Row className='rejected_row' >
+            {/* <Row className='rejected_row' >
               <Col xl={4} xs={24} md={24} lg={4}>
               <Select
                 defaultValue="Select Super"
@@ -138,10 +138,10 @@ const RejectedBetsByEvent = () => {
                 ]}
               />
               </Col>
-            </Row>
+            </Row> */}
 
-            <div className="table_section" style={{marginBottom:"100px"}}>
-            <Table columns={columns} dataSource={data?.data} />
+            <div className="table_section" style={{marginBottom:"10px"}}>
+            <Table columns={columns} dataSource={data?.data?.map((res)=>({...res, bet_status:"Deleted"})) || []} />
             </div>
           </Card>
         </div>

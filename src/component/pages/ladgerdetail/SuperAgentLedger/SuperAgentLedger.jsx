@@ -51,12 +51,12 @@ const nav = useNavigate()
         title={`${Listname} Ledger`}
         extra={<button onClick={handleBackbtn}>Back</button>}>
         <Row className="main_super_super_ledger">
-          <Col xl={8} xs={24} lg={8} md={24} span={8}>
-            <div className="super_ledger item1">
+          <Col  xl={8} xs={24} lg={8} md={24} span={8}>
+            <div className="super_ledger item1" style={{marginTop:"4px"}}>
               <div>Lena</div>
               <div>{leneBalance}</div>
             </div>
-            <div>
+            <div >
               <div className="table_section">
               <Table
               className="live_table limit_update"
@@ -69,8 +69,8 @@ const nav = useNavigate()
               </div>
             </div>
           </Col>
-          <Col  xl={8} xs={24} lg={8} md={24}>
-            <div className="super_ledger item2">
+          <Col style={{marginTop:"4px"}}  xl={8} xs={24} lg={8} md={24}>
+            <div className="super_ledger item2" style={{marginTop:"4px"}}>
               <div>Dena</div>
               <div>{denaData}</div>
             </div>
@@ -88,7 +88,7 @@ const nav = useNavigate()
             </div>
           </Col>
           <Col  xl={8} xs={24} lg={8} md={24}>
-            <div className="super_ledger item3">
+            <div className="super_ledger item3" style={{marginTop:"4px"}}>
               <div>Clear</div>
               <div>{clearData}</div>
             </div>

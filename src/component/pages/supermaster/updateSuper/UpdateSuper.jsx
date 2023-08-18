@@ -11,8 +11,6 @@ import {
   notification,
 } from "antd";
 import "./UpdateSuper.scss";
-import { useSelector } from "react-redux";
-import { globalSelector } from "../../../../store/global/slice";
 import {
   useLazyGetUserQuery,
   useUpdateUserMutation,
@@ -51,7 +49,6 @@ const UpdateSuper = ({ updateName }) => {
   const passw = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,}$/;
 
   const onFinish = (values) => {
-    // console.log(values?.comm_type, "dfdsfsd");
     const userData = {
       userId: id,
       userName: values?.name,
@@ -96,9 +93,11 @@ const UpdateSuper = ({ updateName }) => {
 
   useEffect(() => {
     if (resuilt?.data?.status === true) setData(resuilt?.data?.data);
-    setCommType(Number(data?.data?.matchComm) == 0 || Number(data?.data?.sessionComm) == 0? "no-comm": "bbb");
-    console.log(data?.data?.matchComm == 0 || data?.data?.sessionComm == 0, "dsfsfs")
+    setCommType(Number(resuilt?.data?.data?.matchComm) == 0 || Number(resuilt?.data?.data?.sessionComm) == 0? "no-comm": "bbb");
   }, [resuilt?.data?.data]);
+
+
+  console.log(commType, "dfsdzzf")
 
   const onCommissionType = (e) => {
     setCommType(e);
@@ -221,7 +220,7 @@ const UpdateSuper = ({ updateName }) => {
             ]}>
             <div>
               <Row className="super_agent  update_agent">
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="Name"
                     name="name"
@@ -280,7 +279,7 @@ const UpdateSuper = ({ updateName }) => {
                           "Minimun 6 charecter, must contain letters and numbers!",
                       },
                     ]}>
-                    <Input type="text" placeholder="Password" />
+                    <Input type="password" placeholder="Password" />
                   </Form.Item>
 
                   <Form.Item
@@ -302,7 +301,7 @@ const UpdateSuper = ({ updateName }) => {
                     </Select>
                   </Form.Item>
                 </Col>
-                <Col span={12}></Col>
+                <Col lg={12} xs={24}></Col>
               </Row>
               <div>
                 <h2 style={{ marginLeft: "0px" }} className="update_agent_text">
@@ -310,7 +309,7 @@ const UpdateSuper = ({ updateName }) => {
                 </h2>
               </div>
               <Row className="super_agent  update_agent">
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="MASTER Comm type"
                     name="commType"
@@ -318,7 +317,7 @@ const UpdateSuper = ({ updateName }) => {
                     <Input disabled />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     name="comm_type"
                     label="SUPER comm type"
@@ -339,7 +338,7 @@ const UpdateSuper = ({ updateName }) => {
                 </Col>
                 {commType == "bbb" ? (
                   <>
-                    <Col span={12}>
+                    <Col lg={12} xs={24}>
                       <Form.Item
                         label="MASTER match comm(%)"
                         name="matchcomm"
@@ -347,7 +346,7 @@ const UpdateSuper = ({ updateName }) => {
                         <Input type="number" disabled />
                       </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col lg={12} xs={24}>
                       <Form.Item
                         label="SUPER match comm(%)"
                         name="Supermatchcomm"
@@ -379,7 +378,7 @@ const UpdateSuper = ({ updateName }) => {
                         />
                       </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col lg={12} xs={24}>
                       <Form.Item
                         label="MASTER sess comm(%)"
                         name="sesscomm"
@@ -387,7 +386,7 @@ const UpdateSuper = ({ updateName }) => {
                         <Input type="number" disabled />
                       </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col lg={12} xs={24}>
                       <Form.Item
                         label="SUPER sess comm(%)"
                         name="sess_comm"
@@ -426,7 +425,7 @@ const UpdateSuper = ({ updateName }) => {
                 )}
 
 
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                 <Form.Item
                   label="Transaction Password"
                   name="lupassword"
@@ -444,7 +443,7 @@ const UpdateSuper = ({ updateName }) => {
                   />
                 </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     wrapperCol={{
                       offset: 19,
@@ -462,7 +461,7 @@ const UpdateSuper = ({ updateName }) => {
                 </h2>
               </div>
               <Row className="super_agent  update_agent">
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="MASTER casino Share(%)"
                     name="casinoshare"
@@ -470,7 +469,7 @@ const UpdateSuper = ({ updateName }) => {
                     <Input type="number" disabled />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="SUPER casino Share(%)"
                     name="supercasinoShare"
@@ -484,7 +483,7 @@ const UpdateSuper = ({ updateName }) => {
                     <InputNumber className="number_field" min={0} step="0.1" />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="MASTER casino comm(%)"
                     name="casinoComm"
@@ -492,7 +491,7 @@ const UpdateSuper = ({ updateName }) => {
                     <Input disabled />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="SUPER casino comm(%)"
                     name="Supercasinocomm"

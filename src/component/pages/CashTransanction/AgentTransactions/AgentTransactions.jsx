@@ -114,6 +114,7 @@ const AgentTransactions = ({ userType, Listname }) => {
   }
   }, [result?.data])
   
+  const date = new Date()
 
   return (
     <>
@@ -189,7 +190,7 @@ const AgentTransactions = ({ userType, Listname }) => {
                   ]}>
                   <DatePicker
                     className="transations_date"
-                    defaultValue={dayjs("2015/01/01", dateFormat)}
+                    // defaultValue={dayjs(date, dateFormat)}
                     format={dateFormat}
                   />
                 </Form.Item>
@@ -233,7 +234,7 @@ const AgentTransactions = ({ userType, Listname }) => {
                   rules={[
                     {
                       required: true,
-                      message: "Enter Amount",
+                      message: "Enter Remark",
                     },
                   ]}>
                   <Input type="text" placeholder="Remarks" />

@@ -122,7 +122,7 @@ const PlusMinusReport = () => {
             </table>
 
             <Row className="de_table">
-              <Col span={12}>
+              <Col lg={12} xs={24}>
                 <div>
                   <Table
                     className="session_table table1"
@@ -155,7 +155,7 @@ const PlusMinusReport = () => {
 
                 </div>
               </Col>
-              <Col span={12}>
+              <Col lg={12} xs={24}>
                 <div>
                   <Table
                     className="session_table table1

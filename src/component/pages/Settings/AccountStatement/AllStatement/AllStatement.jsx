@@ -84,8 +84,8 @@ const AllStatement = ({dateData, gameType}) => {
     },
      {
       title: "Balance",
-      dataIndex: "balance",
-      key: "balance",
+      dataIndex: "pts",
+      key: "pts",
     },
   ];
 
@@ -98,7 +98,7 @@ const AllStatement = ({dateData, gameType}) => {
               bordered
               loading={isFetching||isLoading}
               columns={columns}
-              dataSource={data?.data?.dataList?.map((res)=>({...res, commPlus:0, commMinus:0, prevBal:0, balance:0})) || []}></Table>
+              dataSource={data?.data?.dataList?.map((res)=>({...res, commPlus:0, commMinus:0, prevBal:0})) || []}></Table>
           </div>
       </div>
     </>

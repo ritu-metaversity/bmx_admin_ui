@@ -74,10 +74,10 @@ const MatchLedger = () => {
       title="Match Ledger"
       extra={<button onClick={() => nav(-1)}>Back</button>}>
       <Row className="main_super_super_ledger">
-        <Col span={8} className="match_ladger">
+        <Col lg={8} xs={24} className="match_ladger">
           <DatePicker.RangePicker  onChange={onChange}/>
         </Col>
-        {/* <Col span={8} className="selected_ledger">
+        {/* <Col lg={12} xs={24} className="selected_ledger">
         <Select defaultValue="lucy" style={{ width: 120 }} onChange={(value) => console.log(`selected ${value}`)}>
           <Select.Option value="jack" label="Jack" />
           <Select.Option value="lucy" label="Lucy" />
@@ -85,7 +85,7 @@ const MatchLedger = () => {
           <Select.Option value="disabled" label="Disabled" disabled />
         </Select>
       </Col> */}
-        <Col span={6}>
+        <Col lg={6} xs={24}>
           <div className="matchladger_total">
             <p style={{ fontSize: "20px" }}>
               Total : <span style={{ color: "rgb(82, 196, 26)" }}>{data?.data?.total}</span>

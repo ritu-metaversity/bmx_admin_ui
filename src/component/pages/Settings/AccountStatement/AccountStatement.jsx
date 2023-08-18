@@ -59,8 +59,6 @@ const AccountStatement = () => {
 
   const data = useSelector(globalSelector)
 
-  console.log(data?.data, "sdasdsd")
-
   return (
     <>
       <div className="match_slip">
@@ -75,7 +73,7 @@ const AccountStatement = () => {
             extra={<button onClick={handleBackClick}>Back</button>}>
             <div className="main_acc_section">
               <div className="datepicker">
-                <RangePicker  onChange={onChange}/>
+                <RangePicker style={{marginBottom:"12px"}}  onChange={onChange}/>
               </div>
               <div className="tab_section transtion_tab">
                 <Tabs destroyInactiveTabPane  type="card" items={items} />

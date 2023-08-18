@@ -187,7 +187,7 @@ const CreateSuperAgent = ({ createName }) => {
             ]}>
             <div>
               <Row className="super_agent">
-                <Col span={12}>
+                <Col xl={12} lg={12} md={24} xs={24}>
                   <Form.Item
                     label="Name"
                     name="Name"
@@ -205,7 +205,7 @@ const CreateSuperAgent = ({ createName }) => {
                     }}   />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col  xl={12} lg={12} md={24} xs={24}>
                   <Form.Item
                     label="Reference"
                     name="reference"
@@ -219,12 +219,12 @@ const CreateSuperAgent = ({ createName }) => {
                     <Input type="text" placeholder="Enter Reference" />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col  lg={12} xs={24}>
                   <Form.Item label="My Coins" name="My Coins" required={false}>
                     <Input type="number" disabled />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="Coins"
                     name="Coins"
@@ -257,7 +257,7 @@ const CreateSuperAgent = ({ createName }) => {
                     />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="Contact No."
                     name="mobile"
@@ -293,7 +293,7 @@ const CreateSuperAgent = ({ createName }) => {
                     />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="Password"
                     name="password"
@@ -333,7 +333,7 @@ const CreateSuperAgent = ({ createName }) => {
                   <></>
                 ) : (
                   <>
-                    <Col span={12}>
+                    <Col lg={12} xs={24}>
                       <Form.Item
                         label="My Match Share(%)"
                         name="MyMatchShare"
@@ -348,7 +348,7 @@ const CreateSuperAgent = ({ createName }) => {
                         />
                       </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col lg={12} xs={24}>
                       <Form.Item
                         label="Match Share(%)"
                         name="matchShare"
@@ -387,7 +387,7 @@ const CreateSuperAgent = ({ createName }) => {
                   </>
                 )}
 
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="My Comm type"
                     name="MyCommtype"
@@ -396,7 +396,7 @@ const CreateSuperAgent = ({ createName }) => {
                   </Form.Item>
                 </Col>
 
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     name="Commtype"
                     label="Comm type"
@@ -418,7 +418,7 @@ const CreateSuperAgent = ({ createName }) => {
                 </Col>
                 {commiType === "bbb" && (
                   <>
-                    <Col span={12}>
+                    <Col lg={12} xs={24}>
                       <Form.Item name="My_Match_comm" label="My Match comm(%)">
                         <InputNumber
                           className="number_field"
@@ -428,7 +428,7 @@ const CreateSuperAgent = ({ createName }) => {
                         />
                       </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col lg={12} xs={24}>
                       <Form.Item
                         name="Match_comm"
                         required
@@ -462,7 +462,7 @@ const CreateSuperAgent = ({ createName }) => {
                       </Form.Item>
                     </Col>
 
-                    <Col span={12}>
+                    <Col lg={12} xs={24}>
                       <Form.Item name="My_sess_comm" label="My Sess comm(%)">
                         <InputNumber
                           className="number_field"
@@ -472,7 +472,7 @@ const CreateSuperAgent = ({ createName }) => {
                         />
                       </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col lg={12} xs={24}>
                       <Form.Item
                         name="sess_comm"
                         required
@@ -507,7 +507,7 @@ const CreateSuperAgent = ({ createName }) => {
                     </Col>
                   </>
                 )}
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="Transaction Password"
                     name="lupassword"
@@ -520,7 +520,7 @@ const CreateSuperAgent = ({ createName }) => {
                     <Input value={LuPassword} type="password" onChange={(e)=>handleLupassword(e)} placeholder="Transaction Password" />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item 
                     wrapperCol={{offset:19 ,span: 24}}>
                     <Button type="primary" htmlType="submit">

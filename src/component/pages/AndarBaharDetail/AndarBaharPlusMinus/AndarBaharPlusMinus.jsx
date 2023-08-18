@@ -228,7 +228,6 @@ const AndarBaharPlusMinus = () => {
               dataSource={data}
               pagination={false}
               rowClassName={(record) => {
-                console.log(record.key, "sdfdf")
                 return record?.key  == 2 ? "dateHiglight" : "";
               }}
              ></Table>
