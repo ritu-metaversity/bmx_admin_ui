@@ -220,7 +220,7 @@ const UserListTable = ({ userType, Listname }) => {
 
   useEffect(()=>{
     if(Activestatus?.status === true){
-      openNotification(Activestatus?.message)
+      openNotification(Activestatus?.message);
     }
   }, [Activestatus?.status])
 

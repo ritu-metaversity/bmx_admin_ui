@@ -7,7 +7,6 @@ const columns = [
       title: "A/C Name",
       dataIndex: "userId",
       key: "userId",
-      className:"user_id",
       render: (text, record) => (
         <span className="user_id">{ record?.userId} </span>
       ),
@@ -24,7 +23,7 @@ const columns = [
     }
   ];
 
-const SuperAgentProfitLoss = ({name, data}) => {
+const ClientProfitLoss = ({name, data}) => {
   // console.log(data)
 
   // console.log(data?.admin, "fsdfsdsfs")
@@ -36,7 +35,7 @@ const SuperAgentProfitLoss = ({name, data}) => {
                 className="sub_live_section live_report"
                 style={{ borderRadius: "2px 2px 0 0", fontSize: "16px" }}>
                 <div style={{ padding: "9px 8px" }} className="team_name">
-                  Super Master P&L
+                  Client P&L
                 </div>
               </div>
             </div>
@@ -47,7 +46,7 @@ const SuperAgentProfitLoss = ({name, data}) => {
                   bordered
                   pagination={false}
                   columns={columns}
-                  dataSource={data?.superMaster}
+                  dataSource={data?.client}
                 ></Table>
               </div>
             </div>
@@ -56,4 +55,4 @@ const SuperAgentProfitLoss = ({name, data}) => {
   )
 }
 
-export default SuperAgentProfitLoss
+export default ClientProfitLoss

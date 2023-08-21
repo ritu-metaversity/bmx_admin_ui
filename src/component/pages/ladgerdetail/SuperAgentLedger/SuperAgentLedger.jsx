@@ -52,7 +52,7 @@ const nav = useNavigate()
         extra={<button onClick={handleBackbtn}>Back</button>}>
         <Row className="main_super_super_ledger">
           <Col  xl={8} xs={24} lg={8} md={24} span={8}>
-            <div className="super_ledger item1" style={{marginTop:"4px"}}>
+            <div className="super_ledger item1">
               <div>Lena</div>
               <div>{leneBalance}</div>
             </div>
@@ -69,8 +69,8 @@ const nav = useNavigate()
               </div>
             </div>
           </Col>
-          <Col style={{marginTop:"4px"}}  xl={8} xs={24} lg={8} md={24}>
-            <div className="super_ledger item2" style={{marginTop:"4px"}}>
+          <Col  xl={8} xs={24} lg={8} md={24}>
+            <div className="super_ledger item2" >
               <div>Dena</div>
               <div>{denaData}</div>
             </div>
@@ -87,8 +87,9 @@ const nav = useNavigate()
               </div>
             </div>
           </Col>
-          <Col  xl={8} xs={24} lg={8} md={24}>
-            <div className="super_ledger item3" style={{marginTop:"4px"}}>
+          <Col   xl={8} xs={24} lg={8} md={24}>
+            <div className="last_item">
+            <div className="super_ledger item3">
               <div>Clear</div>
               <div>{clearData}</div>
             </div>
@@ -104,6 +105,8 @@ const nav = useNavigate()
             </Table>
               </div>
             </div>
+            </div>
+            
           </Col>
         </Row>
       </Card>

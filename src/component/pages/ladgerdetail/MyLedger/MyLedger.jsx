@@ -3,6 +3,7 @@ import "./MyLedger.scss";
 import { useMyLedgerQuery } from "../../../../store/service/ledgerServices";
 import moment from "moment";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   {
@@ -47,8 +48,9 @@ const columns = [
 ];
 
 const MyLedger = () => {
+  const nav = useNavigate()
   const handleBackbtn = () => {
-    console.log(-1);
+    nav(-1);
   };
 
   const timeBefore = moment().subtract(30, "days").format("YYYY-MM-DD");

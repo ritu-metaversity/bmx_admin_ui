@@ -87,7 +87,7 @@ const MatchLedger = () => {
       </Col> */}
         <Col lg={6} xs={24}>
           <div className="matchladger_total">
-            <p style={{ fontSize: "20px" }}>
+            <p style={{ fontSize: "20px", marginLeft:"10px" }}>
               Total : <span style={{ color: "rgb(82, 196, 26)" }}>{data?.data?.total}</span>
             </p>
           </div>

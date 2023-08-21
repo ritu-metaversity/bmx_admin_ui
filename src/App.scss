@@ -80,7 +80,7 @@ td, th{
   white-space: nowrap;
 }
 
-:where(.css-dev-only-do-not-override-12jzuas).ant-card {
+.ant-card {
   border-radius: 2px;
 }
 
@@ -114,4 +114,7 @@ button {
 }
 .ant-picker.ant-picker-range{
   border-radius: 2px !important;
+}
+.bg_red{
+  background-color: red !important;
 }
