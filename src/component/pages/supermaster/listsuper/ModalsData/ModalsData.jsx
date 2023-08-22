@@ -14,7 +14,7 @@ const ModalsData = ({partnershipDetails}) => {
                 <th>Sub Admin</th>
                 <th>Super Master</th>
                 <th>Master</th>
-                <th>Agent/Dealer</th>
+                <th>Agent</th>
               </tr>
               <tr>
                 <td>{partnershipDetails?.subadminpartnership}</td>
@@ -35,13 +35,15 @@ const ModalsData = ({partnershipDetails}) => {
                 <th>Sub Admin</th>
                 <th>Super Master</th>
                 <th>Master</th>
-                <th>Agent/Dealer</th>
+                <th>Agent</th>
+                <th>Client</th>
               </tr>
               <tr>
                 <td>{partnershipDetails?.subadminoddsloss}</td>
                 <td>{partnershipDetails?.supermasteroddsloss}</td>
                 <td>{partnershipDetails?.masteroddsloss}</td>
                 <td>{partnershipDetails?.agentoddsloss}</td>
+                <td>{partnershipDetails?.oddsloss}</td>
               </tr>
             </table>
           </div>
@@ -57,13 +59,15 @@ const ModalsData = ({partnershipDetails}) => {
                 <th>Sub Admin</th>
                 <th>Super Master</th>
                 <th>Master</th>
-                <th>Agent/Dealer</th>
+                <th>Agent</th>
+                <th>Client</th>
               </tr>
               <tr>
                 <td>{partnershipDetails?.subadminfancyloss}</td>
                 <td>{partnershipDetails?.supermasterfancyloss}</td>
                 <td>{partnershipDetails?.masterfancyloss}</td>
                 <td>{partnershipDetails?.agentfancyloss}</td>
+                <td>{partnershipDetails?.fancyloss}</td>
               </tr>
             </table>
           </div>
@@ -97,7 +101,7 @@ const ModalsData = ({partnershipDetails}) => {
                 <th>Sub Admin</th>
                 <th>Super Master</th>
                 <th>Master</th>
-                <th>Agent/Dealer</th>
+                <th>Agent</th>
               </tr>
               <tr>
                 <td>{partnershipDetails?.subadminpartnershipc}</td>
@@ -118,13 +122,15 @@ const ModalsData = ({partnershipDetails}) => {
                 <th>Sub Admin</th>
                 <th>Super Master</th>
                 <th>Master</th>
-                <th>Agent/Dealer</th>
+                <th>Agent</th>
+                <th>Client</th>
               </tr>
               <tr>
                 <td>{partnershipDetails?.subadmincasinocommssion}</td>
                 <td>{partnershipDetails?.supermastercasinocommssion}</td>
                 <td>{partnershipDetails?.mastercasinocommssion}</td>
                 <td>{partnershipDetails?.agentcasinocommssion}</td>
+                <td>{partnershipDetails?.casinocommssion}</td>
               </tr>
             </table>
             </div>

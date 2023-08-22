@@ -111,7 +111,7 @@ const Sidebar = (props) => {
                 },
                 {
                   className: `${userType === "1" ? "" : "d-none"}`,
-                  label: <Link to="/client/list-agent">Dealer</Link>,
+                  label: <Link to="/client/list-dealer">Agent</Link>,
                 },
                 {
                   label: <Link to="client/list-client">Client</Link>,
@@ -303,7 +303,7 @@ const Sidebar = (props) => {
                       <Link
                         to="/client/list-agent"
                         onClick={() => setOpen(false)}>
-                        Dealer
+                        Agent
                       </Link>
                     ),
                   },
@@ -455,12 +455,12 @@ const Sidebar = (props) => {
                     ),
                   },
                   {
-                    lassName: `${userType != "5" ? "d-none" : ""}`,
+                    className: `${userType != "5" ? "d-none" : ""}`,
                     label: (
                       <Link
                         to="/client/txn-super"
                         onClick={() => setOpen(false)}>
-                        Debit/Credit Entry(SA)
+                        Debit/Credit Entry(SM)
                       </Link>
                     ),
                   },

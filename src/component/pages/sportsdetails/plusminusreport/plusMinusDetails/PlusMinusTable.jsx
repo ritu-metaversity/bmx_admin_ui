@@ -9,24 +9,27 @@ const PlusMinusTable = () => {
   const { data } = useSportPlusMinusQuery({
     eventId: parmes?.id,
     marketId: state?.first,
-    userId: state?.secondUserid,
+    // parentIds: state?.secondUserid,
+    // parentKey:"",
+    // userId:[]
   });
 
   return (
     <>
      
         <MapInteractionCSS
-         showControls
+        //  showControls
          defaultValue={{
            scale: 1,
-           translation: { x: 0, y: 20 }
+           translation: { x: 0, y: 0 }
          }}
-         minScale={0.5}
-         maxScale={3}
-         translationBounds={{
-           xMax: 400,
-           yMax: 200
-         }}
+         minScale={0.3}
+         maxScale={4}
+        //  translationBounds={{
+        //    xMax: 400,
+        //    yMax: 200
+        //  }}
+        
         >
           <table className="plus-table">
             <tbody>
@@ -36,6 +39,7 @@ const PlusMinusTable = () => {
                 ))}
             </tbody>
           </table>
+          
         </MapInteractionCSS>
 
     </>

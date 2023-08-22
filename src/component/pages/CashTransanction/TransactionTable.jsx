@@ -8,7 +8,7 @@ import {
   Row,
   Select,
   Space,
-  message,
+  message,  
   notification,
 } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
@@ -19,24 +19,26 @@ import moment from "moment";
 
 const dateFormat = "YYYY/MM/DD";
 
-const TransactionTable = ({ data, clientId }) => {
+const TransactionTable = ({ data, clientId, balanceData }) => {
   const [debitCal, setDebitCal] = useState(0);
   const [creditCal, setCreditCal] = useState(0);
   const [deletedId, setDeletedId] = useState("");
   const [api, contextHolder] = notification.useNotification();
 
+  console.log(data, "dsdsfcds")
+
   const nav = useNavigate();
 
-  useEffect(() => {
-    const debitCal = data
-      ?.map((res) => res?.debit)
-      .reduce((prev, curr) => Number(prev) + Number(curr), 0);
-    const creditCal = data
-      ?.map((res) => res?.credit)
-      .reduce((prev, curr) => Number(prev) + Number(curr), 0);
-    setDebitCal(debitCal);
-    setCreditCal(creditCal);
-  }, [data]);
+  // useEffect(() => {
+  //   const debitCal = data
+  //     ?.map((res) => res?.debit)
+  //     .reduce((prev, curr) => Number(prev) + Number(curr), 0);
+  //   const creditCal = data
+  //     ?.map((res) => res?.credit)
+  //     .reduce((prev, curr) => Number(prev) + Number(curr), 0);
+  //   setDebitCal(debitCal);
+  //   setCreditCal(creditCal);
+  // }, [data]);
 
 
   const [DeleteByUserId, { data: deletedData, error }] = useDeleteByUserIDMutation();
@@ -84,6 +86,7 @@ const TransactionTable = ({ data, clientId }) => {
 }, [deletedData?.data, error])
 
 
+console.log(data, "asdas")
 
   const items = [
     {
@@ -106,19 +109,19 @@ const TransactionTable = ({ data, clientId }) => {
       <div className="my_ledger" style={{ padding: "12px 0px" }}>
         <div>
           <h3 style={{ padding: "5px", color: "rgb(214, 75, 75)" }}>
-            Dena : {debitCal}
+            Dena : {balanceData?.credit}
           </h3>
         </div>
         <div>
           <h3 style={{ padding: "5px", color: "rgb(51, 181, 28)" }}>
-            Lena : {creditCal}
+            Lena :  {balanceData?.debit}
           </h3>
         </div>
 
         <div>
-          <h3 style={{ padding: "5px", color: "rgb(51, 181, 28)" }}>
-            Balance: {(debitCal - creditCal)?.toFixed(2)}{" "}
-            {debitCal - creditCal > 0 ? "( Dena )" : "( Lena )"}
+          <h3 style={{ padding: "5px"}} className={balanceData?.balance < 0 ?"text_danger":"text_success"}>
+            Balance: {Math.abs(balanceData?.balance)}
+            {balanceData?.balance > 0 ? "( Lena )" : "( Dena )"}
           </h3>
         </div>
         <div>
@@ -174,10 +177,10 @@ const TransactionTable = ({ data, clientId }) => {
                   <td>{res?.collectionName}</td>
                   <td className="text-right">{res?.debit}</td>
                   <td className="text-right">{res?.credit}</td>
-                  <td className="text-right">{res?.balance}</td>
+                  <td className="text-right">{Math.abs(res?.balance)} - {res?.balance > 0? "Lena":"Dena"}</td>
                   <td>{res?.paymentType}</td>
                   <td>{res?.remarks}</td>
-                  <td>{res?.doneBy}</td>
+                  <td>{res?.doneBy}</td>  
                 </tr>
               );
             })}

@@ -156,7 +156,7 @@ const EventProfitLoss = () => {
                 {profitLoss?.data?.data?.map((res, id) => {
                   return (
                     <tr
-                      className={res?.pnl < 0 ? "bg_green" : "bg_red"}
+                      className={res?.pnl > 0 ? "bg_green" : "bg_red"}
                       style={{ color: "#fff" }}
                       key={id}>
                       <td>{res?.userId}</td>

@@ -14,6 +14,7 @@ import {
 import {
   useCreateUserMutation,
   useLazyCreateUserDataQuery,
+  useLazyIsUserIdQuery,
 } from "../../../store/service/createUserServices";
 import { useEffect, useState } from "react";
 
@@ -21,20 +22,18 @@ const CreateSuperAgent = ({ createName }) => {
   const [userData, setUserData] = useState({});
   const [commiType, setCommiType] = useState("nocomm");
   const [LuPassword, setLuPassword] = useState("");
+  const [createUserId, setCreateUserID] = useState();
+  const [userMatchSatus, setUserMatchSatus] = useState();
   const [api, contextHolder] = notification.useNotification();
-  const [form]= Form.useForm();
-
-  // console.log(form, "ddssdds")
+  const [form] = Form.useForm();
 
   const commissionType = (value) => {
     setCommiType(value);
   };
 
-  const handleLupassword = (e)=>{
-    setLuPassword(e.target.value)
-  }
-
-  // const userNameRegex = /^[a-zA-Z][a-zA-Z ]+[a-zA-Z]$/;
+  const handleLupassword = (e) => {
+    setLuPassword(e.target.value);
+  };
 
   const openNotification = (mess) => {
     api.success({
@@ -56,24 +55,52 @@ const CreateSuperAgent = ({ createName }) => {
   const passw = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,15}$/;
   var mobileNum = /^[6-9][0-9]{9}$/;
 
-  const [createUser, { data: UserList, error, isLoading }] =useCreateUserMutation();
-  const [trigger, {data}] = useLazyCreateUserDataQuery();
+  const [getData, { data: results }] = useLazyIsUserIdQuery();
 
+  const handelUseId = (e) => {
+    setCreateUserID(e.target.value);
+  };
+
+  console.log("C" + createUserId, "dss");
+
+  const [createUser, { data: UserList, error, isLoading }] =
+    useCreateUserMutation();
+  const [trigger, { data }] = useLazyCreateUserDataQuery();
 
   useEffect(() => {
-   trigger();
- }, [data?.data]);
+    trigger();
+  }, [data?.data]);
+
+  useEffect(() => {
+    getData({
+      userId: hostname.includes("create-super")
+        ? "S" + createUserId
+        : hostname.includes("create-agent")
+        ? "M" + createUserId
+        : hostname.includes("create-dealer")
+        ? "A" + createUserId
+        : "C" + createUserId,
+    });
+  }, [createUserId]);
+  const hostname = window.location.pathname;
+  console.log(hostname.includes("create-super"), "dasds");
 
   const onFinish = (values) => {
     setLuPassword("");
     const userData = {
-      userId: "",
+      userId: hostname.includes("create-super")
+        ? "S" + createUserId
+        : hostname.includes("create-agent")
+        ? "M" + createUserId
+        : hostname.includes("create-dealer")
+        ? "A" + createUserId
+        : "C" + createUserId,
       username: values?.Name,
       mobile: values?.mobile,
       city: "",
       userRole: window.location.pathname.includes("create-client") ? 2 : 1,
       password: values?.password,
-      sportPartnership: values?.matchShare || 0,
+      sportPartnership: values?.MyMatchShare - values?.matchShare || 0,
       oddLossCommission: commiType === "nocomm" ? "0" : values?.Match_comm,
       lupassword: values?.lupassword,
       liveCasinoLock: false,
@@ -86,11 +113,6 @@ const CreateSuperAgent = ({ createName }) => {
       reference: values?.reference,
     };
     createUser(userData);
-  };
-
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
   };
 
   useEffect(() => {
@@ -110,8 +132,6 @@ const CreateSuperAgent = ({ createName }) => {
   const handleBackClick = () => {
     nav("/client/list-super");
   };
-
-
 
   useEffect(() => {
     setUserData(data?.data);
@@ -149,7 +169,6 @@ const CreateSuperAgent = ({ createName }) => {
             wrapperCol={{ span: 16 }}
             // initialValues={{ remember: true }}
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
             autoComplete="off"
             fields={[
               {
@@ -189,6 +208,41 @@ const CreateSuperAgent = ({ createName }) => {
               <Row className="super_agent">
                 <Col xl={12} lg={12} md={24} xs={24}>
                   <Form.Item
+                    label="User ID"
+                    name="code"
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please Enter UserID",
+                      },
+                      {
+                        // validator: () => {if ((!results?.status))
+                        //     {
+                        //       return Promise.reject(
+                        //         new Error(results?.message)
+                        //       );
+                        //     }
+                        //   },
+                      },
+                    ]}>
+                    <Input
+                      type="text"
+                      placeholder="Enter full name"
+                      onChange={(e) => handelUseId(e)}
+                      onKeyDown={(e) => {
+                        if (
+                          !e.key.match(/^[a-zA-Z0-9]$/) &&
+                          e.key.length === 1
+                        ) {
+                          e.preventDefault();
+                        }
+                      }}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col xl={12} lg={12} md={24} xs={24}>
+                  <Form.Item
                     label="Name"
                     name="Name"
                     required
@@ -196,64 +250,19 @@ const CreateSuperAgent = ({ createName }) => {
                       {
                         required: true,
                         message: "Please enter name",
-                      }
-                    ]}>
-                    <Input type="text" placeholder="Enter full name" onKeyDown={e=>{
-                      if(!e.key.match(/^[a-zA-z ]$/) && e.key.length===1){
-                        e.preventDefault()
-                      }
-                    }}   />
-                  </Form.Item>
-                </Col>
-                <Col  xl={12} lg={12} md={24} xs={24}>
-                  <Form.Item
-                    label="Reference"
-                    name="reference"
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please specify reference",
                       },
                     ]}>
-                    <Input type="text" placeholder="Enter Reference" />
-                  </Form.Item>
-                </Col>
-                <Col  lg={12} xs={24}>
-                  <Form.Item label="My Coins" name="My Coins" required={false}>
-                    <Input type="number" disabled />
-                  </Form.Item>
-                </Col>
-                <Col lg={12} xs={24}>
-                  <Form.Item
-                    label="Coins"
-                    name="Coins"
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter valid Coins",
-                      },
-                      {
-                        validator: async (_, values) => {
-                          console.log(values, "sdsadas");
-                          if (
-                            data?.data?.myBalance < values &&
-                            values != "" &&
-                            values != null
-                          ) {
-                            return Promise.reject(
-                              new Error("Please enter valid Coins")
-                            );
-                          }
-                        },
-                      },
-                    ]}>
-                    <InputNumber
-                      className="number_field"
-                      min={0}
-                      type="number"
-                      placeholder="Super Agent Coins"
+                    <Input
+                      type="text"
+                      placeholder="Enter full name"
+                      onKeyDown={(e) => {
+                        if (
+                          !e.key.match(/^[a-zA-Z0-9]$/) &&
+                          e.key.length === 1
+                        ) {
+                          e.preventDefault();
+                        }
+                      }}
                     />
                   </Form.Item>
                 </Col>
@@ -285,14 +294,66 @@ const CreateSuperAgent = ({ createName }) => {
                       className="number_field"
                       min={0}
                       type="number"
-                      onKeyDown={e=>{
-                        if(!e.key.match(/^[0-9]$/) && e.key.length===1){
-                          e.preventDefault()
+                      onKeyDown={(e) => {
+                        if (!e.key.match(/^[0-9]$/) && e.key.length === 1) {
+                          e.preventDefault();
                         }
                       }}
                     />
                   </Form.Item>
                 </Col>
+                <Col xl={12} lg={12} md={24} xs={24}>
+                  <Form.Item
+                    label="Reference"
+                    name="reference"
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please specify reference",
+                      },
+                    ]}>
+                    <Input type="text" placeholder="Enter Reference" />
+                  </Form.Item>
+                </Col>
+                <Col lg={12} xs={24}>
+                  <Form.Item label="My Coins" name="My Coins" required={false}>
+                    <Input type="number" disabled />
+                  </Form.Item>
+                </Col>
+                <Col lg={12} xs={24}>
+                  <Form.Item
+                    label="Coins"
+                    name="Coins"
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter valid Coins",
+                      },
+                      {
+                        validator: async (_, values) => {
+                          if (
+                            data?.data?.myBalance < values &&
+                            values != "" &&
+                            values != null
+                          ) {
+                            return Promise.reject(
+                              new Error("Please enter valid Coins")
+                            );
+                          }
+                        },
+                      },
+                    ]}>
+                    <InputNumber
+                      className="number_field"
+                      min={0}
+                      type="number"
+                      placeholder="Super Agent Coins"
+                    />
+                  </Form.Item>
+                </Col>
+
                 <Col lg={12} xs={24}>
                   <Form.Item
                     label="Password"
@@ -321,7 +382,6 @@ const CreateSuperAgent = ({ createName }) => {
                     <Input type="password" placeholder="Password" />
                   </Form.Item>
                 </Col>
-                
               </Row>
               <div>
                 <h2 className="match_share">
@@ -441,7 +501,8 @@ const CreateSuperAgent = ({ createName }) => {
                           {
                             validator: async (_, values) => {
                               if (
-                                data?.data?.myMatchCommission < values &&
+                                values > 3 &&
+                                values >= 0 &&
                                 values != "" &&
                                 values != null
                               ) {
@@ -485,7 +546,8 @@ const CreateSuperAgent = ({ createName }) => {
                           {
                             validator: async (_, values) => {
                               if (
-                                data?.data?.mySessionCommission < values &&
+                                values > 3 &&
+                                values >= 0 &&
                                 values != "" &&
                                 values != null
                               ) {
@@ -517,12 +579,16 @@ const CreateSuperAgent = ({ createName }) => {
                         message: "Please Enter Transaction Password",
                       },
                     ]}>
-                    <Input value={LuPassword} type="password" onChange={(e)=>handleLupassword(e)} placeholder="Transaction Password" />
+                    <Input
+                      value={LuPassword}
+                      type="password"
+                      onChange={(e) => handleLupassword(e)}
+                      placeholder="Transaction Password"
+                    />
                   </Form.Item>
                 </Col>
                 <Col lg={12} xs={24}>
-                  <Form.Item 
-                    wrapperCol={{offset:19 ,span: 24}}>
+                  <Form.Item wrapperCol={{ offset: 19, span: 24 }}>
                     <Button type="primary" htmlType="submit">
                       Submit
                     </Button>
@@ -530,7 +596,6 @@ const CreateSuperAgent = ({ createName }) => {
                 </Col>
               </Row>
 
-              
               {/* <div>
                 <h2 className="match_share">{createName} Casino Commission</h2>
               </div>

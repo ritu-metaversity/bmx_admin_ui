@@ -22,16 +22,14 @@ const ChangePassword = ({ setIsModalOpen }) => {
   useEffect(() => {
     if (chnagePassdata?.status === true) {
       message.success(chnagePassdata?.message);
-      // localStorage.clear();
+      localStorage.clear();
       setIsModalOpen(false);
-      // nav("/");
+      nav("/");
     } else if (chnagePassdata?.status === false || error?.status === 401) {
       message.error(chnagePassdata?.message || error?.data?.message);
     }
   }, [chnagePassdata, error]);
 
-
-  console.log(chnagePassdata?.message, "Dfdsfds")
 
   const passw = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,15}$/;
 

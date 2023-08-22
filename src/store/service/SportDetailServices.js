@@ -1,9 +1,15 @@
-import { createApi } from "@reduxjs/toolkit/dist/query/react";
-import { dynamicBaseQuery } from "./dynamicBaseQuery";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
 export const sportDetailsApi = createApi({
   reducerPath: "sportDetailsApi",
-  baseQuery: dynamicBaseQuery,
+  baseQuery: fetchBaseQuery({
+    baseUrl: import.meta.env.VITE_BASE_URL,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem("token");
+      headers.set("Authorization", `Bearer ${token}`);
+      return headers;
+    },
+  }),
   endpoints: (build) => ({
     sportDetail: build.query({
       query: (body) => ({

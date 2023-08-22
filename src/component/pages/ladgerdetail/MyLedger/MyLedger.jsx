@@ -81,17 +81,17 @@ const MyLedger = () => {
         </Col>
           <div>
             <h3 style={{ padding: "5px", color: "rgb(51, 181, 28)" }}>
-              Lena : {data?.data?.data?.credit}
+              Lena : {(data?.data?.data?.credit)?.toFixed(2)}
             </h3>
           </div>
           <div>
             <h3 style={{ padding: "5px", color: "rgb(214, 75, 75)" }}>
-              Dena : {data?.data?.data?.debit}
+              Dena : {(data?.data?.data?.debit)?.toFixed(2)}
             </h3>
           </div>
           <div>
             <h3 style={{ padding: "5px", color: "rgb(214, 75, 75)" }}>
-              Balance: {data?.data?.data?.balance}  {data?.data?.data?.balance>0?"( Dena )":"( Lena )"} 
+              Balance: {(data?.data?.data?.balance?.toFixed(2))}  {data?.data?.data?.balance>0?"( Dena )":"( Lena )"} 
             </h3>
           </div>
         </div>

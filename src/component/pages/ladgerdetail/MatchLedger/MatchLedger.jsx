@@ -42,17 +42,17 @@ const columns = [
 const MatchLedger = () => {
   const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
   const time = moment().format("YYYY-MM-DD");
-  const [dateData, setDateData] = useState([timeBefore,time]);
+  const [dateData, setDateData] = useState([timeBefore, time]);
   const [totalPage, setTotalPage] = useState();
   const [paginationTotal, setPaginationTotal] = useState(10);
   const [indexData, setIndexData] = useState(0);
 
-  const onChange = (date,dateString) => {
+  const onChange = (date, dateString) => {
     setDateData(dateString);
   };
 
   // const [data, setData] = useState({});
-  const [trigger, {data,  isLoading }] =useLazyProfitAndLossLedgerQuery();
+  const [trigger, { data, isLoading }] = useLazyProfitAndLossLedgerQuery();
 
   useEffect(() => {
     trigger({
@@ -64,9 +64,7 @@ const MatchLedger = () => {
     setTotalPage(data?.data?.totalPages);
   }, [data?.data, dateData, paginationTotal, indexData]);
 
-
-  const nav = useNavigate()
-
+  const nav = useNavigate();
 
   return (
     <Card
@@ -75,7 +73,7 @@ const MatchLedger = () => {
       extra={<button onClick={() => nav(-1)}>Back</button>}>
       <Row className="main_super_super_ledger">
         <Col lg={8} xs={24} className="match_ladger">
-          <DatePicker.RangePicker  onChange={onChange}/>
+          <DatePicker.RangePicker onChange={onChange} />
         </Col>
         {/* <Col lg={12} xs={24} className="selected_ledger">
         <Select defaultValue="lucy" style={{ width: 120 }} onChange={(value) => console.log(`selected ${value}`)}>
@@ -87,8 +85,11 @@ const MatchLedger = () => {
       </Col> */}
         <Col lg={6} xs={24}>
           <div className="matchladger_total">
-            <p style={{ fontSize: "20px", marginLeft:"10px" }}>
-              Total : <span style={{ color: "rgb(82, 196, 26)" }}>{data?.data?.total}</span>
+            <p style={{ fontSize: "20px", marginLeft: "10px" }}>
+              Total :{" "}
+              <span style={{ color: "rgb(82, 196, 26)" }}>
+                {(data?.data?.total)?.toFixed(2)}
+              </span>
             </p>
           </div>
         </Col>
@@ -111,13 +112,17 @@ const MatchLedger = () => {
                 <tr key={id} style={{ cursor: "pointer" }}>
                   <td>{moment(res?.date).format("DD-MM-YYYY")}</td>
                   <td>{res?.matchName}</td>
-                  <td>{res?.netPnl < 0 ? res?.netPnl:0}</td>
-                  <td>{res?.netPnl > 0 ? res?.netPnl:0}</td>
+                  <td>{res?.netPnl > 0 ? res?.netPnl : 0}</td>
+                  <td>{res?.netPnl < 0 ? res?.netPnl : 0}</td>
                 </tr>
               );
             })}
           </table>
-          {data?.list?.length === 0 ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> : ""}
+          {data?.list?.length === 0 ? (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          ) : (
+            ""
+          )}
         </div>
       )}
       <Divider />

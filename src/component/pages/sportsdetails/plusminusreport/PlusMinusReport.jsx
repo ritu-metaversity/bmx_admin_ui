@@ -11,49 +11,57 @@ const column = [
   {
     title: "Session",
     dataIndex: "selectionname",
-    key: 1
+    key: 1,
   },
   {
     title: "Declare",
     dataIndex: "result",
-    key: 2
-  }
+    key: 2,
+  },
 ];
 const columns = [
   {
-    title: "Client",
+    title: "Parent",
     dataIndex: "userid",
-    key: 1
+    key: 1,
+  },
+];
+const clintColumns = [
+  {
+    title: "child",
+    dataIndex: "userid",
+    key: 1,
   },
 ];
 
 const PlusMinusReport = () => {
-  const { id } = useParams()
+  const { id } = useParams();
 
-  const [first, setfirst] = useState([])
-  const [secondUserid, setSecondUserid] = useState([])
-  const [showOdds, setShowOdds] = useState(true)
+  const [first, setfirst] = useState([]);
+  const [secondUserid, setSecondUserid] = useState([]);
+  const [showOdds, setShowOdds] = useState(true);
   const [api, contextHolder] = notification.useNotification();
-  const { state } = useLocation()
+  const { state } = useLocation();
 
   const onChange = (e) => {
-    let checked = e.target.checked
-    setShowOdds(checked)
+    let checked = e.target.checked;
+    setShowOdds(checked);
   };
-  console.log(showOdds, first, secondUserid, "sdfds");
+  // console.log(showOdds, first, secondUserid, "sdfds");
 
-  const { data, isFetching, isLoading } = useComplteFancyOddsClientsQuery({
-    "eventId": id
-  }, { refetchOnMountOrArgChange: true })
+  const { data, isFetching, isLoading } = useComplteFancyOddsClientsQuery(
+    {
+      eventId: id,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
 
-
-
-
-
-  const nav = useNavigate()
+  const nav = useNavigate();
   const handleBackClick = () => {
-    nav("/Events/sports-details")
-  }
+    nav("/Events/sports-details");
+  };
+
+  console.log(data?.data?.users, "dfsdfsd");
 
   const handleShowBtn = () => {
     if (showOdds === false) {
@@ -62,24 +70,24 @@ const PlusMinusReport = () => {
         closeIcon: false,
         placement: "top",
       });
-    }
-    else if (first?.length === 0) {
+    } else if (first?.length === 0) {
       api.error({
         message: "Please Select at least one Session",
         closeIcon: false,
         placement: "top",
       });
-    }
-    else if (secondUserid?.length === 0) {
+    } else if (secondUserid?.length === 0) {
       api.error({
         message: "Please Select at least one client.",
         closeIcon: false,
         placement: "top",
       });
     } else {
-      nav(`/Events/${id}/plus-minus-report`, { state: { first, secondUserid, state } })
+      nav(`/Events/${id}/plus-minus-report`, {
+        state: { first, secondUserid, state },
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -88,13 +96,14 @@ const PlusMinusReport = () => {
         <div className="_match">
           <div
             className="sub_live_section live_report"
-          // style={{ marginTop: "35px" }}
+            // style={{ marginTop: "35px" }}
           >
-            <div style={{ padding: "5px 8px", fontSize: "22px" }} className="team_name">
+            <div
+              style={{ padding: "5px 8px", fontSize: "22px" }}
+              className="team_name">
               {state?.dataNameee}
             </div>
             <div className="show_btn">
-
               <button onClick={handleShowBtn}>Show</button>
 
               <button onClick={handleBackClick}>Back</button>
@@ -113,6 +122,7 @@ const PlusMinusReport = () => {
                   <td width="30px">
                     <Checkbox
                       className="table_check"
+                      defaultChecked
                       checked={showOdds}
                       onChange={onChange}></Checkbox>
                   </td>
@@ -128,10 +138,14 @@ const PlusMinusReport = () => {
                     className="session_table table1"
                     rowSelection={{
                       type: "checkbox",
+                      defaultChecked: true,
                       onChange: (selectedRowKeys, selectedRows) => {
-                        setfirst(selectedRows.map(i => i.marketid))
-                        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-
+                        setfirst(selectedRows.map((i) => i.marketid));
+                        console.log(
+                          `selectedRowKeys: ${selectedRowKeys}`,
+                          "selectedRows: ",
+                          selectedRows
+                        );
                       },
                       selectedRowKeys: first,
                       getCheckboxProps: (record) => ({
@@ -141,18 +155,20 @@ const PlusMinusReport = () => {
                         // name: record.name,
                         value: record.marketid,
                         name: record.marketid,
-
                       }),
-
                     }}
                     rowKey="marketid"
                     bordered
                     columns={column}
                     loading={isFetching || isLoading}
                     pagination={false}
-                    dataSource={data?.data?.markets.filter(i => !["match odds", "bookmaker"].includes(i.marketname?.toLowerCase()))}
+                    dataSource={data?.data?.markets.filter(
+                      (i) =>
+                        !["match odds", "bookmaker"].includes(
+                          i.marketname?.toLowerCase()
+                        )
+                    )}
                   />
-
                 </div>
               </Col>
               <Col lg={12} xs={24}>
@@ -163,9 +179,12 @@ const PlusMinusReport = () => {
                     rowSelection={{
                       type: "checkbox",
                       onChange: (selectedRowKeys, selectedRows) => {
-                        setSecondUserid(selectedRows.map(i => i.userid))
-                        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-
+                        setSecondUserid(selectedRows.map((i) => i.userid));
+                        console.log(
+                          `selectedRowKeys: ${selectedRowKeys}`,
+                          "selectedRows: ",
+                          selectedRows
+                        );
                       },
                       selectedRowKeys: secondUserid,
                       getCheckboxProps: (record) => ({
@@ -175,18 +194,49 @@ const PlusMinusReport = () => {
                         // name: record.name,
                         value: record.userid,
                         name: record.userid,
-
                       }),
-
                     }}
-
-
                     rowKey="userid"
                     bordered
                     loading={isFetching || isLoading}
                     columns={columns}
                     pagination={false}
-                    dataSource={data?.data?.users}
+                    dataSource={data?.data?.users?.parent}
+                  />
+                </div>
+              </Col>
+
+              <Col lg={12} xs={24}>
+                <div>
+                  <Table
+                    className="session_table table1
+                  "
+                    rowSelection={{
+                      type: "checkbox",
+                      onChange: (selectedRowKeys, selectedRows) => {
+                        setSecondUserid(selectedRows.map((i) => i.userid));
+                        console.log(
+                          `selectedRowKeys: ${selectedRowKeys}`,
+                          "selectedRows: ",
+                          selectedRows
+                        );
+                      },
+                      selectedRowKeys: secondUserid,
+                      getCheckboxProps: (record) => ({
+                        // disabled: record.name === 'Disabled User',
+                        // : first.includes(record.marketid),
+                        // Column configuration not to be checked
+                        // name: record.name,
+                        value: record.userid,
+                        name: record.userid,
+                      }),
+                    }}
+                    rowKey="userid"
+                    bordered
+                    loading={isFetching || isLoading}
+                    columns={clintColumns}
+                    pagination={false}
+                    dataSource={data?.data?.users?.client}
                   />
                 </div>
               </Col>

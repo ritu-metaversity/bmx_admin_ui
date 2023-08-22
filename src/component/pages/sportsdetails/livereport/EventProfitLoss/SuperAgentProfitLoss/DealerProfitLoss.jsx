@@ -35,7 +35,7 @@ const DealerProfitLoss = ({name, data}) => {
                 className="sub_live_section live_report"
                 style={{ borderRadius: "2px 2px 0 0", fontSize: "16px" }}>
                 <div style={{ padding: "9px 8px" }} className="team_name">
-                Dealer P&L
+                Agent P&L
                 </div>
               </div>
             </div>

@@ -14,6 +14,7 @@ const dateFormat = "YYYY/MM/DD";
 const AgentTransactions = ({ userType, Listname }) => {
   const [api, contextHolder] = notification.useNotification();
   const [userTranstionData, setUserTranstionData] = useState([]);
+  const [form]= Form.useForm();
 
   const nav = useNavigate();
 
@@ -29,18 +30,9 @@ const AgentTransactions = ({ userType, Listname }) => {
 
   const [getClient, result] = useLazyFilterbyClientQuery();
   const [clientId, setClientId] = useState("");
-  
-  // useEffect(() => {
-  //   getClient({
-  //     userId: localStorage.getItem("userId"),
-  //   });
-  // }, [result?.data]);
-
-  const [createTran, { data: createTranstions, error, isLoading }] =
-    useCreateTransactionMutation();
 
 
-
+  const [createTran, { data: createTranstions, error, isLoading }] = useCreateTransactionMutation();
     const openNotification = (mess) => {
       api.success({
         message: mess,
@@ -67,6 +59,7 @@ const AgentTransactions = ({ userType, Listname }) => {
       remarks: values?.remark,
     };
     createTran(createTranstions);
+    form?.resetFields();
   };
 
 
@@ -100,6 +93,7 @@ const AgentTransactions = ({ userType, Listname }) => {
         userId: clientId,
       });
       openNotification(createTranstions?.message);
+      form?.resetFields();
     } else if (createTranstions?.status === false || error?.data?.message) {
       openNotificationError(createTranstions?.message || error?.data?.message);
     }
@@ -109,12 +103,11 @@ const AgentTransactions = ({ userType, Listname }) => {
 
   useEffect(()=>{
     if(result?.data?.data !== undefined){
-    const useData = JSON.parse(result?.data?.data);
+    const useData = JSON.parse(result?.data?.data?.cashtransection);
     setUserTranstionData(useData?.results)
   }
   }, [result?.data])
   
-  const date = new Date()
 
   return (
     <>
@@ -127,6 +120,7 @@ const AgentTransactions = ({ userType, Listname }) => {
           <Form
             className="form_data mt-16 cash_data"
             name="basic"
+            form={form}
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
             initialValues={{ remember: true }}
@@ -172,7 +166,7 @@ const AgentTransactions = ({ userType, Listname }) => {
                       message: "Please select Collection",
                     },
                   ]}>
-                  <Select defaultValue="Cash A/C" allowClear>
+                  <Select defaultValue="Select Cash A/C" allowClear>
                     <Option value="CASH">Cash A/C</Option>
                   </Select>
                 </Form.Item>
@@ -252,7 +246,7 @@ const AgentTransactions = ({ userType, Listname }) => {
 
       <Card className="sport_detail ledger_data">
         {userTranstionData?.length != 0  && (
-          <TransactionTable clientId={clientId} data={userTranstionData} />
+          <TransactionTable clientId={clientId} balanceData = {result?.data?.data?.lenadenabalance}  data={userTranstionData} />
         )}
       </Card>
     </>

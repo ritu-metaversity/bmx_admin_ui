@@ -19,7 +19,7 @@ const data = [
       },
       {
         image: <BiUserCircle />,
-        name: "Dr/Cr Entry Dealer",
+        name: "Dr/Cr Entry Agent",
         path:"/client/txn-client",
         size:"14",
         userType:2

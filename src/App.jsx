@@ -3,7 +3,6 @@ import { Provider } from "react-redux";
 import { store } from "./store/store";
 import Main from "./component/common/main/Main";
 import { useEffect } from "react";
-import 'react-notifications/lib/notifications.css';
 
 function App() {
 

@@ -359,7 +359,7 @@ const UpdateSuper = ({ updateName }) => {
                           {
                             validator: async (_, values) => {
                               if (
-                                resuilt?.data?.data.parentMatchComm < values &&
+                                values > 3 && values < 0 &&
                                 values != "" &&
                                 values != null
                               ) {
@@ -399,8 +399,7 @@ const UpdateSuper = ({ updateName }) => {
                           {
                             validator: async (_, values) => {
                               if (
-                                resuilt?.data?.data.parentSessionComm <
-                                  values &&
+                                values > 3 && values < 0 &&
                                 values != "" &&
                                 values != null
                               ) {

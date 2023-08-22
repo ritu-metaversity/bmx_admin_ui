@@ -20,6 +20,7 @@ const routeFromUSerType = {
   1: "/client/list-dealer/",
   2: "/client/list-clent/",
 };
+
 const UserListTable = ({ userType, Listname }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeStatus, setActiveStatus] = useState();
