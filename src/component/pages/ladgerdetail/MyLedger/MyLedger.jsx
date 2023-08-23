@@ -4,6 +4,7 @@ import { useMyLedgerQuery } from "../../../../store/service/ledgerServices";
 import moment from "moment";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import dayjs from 'dayjs'
 
 const columns = [
   {
@@ -77,7 +78,7 @@ const MyLedger = () => {
 
         <div className="my_ledger">
         <Col lg={8} xs={24} className="match_ladger">
-          <DatePicker.RangePicker  onChange={onChange}/>
+          <DatePicker.RangePicker defaultValue={[dayjs(timeBefore), dayjs(time)]}  onChange={onChange}/>
         </Col>
           <div>
             <h3 style={{ padding: "5px", color: "rgb(51, 181, 28)" }}>

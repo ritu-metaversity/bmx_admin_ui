@@ -13,6 +13,8 @@ import "./ProfitAndLoss.scss";
 import { useEffect, useState } from "react";
 import { useLazyProfitLossQuery } from "../../../../store/service/supermasteAccountStatementServices";
 import moment from "moment";
+import dayjs from "dayjs"
+
 
 const { RangePicker } = DatePicker;
 
@@ -87,7 +89,7 @@ const ProfitAndLoss = () => {
               <Row className="profit_apply">
                 <Col xs={24} xl={8} lg={8} md={24}>
                   <div className="profit_date">
-                    <RangePicker onChange={onChange} />
+                    <RangePicker defaultValue={[dayjs(timeBefore), dayjs(time)]} onChange={onChange} />
                   </div>
                 </Col>
                 <Col xs={24} xl={4} lg={4} md={24} className="text-center">

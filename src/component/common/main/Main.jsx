@@ -97,7 +97,7 @@ const Main = ({setOpenRules}) => {
               <Route path="/client/limitplusminus-client" element={<ClientLimitDetails />}/>
               <Route path="/client/my-ledger" element={<MyLedger />}/>
 
-              <Route path="/client/ledger-super" element={<SuperAgentLedger userTyep={0} Listname={"Super Agent"}/>}/>
+              <Route path="/client/ledger-super" element={<SuperAgentLedger userTyep={0} Listname={"Super Master"}/>}/>
               <Route path="/client/ledger-master" element={<SuperAgentLedger userTyep={1} Listname={"Master"}/>}/>
               <Route path="/client/ledger-agent" element={<SuperAgentLedger userTyep={2} Listname={"Delear"}/>}/>
               <Route path="/client/ledger-client" element={<SuperAgentLedger userTyep={3} Listname={"Client"}/>}/>

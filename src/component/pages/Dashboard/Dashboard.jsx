@@ -87,6 +87,7 @@ const handleLogout = ()=>{
   logOut()
 }
 
+const uType = localStorage.getItem("userType")
   return (
     <>
       <Card>
@@ -118,7 +119,7 @@ const handleLogout = ()=>{
             </div>
             <div className="tital_card_section f-w">
               <h2>{dataDes?.data?.username}</h2>
-              <p>You are master</p>
+              <p>You are {uType == 5?"Sub Admin":uType==0?"Super Master":uType==1?"Master":uType==2?"Agent":"Client"}</p>
             </div>
           </div>
         </Card.Grid>

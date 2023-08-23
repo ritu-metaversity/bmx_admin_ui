@@ -4,6 +4,7 @@ import './AccountOperations.scss'
 import { useAccountOprationQuery } from "../../../../store/service/createUserServices";
 import moment from "moment";
 import React, { useState } from "react";
+import dayjs from 'dayjs'
 
 // const handleChange = (value) => {
 //   console.log(`selected ${value}`);
@@ -77,7 +78,7 @@ const AccountOperations = () => {
             title={`List Of All Transactions ( ${data?.data?.data?.length} )`}
             extra={<button onClick={handleBackClick}>Back</button>}>
             <div className="">
-              <RangePicker onChange={onChange}/>
+              <RangePicker defaultValue={[dayjs(timeBefore), dayjs(time)]} onChange={onChange}/>
             </div>
 
 

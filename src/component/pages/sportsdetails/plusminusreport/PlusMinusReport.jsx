@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 // import { Divider, Radio, Table } from "antd";
 import "./PlusMinusReport.scss";
 import { Checkbox, Col, notification, Row, Table } from "antd";
@@ -39,6 +39,7 @@ const PlusMinusReport = () => {
 
   const [first, setfirst] = useState([]);
   const [secondUserid, setSecondUserid] = useState([]);
+  const [thirdUserid, setThiredUserid] = useState([]);
   const [showOdds, setShowOdds] = useState(true);
   const [api, contextHolder] = notification.useNotification();
   const { state } = useLocation();
@@ -56,12 +57,19 @@ const PlusMinusReport = () => {
     { refetchOnMountOrArgChange: true }
   );
 
+  console.log(data?.data?.users?.parentKey, "dfsfsdf")
+
+const [ParentKey, setParentKey] = useState("")
+  useEffect(()=>{
+    setParentKey(data?.data?.users?.parentKey)
+  }, [data?.data])
+
   const nav = useNavigate();
   const handleBackClick = () => {
     nav("/Events/sports-details");
   };
 
-  console.log(data?.data?.users, "dfsdfsd");
+  console.log(first?.length, "dfsdfsd");
 
   const handleShowBtn = () => {
     if (showOdds === false) {
@@ -70,13 +78,15 @@ const PlusMinusReport = () => {
         closeIcon: false,
         placement: "top",
       });
-    } else if (first?.length === 0) {
-      api.error({
-        message: "Please Select at least one Session",
-        closeIcon: false,
-        placement: "top",
-      });
-    } else if (secondUserid?.length === 0) {
+    }
+    //  else if (first?.length === 0) {
+    //   api.error({
+    //     message: "Please Select at least one Session",
+    //     closeIcon: false,
+    //     placement: "top",
+    //   });
+    // } 
+    else if (secondUserid?.length === 0) {
       api.error({
         message: "Please Select at least one client.",
         closeIcon: false,
@@ -84,10 +94,27 @@ const PlusMinusReport = () => {
       });
     } else {
       nav(`/Events/${id}/plus-minus-report`, {
-        state: { first, secondUserid, state },
+        state: { first, secondUserid, state, thirdUserid, ParentKey },
       });
     }
   };
+
+  useEffect(() => {
+    
+    if(data?.data?.markets?.length){
+      setfirst(data?.data?.markets?.map(i=>i.marketid))
+    }
+   
+    if(data?.data?.users?.parent?.length){
+      setSecondUserid(data?.data?.users?.parent?.map(i=>i.userid))
+    }   
+    if(data?.data?.users?.client?.length){
+      setThiredUserid(data?.data?.users?.client?.map(i=>i.marketid))
+    }
+    return () => {}
+  }, [data?.data])
+  
+  // console.log(first, secondUserid,thirdUserid, "sdasdasa")
 
   return (
     <>
@@ -138,15 +165,8 @@ const PlusMinusReport = () => {
                     className="session_table table1"
                     rowSelection={{
                       type: "checkbox",
-                      defaultChecked: true,
                       onChange: (selectedRowKeys, selectedRows) => {
-                        setfirst(selectedRows.map((i) => i.marketid));
-                        console.log(
-                          `selectedRowKeys: ${selectedRowKeys}`,
-                          "selectedRows: ",
-                          selectedRows
-                        );
-                      },
+                        setfirst(selectedRows.map((i) => i.marketid));},
                       selectedRowKeys: first,
                       getCheckboxProps: (record) => ({
                         // disabled: record.name === 'Disabled User',
@@ -180,11 +200,6 @@ const PlusMinusReport = () => {
                       type: "checkbox",
                       onChange: (selectedRowKeys, selectedRows) => {
                         setSecondUserid(selectedRows.map((i) => i.userid));
-                        console.log(
-                          `selectedRowKeys: ${selectedRowKeys}`,
-                          "selectedRows: ",
-                          selectedRows
-                        );
                       },
                       selectedRowKeys: secondUserid,
                       getCheckboxProps: (record) => ({
@@ -214,14 +229,9 @@ const PlusMinusReport = () => {
                     rowSelection={{
                       type: "checkbox",
                       onChange: (selectedRowKeys, selectedRows) => {
-                        setSecondUserid(selectedRows.map((i) => i.userid));
-                        console.log(
-                          `selectedRowKeys: ${selectedRowKeys}`,
-                          "selectedRows: ",
-                          selectedRows
-                        );
+                        setThiredUserid(selectedRows.map((i) => i.userid));
                       },
-                      selectedRowKeys: secondUserid,
+                      selectedRowKeys: thirdUserid,
                       getCheckboxProps: (record) => ({
                         // disabled: record.name === 'Disabled User',
                         // : first.includes(record.marketid),

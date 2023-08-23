@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import { setData } from "../../../store/global/slice";
+import dayjs from 'dayjs'
 
 const { confirm } = Modal;
 const showConfirm = () => {
@@ -132,6 +133,7 @@ const SportsDetails = () => {
         extra={<button onClick={handleBackbtn}>Back</button>}>
         <div className="date_picker" style={{}}>
           <RangePicker
+          defaultValue={[dayjs(timeBefore), dayjs(time)]}
             style={{ margin: "10px" }}
             onChange={onChange}
             bordered={false}
@@ -149,7 +151,7 @@ const SportsDetails = () => {
               {/* <th>Competition</th> */}
               <th>Declare</th>
               <th>Won by</th>
-              <th className="text-right">Plus Minu</th>
+              <th className="text-right">Plus Minus</th>
             </tr>
             {isLoading || isFetching ? (
                 <div className="spin_icon comp_spin">

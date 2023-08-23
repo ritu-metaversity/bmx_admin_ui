@@ -9,10 +9,11 @@ const PlusMinusTable = () => {
   const { data } = useSportPlusMinusQuery({
     eventId: parmes?.id,
     marketId: state?.first,
-    // parentIds: state?.secondUserid,
-    // parentKey:"",
-    // userId:[]
+    parentIds: state?.secondUserid,
+    parentKey:state?.ParentKey,
+    userId: state?.thirdUserid
   });
+
 
   return (
     <>
@@ -55,21 +56,21 @@ const RecursiveTable = ({ data, title }) => {
 
     if (data?.groupName === "subadmin") {
       returnArr.push(
-        <tr className="master_color">
+        <tr className="sub_color">
           <td>&nbsp;</td>
-          <td>Sub Admin </td>
+          <td style={{whiteSpace:"nowrap"}}>Sub Admin </td>
           <td colSpan={30}>
-            <strong>MA14106 - {title}</strong>
+            <strong>{title}</strong>
           </td>
         </tr>
       );
     } else if (data?.groupName === "supermaster") {
       returnArr.push(
-        <tr className="agent_color">
+        <tr className="master_color">
           <td colSpan={2}>&nbsp;</td>
-          <td>SUPER Master </td>
+          <td style={{whiteSpace:"nowrap"}}>SUPER Master </td>
           <td colSpan={28}>
-            <strong>A154552 - {title}</strong>
+            <strong>{title}</strong>
           </td>
         </tr>
       );
@@ -78,16 +79,16 @@ const RecursiveTable = ({ data, title }) => {
         <tr className="super_color">
           <td colSpan={3}>&nbsp;</td> <td>MASTER </td>
           <td colSpan={27}>
-            <strong>SA154548 - {title}</strong>
+            <strong>{title}</strong>
           </td>
         </tr>
       );
     } else if (data?.groupName === "dealer") {
       returnArr.push(
-        <tr className="super_color">
-          <td colSpan={3}>&nbsp;</td> <td>Agent </td>
+        <tr className="agent_color">
+          <td colSpan={4}>&nbsp;</td> <td>Agent </td>
           <td colSpan={25}>
-            <strong>SA154548 - {title}</strong>
+            <strong>{title}</strong>
           </td>
         </tr>
       );
@@ -297,7 +298,6 @@ const RecursiveTable = ({ data, title }) => {
               </td>
             </tr>
           );
-          console.log(data[item], "as as");
           returnArr = [
             ...returnArr,
             dynamicHeader,

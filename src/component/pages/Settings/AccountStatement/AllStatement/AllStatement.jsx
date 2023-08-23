@@ -33,8 +33,8 @@ const AllStatement = ({dateData, gameType}) => {
     },
     {
       title: "Description",
-      dataIndex: "remark",
-      key: "remark",
+      dataIndex: "fromto",
+      key: "fromto",
     },
     {
       title: "Prev. Bal",
@@ -87,6 +87,11 @@ const AllStatement = ({dateData, gameType}) => {
       dataIndex: "pts",
       key: "pts",
     },
+    {
+      title: "Remark",
+      dataIndex: "remark",
+      key: "remark",
+    }
   ];
 
   return (

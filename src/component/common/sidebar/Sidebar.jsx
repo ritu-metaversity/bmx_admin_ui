@@ -46,6 +46,8 @@ const Sidebar = (props) => {
   };
   // console.log(openKeys, "fafasda")
 
+  const uType = localStorage.getItem("userType")
+
   return (
     <>
       <div className={collapsed ? "logo_icon" : "logo_icon coll_btn"}>
@@ -99,7 +101,7 @@ const Sidebar = (props) => {
             {
               key: "2",
               icon: <BiUserCircle />,
-              label: "Master Details",
+              label: <div>{uType == 5? "Super Master Details": uType == 0?"Master Detail":uType == 1?"Agent Detail": uType == 2?"Client Detail":""}</div>,
               children: [
                 {
                   className: `${userType != "5" ? "d-none" : ""}`,
@@ -193,9 +195,9 @@ const Sidebar = (props) => {
                   ),
                 },
                 {
-                  lassName: `${userType != "5" ? "d-none" : ""}`,
+                  className: `${userType == "5" ? "" : "d-none"}`,
                   label: (
-                    <Link to="/client/txn-super">Debit/Credit Entry(SA)</Link>
+                    <Link to="/client/txn-super">Debit/Credit Entry(SM)</Link>
                   ),
                 },
                 {
@@ -275,7 +277,7 @@ const Sidebar = (props) => {
               {
                 key: "2",
                 icon: <BiUserCircle />,
-                label: "Master Details",
+                label: <div>{uType == 5? "Super Master Details": uType == 0?"Master Detail":uType == 1?"Agent Detail": uType == 2?"Client Detail":""}</div>,
                 children: [
                   {
                     className: `${userType != "5" ? "d-none" : ""}`,
@@ -455,7 +457,7 @@ const Sidebar = (props) => {
                     ),
                   },
                   {
-                    className: `${userType != "5" ? "d-none" : ""}`,
+                    className: `${userType == "5" ? "" : "d-none"}`,
                     label: (
                       <Link
                         to="/client/txn-super"
@@ -465,7 +467,7 @@ const Sidebar = (props) => {
                     ),
                   },
                   {
-                    className: `${userType === "0" ? "" : "d-none"}`,
+                    className: `${userType == "0" ? "" : "d-none"}`,
                     label: (
                       <Link
                         to="/client/txn-master"

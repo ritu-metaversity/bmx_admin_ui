@@ -15,18 +15,29 @@ const columns = [
       title: "P&L",
       dataIndex: "pnl",
       key: "pnl",
+      render: (text, record) => (
+        // console.log(record?.pnl, "dsdass")
+        <span className={record?.pnl > 0?"text_success":"text_danger"}>
+         {record?.pnl}
+        </span>
+      ),
     },
     {
       title: "Comm.",
       dataIndex: "comm",
       key: "comm",
+      render: (text, record) => (
+        <span>
+         0
+        </span>
+      ),
     }
   ];
 
 const MasterProfitLoss = ({name, data}) => {
   // console.log(data)
 
-  // console.log(data?.admin, "fsdfsdsfs")
+  // console.log(data, "fsdfsdsfs")
   return (
     <>
       <div className="main_live_section">

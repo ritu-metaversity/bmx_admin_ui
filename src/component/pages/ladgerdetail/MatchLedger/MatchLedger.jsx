@@ -15,29 +15,36 @@ import { useLazyProfitAndLossLedgerQuery } from "../../../../store/service/ledge
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import dayjs from 'dayjs'
 
-const columns = [
-  {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
-  },
-  {
-    title: "Title",
-    dataIndex: "matchName",
-    key: "matchName",
-  },
-  {
-    title: "CR",
-    dataIndex: "netPnl",
-    key: "netPnl",
-  },
-  {
-    title: "DR",
-    dataIndex: "netPnl",
-    key: "netPnl",
-  },
-];
+// const columns = [
+//   {
+//     title: "Date",
+//     dataIndex: "date",
+//     key: "date",
+//   },
+//   {
+//     title: "Title",
+//     dataIndex: "matchName",
+//     key: "matchName",
+//   },
+//   {
+//     title: "CR",
+//     dataIndex: "netPnl",
+//     key: "netPnl",
+//     render: (text, record) => (
+//       console.log(record, "asdasda")
+//       // <span>
+//       //  0
+//       // </span>
+//     ),
+//   },
+//   {
+//     title: "DR",
+//     dataIndex: "netPnl",
+//     key: "netPnl",
+//   },
+// ];
 
 const MatchLedger = () => {
   const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
@@ -73,7 +80,7 @@ const MatchLedger = () => {
       extra={<button onClick={() => nav(-1)}>Back</button>}>
       <Row className="main_super_super_ledger">
         <Col lg={8} xs={24} className="match_ladger">
-          <DatePicker.RangePicker onChange={onChange} />
+          <DatePicker.RangePicker defaultValue={[dayjs(timeBefore), dayjs(time)]} onChange={onChange} />
         </Col>
         {/* <Col lg={12} xs={24} className="selected_ledger">
         <Select defaultValue="lucy" style={{ width: 120 }} onChange={(value) => console.log(`selected ${value}`)}>
@@ -87,7 +94,7 @@ const MatchLedger = () => {
           <div className="matchladger_total">
             <p style={{ fontSize: "20px", marginLeft: "10px" }}>
               Total :{" "}
-              <span style={{ color: "rgb(82, 196, 26)" }}>
+              <span className={data?.data?.total>0?"text_success":"text_danges"} >
                 {(data?.data?.total)?.toFixed(2)}
               </span>
             </p>
@@ -112,8 +119,8 @@ const MatchLedger = () => {
                 <tr key={id} style={{ cursor: "pointer" }}>
                   <td>{moment(res?.date).format("DD-MM-YYYY")}</td>
                   <td>{res?.matchName}</td>
-                  <td>{res?.netPnl > 0 ? res?.netPnl : 0}</td>
-                  <td>{res?.netPnl < 0 ? res?.netPnl : 0}</td>
+                  <td className="text_success">{res?.netPnl > 0 ? res?.netPnl : 0}</td>
+                  <td className="text_danger">{res?.netPnl < 0 ? res?.netPnl : 0}</td>
                 </tr>
               );
             })}

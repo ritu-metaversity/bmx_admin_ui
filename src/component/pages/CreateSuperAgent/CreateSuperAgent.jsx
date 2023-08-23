@@ -17,6 +17,7 @@ import {
   useLazyIsUserIdQuery,
 } from "../../../store/service/createUserServices";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const CreateSuperAgent = ({ createName }) => {
   const [userData, setUserData] = useState({});
@@ -217,13 +218,35 @@ const CreateSuperAgent = ({ createName }) => {
                         message: "Please Enter UserID",
                       },
                       {
-                        // validator: () => {if ((!results?.status))
-                        //     {
-                        //       return Promise.reject(
-                        //         new Error(results?.message)
-                        //       );
-                        //     }
-                        //   },
+                        validator: async(rules,value) => {
+                          try{
+
+                          const results = await axios.post("user/is-userid-available",{
+                            userId: hostname.includes("create-super")
+                            ? "S" + value
+                            : hostname.includes("create-agent")
+                            ? "M" + value
+                            : hostname.includes("create-dealer")
+                            ? "A" + value
+                            : "C" + value,
+                          },{
+                           headers :{"Authorization": `Bearer ${localStorage.getItem("token")}`},
+                           baseURL:import.meta.env.VITE_BASE_URL
+                          })
+                          
+                          if (
+                          
+                          (results?.data.status===false)
+                          
+                          )
+                            {
+                              return Promise.reject(
+                                new Error(results?.data.message)
+                              );
+                            }
+                          }catch(err){console.log(err);}
+                          },
+
                       },
                     ]}>
                     <Input

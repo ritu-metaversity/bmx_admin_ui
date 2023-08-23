@@ -26,10 +26,14 @@ const CompeleteFancy = () => {
   }, [completeFancyData]);
 
   const handleShowBets = (val) => {
+    console.log(val)
     setMarketId(val);
     dispatch(setData(val));
     nav(`/Events/${id}/pl/live-report`, { state: {id: val} });
   };
+
+
+
 
 
   return (

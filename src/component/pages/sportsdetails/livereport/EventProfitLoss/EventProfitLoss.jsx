@@ -62,7 +62,7 @@ const EventProfitLoss = () => {
   const { id } = useParams();
 
   const handleBackClick = () => {
-    nav("/");
+    nav(-1);
   };
 
   const { state } = useLocation();
