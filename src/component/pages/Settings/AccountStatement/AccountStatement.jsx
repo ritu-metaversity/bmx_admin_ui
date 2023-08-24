@@ -60,9 +60,13 @@ const AccountStatement = () => {
 
   const data = useSelector(globalSelector);
 
+  
+  const pName = window.location.pathname
+  console.log(pName, "dfsafdf")
+
   return (
     <>
-      <div className="match_slip">
+      <div  className={pName == "/markets"?"":"match_slip"}>
         <div>
           <Card
             style={{

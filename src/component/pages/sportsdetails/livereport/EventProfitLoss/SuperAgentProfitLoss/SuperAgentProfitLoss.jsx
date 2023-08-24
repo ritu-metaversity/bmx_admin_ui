@@ -36,9 +36,6 @@ const columns = [
   ];
 
 const SuperAgentProfitLoss = ({name, data}) => {
-  // console.log(data)
-
-  // console.log(data?.admin, "fsdfsdsfs")
   return (
     <>
       <div className="main_live_section">

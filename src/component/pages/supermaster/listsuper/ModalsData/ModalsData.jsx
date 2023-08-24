@@ -1,8 +1,15 @@
+import { Spin } from "antd";
 import "./ModalsData.scss";
 
-const ModalsData = ({partnershipDetails}) => {
+const ModalsData = ({partnershipDetails, loading}) => {
   return (
     <>
+    <div className="ant-spin-nested-loading">
+    {
+      loading? <div className="spin_icon">
+      <Spin size="large" />
+    </div>:""
+    }
       <div className="partnership">
         <div className="sub_partnership">
           <div className="partnership_name">
@@ -137,6 +144,7 @@ const ModalsData = ({partnershipDetails}) => {
         </div>
       </div>
       <br/>
+      </div>
     </>
   );
 };

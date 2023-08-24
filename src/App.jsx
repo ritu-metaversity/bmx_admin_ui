@@ -7,7 +7,7 @@ import { useEffect } from "react";
 function App() {
 
   useEffect(() => {
-    document.title = window.location.hostname;
+    document.title = (window.location.hostname).split(".")[1];
   }, []);
   return (
     <Provider store={store}>

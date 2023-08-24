@@ -27,9 +27,9 @@ const Signin = () => {
     const authData = {
       userId: values?.username,
       password: values?.password,
-      appUrl: window.location.hostname,   
+      appUrl: window.location.hostname,
       // appUrl: "master.247idhub.com",
-      // appUrl: "supermaster.247idhub.com",
+      // appUrl: "supermaster.247idhub.com", 
       // appUrl: "agent.247idhub.com",
       // appUrl: "subadmin.247idhub.com",
       // appUrl: "subadmin.localhost",

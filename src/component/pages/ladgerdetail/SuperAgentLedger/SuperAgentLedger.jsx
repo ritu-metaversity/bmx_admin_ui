@@ -15,6 +15,11 @@ const columns = [
     title: "Balance",
     dataIndex: "balance",
     key: "balance",
+    render: (text, record) => (
+      <span>
+       {Math.abs(record?.balance)}
+      </span>
+    ),
   }
 ];
 
@@ -72,7 +77,7 @@ const nav = useNavigate()
           <Col  xl={8} xs={24} lg={8} md={24}>
             <div className="super_ledger item2" >
               <div>Dena</div>
-              <div>{denaData}</div>
+              <div>{Math.abs(denaData)}</div>
             </div>
             <div>
               <div className="table_section">

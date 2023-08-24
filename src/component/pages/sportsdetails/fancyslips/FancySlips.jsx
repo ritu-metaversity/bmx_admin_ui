@@ -46,6 +46,9 @@ const columns = [
     title: "Profit/Loss",
     dataIndex: "netpnl",
     key: "netpnl",
+    render: (text, record)=>(
+      <span className={record?.netpnl>0?"text_success":"text_danger"}>{record?.netpnl}</span>
+      )
   },
 
   {

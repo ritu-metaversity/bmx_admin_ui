@@ -67,8 +67,6 @@ const EventProfitLoss = () => {
 
   const { state } = useLocation();
 
-  console.log(state?.id, "dsfsadfsd");
-
   const {
     data: profitLoss,
     isFetching,
@@ -127,7 +125,7 @@ const EventProfitLoss = () => {
         </div>
         <div>
           <div
-            className="table_section sport_detail main_pl"
+            className="sport_detail my_ledger main_match_ledger"
             style={{ padding: "0px", margin: "0px", width: "100%" }}>
             {/* <Table
               className="live_table limit_update"

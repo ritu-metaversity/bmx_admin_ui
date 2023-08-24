@@ -53,7 +53,6 @@ const FancyData = ({ data, keyData }) => {
    id && matchid&& getData({
       matchid: Number(id),
       marketid: matchid,
-      subadminid: localStorage.getItem("userId"),
     });
   }, [ matchid])
 
@@ -63,7 +62,6 @@ const FancyData = ({ data, keyData }) => {
     getData({
       matchid: Number(id),
       marketid: matchid,
-      subadminid: localStorage.getItem("userId"),
     });
   };
   const ttl = results?.data?.[0] ?({

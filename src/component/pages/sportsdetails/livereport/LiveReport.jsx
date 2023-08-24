@@ -13,7 +13,6 @@ import { useOddsPnlMutation } from "../../../../store/service/OddsPnlServices";
 const LiveReport = () => {
   const [oddsData, setOddsData] = useState([]);
   const [ShowMyBook, setShowMyBook] = useState(1);
-  // const [TtlBookData, setTtlBookData] = useState([]);
   const [marketId, setMarketId] = useState("");
 
   const { id } = useParams();
@@ -36,7 +35,7 @@ const LiveReport = () => {
   const [getData, {data: results}] = useLazyTtlBookQuery();
 
   useEffect(() => {
-   marketId&& id &&getData({
+   marketId&& id && getData({
       matchid: Number(id),
       marketid: marketId,
       subadminid: localStorage.getItem("userId"),

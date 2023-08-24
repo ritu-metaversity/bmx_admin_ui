@@ -35,6 +35,11 @@ const columns = [
     dataIndex: "balance",
     key: "balance",
     align: "right",
+    render: (text, record) => (
+      <span>
+       {Math.abs(record?.balance)}
+      </span>
+    ),
   },
   {
     title: "Payment Type",
@@ -91,8 +96,8 @@ const MyLedger = () => {
             </h3>
           </div>
           <div>
-            <h3 style={{ padding: "5px", color: "rgb(214, 75, 75)" }}>
-              Balance: {(data?.data?.data?.balance?.toFixed(2))}  {data?.data?.data?.balance>0?"( Dena )":"( Lena )"} 
+            <h3 className={data?.data?.data?.balance>0?"text_danger":"text_success"}>
+              Balance: {Math.abs(data?.data?.data?.balance?.toFixed(2))}  {data?.data?.data?.balance>0?"( Dena )":"( Lena )"} 
             </h3>
           </div>
         </div>

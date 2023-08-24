@@ -48,7 +48,6 @@ const PlusMinusReport = () => {
     let checked = e.target.checked;
     setShowOdds(checked);
   };
-  // console.log(showOdds, first, secondUserid, "sdfds");
 
   const { data, isFetching, isLoading } = useComplteFancyOddsClientsQuery(
     {
@@ -86,7 +85,7 @@ const [ParentKey, setParentKey] = useState("")
     //     placement: "top",
     //   });
     // } 
-    else if (secondUserid?.length === 0) {
+    else if (secondUserid?.length === 0 && thirdUserid?.length === 0) {
       api.error({
         message: "Please Select at least one client.",
         closeIcon: false,
@@ -109,7 +108,7 @@ const [ParentKey, setParentKey] = useState("")
       setSecondUserid(data?.data?.users?.parent?.map(i=>i.userid))
     }   
     if(data?.data?.users?.client?.length){
-      setThiredUserid(data?.data?.users?.client?.map(i=>i.marketid))
+      setThiredUserid(data?.data?.users?.client?.map(i=>i.userid))
     }
     return () => {}
   }, [data?.data])

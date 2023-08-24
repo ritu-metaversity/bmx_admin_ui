@@ -37,7 +37,7 @@ const LadgerDetails = () => {
           },
           {
             image: <BiUserCircle />,
-            name: "Dealer",
+            name: "Agent",
             path: `/client/ledger-agent`,
             size: "20",
             userType:2

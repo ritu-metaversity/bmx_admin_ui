@@ -101,7 +101,7 @@ const Sidebar = (props) => {
             {
               key: "2",
               icon: <BiUserCircle />,
-              label: <div>{uType == 5? "Super Master Details": uType == 0?"Master Detail":uType == 1?"Agent Detail": uType == 2?"Client Detail":""}</div>,
+              label: <div>{uType == 5? "Sub Admin Details": uType == 0?"Super Master Detail":uType == 1?"Master Detail": uType == 2?"Agent Detail":""}</div>,
               children: [
                 {
                   className: `${userType != "5" ? "d-none" : ""}`,
@@ -145,9 +145,9 @@ const Sidebar = (props) => {
                 //     </Link>
                 //   ),
                 // },
-                {
-                  label: <Link to="/Casino/casino-details">Casino Detail</Link>,
-                },
+                // {
+                //   label: <Link to="/Casino/casino-details">Casino Detail</Link>,
+                // },
               ],
             },
             {
@@ -277,7 +277,7 @@ const Sidebar = (props) => {
               {
                 key: "2",
                 icon: <BiUserCircle />,
-                label: <div>{uType == 5? "Super Master Details": uType == 0?"Master Detail":uType == 1?"Agent Detail": uType == 2?"Client Detail":""}</div>,
+                label: <div>{uType == 5? "Sub Admin Details": uType == 0?"Super Master Detail":uType == 1?"Master Detail": uType == 2?"Agent Detail":""}</div>,
                 children: [
                   {
                     className: `${userType != "5" ? "d-none" : ""}`,
@@ -361,11 +361,11 @@ const Sidebar = (props) => {
                   //     </Link>
                   //   ),
                   // },
-                  {
-                    label: (
-                      <Link to="/Casino/casino-details">Casino Detail</Link>
-                    ),
-                  },
+                  // {
+                  //   label: (
+                  //     <Link to="/Casino/casino-details">Casino Detail</Link>
+                  //   ),
+                  // },
                 ],
               },
               {

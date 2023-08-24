@@ -35,13 +35,12 @@ const UserListTable = ({ userType, Listname }) => {
   const [indexData, setIndexData] = useState(0);
   const [partnershipDetails, setPartnershipDetails] = useState({});
   const [userIds, setUserIds] = useState("");
+  const [parentUserids, setParentUserIds] = useState("");
   const [api, contextHolder] = notification.useNotification();
 
 
 
-  const [partnerShipData, {data: partnerShipDetail}] = usePartnershipMutation();
-  
-  
+  const [partnerShipData, {data: partnerShipDetail, isLoading: loading,}] = usePartnershipMutation();
   const showModal = (val) => {
     setUserIds(val)
     const partnerShipDetail = {
@@ -55,15 +54,6 @@ const UserListTable = ({ userType, Listname }) => {
     setPartnershipDetails(partnerShipDetail?.data);
   }, [partnerShipDetail?.data])
 
-
-
-  const handleWithdrawnOk = () => {
-    SetWithdrawnModal(false);
-  };
-
-  const handleWithdrawnCancel = () => {
-    SetWithdrawnModal(false);
-  };
 
   const showWithdrawnModal = () => {
     SetWithdrawnModal(true);
@@ -85,9 +75,8 @@ const UserListTable = ({ userType, Listname }) => {
 
   const { id } = useParams();
 
-  // console.log(id, "dfsdfgsdgfd")
+  const [getData, {data: results, isLoading, isFetching }] = useLazySuperuserListQuery();
 
-  const [getData, results, { isLoading }] = useLazySuperuserListQuery();
 
   useEffect(() => {
     getData({
@@ -116,17 +105,18 @@ const UserListTable = ({ userType, Listname }) => {
   }, [Activestatus?.status === true, paginationTotal, indexData]);
 
   useEffect(() => {
-    setUserList(results?.data?.data?.users);
-    setTotalPage(results?.data?.data?.totalPages);
+    setUserList(results?.data?.users);
+    setTotalPage(results?.data?.totalPages);
   }, [results?.data, paginationTotal, indexData]);
 
 
   const [userIdData, setUserIdData] = useState("")
 
-  const handleParentId = (val, bal, user) => {
+  const handleParentId = (val, bal, user, parentUserID) => {
     setParentUserId(val);
-    setBalance(bal)
-    setUserIdData(user)
+    setBalance(bal);
+    setUserIdData(user);
+    setParentUserIds(parentUserID)
   };
 
   const handleEditData = (val, active) => {
@@ -134,29 +124,51 @@ const UserListTable = ({ userType, Listname }) => {
     setActiveStatus(active);
   };
 
+
+  const userId  = localStorage.getItem("userId")
+
+  console.log(userId, "fgdf")
+
   const items = [
     {
-      label: <div onClick={showDepositModal}>Deposit</div>,
+      label: <div className={parentUserids == userId?"":"d_none"} onClick={showDepositModal}>Deposit</div>,
       key: "0",
     },
     {
-      label: <div onClick={showWithdrawnModal}>Withdrawn</div>,
+      label: <div className={parentUserids == userId?"":"d_none"} onClick={showWithdrawnModal}>Withdrawn</div>,
       key: "1",
     },
     {
       label: (
-        <div onClick={handleActive}>{`${
+        <div className={parentUserids == userId?"":"d_none"} onClick={handleActive}>{`${
           activeStatus === true ? "inActive" : "Active"
         }`}</div>
       ),
       key: "2",
     },
+    // {
+    //   label: (
+    //     <div className={userType == 3?"":"d_none"} onClick={handleBlockBettting}>
+         
+    //      Block Betting
+    //     </div>
+    //   ),
+    //   key: "3",
+    // },
+    // {
+    //   label: (
+    //     <div className={userType == 3?"":"d_none"} onClick={handleBlockCasino}>
+    //     Block Casino
+    //     </div>
+    //   ),
+    //   key: "4",
+    // },
     {
       type: "divider",
     },
     {
       label: (
-        <Link
+        <Link className={parentUserids == userId?"":"d_none"}
           to={`${
             Listname === "Super Agent"
               ? `/client/update-super/${data}`
@@ -169,15 +181,15 @@ const UserListTable = ({ userType, Listname }) => {
           Edit
         </Link>
       ),
-      key: "3",
+      key: "5",
     },
     {
-      label: <Link to={`/client/limitplusminus-super/${data}`}>Update Limit</Link>,
-      key: "4",
+      label: <Link className={parentUserids == userId?"":"d_none"} to={`/client/limitplusminus-super/${data}`}>Update Limit</Link>,
+      key: "6",
     },
     {
       label: <Link to={`/account-statement/${data}`}>Statement</Link>,
-      key: "4",
+      key: "7",
     },
     {
       label: (
@@ -185,17 +197,17 @@ const UserListTable = ({ userType, Listname }) => {
           Account Operations
         </Link>
       ),
-      key: "5",
+      key: "8",
     },
     {
       label: <Link to={`/client/login-report/${data}`}>Login Report</Link>,
-      key: "6",
+      key: "9",
     },
     {
       label: (
-        <Link to={routeFromUSerType[userType] + parentUserId}>Downline</Link>
+        <Link className={userType == 3?"d_none":""} to={routeFromUSerType[userType] + parentUserId}>Downline</Link>
       ),
-      key: "7",
+      key: "10",
     },
     // {
     //   label: <Link to="https://www.aliyun.com">Send Login Details</Link>,
@@ -211,14 +223,6 @@ const UserListTable = ({ userType, Listname }) => {
     });
   };
 
-  // const openNotificationError = (mess) => {
-  //   api.error({
-  //     message: mess,
-  //     closeIcon: false,
-  //     placement: "top",
-  //   });
-  // };
-
   useEffect(()=>{
     if(Activestatus?.status === true){
       openNotification(Activestatus?.message);
@@ -229,7 +233,7 @@ const UserListTable = ({ userType, Listname }) => {
   return (
     <div>
       {contextHolder}
-      <div className="table_section sport_detail m-0">
+      <div className="table_section sport_detail m-0 ant-spin-nested-loading">
         {
           <div className="table_section statement_tabs_data ant-spin-nested-loading">
             <table className="live_table">
@@ -270,8 +274,8 @@ const UserListTable = ({ userType, Listname }) => {
                 <th>Match</th>
                 <th>SSN</th>
               </tr>
-              {isLoading ? (
-                <div className="spin_icon comp_spin">
+              {isLoading || isFetching ? (
+                <div className="spin_icon">
                   <Spin size="large" />
                 </div>
               ) : (
@@ -285,7 +289,7 @@ const UserListTable = ({ userType, Listname }) => {
                         <PlusOutlined />
                       </div>
                     </td>
-                    <td onClick={() => handleParentId(res?.id, res?.availablebalance, res?.userid)}>
+                    <td onClick={() => handleParentId(res?.id, res?.availablebalance, res?.userid, res?.parent)}>
                       <Dropdown
                         className="droup_menu"
                         
@@ -343,11 +347,12 @@ const UserListTable = ({ userType, Listname }) => {
         }
 
         <Modal
+        className="partnership"
           title={`Partnership Info - ${userIds}`}
           open={isModalOpen}
           onCancel={handleCancel}
           okButtonProps={{ style: { display: "none" } }}>
-          <ModalsData partnershipDetails={partnershipDetails}/>
+          <ModalsData loading={loading} partnershipDetails={partnershipDetails}/>
         </Modal>
       </div>
 

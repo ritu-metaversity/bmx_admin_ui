@@ -125,3 +125,39 @@ button {
     color: #fff;
   }
 }
+
+.ant-btn-default {
+  &:hover {
+    color: #fff !important;
+    border-color: unset !important;
+  }
+}
+
+.ant-table-wrapper {
+  .ant-table-container {
+    table {
+      thead {
+        tr {
+          &:first-child {
+            *:first-child {
+              border-start-start-radius: 2px !important;
+            }
+          }
+          &:last-child{
+            *:last-child {
+              border-start-end-radius: 2px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.ant-select-selector{
+  border-radius: 2px !important;
+  margin-right: 2px;
+}
+
+li.ant-pagination-options {
+  margin-right: 12px;
+}

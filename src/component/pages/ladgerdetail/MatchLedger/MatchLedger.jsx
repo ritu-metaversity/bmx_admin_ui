@@ -15,7 +15,7 @@ import { useLazyProfitAndLossLedgerQuery } from "../../../../store/service/ledge
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 
 // const columns = [
 //   {
@@ -32,12 +32,12 @@ import dayjs from 'dayjs'
 //     title: "CR",
 //     dataIndex: "netPnl",
 //     key: "netPnl",
-//     render: (text, record) => (
-//       console.log(record, "asdasda")
-//       // <span>
-//       //  0
-//       // </span>
-//     ),
+    // render: (text, record) => (
+    //   console.log(record, "asdasda")
+    //   <span>
+    //    0
+    //   </span>
+    // ),
 //   },
 //   {
 //     title: "DR",
@@ -59,7 +59,7 @@ const MatchLedger = () => {
   };
 
   // const [data, setData] = useState({});
-  const [trigger, { data, isLoading }] = useLazyProfitAndLossLedgerQuery();
+  const [trigger, { data, isLoading, isFetching }] = useLazyProfitAndLossLedgerQuery();
 
   useEffect(() => {
     trigger({
@@ -75,12 +75,15 @@ const MatchLedger = () => {
 
   return (
     <Card
-      className="sport_detail main_match_ledger"
+      className="sport_detail my_ledger main_match_ledger"
       title="Match Ledger"
       extra={<button onClick={() => nav(-1)}>Back</button>}>
       <Row className="main_super_super_ledger">
         <Col lg={8} xs={24} className="match_ladger">
-          <DatePicker.RangePicker defaultValue={[dayjs(timeBefore), dayjs(time)]} onChange={onChange} />
+          <DatePicker.RangePicker
+            defaultValue={[dayjs(timeBefore), dayjs(time)]}
+            onChange={onChange}
+          />
         </Col>
         {/* <Col lg={12} xs={24} className="selected_ledger">
         <Select defaultValue="lucy" style={{ width: 120 }} onChange={(value) => console.log(`selected ${value}`)}>
@@ -94,51 +97,60 @@ const MatchLedger = () => {
           <div className="matchladger_total">
             <p style={{ fontSize: "20px", marginLeft: "10px" }}>
               Total :{" "}
-              <span className={data?.data?.total>0?"text_success":"text_danges"} >
-                {(data?.data?.total)?.toFixed(2)}
+              <span
+                className={
+                  data?.data?.total > 0 ? "text_success" : "text_danges"
+                }>
+                {data?.data?.total?.toFixed(2)}
               </span>
             </p>
           </div>
         </Col>
       </Row>
-      {isLoading ? (
-        <Spin className="loading_active" tip="Loading..." size="large">
-          <div className="content" />
-        </Spin>
-      ) : (
-        <div className="table_section statement_tabs_data">
-          <table className="">
-            <tr>
-              <th>Date</th>
-              <th>Title</th>
-              <th>CR</th>
-              <th>DR</th>
-            </tr>
-            {data?.data?.list?.map((res, id) => {
-              return (
-                <tr key={id} style={{ cursor: "pointer" }}>
-                  <td>{moment(res?.date).format("DD-MM-YYYY")}</td>
-                  <td>{res?.matchName}</td>
-                  <td className="text_success">{res?.netPnl > 0 ? res?.netPnl : 0}</td>
-                  <td className="text_danger">{res?.netPnl < 0 ? res?.netPnl : 0}</td>
-                </tr>
-              );
-            })}
-          </table>
-          {data?.list?.length === 0 ? (
-            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+
+      <div className="table_section statement_tabs_data ant-spin-nested-loading">
+        <table className="">
+          <tr>
+            <th>Date</th>
+            <th>Title</th>
+            <th>CR</th>
+            <th>DR</th>
+          </tr>
+          {isLoading || isFetching ? (
+            <Spin className="spin_icon" size="large">
+            </Spin>
           ) : (
             ""
           )}
-        </div>
-      )}
-      <Divider />
-      <Pagination
-        className="pagination_main ledger_pagination"
-        onShowSizeChange={(c, s) => setPaginationTotal(s)}
-        total={totalPage && totalPage * paginationTotal}
-        onChange={(e) => setIndexData(e - 1)}
-      />
+          {data?.data?.list?.map((res, id) => {
+            return (
+              <tr key={id} style={{ cursor: "pointer" }}>
+                <td>{moment(res?.date).format("DD-MM-YYYY")}</td>
+                <td>{res?.matchName}</td>
+                <td className="text_success">
+                  {res?.netPnl > 0 ? res?.netPnl : 0}
+                </td>
+                <td className="text_danger">
+                  {res?.netPnl < 0 ? res?.netPnl : 0}
+                </td>
+              </tr>
+            );
+          })}
+        </table>
+        {data?.list?.length === 0 ? (
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        ) : (
+          <>
+            <Divider />
+            <Pagination
+              className="pagination_main ledger_pagination"
+              onShowSizeChange={(c, s) => setPaginationTotal(s)}
+              total={totalPage && totalPage * paginationTotal}
+              onChange={(e) => setIndexData(e - 1)}
+            />
+          </>
+        )}
+      </div>
     </Card>
   );
 };

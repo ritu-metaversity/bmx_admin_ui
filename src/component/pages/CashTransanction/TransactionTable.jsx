@@ -120,8 +120,8 @@ console.log(data, "asdas")
 
         <div>
           <h3 style={{ padding: "5px"}} className={balanceData?.balance < 0 ?"text_danger":"text_success"}>
-            Balance: {Math.abs(balanceData?.balance)}
-            {balanceData?.balance > 0 ? "( Lena )" : "( Dena )"}
+            Balance: {Math.abs(balanceData?.balance)}{" "}
+            {balanceData?.balance > 0 ? "(Lena)" : "(Dena)"}
           </h3>
         </div>
         <div>
