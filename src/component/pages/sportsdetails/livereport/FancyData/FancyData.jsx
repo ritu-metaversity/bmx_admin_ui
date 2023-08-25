@@ -7,7 +7,7 @@ import {
   useOddsPnlMutation,
   useOddsQuPnlQuery,
 } from "../../../../../store/service/OddsPnlServices";
-import { useLazyTtlBookQuery } from "../../../../../store/service/TtlBookServices";
+import { useLazyTtlBookQuery } from "../../../../../store/service/supermasteAccountStatementServices";
 
 const FancyData = ({ data, keyData }) => {
   const [FancyId, setFancyID] = useState("");

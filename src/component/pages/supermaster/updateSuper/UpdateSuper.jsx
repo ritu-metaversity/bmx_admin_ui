@@ -11,11 +11,8 @@ import {
   notification,
 } from "antd";
 import "./UpdateSuper.scss";
-import {
-  useLazyGetUserQuery,
-  useUpdateUserMutation,
-} from "../../../../store/service/createUserServices";
 import { useParams } from "react-router-dom";
+import { useLazyGetUserQuery, useUpdateUserMutation } from "../../../../store/service/userlistService";
 
 const UpdateSuper = ({ updateName }) => {
   const [api, contextHolder] = notification.useNotification();

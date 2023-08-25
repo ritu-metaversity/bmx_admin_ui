@@ -2,15 +2,11 @@ import React from "react";
 import { Col, Empty, Row, Spin } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import SuperAgentProfitLoss from "./SuperAgentProfitLoss/SuperAgentProfitLoss";
-import { useProfitLossQuery } from "../../../../../store/service/ProfitLossServices";
 import "./EventProfitLoss.scss";
-import moment from "moment";
-// import AgentProfitLoss from "./SuperAgentProfitLoss/MasterProfitLoss";
 import MasterProfitLoss from "./SuperAgentProfitLoss/MasterProfitLoss";
 import DealerProfitLoss from "./SuperAgentProfitLoss/DealerProfitLoss";
 import ClientProfitLoss from "./SuperAgentProfitLoss/ClientProfitLoss";
-// import AdminProfitLoss from "./SuperAgentProfitLoss/AdminProfitLoss";
-// import SubAdminProfitLoss from "./SuperAgentProfitLoss/SubAdminProfitLoss";
+import { useProfitLossQuery } from "../../../../../store/service/supermasteAccountStatementServices";
 
 // const columns = [
 //   {

@@ -95,7 +95,6 @@ const FancySlips = ({ type, name }) => {
   };
 
   const [userList, resultData] = useLazySearchUserDownlineQuery();
-console.log(resultData?.data?.data,"resultdata");
   const handleChange = (value) => {
     userList({
       term: value,
@@ -121,7 +120,8 @@ console.log(resultData?.data?.data,"resultdata");
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               autoComplete="off"
-              className="form_data">
+              className="form_data"
+              >
               <Row
                 className="rejected_row fancy_data_sess"
                 style={{ margin: "2px 0px 25px 28px" }}>
@@ -149,16 +149,6 @@ console.log(resultData?.data?.data,"resultdata");
                       onSelect={handleSelect}
                       onSearch={handleChange}></Select>
                   </Form.Item>
-                  {/* <Form.Item
-                    name="username"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter user ID!",
-                      },
-                    ]}>
-                    <Input placeholder="Enter User Id"/>
-                  </Form.Item> */}
                 </Col>
                 <Col xs={24} md={24} lg={5} xl={5}>
                   <Form.Item>

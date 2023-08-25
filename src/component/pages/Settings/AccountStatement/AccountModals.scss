@@ -1,0 +1,59 @@
+.accont_modals {
+  margin-top: 10px;
+  .account_title {
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .sub_modals_section {
+    margin-inline: 12px;
+    .redio_section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      .amount_data {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        p {
+          margin: 4px;
+          span {
+            color: green;
+          }
+        }
+      }
+    }
+  }
+  .acc_tabel {
+    padding-bottom: 4px;
+  }
+}
+
+.bet_list {
+  .ant-modal-content {
+    padding: 0px !important;
+  }
+  .ant-modal-header {
+    .ant-modal-title {
+      padding: 12px;
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .redio_section {
+    display: block !important;
+    margin-bottom: 10px;
+    .amount_data {
+      margin-top: 5px;
+
+      p {
+        margin: 4px;
+        span {
+          color: green;
+        }
+      }
+    }
+  }
+}

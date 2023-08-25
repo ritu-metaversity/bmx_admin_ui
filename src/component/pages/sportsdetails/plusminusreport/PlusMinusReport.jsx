@@ -1,11 +1,10 @@
-import { React, useEffect, useState } from "react";
+import  React, {useEffect, useState } from "react";
 // import { Divider, Radio, Table } from "antd";
 import "./PlusMinusReport.scss";
 import { Checkbox, Col, notification, Row, Table } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useComplteFancyOddsClientsQuery } from "../../../../store/service/CompleteFancyOddsServices";
-import { useSelector } from "react-redux";
-import { globalSelector } from "../../../../store/global/slice";
+
+import { useComplteFancyOddsClientsQuery } from "../../../../store/service/supermasteAccountStatementServices";
 
 const column = [
   {

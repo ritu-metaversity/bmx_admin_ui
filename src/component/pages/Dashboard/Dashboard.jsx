@@ -9,12 +9,10 @@ import { IoMdInformationCircle } from "react-icons/io";
 
 import { Card } from "antd";
 import "./Dashboard.scss";
-import CardItem from "../../common/carditem/CardItem";
-import CardItemWithDes from "../../common/cordItemWithdes/CardItemWithDes";
-import { useDashboardQuery } from "../../../store/service/dashboardServices";
 import ActiveMatch from "../../common/ActiveMatch/ActiveMatch";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../../../store/service/authService";
+import { useDashboardQuery } from "../../../store/service/supermasteAccountStatementServices";
 
 const gridStyle = {
   width: "23%",

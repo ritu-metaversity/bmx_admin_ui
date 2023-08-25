@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "antd";
-import { useAccountstatementQuery } from "../../../../../store/service/supermasteAccountStatementServices";
-import { useParams } from "react-router-dom";
+import { Modal, Table } from "antd";
+import { useLazyAccountstatementQuery } from "../../../../../store/service/supermasteAccountStatementServices";
 import { useDispatch } from "react-redux";
 import { setData } from "../../../../../store/global/slice";
+import AccountModals from "../AccountModals";
 
-const AllStatement = ({ dateData, gameType }) => {
-  const { id } = useParams();
+const AllStatement = ({clientId, dateData, gameType }) => {
+  const [trigger, {data, isFetching, isLoading}] = useLazyAccountstatementQuery();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [marketId, setMarketId] = useState("");
+  const [remark, setRemark] = useState("");
 
-  const { data, isFetching, isLoading } = useAccountstatementQuery(
-    {
-      index: "0",
+  useEffect(()=>{
+    const AccData = {
+      index: 0,
       noOfRecords: "200",
       fromDate: dateData[0],
       toDate: dateData[1],
-      userid: id || "",
+      userid: clientId || "",
       type: gameType,
-    },
-    { refetchOnMountOrArgChange: true }
-  );
+    }
+    trigger(AccData)
+  }, [data, gameType,clientId, dateData ])
 
   const dispatch = useDispatch();
 
@@ -95,6 +98,18 @@ const AllStatement = ({ dateData, gameType }) => {
     },
   ];
 
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const handelAccountModals = (e, id, rem) =>{
+    e.preventDefault();
+    setIsModalOpen(true);
+    setMarketId(id)
+    setRemark(rem)
+  } 
+  // console.log(marketId, "Sdfsdafsdf")
+
   return (
     <>
       <div className="table_section statement_tabs_data">
@@ -102,6 +117,14 @@ const AllStatement = ({ dateData, gameType }) => {
           <Table
             className="live_table statemt_account agent_master"
             bordered
+            rowClassName="c_pointer"
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: event => { 
+                   handelAccountModals(event,record?.marketid, record?.remark)
+                }, 
+              };
+            }}
             loading={isFetching || isLoading}
             columns={columns}
             dataSource={
@@ -114,6 +137,17 @@ const AllStatement = ({ dateData, gameType }) => {
             }></Table>
         </div>
       </div>
+      {
+        marketId != "" && <Modal title="Bet List" 
+        className="bet_list"
+        open={isModalOpen} 
+        onCancel={handleCancel}
+        footer={null}
+        >
+         <AccountModals marketId={marketId} remark={remark}/>
+        </Modal>
+      }
+      
     </>
   );
 };

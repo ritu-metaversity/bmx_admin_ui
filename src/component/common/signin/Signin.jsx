@@ -15,7 +15,6 @@ const Signin = () => {
       message.error(authData?.message || error.data?.message);
     } else if (authData?.token !== null && authData?.token !== undefined) {
       localStorage.setItem("token", authData?.token);
-      // localStorage.setItem("userId", JSON.stringify(authData));
       localStorage.setItem("rulesStatus", true)
       localStorage.setItem("userId", authData?.userId);
       localStorage.setItem("userType", authData?.userType);

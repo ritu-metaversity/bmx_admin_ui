@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { setData } from "../../../../../store/global/slice";
-import { useCompleteFancyQuery } from "../../../../../store/service/compeleteFancyServices";
+import { useCompleteFancyQuery } from "../../../../../store/service/supermasteAccountStatementServices";
 
 const CompeleteFancy = () => {
   const [marketId, setMarketId] = useState("");

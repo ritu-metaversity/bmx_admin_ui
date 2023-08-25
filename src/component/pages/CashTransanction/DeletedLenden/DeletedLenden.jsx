@@ -2,9 +2,9 @@ import {
     Card, Empty,
   } from "antd";
   import React from "react";
-import { useFetchDeleteTransectionQuery } from "../../../../store/service/transactionServices";
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
+import { useFetchDeleteTransectionQuery } from "../../../../store/service/supermasteAccountStatementServices";
 
   
   const DeletedLenden = () => {

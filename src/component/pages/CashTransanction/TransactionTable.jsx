@@ -13,9 +13,9 @@ import {
 } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-import { useDeleteByUserIDMutation } from "../../../store/service/transactionServices";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import { useDeleteByUserIDMutation } from "../../../store/service/supermasteAccountStatementServices";
 
 const dateFormat = "YYYY/MM/DD";
 

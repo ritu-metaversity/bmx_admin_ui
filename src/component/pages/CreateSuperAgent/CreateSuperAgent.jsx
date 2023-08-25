@@ -11,13 +11,9 @@ import {
   Spin,
   notification,
 } from "antd";
-import {
-  useCreateUserMutation,
-  useLazyCreateUserDataQuery,
-  useLazyIsUserIdQuery,
-} from "../../../store/service/createUserServices";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useCreateUserMutation, useLazyCreateUserDataQuery, useLazyIsUserIdQuery } from "../../../store/service/userlistService";
 
 const CreateSuperAgent = ({ createName }) => {
   const [userData, setUserData] = useState({});

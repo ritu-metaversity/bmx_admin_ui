@@ -22,45 +22,125 @@ export const userlistApi = createApi({
       query: (body) => ({
         url: "/bets/odds-pnl",
         method: "POST",
-        body
+        body,
       }),
     }),
     deposit: build.mutation({
       query: (body) => ({
         url: "/dwc/dcr",
         method: "POST",
-        body
+        body,
       }),
     }),
     withdraw: build.mutation({
       query: (body) => ({
         url: "/dwc/wcr",
         method: "POST",
-        body
+        body,
       }),
     }),
     depositAndWithdraw: build.query({
       query: (body) => ({
         url: "/dwc/depositwithdrawdata",
         method: "POST",
-        body
+        body,
       }),
     }),
     addLimit: build.mutation({
       query: (body) => ({
         url: "/dwc/deposit-chips-pnl",
         method: "POST",
-        body
+        body,
       }),
     }),
     minusLimit: build.mutation({
       query: (body) => ({
         url: "/dwc/withdraw-chips-pnl",
         method: "POST",
-        body
+        body,
+      }),
+    }),
+    partnership: build.mutation({
+      query: (body) => ({
+        url: "/bmx/report/partnership-by-userid",
+        method: "POST",
+        body,
+      }),
+    }),
+    createUserData: build.query({
+      query: (body) => ({
+        url: "/bmx/user/get-user-data-for-create-user",
+        method: "POST",
+        body,
+      }),
+    }),
+    createUser: build.mutation({
+      query: (body) => ({
+        url: "/bmx/user/create",
+        method: "POST",
+        body,
+      }),
+    }),
+    updateUser: build.mutation({
+      query: (body) => ({
+        url: "/bmx/user/update",
+        method: "POST",
+        body,
+      }),
+    }),
+    getUser: build.query({
+      query: (body) => ({
+        url: "/bmx/user/get-user-for-update",
+        method: "POST",
+        body,
+      }),
+    }),
+    accountOpration: build.query({
+      query: (body) => ({
+        url: "/bmx/report/action-logs",
+        method: "POST",
+        body,
+      }),
+    }),
+    upDateStatus: build.mutation({
+      query: (body) => ({
+        url: "/bmx/user/update-status",
+        method: "POST",
+        body,
+      }),
+    }),
+    isUserId: build.query({
+      query: (body) => ({
+        url: "/user/is-userid-available",
+        method: "POST",
+        body,
+      }),
+    }),
+    blockBetting: build.mutation({
+      query: (body) => ({
+        url: "/user/update-bet-account-status",
+        method: "POST",
+        body,
       }),
     }),
   }),
 });
 
-export const {useUserListQuery, useOdsPnlQuery,useDepositMutation, useWithdrawMutation, useDepositAndWithdrawQuery,useAddLimitMutation,useMinusLimitMutation} = userlistApi;
+export const {
+  useUserListQuery,
+  useOdsPnlQuery,
+  useDepositMutation,
+  useWithdrawMutation,
+  useDepositAndWithdrawQuery,
+  useAddLimitMutation,
+  useMinusLimitMutation,
+  usePartnershipMutation,
+  useLazyCreateUserDataQuery,
+  useCreateUserMutation,
+  useUpdateUserMutation,
+  useLazyGetUserQuery,
+  useAccountOprationQuery,
+  useUpDateStatusMutation,
+  useLazyIsUserIdQuery,
+  useBlockBettingMutation
+} = userlistApi;

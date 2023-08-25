@@ -8,12 +8,13 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 import ModalsData from "../pages/supermaster/listsuper/ModalsData/ModalsData";
-import { useUpDateStatusMutation } from "../../store/service/createUserServices";
-import { useLazySuperuserListQuery } from "../../store/service/superMasteruseListServices";
-import { usePartnershipMutation } from "../../store/service/partnershipServices";
+
 import moment from "moment";
 import Deposit from "./Deposit";
 import Withdraw from "./Withdraw";
+import BetlockModal from "./BetlockModal";
+import { useLazySuperuserListQuery } from "../../store/service/supermasteAccountStatementServices";
+import { usePartnershipMutation, useUpDateStatusMutation } from "../../store/service/userlistService";
 
 const routeFromUSerType = {
   0: "/client/list-agent/",
@@ -26,6 +27,7 @@ const UserListTable = ({ userType, Listname }) => {
   const [activeStatus, setActiveStatus] = useState();
   const [isDepositeModalOpen, SetisDepositeModalOpen] = useState(false);
   const [WithdrawnModal, SetWithdrawnModal] = useState(false);
+  const [betLockModals, setBetLockModals] = useState(false);
   const [balance, setBalance] = useState();
   const [parentUserId, setParentUserId] = useState();
   const [userList, setUserList] = useState([]);
@@ -36,6 +38,7 @@ const UserListTable = ({ userType, Listname }) => {
   const [partnershipDetails, setPartnershipDetails] = useState({});
   const [userIds, setUserIds] = useState("");
   const [parentUserids, setParentUserIds] = useState("");
+  const [betStatus, setBetStatus] = useState(true);
   const [api, contextHolder] = notification.useNotification();
 
 
@@ -75,7 +78,11 @@ const UserListTable = ({ userType, Listname }) => {
 
   const { id } = useParams();
 
+  //API CALL
+
   const [getData, {data: results, isLoading, isFetching }] = useLazySuperuserListQuery();
+  const [activeData, { data: Activestatus }] = useUpDateStatusMutation();
+  
 
 
   useEffect(() => {
@@ -87,7 +94,7 @@ const UserListTable = ({ userType, Listname }) => {
     });
   }, [id, userType]);
 
-  const [activeData, { data: Activestatus }] = useUpDateStatusMutation();
+
 
   const handleActive = () => {
     activeData({
@@ -127,7 +134,9 @@ const UserListTable = ({ userType, Listname }) => {
 
   const userId  = localStorage.getItem("userId")
 
-  console.log(userId, "fgdf")
+  const handleBlockBettting = ()=>{
+    setBetLockModals(true)
+  }
 
   const items = [
     {
@@ -146,23 +155,12 @@ const UserListTable = ({ userType, Listname }) => {
       ),
       key: "2",
     },
-    // {
-    //   label: (
-    //     <div className={userType == 3?"":"d_none"} onClick={handleBlockBettting}>
-         
-    //      Block Betting
-    //     </div>
-    //   ),
-    //   key: "3",
-    // },
-    // {
-    //   label: (
-    //     <div className={userType == 3?"":"d_none"} onClick={handleBlockCasino}>
-    //     Block Casino
-    //     </div>
-    //   ),
-    //   key: "4",
-    // },
+    {
+      label: (
+        <div onClick={handleBlockBettting}>{betStatus ? "Block Betting":"UnBlock Betting"}</div>
+      ),
+      key: "3",
+    },
     {
       type: "divider",
     },
@@ -209,10 +207,6 @@ const UserListTable = ({ userType, Listname }) => {
       ),
       key: "10",
     },
-    // {
-    //   label: <Link to="https://www.aliyun.com">Send Login Details</Link>,
-    //   key: "8",
-    // },
   ];
 
   const openNotification = (mess) => {
@@ -228,6 +222,9 @@ const UserListTable = ({ userType, Listname }) => {
       openNotification(Activestatus?.message);
     }
   }, [Activestatus?.status])
+
+  console.log(betStatus, "dsadasdasdas")
+
 
 
   return (
@@ -358,6 +355,7 @@ const UserListTable = ({ userType, Listname }) => {
 
       <Modal
         className="modal_deposit"
+        destroyOnClose
         title={
           <h1>
             Deposite Chips
@@ -375,6 +373,7 @@ const UserListTable = ({ userType, Listname }) => {
 
       <Modal
         className="modal_deposit"
+        destroyOnClose
         title={
           <h1>
             <span>Withdrawal Chips</span>
@@ -387,6 +386,20 @@ const UserListTable = ({ userType, Listname }) => {
         cancelButtonProps={{ style: { display: 'none' } }}
         footer={null}>
        <Withdraw userIdData={userIdData} handleClose={()=>SetWithdrawnModal(false)} balance={balance}/>
+      </Modal>
+
+
+      <Modal
+        className="modal_deposit"
+        destroyOnClose
+        title={<h1><span>Current Password</span></h1>}
+        open={betLockModals}
+        // onOk={handleBetLockOk}
+        onCancel={()=>setBetLockModals(false)}
+        okButtonProps={{ style: { display: 'none' } }}
+        cancelButtonProps={{ style: { display: 'none' } }}
+        footer={null}>
+       <BetlockModal userIdData={userIdData} setBetStatus={setBetStatus} betStatus={betStatus} handleClose={()=>setBetLockModals(false)}/>
       </Modal>
     </div>
   );

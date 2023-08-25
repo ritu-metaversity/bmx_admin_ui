@@ -1,7 +1,7 @@
 import { Button, Form, Input, message } from "antd";
 import React, { useEffect } from "react";
-import { useChangePasswordMutation } from "../../../store/service/changePasswordService";
 import { useNavigate } from "react-router-dom";
+import { useChangePasswordMutation } from "../../../store/service/supermasteAccountStatementServices";
 
 const ChangePassword = ({ setIsModalOpen }) => {
   const [trigger, { data: chnagePassdata, error, isLoading }] = useChangePasswordMutation();

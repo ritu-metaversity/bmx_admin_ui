@@ -7,8 +7,8 @@ import { useEventDetailQuery } from "../../../../store/service/eventDetailServic
 import ScoreCard from "./ScoreCard/ScoreCard";
 import React, { useEffect, useState } from "react";
 import FancyData from "./FancyData/FancyData";
-import { useLazyTtlBookQuery } from "../../../../store/service/TtlBookServices";
 import { useOddsPnlMutation } from "../../../../store/service/OddsPnlServices";
+import { useLazyTtlBookQuery } from "../../../../store/service/supermasteAccountStatementServices";
 
 const LiveReport = () => {
   const [oddsData, setOddsData] = useState([]);

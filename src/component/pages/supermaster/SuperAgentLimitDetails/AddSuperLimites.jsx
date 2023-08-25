@@ -8,6 +8,7 @@ const AddSuperLimites = ({ data }) => {
   const [chipsValue, setChipsValue] = useState();
   const [passWord, setPassword] = useState("");
   const [api, contextHolder] = notification.useNotification();
+  const [form]= Form.useForm();
 
   const handelAddLimit = (e) => {
     setChipsValue(e.target.value);
@@ -50,6 +51,7 @@ const AddSuperLimites = ({ data }) => {
   useEffect(() => {
     if (addData?.status === true) {
       openNotification(addData?.message);
+      form?.resetFields();
     } else if (addData?.status === false || error?.data?.message) {
       openNotificationError(addData?.message || error?.data?.message);
     }
@@ -62,6 +64,7 @@ const AddSuperLimites = ({ data }) => {
         <div className="table_section statement_tabs_data ant-spin-nested-loading">
           <Form
             onFinish={onFinish}
+            form={form}
             // onFinishFailed={onFinishFailed}
             autoComplete="off">
             <table className="live_table  limit_update">
@@ -113,6 +116,7 @@ const AddSuperLimites = ({ data }) => {
                         onChange={(e) => handelPassword(e)}
                         type="password"
                         placeholder="Enter Transaction Password"
+                        autoComplete="off"
                       />
                     </Form.Item>
                   </div>
@@ -122,6 +126,7 @@ const AddSuperLimites = ({ data }) => {
                     <Button
                       style={{ height: "unset" }}
                       className="add"
+                      loading={isLoading}
                       htmlType="submit">
                       Add
                     </Button>

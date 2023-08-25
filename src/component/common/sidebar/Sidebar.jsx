@@ -171,7 +171,7 @@ const Sidebar = (props) => {
                 },
                 {
                   className: `${userType === "1" ? "" : "d-none"}`,
-                  label: <Link to="/client/ledger-agent">Deler Ledger</Link>,
+                  label: <Link to="/client/ledger-agent">Agent Ledger</Link>,
                 },
                 {
                   label: <Link to="/client/ledger-client">Client Ledger</Link>,
@@ -417,7 +417,7 @@ const Sidebar = (props) => {
                       <Link
                         onClick={() => setOpen(false)}
                         to="/client/ledger-agent">
-                        Deler Ledger
+                        Agent Ledger
                       </Link>
                     ),
                   },

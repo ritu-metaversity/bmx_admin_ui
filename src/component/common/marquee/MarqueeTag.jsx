@@ -9,7 +9,7 @@ const MarqueeTag = () => {
   return (
     <>
       <div className="marque_section">
-        <Marquee>Welcome to {host}</Marquee>
+        <Marquee>{host}</Marquee>
       </div>
     </>
   );
