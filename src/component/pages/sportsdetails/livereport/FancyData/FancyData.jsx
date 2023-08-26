@@ -3,17 +3,14 @@ import React, { useEffect, useState } from "react";
 import FancyBets from "../fancyBets/FancyBets";
 import FancyBookModals from "../FancyBookModals/FancyBookModals";
 import { useParams } from "react-router-dom";
-import {
-  useOddsPnlMutation,
-  useOddsQuPnlQuery,
-} from "../../../../../store/service/OddsPnlServices";
+import { useFancyPnlQuery, useLazyOddsQuPnlQuery } from "../../../../../store/service/OddsPnlServices";
 import { useLazyTtlBookQuery } from "../../../../../store/service/supermasteAccountStatementServices";
 
 const FancyData = ({ data, keyData }) => {
   const [FancyId, setFancyID] = useState("");
   const [open, setOpen] = useState(false);
   const [matchid, setMatchID] = useState("");
-  const [showMyBook, setShowMyBook] = useState(1);
+  const [showMyBook, setShowMyBook] = useState(2);
 
   const { id } = useParams();
 
@@ -38,7 +35,14 @@ const FancyData = ({ data, keyData }) => {
     });
   }, [data]);
 
-  const [trigger, { data: PnlOdds }] = useOddsPnlMutation();
+  const [trigger, { data: PnlOdds }] = useLazyOddsQuPnlQuery();
+
+  
+  const {data: fancyPnl} = useFancyPnlQuery({
+    matchId: id
+  })
+
+  console.log(fancyPnl?.data, "dsdfsf");
 
   const handleMyBook = (e) => {
     e.preventDefault();
@@ -54,6 +58,10 @@ const FancyData = ({ data, keyData }) => {
       matchid: Number(id),
       marketid: matchid,
     });
+    const oddsPnl = {
+      matchId: Number(id),
+    };
+    trigger(oddsPnl);
   }, [ matchid])
 
   const handleTtlBook = (e) => {
@@ -86,12 +94,13 @@ const FancyData = ({ data, keyData }) => {
                     </div>
                     {keyData === "Bookmaker" && (
                       <Col span={19} className="back-lay-bg bookData">
+                         <button onClick={(e) => handleMyBook(e)}>
+                          My Book
+                        </button>
                         <button onClick={(e) => handleTtlBook(e)}>
                           Ttl Book
                         </button>
-                        <button onClick={(e) => handleMyBook(e)}>
-                          My Book
-                        </button>
+                       
                       </Col>
                     )}
                     <div>
@@ -117,6 +126,9 @@ const FancyData = ({ data, keyData }) => {
                   <Row key={index} className="scor fancy_all_data">
                     <Col span={19} className="match_title">
                       <div className="title">{res?.nation}</div>
+                      <span>
+                      {/* {Object?.keys(fancyPnl)?.find(key =>fancyPnl[key] === res?.sid) || 0} */}
+                      </span>
                       {keyData !== "Bookmaker" && (
                         <span
                           className="fancy_book_data"

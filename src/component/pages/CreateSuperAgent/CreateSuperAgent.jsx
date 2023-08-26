@@ -13,7 +13,11 @@ import {
 } from "antd";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useCreateUserMutation, useLazyCreateUserDataQuery, useLazyIsUserIdQuery } from "../../../store/service/userlistService";
+import {
+  useCreateUserMutation,
+  useLazyCreateUserDataQuery,
+  useLazyIsUserIdQuery,
+} from "../../../store/service/userlistService";
 
 const CreateSuperAgent = ({ createName }) => {
   const [userData, setUserData] = useState({});
@@ -134,6 +138,9 @@ const CreateSuperAgent = ({ createName }) => {
     setUserData(data?.data);
   }, [data?.data, UserList?.status]);
 
+
+ 
+
   return (
     <>
       {contextHolder}
@@ -214,35 +221,38 @@ const CreateSuperAgent = ({ createName }) => {
                         message: "Please Enter UserID",
                       },
                       {
-                        validator: async(rules,value) => {
-                          try{
+                        validator: async (rules, value) => {
+                          try {
+                            const results = await axios.post(
+                              "user/is-userid-available",
+                              {
+                                userId: hostname.includes("create-super")
+                                  ? "S" + value
+                                  : hostname.includes("create-agent")
+                                  ? "M" + value
+                                  : hostname.includes("create-dealer")
+                                  ? "A" + value
+                                  : "C" + value,
+                              },
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${localStorage.getItem(
+                                    "token"
+                                  )}`,
+                                },
+                                baseURL: import.meta.env.VITE_BASE_URL,
+                              }
+                            );
 
-                          const results = await axios.post("user/is-userid-available",{
-                            userId: hostname.includes("create-super")
-                            ? "S" + value
-                            : hostname.includes("create-agent")
-                            ? "M" + value
-                            : hostname.includes("create-dealer")
-                            ? "A" + value
-                            : "C" + value,
-                          },{
-                           headers :{"Authorization": `Bearer ${localStorage.getItem("token")}`},
-                           baseURL:import.meta.env.VITE_BASE_URL
-                          })
-                          
-                          if (
-                          
-                          (results?.data.status===false)
-                          
-                          )
-                            {
+                            if (results?.data.status === false) {
                               return Promise.reject(
                                 new Error(results?.data.message)
                               );
                             }
-                          }catch(err){console.log(err);}
-                          },
-
+                          } catch (err) {
+                            console.log(err);
+                          }
+                        },
                       },
                     ]}>
                     <Input
@@ -289,12 +299,7 @@ const CreateSuperAgent = ({ createName }) => {
                   <Form.Item
                     label="Contact No."
                     name="mobile"
-                    required
                     rules={[
-                      {
-                        required: true,
-                        message: "Please Enter Valid Mobile Number",
-                      },
                       {
                         validator: async (_, names) => {
                           if (
@@ -322,16 +327,7 @@ const CreateSuperAgent = ({ createName }) => {
                   </Form.Item>
                 </Col>
                 <Col xl={12} lg={12} md={24} xs={24}>
-                  <Form.Item
-                    label="Reference"
-                    name="reference"
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please specify reference",
-                      },
-                    ]}>
+                  <Form.Item label="Reference" name="reference">
                     <Input type="text" placeholder="Enter Reference" />
                   </Form.Item>
                 </Col>
@@ -369,6 +365,11 @@ const CreateSuperAgent = ({ createName }) => {
                       min={0}
                       type="number"
                       placeholder="Super Agent Coins"
+                      onKeyDown={(e) => {
+                        if (e.key == ".") {
+                          e.preventDefault();
+                        }
+                      }}
                     />
                   </Form.Item>
                 </Col>
@@ -460,6 +461,11 @@ const CreateSuperAgent = ({ createName }) => {
                           step="1"
                           type="number"
                           placeholder="Super Agent Match Share"
+                          onKeyDown={(e) => {
+                            if (e.key == ".") {
+                              e.preventDefault();
+                            }
+                          }}
                         />
                       </Form.Item>
                     </Col>
@@ -515,30 +521,80 @@ const CreateSuperAgent = ({ createName }) => {
                         rules={[
                           {
                             required: true,
-                            message: "Please enter odds commission",
-                          },
-                          {
-                            validator: async (_, values) => {
-                              if (
-                                values > 3 &&
-                                values >= 0 &&
-                                values != "" &&
-                                values != null
-                              ) {
-                                return Promise.reject(
-                                  new Error("Please enter odds commission")
-                                );
-                              }
-                            },
-                          },
+                            message: "Please select odds commission",
+                          }
+                          // ,
+                          // {
+                          //   validator: async (_, values) => {
+                          //     if (
+                          //       values > 3 &&
+                          //       values >= 0 &&
+                          //       values != "" &&
+                          //       values != null
+                          //     ) {
+                          //       return Promise.reject(
+                          //         new Error("Please enter odds commission")
+                          //       );
+                          //     }
+                          //   },
+                          // },
                         ]}>
-                        <InputNumber
+                        <Select
+                          defaultValue="Select Match comm(%)"
+                          options={[
+                            {
+                              value: '0.00',
+                              label: '0.00',
+                            },
+                            {
+                              value: '0.25',
+                              label: '0.25',
+                            },
+                            {
+                              value: '0.50',
+                              label: '0.50',
+                            },
+                            {
+                              value: '0.75',
+                              label: '0.75',
+                            },
+                            {
+                              value: '1.00',
+                              label: '1.00',
+                            },
+                            {
+                              value: '1.25',
+                              label: '1.25',
+                            },
+                            {
+                              value: '1.50',
+                              label: '1.50',
+                            },
+                            {
+                              value: '1.75',
+                              label: '1.75',
+                            },
+                            {
+                              value: '2.00',
+                              label: '2.00',
+                            },
+                            {
+                              value: '2.25',
+                              label: '2.25',
+                            },
+                            {
+                              value: '2.50',
+                              label: '2.50',
+                            },
+                          ]}
+                        />
+                        {/* <InputNumber
                           className="number_field"
                           min={0}
                           step="0.1"
                           type="number"
                           placeholder="Match commission"
-                        />
+                        /> */}
                       </Form.Item>
                     </Col>
 
@@ -560,30 +616,88 @@ const CreateSuperAgent = ({ createName }) => {
                         rules={[
                           {
                             required: true,
-                            message: "Please enter session commission",
-                          },
-                          {
-                            validator: async (_, values) => {
-                              if (
-                                values > 3 &&
-                                values >= 0 &&
-                                values != "" &&
-                                values != null
-                              ) {
-                                return Promise.reject(
-                                  new Error("Please enter session commission")
-                                );
-                              }
-                            },
-                          },
+                            message: "Please select session commission",
+                          }
+                          // ,
+                          // {
+                          //   validator: async (_, values) => {
+                          //     if (
+                          //       values > 3 &&
+                          //       values >= 0 &&
+                          //       values != "" &&
+                          //       values != null
+                          //     ) {
+                          //       return Promise.reject(
+                          //         new Error("Please enter session commission")
+                          //       );
+                          //     }
+                          //   },
+                          // },
                         ]}>
-                        <InputNumber
+                          <Select
+                          defaultValue="Select Sess Comm(%)"
+                          options={[
+                            {
+                              value: '0.00',
+                              label: '0.00',
+                            },
+                            {
+                              value: '0.25',
+                              label: '0.25',
+                            },
+                            {
+                              value: '0.50',
+                              label: '0.50',
+                            },
+                            {
+                              value: '0.75',
+                              label: '0.75',
+                            },
+                            {
+                              value: '1.00',
+                              label: '1.00',
+                            },
+                            {
+                              value: '1.25',
+                              label: '1.25',
+                            },
+                            {
+                              value: '1.50',
+                              label: '1.50',
+                            },
+                            {
+                              value: '1.75',
+                              label: '1.75',
+                            },
+                            {
+                              value: '2.00',
+                              label: '2.00',
+                            },
+                            {
+                              value: '2.25',
+                              label: '2.25',
+                            },
+                            {
+                              value: '2.50',
+                              label: '2.50',
+                            },
+                            {
+                              value: '2.75',
+                              label: '2.75',
+                            },
+                            {
+                              value: '3.00',
+                              label: '3.00',
+                            }
+                          ]}
+                        />
+                        {/* <InputNumber
                           className="number_field"
                           min={0}
                           step="0.1"
                           type="number"
                           placeholder="session commission"
-                        />
+                        /> */}
                       </Form.Item>
                     </Col>
                   </>

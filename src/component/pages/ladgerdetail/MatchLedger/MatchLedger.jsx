@@ -51,7 +51,7 @@ const MatchLedger = () => {
   const time = moment().format("YYYY-MM-DD");
   const [dateData, setDateData] = useState([timeBefore, time]);
   const [totalPage, setTotalPage] = useState();
-  const [paginationTotal, setPaginationTotal] = useState(10);
+  const [paginationTotal, setPaginationTotal] = useState(50);
   const [indexData, setIndexData] = useState(0);
 
   const onChange = (date, dateString) => {
@@ -145,7 +145,7 @@ const MatchLedger = () => {
             <Pagination
               className="pagination_main ledger_pagination"
               onShowSizeChange={(c, s) => setPaginationTotal(s)}
-              total={totalPage && totalPage * paginationTotal}
+              total={totalPage}
               onChange={(e) => setIndexData(e - 1)}
             />
           </>

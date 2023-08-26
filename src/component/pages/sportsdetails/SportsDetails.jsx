@@ -33,7 +33,7 @@ const SportsDetails = () => {
   const [matchId, setMatchId] = useState(0);
   const [InPlay, setInPlay] = useState();
   const [totalPage, setTotalPage] = useState();
-  const [paginationTotal, setPaginationTotal] = useState(10);
+  const [paginationTotal, setPaginationTotal] = useState(50);
   const [indexData, setIndexData] = useState(0);
   const [dataNameee, setDataNameee] = useState("");
   const navigate = useNavigate();
@@ -125,6 +125,8 @@ const SportsDetails = () => {
   }, [sportDetail]);
 
 
+  console.log(sportDetail?.data?.totalPages * paginationTotal, "Dasdasda")
+
   return (
     <>
       <Card
@@ -160,7 +162,6 @@ const SportsDetails = () => {
               ) : (
                 ""
               )}
-
             {sportDetail?.data?.data?.map((res) => {
               return (
                 <tr key={res?.key}>
@@ -216,7 +217,7 @@ const SportsDetails = () => {
           style={{marginBottom:"12px"}}
           className="pagination_main ledger_pagination pagination_main"
           onShowSizeChange={(c, s) => setPaginationTotal(s)}
-          total={totalPage && (totalPage)*paginationTotal}
+          total={sportDetail?.data?.totalPages && sportDetail?.data?.totalPages * paginationTotal }
           onChange={(e)=>setIndexData(e-1)}
         />
       </Card>

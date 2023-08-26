@@ -26,7 +26,7 @@ const ProfitAndLoss = () => {
   const [dateData, setDateData] = useState([timeBefore, time]);
   const [ProfitLossData, setProfitLossData] = useState([]);
   const [totalPage, setTotalPage] = useState();
-  const [paginationTotal, setPaginationTotal] = useState(10);
+  const [paginationTotal, setPaginationTotal] = useState(50);
   const [indexData, setIndexData] = useState(0);
   const nav = useNavigate();
 
@@ -135,7 +135,7 @@ const ProfitAndLoss = () => {
                     <Pagination
                       className="pagination_main ledger_pagination"
                       onShowSizeChange={(c, s) => setPaginationTotal(s)}
-                      total={totalPage && totalPage * paginationTotal}
+                      total={totalPage}
                       onChange={(e) => setIndexData(e - 1)}
                     />
                   </div>

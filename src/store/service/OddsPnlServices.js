@@ -11,13 +11,13 @@ export const oddsPnlApi = createApi({
     },
   }),
   endpoints: (build) => ({
-    oddsPnl: build.mutation({
-      query: (body) => ({
-        url: "/bets/odds-pnl",
-        method: "POST",
-        body
-      }),
-    }),
+    // oddsPnl: build.mutation({
+    //   query: (body) => ({
+    //     url: "/bets/odds-pnl",
+    //     method: "POST",
+    //     body
+    //   }),
+    // }),
     oddsQuPnl: build.query({
       query: (body) => ({
         url: "/bets/odds-pnl",
@@ -25,7 +25,14 @@ export const oddsPnlApi = createApi({
         body
       }),
     }),
+    fancyPnl: build.query({
+      query: (body) => ({
+        url: "/bets/fancy-pnl",
+        method: "POST",
+        body
+      }),
+    }),
   }),
 });
 
-export const {useOddsPnlMutation, useOddsQuPnlQuery} = oddsPnlApi;
+export const {useLazyOddsQuPnlQuery, useFancyPnlQuery} = oddsPnlApi;

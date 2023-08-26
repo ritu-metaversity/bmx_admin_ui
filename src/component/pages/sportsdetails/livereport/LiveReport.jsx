@@ -7,12 +7,12 @@ import { useEventDetailQuery } from "../../../../store/service/eventDetailServic
 import ScoreCard from "./ScoreCard/ScoreCard";
 import React, { useEffect, useState } from "react";
 import FancyData from "./FancyData/FancyData";
-import { useOddsPnlMutation } from "../../../../store/service/OddsPnlServices";
+import { useLazyOddsQuPnlQuery} from "../../../../store/service/OddsPnlServices";
 import { useLazyTtlBookQuery } from "../../../../store/service/supermasteAccountStatementServices";
 
 const LiveReport = () => {
   const [oddsData, setOddsData] = useState([]);
-  const [ShowMyBook, setShowMyBook] = useState(1);
+  const [ShowMyBook, setShowMyBook] = useState(2);
   const [marketId, setMarketId] = useState("");
 
   const { id } = useParams();
@@ -30,7 +30,7 @@ const LiveReport = () => {
 
   console.log(marketId, "dadadwd")
 
-  const [trigger, { data: PnlOdds }] = useOddsPnlMutation();
+  const [trigger, { data: PnlOdds }] = useLazyOddsQuPnlQuery();
 
   const [getData, {data: results}] = useLazyTtlBookQuery();
 
@@ -40,8 +40,13 @@ const LiveReport = () => {
       marketid: marketId,
       subadminid: localStorage.getItem("userId"),
     });
-    // setTtlBookData(results?.data);
+    const oddsPnl = {
+      matchId: Number(id),
+    };
+    trigger(oddsPnl);
   }, [marketId]);
+
+  // console.log(PnlOdds?.data[0], "sdfsd")
 
   const handleMyBook = () => {
     setShowMyBook(2);
@@ -51,7 +56,7 @@ const LiveReport = () => {
     trigger(oddsPnl);
   };
 
-  console.log(results, "fsdfsdf")
+  // console.log(results, "fsdfsdf")
 
 
   const handleTtlBook = (mrktid) => {
@@ -85,10 +90,10 @@ const LiveReport = () => {
                 <div className="match_section">
                   <Row>
                     <Col span={19} className="back-lay-bg">
+                      <button onClick={() => handleMyBook()}>My Book</button>
                       <button onClick={() => handleTtlBook(marketId)}>
                         Ttl Book
                       </button>
-                      <button onClick={() => handleMyBook()}>My Book</button>
                     </Col>
                     <Col span={5}>
                       <Row>
@@ -110,6 +115,7 @@ const LiveReport = () => {
                           <div className="title">{res?.name}</div>
                           {ShowMyBook===1 && <span className={ttl[res.selectionId] < 0 ?"text_danger":"text_success"}>{ttl[res.selectionId]||"0.0"}</span>}
                           {PnlOdds?.data?.map((res, id) => {
+                            console.log(res, "dsdsds")
                             if (res?.marketId?.includes("BM")) return <></>;
                             return (
                               <div className="sub_title" key={id}>
@@ -124,21 +130,6 @@ const LiveReport = () => {
                               </div>
                             );
                           })}
-                          {/* {results?.data?.length !== 0 &&
-                          results?.data != undefined ? (
-                            <div className="sub_title">
-                              {ShowMyBook !== 2 &&
-                                (id === 0
-                                  ? `${results?.data?.[0]?.pnl1}`
-                                  : id === 1
-                                  ? `${results?.data?.[0]?.pnl2}`
-                                  : `${results?.data?.[0]?.pnl3}`)}
-                            </div>
-                          ) : (
-                            <div className="sub_title">
-                              {ShowMyBook !== 2 && "0.0"}
-                            </div>
-                          )} */}
                         </Col>
                         <Col span={5}>
                           <Row>

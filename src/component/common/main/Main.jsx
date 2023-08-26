@@ -69,17 +69,17 @@ const Main = ({setOpenRules}) => {
               <Route path="/completed-fancy-slips/:id" element={<CompletedFancySlips/>} />
               <Route path="/rejectedBetsByEvent/:id" element={<RejectedBetsByEvent />} />
 
-              <Route path="/client/list-super" element={<ListSuper userTyep={0} Listname={"Super Agent"}/>} />
+              <Route path="/client/list-super" element={<ListSuper userTyep={0} Listname={"Super Master"}/>} />
               <Route path="/client/list-agent" element={<ListSuper userTyep={1} Listname={"Master"} /> } />
               <Route path="/client/list-dealer" element={<ListSuper userTyep={2} Listname={"Agent"}/> } />
               <Route path="/client/list-client" element={<ListSuper userTyep={3} Listname={"Client"}/> } />
 
-              <Route path="/client/list-super/:id" element={<ListSuper userTyep={0} Listname={"Super Agent"}/> } />
+              <Route path="/client/list-super/:id" element={<ListSuper userTyep={0} Listname={"Super Master"}/> } />
               <Route path="/client/list-agent/:id" element={<ListSuper userTyep={1} Listname={"Master"}/> } />
               <Route path="/client/list-dealer/:id" element={<ListSuper userTyep={2} Listname={"Agent"}/> } />
               <Route path="/client/list-clent/:id" element={<ListSuper userTyep={3} Listname={"Client"}/> } />
 
-              <Route path="/client/update-super/:id" element={<UpdateSuper updateName={"Super Agent"}/>} />
+              <Route path="/client/update-super/:id" element={<UpdateSuper updateName={"Super Master"}/>} />
               <Route path="/client/update-agent/:id" element={<UpdateSuper updateName={"Master"}/>} />
               <Route path="/client/update-client/:id" element={<UpdateSuper updateName={"Client"}/>} />
               <Route path="/client/update-dealer/:id" element={<UpdateSuper updateName={"Agent"}/>} />
@@ -87,7 +87,7 @@ const Main = ({setOpenRules}) => {
               <Route path="/account-operation" element={<AccountOperations />} />
               <Route path="/client/login-report" element={<LoginReport />} />
               <Route path="/client/login-report/:id" element={<LoginReport />} />
-              <Route path="/client/create-super" element={<CreateSuperAgent createName={"Super Agent"}/>}/>
+              <Route path="/client/create-super" element={<CreateSuperAgent createName={"Super Master"}/>}/>
               <Route path="/client/create-agent" element={<CreateSuperAgent createName={"Master"}/>}/>
               <Route path="/client/create-dealer" element={<CreateSuperAgent createName={"Agent"}/>} />
               <Route path="/client/create-client" element={<CreateSuperAgent createName={"Client"}/>} />

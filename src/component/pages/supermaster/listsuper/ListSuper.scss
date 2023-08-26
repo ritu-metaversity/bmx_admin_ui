@@ -256,3 +256,15 @@ ul.menu_data {
     font-weight: 400;
   }
 }
+
+.search_code{
+  .ant-space-item{
+    background-color: unset !important;
+  }
+}
+
+ul.ant-menu.ant-menu-root.ant-menu-vertical.ant-menu-light.menu_item{
+  position: absolute;
+  left: 33px;
+  top: 52px;
+}

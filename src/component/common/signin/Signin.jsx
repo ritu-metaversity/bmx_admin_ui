@@ -24,8 +24,8 @@ const Signin = () => {
 
   const onFinish = (values) => {
     const authData = {
-      userId: values?.username,
-      password: values?.password,
+      userId: (values?.username?.trim()),
+      password: (values?.password?.trim()),
       appUrl: window.location.hostname,
       // appUrl: "master.247idhub.com",
       // appUrl: "supermaster.247idhub.com", 

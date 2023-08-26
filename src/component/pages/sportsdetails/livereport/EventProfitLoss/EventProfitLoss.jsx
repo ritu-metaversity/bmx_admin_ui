@@ -137,6 +137,7 @@ const EventProfitLoss = () => {
                   <th>Result</th>
                   <th>Back/Lay</th>
                   <th>Value</th>
+                  <th>Volume</th>
                   <th>Stake</th>
                   <th>pnl</th>
                 </tr>
@@ -159,6 +160,7 @@ const EventProfitLoss = () => {
                       <td>{res?.result}</td>
                       <td>{res?.isback === true ? "Yes" : "No"}</td>
                       <td>{res?.value}</td>
+                      <td>{res?.volume}</td>
                       <td>{res?.stake}</td>
                       <td>{res?.pnl}</td>
                     </tr>
