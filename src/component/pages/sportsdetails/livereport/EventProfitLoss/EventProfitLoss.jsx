@@ -162,7 +162,7 @@ const EventProfitLoss = () => {
                       <td>{res?.value}</td>
                       <td>{res?.volume}</td>
                       <td>{res?.stake}</td>
-                      <td>{res?.pnl}</td>
+                      <td>{Math.abs(res?.pnl)}</td>
                     </tr>
                   );
                 })}

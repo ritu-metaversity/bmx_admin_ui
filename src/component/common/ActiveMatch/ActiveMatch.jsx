@@ -42,7 +42,7 @@ const ActiveMatch = () => {
                   <tr key={id} onClick={() => handleDetails(res?.matchId)} style={{cursor:"pointer"}}>
                     <td>{id + 1}</td>
                     <td>{res?.matchName}</td>
-                    <td>{moment(res?.openDate).format("DD-MM-YYYY, h:mm a")}</td>
+                    <td>{moment(res?.openDate).format("YYYY-MM-DD, h:mm a")}</td>
                     {/* <td>??</td> */}
                     <td>
                       {res?.inPlay && (

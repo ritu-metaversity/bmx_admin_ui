@@ -1,6 +1,7 @@
-import { Button, Form, Input, Space, Table, notification } from "antd";
-import React, { useEffect, useRef, useState } from "react";
-import { useMinusLimitMutation } from "../../../../store/service/userlistService";
+import { Button, Form, Input, notification } from "antd";
+import React, { useEffect, useState } from "react";
+import { useUpDateLimitesQuery, useWithdrawMutation } from "../../../../store/service/userlistService";
+import { useLocation, useParams } from "react-router-dom";
 
 const MinusLimit = ({ data }) => {
   const [addTotal, setAddTotal] = useState(0);
@@ -8,17 +9,22 @@ const MinusLimit = ({ data }) => {
   const [passWord, setPassword] = useState("");
   const [api, contextHolder] = notification.useNotification();
   const [form]= Form.useForm();
+  const {state} = useLocation();
+  const {id} = useParams();
 
   const handelAddLimit = (e) => {
     setChipsValue(e.target.value);
-    setAddTotal(Number(data?.childAmount) - Number(e.target.value));
+    setAddTotal(Number(updateLimite?.data?.childAmount) - Number(e.target.value));
   };
 
   const handelPassword = (e) => {
     setPassword(e.target.value);
   };
 
-  const [trigger, { data: addData, error,isLoading }] = useMinusLimitMutation();
+  const [trigger, { data: addData, error,isLoading }] = useWithdrawMutation();
+  const {data: updateLimite} = useUpDateLimitesQuery({
+    userId:id
+  })
 
   const openNotification = (mess) => {
     api.success({
@@ -75,9 +81,9 @@ const MinusLimit = ({ data }) => {
               </tr>
 
               <tr>
-                <td>{data?.childId}</td>
-                <td>{data?.childName}</td>
-                <td>{data?.childAmount}</td>
+              <td>{updateLimite?.data?.childId}</td>
+                <td>{updateLimite?.data?.childName}</td>
+                <td>{updateLimite?.data?.childAmount}</td>
                 <td>
                   <div>
                     <Form.Item

@@ -127,6 +127,7 @@ const AllStatement = ({clientId, dateData, gameType }) => {
             }}
             loading={isFetching || isLoading}
             columns={columns}
+            pagination={{defaultPageSize:50, pageSizeOptions:[50, 100, 150, 200, 250]}}
             dataSource={
               data?.data?.dataList?.map((res) => ({
                 ...res,

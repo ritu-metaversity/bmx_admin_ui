@@ -107,6 +107,7 @@ const MyLedger = () => {
             bordered
             columns={columns}
             loading={isFetching||isLoading}
+            pagination={{ defaultPageSize: 50, pageSizeOptions:[50, 100, 150, 200, 250]}}
             dataSource={data?.data?.list}/>
         </div> 
       </Card>

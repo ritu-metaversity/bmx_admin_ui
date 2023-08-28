@@ -4,46 +4,47 @@ import "./ModalsData.scss";
 const ModalsData = ({ partnershipDetails, loading }) => {
   const uType = localStorage.getItem("userType");
 
-  let subAdminTotal;
-  let subAdminCommTotal;
-  if (uType == 5) {
-    subAdminTotal =
-      100 -
-      (Number(partnershipDetails?.subadminpartnership) +
-        Number(partnershipDetails?.supermastepartnership) +
-        Number(partnershipDetails?.masterpartership) +
-        Number(partnershipDetails?.delearpartership));
+  // let subAdminTotal;
+  // let subAdminCommTotal;
+  // if (uType == 5) {
+  //   subAdminTotal =
+  //     100 -
+  //     (Number(partnershipDetails?.subadminpartnership) +
+  //       Number(partnershipDetails?.supermastepartnership) +
+  //       Number(partnershipDetails?.masterpartership) +
+  //       Number(partnershipDetails?.delearpartership));
 
-    subAdminCommTotal =
-      100 -
-      (Number(partnershipDetails?.subadminpartnershipc) +
-        Number(partnershipDetails?.supermastepartnershipc) +
-        Number(partnershipDetails?.masterpartershipc) +
-        Number(partnershipDetails?.delearpartershipc));
-  } else if (uType == 0) {
-    subAdminTotal =
-      100 -
-      (Number(partnershipDetails?.supermastepartnership) +
-        Number(partnershipDetails?.masterpartership) +
-        Number(partnershipDetails?.delearpartership));
-    subAdminCommTotal =
-      100 -
-      (Number(partnershipDetails?.supermastepartnershipc) +
-        Number(partnershipDetails?.masterpartershipc) +
-        Number(partnershipDetails?.delearpartershipc));
-  } else if (uType == 1) {
-    subAdminTotal =
-      100 -
-      (Number(partnershipDetails?.masterpartership) +
-        Number(partnershipDetails?.delearpartership));
-    subAdminCommTotal =
-      100 -
-      (Number(partnershipDetails?.masterpartershipc) +
-        Number(partnershipDetails?.delearpartershipc));
-  } else if (uType == 2) {
-    subAdminTotal = 100 - Number(partnershipDetails?.delearpartership);
-    subAdminCommTotal = 100 - Number(partnershipDetails?.delearpartershipc);
-  }
+  //   subAdminCommTotal =
+  //     100 -
+  //     (Number(partnershipDetails?.subadminpartnershipc) +
+  //       Number(partnershipDetails?.supermastepartnershipc) +
+  //       Number(partnershipDetails?.masterpartershipc) +
+  //       Number(partnershipDetails?.delearpartershipc));
+  // } else if (uType == 0) {
+  //   subAdminTotal =
+  //     100 -
+  //     (Number(partnershipDetails?.supermastepartnership) +
+  //       Number(partnershipDetails?.masterpartership) +
+  //       Number(partnershipDetails?.delearpartership));
+  //   subAdminCommTotal =
+  //     100 -
+  //     (Number(partnershipDetails?.supermastepartnershipc) +
+  //       Number(partnershipDetails?.masterpartershipc) +
+  //       Number(partnershipDetails?.delearpartershipc));
+  // } else if (uType == 1) {
+  //   subAdminTotal =
+  //     100 -
+  //     (Number(partnershipDetails?.masterpartership) +
+  //       Number(partnershipDetails?.delearpartership));
+  //   subAdminCommTotal =
+  //     100 -
+  //     (Number(partnershipDetails?.masterpartershipc) +
+  //       Number(partnershipDetails?.delearpartershipc));
+  // } else if (uType == 2) {
+  //   subAdminTotal = 100 - Number(partnershipDetails?.delearpartership);
+  //   subAdminCommTotal = 100 - Number(partnershipDetails?.delearpartershipc);
+  // }
+
 
   return (
     <>
@@ -70,7 +71,7 @@ const ModalsData = ({ partnershipDetails, loading }) => {
                   <th>Agent</th>
                 </tr>
                 <tr>
-                  <td>{subAdminTotal}</td>
+                  <td>{partnershipDetails?.uplinepartership}</td>
                   <td className={uType != 5 && "d_none"}>
                     {partnershipDetails?.subadminpartnership}
                   </td>
@@ -133,7 +134,7 @@ const ModalsData = ({ partnershipDetails, loading }) => {
             </div>
           </div>
          
-          <div className="sub_partnership">
+          {/* <div className="sub_partnership">
             <div className="partnership_name">
               <p>Casino Share</p>
             </div>
@@ -147,7 +148,7 @@ const ModalsData = ({ partnershipDetails, loading }) => {
                   <th>Agent</th>
                 </tr>
                 <tr>
-                  <td>{subAdminCommTotal}</td>
+                  <td>{partnershipDetails?.uplinepartershipc}</td>
                   <td className={uType != 5 && "d_none"}>
                     {partnershipDetails?.subadminpartnershipc}
                   </td>
@@ -157,8 +158,8 @@ const ModalsData = ({ partnershipDetails, loading }) => {
                 </tr>
               </table>
             </div>
-          </div>
-          <div className="sub_partnership">
+          </div> */}
+          {/* <div className="sub_partnership">
             <div className="partnership_name">
               <p>Casino Commission</p>
             </div>
@@ -182,7 +183,7 @@ const ModalsData = ({ partnershipDetails, loading }) => {
                 </tr>
               </table>
             </div>
-          </div>
+          </div> */}
         </div>
         <br />
       </div>

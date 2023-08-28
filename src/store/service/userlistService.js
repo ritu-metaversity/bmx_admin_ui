@@ -123,6 +123,13 @@ export const userlistApi = createApi({
         body,
       }),
     }),
+    upDateLimites: build.query({
+      query: (body) => ({
+        url: "/dwc/creditdata",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -142,5 +149,7 @@ export const {
   useAccountOprationQuery,
   useUpDateStatusMutation,
   useLazyIsUserIdQuery,
-  useBlockBettingMutation
+  useBlockBettingMutation,
+  useUpDateLimitesQuery
+
 } = userlistApi;

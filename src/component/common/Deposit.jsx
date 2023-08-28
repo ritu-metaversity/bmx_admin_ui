@@ -1,32 +1,17 @@
 import React, { useEffect } from "react";
 import { Button, Form, Input, InputNumber, Spin, notification } from "antd";
 import './Deposit.scss'
-import { useDepositMutation } from "../../store/service/userlistService";
+import { useAddLimitMutation, useDepositAndWithdrawQuery } from "../../store/service/userlistService";
+import { openNotification, openNotificationError } from "../../App";
 
-const Deposit = ({balance, userIdData, handleClose}) => {
+const Deposit = ({data: datadeposit, userIdData, handleClose}) => {
   const [form]= Form.useForm();
-  const [api, contextHolder] = notification.useNotification();
 
 
-    const openNotification = (mess) => {
-        api.success({
-          message: mess,
-          description: "Success",
-          closeIcon: false,
-          placement: "top",
-        });
-      };
-    
-      const openNotificationError = (mess) => {
-        api.error({
-          message: mess,
-          closeIcon: false,
-          placement: "top",
-        });
-      };
-
-
-    const [trigger , {data, error, isLoading}] = useDepositMutation()
+    const [trigger , {data, error, isLoading}] = useAddLimitMutation()
+    const {data: depositeWithdraw} = useDepositAndWithdrawQuery({
+      userId:datadeposit
+    });
 
   const onFinish = (values) => {
     const depositData = {
@@ -47,16 +32,15 @@ useEffect(()=>{
         handleClose()
     }else if(data?.status === false || error?.data?.message){
         openNotificationError(data?.message || error?.data?.message);
+        handleClose()
     }
 }, [data?.data, error])
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+
 
   return (
     <>
-    {contextHolder}
+    {/* {contextHolder} */}
     <div>
     {isLoading && (
           <>
@@ -65,13 +49,12 @@ useEffect(()=>{
         )}
     
       <div>
-        <p>Curr Coins : {balance}</p>
+        <p>Curr Coins : {depositeWithdraw?.data?.childUplineAmount}</p>
       </div>
       <div className="form_modals">
         <Form
           onFinish={onFinish}
           form={form}
-          onFinishFailed={onFinishFailed}
           autoComplete="off">
           <Form.Item
             required
@@ -100,7 +83,7 @@ useEffect(()=>{
                 message: "Please enter password",
               },
             ]}>
-            <Input placeholder="Enter Password" type="password" />
+            <Input autoComplete="off" placeholder="Enter Password" type="password" />
           </Form.Item>
 
             <div className="deposit_btn">

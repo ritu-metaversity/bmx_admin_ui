@@ -27,11 +27,6 @@ const Sidebar = (props) => {
     setOpen(false);
   };
 
-  // const handleDashBoard = (e)=>{
-  //   e.preventDefault()
-  //   console.log("helooo")
-  // }
-
   const nav = useNavigate();
 
   const userType = localStorage.getItem("userType");
@@ -44,7 +39,6 @@ const Sidebar = (props) => {
       setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
     }
   };
-  // console.log(openKeys, "fafasda")
 
   const uType = localStorage.getItem("userType")
 

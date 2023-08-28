@@ -20,12 +20,8 @@ import { useDeleteByUserIDMutation } from "../../../store/service/supermasteAcco
 const dateFormat = "YYYY/MM/DD";
 
 const TransactionTable = ({ data, clientId, balanceData }) => {
-  const [debitCal, setDebitCal] = useState(0);
-  const [creditCal, setCreditCal] = useState(0);
   const [deletedId, setDeletedId] = useState("");
   const [api, contextHolder] = notification.useNotification();
-
-  console.log(data, "dsdsfcds")
 
   const nav = useNavigate();
 
@@ -85,8 +81,6 @@ const TransactionTable = ({ data, clientId, balanceData }) => {
     }
 }, [deletedData?.data, error])
 
-
-console.log(data, "asdas")
 
   const items = [
     {
@@ -169,10 +163,10 @@ console.log(data, "asdas")
                     )}
                   </td>
                   <td>
-                    {moment(res?.date?.$date).format("DD-MM-YYYY, h:mm a")}
+                    {moment(res?.date?.$date).format("YYYY-MM-DD, h:mm a")}
                   </td>
                   <td>
-                    {moment(res?.date?.$date).format("DD-MM-YYYY, h:mm a")}
+                    {moment(res?.date?.$date).format("YYYY-MM-DD, h:mm a")}
                   </td>
                   <td>{res?.collectionName}</td>
                   <td className="text-right">{res?.debit}</td>

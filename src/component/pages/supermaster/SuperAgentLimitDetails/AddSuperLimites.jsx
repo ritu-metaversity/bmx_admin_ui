@@ -1,7 +1,8 @@
 import { Button, Form, Input, Space, Table, notification } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 
-import { useAddLimitMutation } from "../../../../store/service/userlistService";
+import {useDepositMutation, useUpDateLimitesQuery } from "../../../../store/service/userlistService";
+import { useLocation, useParams } from "react-router-dom";
 
 const AddSuperLimites = ({ data }) => {
   const [addTotal, setAddTotal] = useState(0);
@@ -9,10 +10,15 @@ const AddSuperLimites = ({ data }) => {
   const [passWord, setPassword] = useState("");
   const [api, contextHolder] = notification.useNotification();
   const [form]= Form.useForm();
+  const {state} = useLocation();
+
+  const {id} = useParams()
+
+  console.log(id, "dsadsa")
 
   const handelAddLimit = (e) => {
     setChipsValue(e.target.value);
-    setAddTotal(Number(e.target.value) + Number(data?.childAmount));
+    setAddTotal(Number(e.target.value) + Number(updateLimite?.data?.childAmount));
   };
 
   const handelPassword = (e) => {
@@ -36,14 +42,18 @@ const AddSuperLimites = ({ data }) => {
     });
   };
 
-  const [trigger, { data: addData, error, isLoading }] = useAddLimitMutation();
+
+  const [trigger, { data: addData, error, isLoading }] = useDepositMutation();
+  const {data: updateLimite} = useUpDateLimitesQuery({
+    userId:id
+  })
 
   const onFinish = (values) => {
     const addList = {
-      amount: Number(values?.amount),
-      remark: "deposit",
-      lupassword: values?.pass,
-      userId: data?.childId,
+        amount:Number(values?.amount),
+        remark:"Creadit deposit",
+        lupassword:values?.pass,
+        userId:data?.childId
     };
     trigger(addList);
   };
@@ -79,9 +89,9 @@ const AddSuperLimites = ({ data }) => {
               </tr>
 
               <tr>
-                <td>{data?.childId}</td>
-                <td>{data?.childName}</td>
-                <td>{data?.childAmount}</td>
+                <td>{updateLimite?.data?.childId}</td>
+                <td>{updateLimite?.data?.childName}</td>
+                <td>{updateLimite?.data?.childAmount}</td>
 
                 <td>
                   <div>

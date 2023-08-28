@@ -392,7 +392,7 @@ const CreateSuperAgent = ({ createName }) => {
                           ) {
                             return Promise.reject(
                               new Error(
-                                "Minimun 6 charecter, must contain letters and numbers"
+                                "Minimun 6 character, must contain letters and numbers"
                               )
                             );
                           }

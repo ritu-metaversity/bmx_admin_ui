@@ -10,11 +10,7 @@ import { useNavigate } from "react-router-dom";
 import './SelectClient.scss'
 import moment from "moment";
 
-// const handleChange = (value) => {
-//   console.log(`selected ${value}`);
-// };
-
-const { RangePicker } = DatePicker;
+// const { RangePicker } = DatePicker;
 
 const data = [];
 const SelectClient = () => {
@@ -67,7 +63,7 @@ const SelectClient = () => {
                 {data?.map((res) => {
                   return (
                     <tr key={res?.key}>
-                      <td>{moment(res?.date).format("DD-MM-YYYY, h:mm a")} </td>
+                      <td>{moment(res?.date).format("YYYY-MM-DD, h:mm a")} </td>
                       <td>{res?.operation}</td>
                       <td>{res?.description}</td>
                     </tr>

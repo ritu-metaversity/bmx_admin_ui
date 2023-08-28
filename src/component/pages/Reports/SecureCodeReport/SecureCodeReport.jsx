@@ -83,7 +83,7 @@ const SecureCodeReport = () => {
                 {data?.map((res) => {
                   return (
                     <tr key={res?.key}>
-                      <td>{moment(res?.date).format("DD-MM-YYYY, h:mm a")}</td>
+                      <td>{moment(res?.date).format("YYYY-MM-DD, h:mm A")}</td>
                       <td>{res?.operation}</td>
                       <td>{res?.description}</td>
                     </tr>

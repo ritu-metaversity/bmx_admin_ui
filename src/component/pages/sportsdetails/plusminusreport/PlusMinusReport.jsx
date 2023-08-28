@@ -55,8 +55,6 @@ const PlusMinusReport = () => {
     { refetchOnMountOrArgChange: true }
   );
 
-  console.log(data?.data?.users?.parentKey, "dfsfsdf")
-
 const [ParentKey, setParentKey] = useState("")
   useEffect(()=>{
     setParentKey(data?.data?.users?.parentKey)
@@ -67,7 +65,6 @@ const [ParentKey, setParentKey] = useState("")
     nav("/Events/sports-details");
   };
 
-  console.log(first?.length, "dfsdfsd");
 
   const handleShowBtn = () => {
     if (showOdds === false) {
@@ -77,13 +74,6 @@ const [ParentKey, setParentKey] = useState("")
         placement: "top",
       });
     }
-    //  else if (first?.length === 0) {
-    //   api.error({
-    //     message: "Please Select at least one Session",
-    //     closeIcon: false,
-    //     placement: "top",
-    //   });
-    // } 
     else if (secondUserid?.length === 0 && thirdUserid?.length === 0) {
       api.error({
         message: "Please Select at least one client.",

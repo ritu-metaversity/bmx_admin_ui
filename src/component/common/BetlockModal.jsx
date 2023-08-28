@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Form,
@@ -10,17 +10,20 @@ import {
 } from "antd";
 import "./Deposit.scss";
 import { useBlockBettingMutation } from "../../store/service/userlistService";
+import { openNotification, openNotificationError } from "../../App";
 
 const BetlockModal = ({ betStatus, setBetStatus, userIdData, handleClose }) => {
-  const [api, contextHolder] = notification.useNotification();
+  const [accountBetStatus, setAccountBetStatus] = useState(false)
   const [form] = Form.useForm();
 
   const [trigger, { data, error, isLoading }] = useBlockBettingMutation();
 
   const onFinish = (values) => {
+    console.log(values?.type, "fdfsdf")
+    setAccountBetStatus(values?.type == "acc"  ? true : false)
     const bettingPayload = {
       userId: userIdData,
-      betLock: values?.type == "brt"  ? true : false,
+      betLock: values?.type == "bet" && betStatus ? true : false,
       accountLock: values?.type == "acc"  ? true : false,
       isactive: true,
       liveCasinoLock: false,
@@ -30,22 +33,6 @@ const BetlockModal = ({ betStatus, setBetStatus, userIdData, handleClose }) => {
     trigger(bettingPayload);
   };
 
-  const openNotification = (mess) => {
-    api.success({
-      message: mess,
-      description: "Success",
-      closeIcon: false,
-      placement: "top",
-    });
-  };
-
-  const openNotificationError = (mess) => {
-    api.error({
-      message: mess,
-      closeIcon: false,
-      placement: "top",
-    });
-  };
 
   useEffect(() => {
     if (data?.status === true) {
@@ -61,7 +48,6 @@ const BetlockModal = ({ betStatus, setBetStatus, userIdData, handleClose }) => {
 
   return (
     <>
-      {contextHolder}
       <div className="ant-spin-nested-loading">
         {isLoading && (
           <>
@@ -85,11 +71,11 @@ const BetlockModal = ({ betStatus, setBetStatus, userIdData, handleClose }) => {
                 options={[
                   {
                     value: "bet",
-                    label: "Block Betting",
+                    label: <div>{betStatus ? "Block Betting":"UnBlock Betting"}</div>
                   },
                   {
                     value: "acc",
-                    label: "Account Block",
+                    label: <div>{accountBetStatus ? "Account UnBlock":"Account Block"}</div>
                   },
                 ]}
               />
@@ -115,7 +101,7 @@ const BetlockModal = ({ betStatus, setBetStatus, userIdData, handleClose }) => {
               </Form.Item>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
-                  {betStatus ? "Block Betting" : "UnBlock Betting"}
+                  Submit
                 </Button>
               </Form.Item>
             </div>

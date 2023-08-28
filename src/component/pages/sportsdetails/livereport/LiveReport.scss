@@ -343,17 +343,17 @@
         width: 36%;
       }
     }
-    .ant-col.ant-col-21.gutter-row{
+    .ant-col.ant-col-21.gutter-row {
       width: 100%;
       min-width: 100%;
       max-width: 100%;
     }
-    .ant-col.ant-col-19.back-lay-bg{
+    .ant-col.ant-col-19.back-lay-bg {
       width: 64%;
       min-width: 64%;
       max-width: 64%;
     }
-    .ant-col.ant-col-5{
+    .ant-col.ant-col-5 {
       width: 36%;
       min-width: 36%;
       max-width: 36%;
@@ -399,63 +399,67 @@
   position: static;
   display: inline-block !important;
   opacity: 1 !important;
-  .ant-spin-dot{
-    i{
-    width: 14px;
-    height: 14px;
+  .ant-spin-dot {
+    i {
+      width: 14px;
+      height: 14px;
+    }
   }
-
-}
-.ant-spin-dot-item{
-  background-color: #5d7074;
+  .ant-spin-dot-item {
+    background-color: #5d7074;
     border-radius: 100%;
-  &:first-child{
-    top: 0;
-    left: 0;
+    &:first-child {
+      top: 0;
+      left: 0;
+    }
   }
 }
-}
 
-.run_amount_modals{
+.run_amount_modals {
   .ant-modal-body {
     height: 75vh;
     overflow: scroll;
+  }
 }
-}
-.bookData{
+.bookData {
   margin-left: -24px;
-  button{
+  button {
     margin: 2px;
     padding: 4px 8px;
   }
 }
 
 @media screen and (max-width: 800px) {
-  .bookData{
+  .bookData {
     width: 30% !important;
     min-width: 30% !important;
     max-width: 55% !important;
-    button{
+    button {
       margin: 2px;
       padding: 4px 8px;
     }
   }
   .lagai1 {
     height: 64px;
+  }
+  .ant-col.ant-col-21 {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+  }
+  .b-bottom {
+    width: 36%;
+    min-width: 36%;
+    max-width: 36%;
+  }
+  .ant-col.back-lay-bg {
+    width: 64%;
+    min-width: 64%;
+    max-width: 64%;
+  }
 }
-.ant-col.ant-col-21{
-  width: 100% !important;
-  min-width: 100% !important;
-  max-width: 100% !important;
-}
-.b-bottom {
-width: 36%;
-min-width: 36%;
-max-width: 36%;
-}
-.ant-col.back-lay-bg {
-width: 64%;
-min-width: 64%;
-max-width: 64%;
-}
+
+.activeMyBook {
+  background: #64b7f7 !important;
+  color: #fff !important;
 }

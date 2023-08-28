@@ -64,6 +64,13 @@ const CompeleteFancy = () => {
               ) : (
                 ""
               )}
+              {/* <tr>
+                <td>Total</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr> */}
               {completeFancy?.map((res) => {
                 return (
                   <tr key={res?.key}>

@@ -66,6 +66,7 @@ const LoginReport = () => {
                   bordered
                   columns={columns}
                   dataSource={data?.data || []}
+                  pagination={{defaultPageSize: 50, pageSizeOptions:[50, 100, 150, 200, 250] }}
                   loading={isLoading||isFetching}></Table>
               </div>
           </div>

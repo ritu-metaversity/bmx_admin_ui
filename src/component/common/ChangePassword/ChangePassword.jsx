@@ -33,15 +33,12 @@ const ChangePassword = ({ setIsModalOpen }) => {
 
   const passw = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,15}$/;
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+ 
   return (
     <>
       <Form
         name="basic"
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
         autoComplete="off"
         initialValues={{
           remember: true,
@@ -66,7 +63,7 @@ const ChangePassword = ({ setIsModalOpen }) => {
             },
             {
               pattern: passw,
-              message: "Minimun 6 charecter, must contain letters and numbers",
+              message: "Minimun 6 character, must contain letters and numbers",
             },
           ]}>
           <Input.Password placeholder="Enter New Password" />

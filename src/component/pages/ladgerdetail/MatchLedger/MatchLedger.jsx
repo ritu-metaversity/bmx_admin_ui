@@ -76,7 +76,7 @@ const MatchLedger = () => {
   return (
     <Card
       className="sport_detail my_ledger main_match_ledger"
-      title="Match Ledger"
+      title="Proft/Loss"
       extra={<button onClick={() => nav(-1)}>Back</button>}>
       <Row className="main_super_super_ledger">
         <Col lg={8} xs={24} className="match_ladger">
@@ -99,7 +99,7 @@ const MatchLedger = () => {
               Total :{" "}
               <span
                 className={
-                  data?.data?.total > 0 ? "text_success" : "text_danges"
+                  data?.data?.total > 0 ? "text_success" : "text_danger"
                 }>
                 {data?.data?.total?.toFixed(2)}
               </span>
@@ -125,7 +125,7 @@ const MatchLedger = () => {
           {data?.data?.list?.map((res, id) => {
             return (
               <tr key={id} style={{ cursor: "pointer" }}>
-                <td>{moment(res?.date).format("DD-MM-YYYY")}</td>
+                <td>{moment(res?.date).format("YYYY-MM-DD")}</td>
                 <td>{res?.matchName}</td>
                 <td className="text_success">
                   {res?.netPnl > 0 ? res?.netPnl : 0}
@@ -145,7 +145,9 @@ const MatchLedger = () => {
             <Pagination
               className="pagination_main ledger_pagination"
               onShowSizeChange={(c, s) => setPaginationTotal(s)}
-              total={totalPage}
+              total={totalPage && totalPage * paginationTotal}
+              defaultPageSize={50}
+              pageSizeOptions={[50, 100, 150, 200, 250]}
               onChange={(e) => setIndexData(e - 1)}
             />
           </>

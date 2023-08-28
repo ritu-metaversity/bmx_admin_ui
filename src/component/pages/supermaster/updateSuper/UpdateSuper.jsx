@@ -93,14 +93,9 @@ const UpdateSuper = ({ updateName }) => {
     setCommType(Number(resuilt?.data?.data?.matchComm) == 0 || Number(resuilt?.data?.data?.sessionComm) == 0? "no-comm": "bbb");
   }, [resuilt?.data?.data]);
 
-
-  console.log(commType, "dfsdzzf")
-
   const onCommissionType = (e) => {
     setCommType(e);
   };
-
-  // console.log(commType, "Fsfdfdsfs")
 
 
   return (
@@ -273,7 +268,7 @@ const UpdateSuper = ({ updateName }) => {
                       {
                         pattern: passw,
                         message:
-                          "Minimun 6 charecter, must contain letters and numbers!",
+                          "Minimun 6 character, must contain letters and numbers!",
                       },
                     ]}>
                     <Input type="password" placeholder="Password" />

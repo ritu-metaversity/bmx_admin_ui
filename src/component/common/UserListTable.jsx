@@ -13,8 +13,7 @@ import {
   Spin,
   notification,
 } from "antd";
-// import menu from "../pages/supermaster/listsuper/SearchModals/SearchModals";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   SearchOutlined,
   CaretDownOutlined,
@@ -28,9 +27,11 @@ import Withdraw from "./Withdraw";
 import BetlockModal from "./BetlockModal";
 import { useLazySuperuserListQuery } from "../../store/service/supermasteAccountStatementServices";
 import {
+  useDepositAndWithdrawQuery,
   usePartnershipMutation,
   useUpDateStatusMutation,
 } from "../../store/service/userlistService";
+import { openNotification } from "../../App";
 
 const routeFromUSerType = {
   0: "/client/list-agent/",
@@ -46,17 +47,15 @@ const UserListTable = ({ userType, Listname }) => {
   const [betLockModals, setBetLockModals] = useState(false);
   const [balance, setBalance] = useState();
   const [parentUserId, setParentUserId] = useState();
-  const [userList, setUserList] = useState([]);
   const [data, setData] = useState();
   const [paginationTotal, setPaginationTotal] = useState(50);
-  const [totalPage, setTotalPage] = useState();
   const [indexData, setIndexData] = useState(0);
   const [partnershipDetails, setPartnershipDetails] = useState({});
   const [userIds, setUserIds] = useState("");
   const [parentUserids, setParentUserIds] = useState("");
   const [betStatus, setBetStatus] = useState(true);
   const [droupSearch, setDroupSearch] = useState(false);
-  const [api, contextHolder] = notification.useNotification();
+  const [form] = Form.useForm();
 
   const [partnerShipData, { data: partnerShipDetail, isLoading: loading }] =
     usePartnershipMutation();
@@ -93,38 +92,25 @@ const UserListTable = ({ userType, Listname }) => {
 
   const { id } = useParams();
   //API CALL
-  const [getData, { data: results, isLoading, isFetching }] =
-    useLazySuperuserListQuery();
+  const [getData, { data: results, isLoading, isFetching, isError }] = useLazySuperuserListQuery();
   const [activeData, { data: Activestatus }] = useUpDateStatusMutation();
-
-  useEffect(() => {
-    getData({
-      userType: userType,
-      parentUserId: id || null,
-      noOfRecords: paginationTotal,
-      index: indexData,
-    });
-  }, [id, userType]);
+ 
+  
 
   const handleActive = () => {
     activeData({
       userId: data,
     });
   };
-
   useEffect(() => {
     getData({
       userType: userType,
       parentUserId: id || null,
       noOfRecords: paginationTotal,
       index: indexData,
+      userId: "",
     });
-  }, [Activestatus?.status === true, paginationTotal, indexData]);
-
-  useEffect(() => {
-    setUserList(results?.data?.users);
-    setTotalPage(results?.data?.totalPages);
-  }, [results?.data, paginationTotal, indexData]);
+  }, [id, userType, paginationTotal, indexData, Activestatus?.status === true]);
 
   const [userIdData, setUserIdData] = useState("");
 
@@ -135,9 +121,14 @@ const UserListTable = ({ userType, Listname }) => {
     setParentUserIds(parentUserID);
   };
 
-  const handleEditData = (val, active) => {
+  const [userName, setUserName] = useState("");
+  const [userBalance, setUserBalance] = useState(0);
+
+  const handleEditData = (val, active, userName, balanc) => {
     setData(val);
     setActiveStatus(active);
+    setUserBalance(balanc);
+    setUserName(userName);
   };
 
   const userId = localStorage.getItem("userId");
@@ -146,8 +137,15 @@ const UserListTable = ({ userType, Listname }) => {
     setBetLockModals(true);
   };
 
+  const nav = useNavigate();
 
-  console.log(totalPage, "dsdsad")
+  const handleUpdateLimites = (data) => {
+    const infoData = {
+      name: userName,
+      uBalance: userBalance,
+    };
+    nav(`/client/limitplusminus-super/${data}`, { state: infoData });
+  };
 
   const items = [
     {
@@ -181,11 +179,7 @@ const UserListTable = ({ userType, Listname }) => {
       key: "2",
     },
     {
-      label: (
-        <div onClick={handleBlockBettting}>
-          {betStatus ? "Block Betting" : "UnBlock Betting"}
-        </div>
-      ),
+      label: <div onClick={handleBlockBettting}>Block Betting</div>,
       key: "3",
     },
     {
@@ -211,11 +205,11 @@ const UserListTable = ({ userType, Listname }) => {
     },
     {
       label: (
-        <Link
+        <div
           className={parentUserids == userId ? "" : "d_none"}
-          to={`/client/limitplusminus-super/${data}`}>
+          onClick={() => handleUpdateLimites(data)}>
           Update Limit
-        </Link>
+        </div>
       ),
       key: "6",
     },
@@ -247,21 +241,13 @@ const UserListTable = ({ userType, Listname }) => {
     },
   ];
 
-  const openNotification = (mess) => {
-    api.success({
-      message: mess,
-      closeIcon: false,
-      placement: "top",
-    });
-  };
+
 
   useEffect(() => {
     if (Activestatus?.status === true) {
       openNotification(Activestatus?.message);
     }
   }, [Activestatus?.status]);
-
-  console.log(betStatus, "dsadasdasdas");
 
   const onFinish = (values) => {
     getData({
@@ -271,15 +257,20 @@ const UserListTable = ({ userType, Listname }) => {
       index: indexData,
       userId: values?.username,
     });
-    setUserList(results?.data?.users);
-    setTotalPage(results?.data?.totalPages);
     if (results?.status === true) {
+      form.resetFields();
       setDroupSearch(false);
     }
   };
+
+  const uType = localStorage.getItem("userType")
+
   return (
     <div>
-      {contextHolder}
+      {droupSearch && (
+        <div className="over_view" onClick={() => setDroupSearch(false)}></div>
+      )}
+
       <div className="table_section sport_detail m-0 ant-spin-nested-loading">
         {
           <div className="table_section statement_tabs_data ant-spin-nested-loading">
@@ -290,52 +281,55 @@ const UserListTable = ({ userType, Listname }) => {
                 <th rowSpan={2}>
                   <div className="main_search_droup">
                     <p>Code</p>
-                    {
-                      droupSearch &&   <Menu className="menu_item">
-                      <Form
-                        name="code"
-                        initialValues={{
-                          remember: true,
-                        }}
-                        onFinish={onFinish}
-                        autoComplete="off">
-                        <Form.Item name="username">
-                          <Input />
-                        </Form.Item>
+                    {droupSearch && (
+                      <Menu className="menu_item">
+                        <Form
+                          name="code"
+                          form={form}
+                          initialValues={{
+                            remember: true,
+                          }}
+                          onFinish={onFinish}
+                          autoComplete="off">
+                          <Form.Item name="username">
+                            <Input />
+                          </Form.Item>
 
-                        <div className="agent_search_deatil">
-                          <Form.Item>
-                            <Button
-                              type="primary"
-                              htmlType="submit"
-                              style={{
-                                width: "86px",
-                                marginRight: "8px",
-                              }}>
-                              <SearchOutlined /> Search
-                            </Button>
-                          </Form.Item>
-                          <Form.Item>
-                            <Button
-                              type="primary "
-                              className="ant_reset_btn"
-                              style={{ width: "86px" }}>
-                              Reset
-                            </Button>
-                          </Form.Item>
-                        </div>
-                      </Form>
-                    </Menu>
-                    }
+                          <div className="agent_search_deatil">
+                            <Form.Item>
+                              <Button
+                                type="primary"
+                                htmlType="submit"
+                                style={{
+                                  width: "86px",
+                                  marginRight: "8px",
+                                }}>
+                                <SearchOutlined /> Search
+                              </Button>
+                            </Form.Item>
+                            <Form.Item>
+                              <Button
+                                onClick={() => form.resetFields()}
+                                className="ant_reset_btn"
+                                style={{ width: "86px" }}>
+                                Reset
+                              </Button>
+                            </Form.Item>
+                          </div>
+                        </Form>
+                      </Menu>
+                    )}
                     <p className="search_code">
-                        <Space>
-                          <SearchOutlined  onClick={()=>setDroupSearch(!droupSearch)}/>
-                        </Space>
+                      <Space>
+                        <SearchOutlined
+                          onClick={() => setDroupSearch(!droupSearch)}
+                        />
+                      </Space>
                     </p>
                   </div>
                 </th>
                 <th rowSpan={2}>Name</th>
-                <th rowSpan={2}>Master</th>
+                <th rowSpan={2}>{uType == 5? "Sub Admin": uType == 0?"Super Master":uType == 1?"Master": uType == 2?"Agent":""}</th>
                 <th rowSpan={2}>Contact</th>
                 <th rowSpan={2}>D.O.J </th>
                 <th rowSpan={2}>Share%</th>
@@ -358,7 +352,7 @@ const UserListTable = ({ userType, Listname }) => {
               ) : (
                 ""
               )}
-              {userList?.map((res, id) => {
+              {!isError && results?.data?.users?.map((res, id) => {
                 return (
                   <tr key={id}>
                     <td>
@@ -385,7 +379,12 @@ const UserListTable = ({ userType, Listname }) => {
                           className="droup_link"
                           style={{ cursor: "pointer" }}
                           onClick={() =>
-                            handleEditData(res?.userid, res?.active)
+                            handleEditData(
+                              res?.userid,
+                              res?.active,
+                              res?.username,
+                              res?.availablebalance
+                            )
                           }>
                           <Space>
                             <CaretDownOutlined />
@@ -398,7 +397,7 @@ const UserListTable = ({ userType, Listname }) => {
                     <td>{res?.parent}</td>
                     <td>{res?.mobile}</td>
                     <td>
-                      {moment(res?.dateOfJoining).format("DD-MM-YYYY, h:mm a")}
+                      {moment(res?.dateOfJoining).format("YYYY-MM-DD, h:mm A")}
                     </td>
                     <td>{res?.partnerShip}</td>
                     <td>{res?.password}</td>
@@ -416,7 +415,7 @@ const UserListTable = ({ userType, Listname }) => {
               })}
             </table>
 
-            {userList === undefined ? (
+            {results?.data?.users === undefined || isError ? (
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             ) : (
               <>
@@ -425,7 +424,9 @@ const UserListTable = ({ userType, Listname }) => {
                   <Pagination
                     className="pagination_main ledger_pagination"
                     onShowSizeChange={(c, s) => setPaginationTotal(s)}
-                    total={totalPage }
+                    total={results?.data?.totalPages && results?.data?.totalPages * paginationTotal}
+                    defaultPageSize={50}
+                    pageSizeOptions={[50, 100, 150, 200, 250]}
                     onChange={(e) => setIndexData(e - 1)}
                   />
                 </div>
@@ -460,7 +461,7 @@ const UserListTable = ({ userType, Listname }) => {
         <Deposit
           handleClose={() => SetisDepositeModalOpen(false)}
           userIdData={userIdData}
-          balance={balance}
+          data={data}
         />
       </Modal>
 
@@ -481,7 +482,7 @@ const UserListTable = ({ userType, Listname }) => {
         <Withdraw
           userIdData={userIdData}
           handleClose={() => SetWithdrawnModal(false)}
-          balance={balance}
+          data={data}
         />
       </Modal>
 
@@ -490,7 +491,7 @@ const UserListTable = ({ userType, Listname }) => {
         destroyOnClose
         title={
           <h1>
-            <span>Current Password</span>
+            <span>Betting Lock</span>
           </h1>
         }
         open={betLockModals}

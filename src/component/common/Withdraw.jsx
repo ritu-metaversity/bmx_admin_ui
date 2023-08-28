@@ -1,17 +1,20 @@
 import React, { useEffect } from "react";
-import { Button, Form, Input, InputNumber, Spin, notification } from "antd";
+import { Button, Form, Input, InputNumber, Spin} from "antd";
 import "./Deposit.scss";
 import {
-  useDepositMutation,
-  useWithdrawMutation,
+  useDepositAndWithdrawQuery,
+  useMinusLimitMutation,
 } from "../../store/service/userlistService";
+import { openNotification, openNotificationError } from "../../App";
 
-const Withdraw = ({ balance, userIdData, handleClose }) => {
-  const [api, contextHolder] = notification.useNotification();
+const Withdraw = ({ data:datadeposit, userIdData, handleClose }) => {
   const [form]= Form.useForm();
 
 
-  const [trigger, { data, error, isLoading }] = useWithdrawMutation();
+  const [trigger, { data, error, isLoading }] = useMinusLimitMutation();
+  const {data: depositeWithdraw} = useDepositAndWithdrawQuery({
+    userId:datadeposit
+  });
 
   const onFinish = (values) => {
     const withdrawData = {
@@ -22,23 +25,6 @@ const Withdraw = ({ balance, userIdData, handleClose }) => {
     };
     trigger(withdrawData);
     form?.resetFields();
-  };
-
-  const openNotification = (mess) => {
-    api.success({
-      message: mess,
-      description: "Success",
-      closeIcon: false,
-      placement: "top",
-    });
-  };
-
-  const openNotificationError = (mess) => {
-    api.error({
-      message: mess,
-      closeIcon: false,
-      placement: "top",
-    });
   };
 
   useEffect(() => {
@@ -52,13 +38,9 @@ const Withdraw = ({ balance, userIdData, handleClose }) => {
     }
   }, [data?.data, error]);
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
 
   return (
     <>
-      {contextHolder}
       <div className="ant-spin-nested-loading">
       {isLoading && (
           <>
@@ -66,14 +48,13 @@ const Withdraw = ({ balance, userIdData, handleClose }) => {
           </>
         )}
       <div>
-        <p>Curr Coins : {balance}</p>
+        <p>Curr Coins : {depositeWithdraw?.data?.childUplineAmount}</p>
       </div>
       <div className="form_modals">
        
         <Form
           onFinish={onFinish}
           form={form}
-          onFinishFailed={onFinishFailed}
           autoComplete="off">
           <Form.Item
             required

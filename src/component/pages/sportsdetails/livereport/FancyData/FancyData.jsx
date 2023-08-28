@@ -11,12 +11,9 @@ const FancyData = ({ data, keyData }) => {
   const [open, setOpen] = useState(false);
   const [matchid, setMatchID] = useState("");
   const [showMyBook, setShowMyBook] = useState(2);
+  const [activeBook, setActiveBook] = useState(1);
 
   const { id } = useParams();
-
-  // const { data: PnlOdds } = useOddsQuPnlQuery({
-  //   matchId: Number(id),
-  // });
 
   const hanldeBookSection = (val) => {
     setOpen(true);
@@ -41,10 +38,8 @@ const FancyData = ({ data, keyData }) => {
   const {data: fancyPnl} = useFancyPnlQuery({
     matchId: id
   })
-
-  console.log(fancyPnl?.data, "dsdfsf");
-
   const handleMyBook = (e) => {
+    setActiveBook(1)
     e.preventDefault();
     setShowMyBook(2);
     const oddsPnl = {
@@ -65,6 +60,7 @@ const FancyData = ({ data, keyData }) => {
   }, [ matchid])
 
   const handleTtlBook = (e) => {
+    setActiveBook(2)
     e.preventDefault();
     setShowMyBook(1);
     getData({
@@ -94,10 +90,10 @@ const FancyData = ({ data, keyData }) => {
                     </div>
                     {keyData === "Bookmaker" && (
                       <Col span={19} className="back-lay-bg bookData">
-                         <button onClick={(e) => handleMyBook(e)}>
+                         <button className={activeBook ==1?"activeMyBook":""} onClick={(e) => handleMyBook(e)}>
                           My Book
                         </button>
-                        <button onClick={(e) => handleTtlBook(e)}>
+                        <button className={activeBook ==2?"activeMyBook":""} onClick={(e) => handleTtlBook(e)}>
                           Ttl Book
                         </button>
                        
@@ -126,11 +122,14 @@ const FancyData = ({ data, keyData }) => {
                   <Row key={index} className="scor fancy_all_data">
                     <Col span={19} className="match_title">
                       <div className="title">{res?.nation}</div>
-                      <span>
-                      {/* {Object?.keys(fancyPnl)?.find(key =>fancyPnl[key] === res?.sid) || 0} */}
-                      </span>
+                      {
+                        !res?.mid?.includes("BM") &&  <span>
+                        {(fancyPnl?.data ) && Object?.keys(fancyPnl?.data)?.find(key => fancyPnl?.data[key] === res?.sid) || 0}
+                        </span>
+                      }
+                     
                       {keyData !== "Bookmaker" && (
-                        <span
+                        <span 
                           className="fancy_book_data"
                           onClick={() => hanldeBookSection(res?.sid)}>
                           Book

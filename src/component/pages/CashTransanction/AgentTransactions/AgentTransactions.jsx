@@ -1,6 +1,6 @@
 import { Button, Card, Col, DatePicker, Form, Input, Row, Select, notification } from "antd";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TransactionTable from "../TransactionTable";
 import { useEffect, useState } from "react";
 import { useCreateTransactionMutation, useLazyFilterbyClientQuery, useLazyUserListQuery } from "../../../../store/service/supermasteAccountStatementServices";
@@ -11,6 +11,8 @@ const AgentTransactions = ({ userType, Listname }) => {
   const [api, contextHolder] = notification.useNotification();
   const [userTranstionData, setUserTranstionData] = useState([]);
   const [form]= Form.useForm();
+  const {pathname} = useLocation();
+
 
   const nav = useNavigate();
 
@@ -18,9 +20,6 @@ const AgentTransactions = ({ userType, Listname }) => {
     nav(-1);
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
 
   const { Option } = Select;
 
@@ -80,7 +79,7 @@ const AgentTransactions = ({ userType, Listname }) => {
     getClient({
       userId: clientId,
     });
-  }, [clientId, result?.data]);
+  }, [clientId, result?.data,]);
 
 
   useEffect(()=>{
@@ -103,6 +102,13 @@ const AgentTransactions = ({ userType, Listname }) => {
     setUserTranstionData(useData?.results)
   }
   }, [result?.data])
+
+  
+  
+  useEffect(()=>{
+    form?.resetFields();
+    setClientId("")
+  }, [pathname])
   
 
   return (
@@ -121,7 +127,6 @@ const AgentTransactions = ({ userType, Listname }) => {
             wrapperCol={{ span: 16 }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
             autoComplete="off">
             <Row>
               <Col xl={8} lg={8} md={24} xs={24} >

@@ -19,7 +19,6 @@ const SuperAgentLimitDetails = () => {
     userId: id,
   });
 
-  console.log(data?.data, "dsdsdsd");
 
   const items = [
     {
@@ -39,6 +38,8 @@ const SuperAgentLimitDetails = () => {
   };
 
 
+  const uType = localStorage.getItem("userType")
+
 
   return (
     <>
@@ -50,7 +51,7 @@ const SuperAgentLimitDetails = () => {
             <div
               style={{ padding: "9px 8px", fontSize: "22px" }}
               className="team_name">
-              Super Agent Limit Details
+              {uType == 5? "Super Master Limit Details": uType == 0?"Master Limit Details ":uType == 1?"Agent Limit Details": uType == 2?"Client Limit Details":""}
             </div>
             <div className="show_btn">
               <button onClick={handleBackClick}>Back</button>

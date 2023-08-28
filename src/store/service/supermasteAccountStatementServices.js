@@ -110,6 +110,13 @@ export const supermasteAccountStatementApi = createApi({
         body
       }),
     }),
+    super_User_List: build.mutation({
+      query: (body) => ({
+        url: "/bmx/user/get-user-list",
+        method: "POST",
+        body
+      }),
+    }),
     profitLoss: build.query({
       query: (body) => ({
         url: `/bmx/profit-loss`,
@@ -136,5 +143,6 @@ export const {
   useFetchDeleteTransectionQuery,
   useLazyTtlBookQuery,
   useLazySuperuserListQuery,
-  useProfitLossQuery
+  useProfitLossQuery,
+  useSuper_User_ListMutation
 } = supermasteAccountStatementApi;

@@ -71,7 +71,7 @@ const ShowBets = () => {
         <tbody>
           {data.map((res) => (
             <tr key={res.key} className="bg-red">
-              <td>{moment(res?.date).format("DD-MM-YYYY, h:mm a")}</td>
+              <td>{moment(res?.date).format("YYYY-MM-DD, h:mm a")}</td>
               <td>{res.client}</td>
               <td>{res.market}</td>
               <td>{res.rate}</td>
