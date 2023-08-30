@@ -47,12 +47,12 @@ const AccountStatement = () => {
 
   const items =[
       {
-        key: "1",
+        key: "13",
         label: `All`,
         children: <AllStatement gameType={1} clientId={clientId} dateData={dateData} />,
       },
       {
-        key: "3",
+        key: "14",
         label: `P&L`,
         children: <AllStatement gameType={2} clientId={clientId} dateData={dateData} />,
       },

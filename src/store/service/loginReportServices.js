@@ -14,7 +14,7 @@ export const loginReportApi = createApi({
     loginReport: build.query({
       keepUnusedDataFor: 0,
       query: (body) => ({
-        url: "/util/login-history-report",
+        url: "/bmx/report/bmx-login-report",
         method: "POST",
         body,
       }),
@@ -22,4 +22,4 @@ export const loginReportApi = createApi({
   }),
 });
 
-export const { useLoginReportQuery } = loginReportApi;
+export const { useLazyLoginReportQuery } = loginReportApi;

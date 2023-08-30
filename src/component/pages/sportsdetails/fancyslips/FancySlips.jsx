@@ -9,18 +9,18 @@ import "./FancySlips.scss";
 const columns = [
   {
     title: "Rate",
-    dataIndex: "stake",
-    key: "stake",
+    dataIndex: "odds",
+    key: "odds",
     render: (text, record)=>(
-      <p className="text-right">{record?.stake}</p>
+      <p className="text-right">{record?.odds}</p>
       )
   },
   {
     title: "Amount",
-    dataIndex: "pricevalue",
-    key: "pricevalue",
+    dataIndex: "stake",
+    key: "stake",
     render: (text, record)=>(
-      <p className="text-right">{record?.pricevalue}</p>
+      <p className="text-right">{record?.stake}</p>
       )
   },
   {
@@ -53,14 +53,14 @@ const columns = [
     dataIndex: "date",
     key: "date",
   },
-  {
-    title: "Odds",
-    dataIndex: "odds",
-    key: "odds",
-    render: (text, record)=>(
-      <p className="text-right">{record?.pricevalue}</p>
-      )
-  },
+  // {
+  //   title: "Odds",
+  //   dataIndex: "odds",
+  //   key: "odds",
+  //   render: (text, record)=>(
+  //     <p className="text-right">{record?.pricevalue}</p>
+  //     )
+  // },
   {
     title: "Profit/Loss",
     dataIndex: "netpnl",
@@ -72,8 +72,8 @@ const columns = [
 
   {
     title: "Volume",
-    dataIndex: "volume",
-    key: "volume",
+    dataIndex: "pricevalue",
+    key: "pricevalue",
   },
 ];
 

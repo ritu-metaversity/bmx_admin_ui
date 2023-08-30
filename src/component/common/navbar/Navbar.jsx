@@ -72,9 +72,9 @@ const Navbar = () => {
                 onClick: handleModal,
               }}
               trigger={["click"]}>
-              <p className="user_deatils" onClick={(e) => e.preventDefault()}>
-                <p>{localStorage.getItem("userId")}</p>
-                <p>
+              <p className="user_deatils" style={{cursor:"pointer"}} onClick={(e) => e.preventDefault()}>
+                <p style={{fontWeight: 600, fontSize:"16px"}}>{localStorage.getItem("userId")}</p>
+                <p >
                   <DownOutlined />
                 </p>
               </p>

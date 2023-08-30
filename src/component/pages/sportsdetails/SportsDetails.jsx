@@ -205,14 +205,7 @@ const SportsDetails = () => {
                   <td>{res?.eventId}</td>
                   <td>{res?.eventName}</td>
                   <td>
-                    {res?.inPlay == true ? (
-                      <button onClick={showConfirm} className="setting_btn">
-                        {" "}
-                        Enabled{" "}
-                      </button>
-                    ) : (
-                      "Enabled"
-                    )}
+                    {res?.statusStr}
                   </td>
                   <td>{moment(res?.eventDate).format("YYYY-MM-DD, h:mm A")}</td>
                   {/* <td>{res?.competition}</td> */}

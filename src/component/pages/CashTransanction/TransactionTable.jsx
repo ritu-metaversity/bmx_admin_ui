@@ -103,12 +103,12 @@ const TransactionTable = ({ data, clientId, balanceData }) => {
       <div className="my_ledger" style={{ padding: "12px 0px" }}>
         <div>
           <h3 style={{ padding: "5px", color: "rgb(214, 75, 75)" }}>
-            Dena : {balanceData?.credit}
+            Dena : {(balanceData?.credit)?.toFixed(2)}
           </h3>
         </div>
         <div>
           <h3 style={{ padding: "5px", color: "rgb(51, 181, 28)" }}>
-            Lena :  {balanceData?.debit}
+            Lena :  {(balanceData?.debit)?.toFixed(2)}
           </h3>
         </div>
 
@@ -141,7 +141,7 @@ const TransactionTable = ({ data, clientId, balanceData }) => {
               return (
                 <tr key={res?.key}>
                   <td>
-                    {res?.doneBy && (
+                    {(res?.doneBy && !res?.isRollback) && (
                       <Dropdown
                         className="table_dropdown sport_droupdown"
                         onClick={() => handelDeleteUser(res?._id?.$oid)}

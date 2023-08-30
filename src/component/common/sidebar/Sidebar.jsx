@@ -157,7 +157,7 @@ const Sidebar = (props) => {
                 },
                 {
                   className: `${userType != "5" ? "d-none" : ""}`,
-                  label: <Link to="/client/ledger-super">Super Ledger</Link>,
+                  label: <Link to="/client/ledger-super">Super Master Ledger</Link>,
                 },
                 {
                   className: `${userType === "0" ? "" : "d-none"}`,

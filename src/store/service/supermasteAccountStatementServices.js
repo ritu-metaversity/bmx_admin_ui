@@ -13,7 +13,7 @@ export const supermasteAccountStatementApi = createApi({
   endpoints: (build) => ({
     accountstatement: build.query({
       query: (body) => ({
-        url: "/report/account-statement",
+        url: "/bmx/report/account-statement",
         method: "POST",
         body,
       }),

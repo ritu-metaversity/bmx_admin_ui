@@ -292,9 +292,9 @@ p.ant-dropdown-trigger.user_deatils.droup_nav {
 
 .mob_side{
   button.ant-btn{
-    svg{
-      z-index: 999999 !important;
-    }
+    // svg{
+    //   z-index: 999999 !important;
+    // }
   }
 }
 
@@ -303,13 +303,13 @@ p.ant-dropdown-trigger.user_deatils.droup_nav {
 .ant-drawer {
   position: fixed;
   inset: 0;
-  z-index: 999999 !important;
+  // z-index: 999999 !important;
   pointer-events: none;
 }
 
-.ant-dropdown.ant-dropdown-placement-bottomRight {
-  z-index: 99999;
-}
+// .ant-dropdown.ant-dropdown-placement-bottomRight {
+//   z-index: 99999;
+// }
 
 
 

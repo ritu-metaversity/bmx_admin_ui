@@ -9,8 +9,8 @@ import dayjs from 'dayjs'
 const columns = [
   {
     title: "Date",
-    dataIndex: "date",
-    key: "code",
+    dataIndex: "dateStr",
+    key: "dateStr",
   },
   {
     title: "Collection Name",
@@ -45,6 +45,12 @@ const columns = [
     title: "Payment Type",
     dataIndex: "paymentType",
     key: "paymentType",
+    render: (text, record) => (
+        // console.log(record, "dsdscsd")
+      <span>
+       {`${record?.paymentType} ${record?.showDate ? `- ${record?.dateOnlyStr}`  : ""} ${record?.isRollBack ? "- RollBack" : ""}`}
+      </span>
+    ),
   },
   {
     title: "Remark",

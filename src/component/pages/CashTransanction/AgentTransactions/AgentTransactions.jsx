@@ -189,14 +189,16 @@ const AgentTransactions = ({ userType, Listname }) => {
                 <Form.Item
                   label="Date"
                   name="Date"
-                  required
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select date",
-                    },
-                  ]}>
+                  // required
+                  // rules={[
+                  //   {
+                  //     required: true,
+                  //     message: "Please select date",
+                  //   },
+                  // ]}
+                  >
                   <DatePicker
+                  required
                   onChange = {onSelectDate}
                     className="transations_date"
                     // defaultValue={moment()}
