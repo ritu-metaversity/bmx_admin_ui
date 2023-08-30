@@ -134,7 +134,7 @@ export const {
   useLazySearchBetMarketIdQuery,
   useChangePasswordMutation,
   useDashboardQuery,
-  useCompleteFancyQuery,
+  useLazyCompleteFancyQuery,
   useComplteFancyOddsClientsQuery,
   useLazyFilterbyClientQuery,
   useCreateTransactionMutation,

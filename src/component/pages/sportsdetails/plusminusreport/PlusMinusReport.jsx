@@ -118,7 +118,7 @@ const [ParentKey, setParentKey] = useState("")
               className="team_name">
               {state?.dataNameee}
             </div>
-            <div className="show_btn">
+            <div className="show_btn back_show">
               <button onClick={handleShowBtn}>Show</button>
 
               <button onClick={handleBackClick}>Back</button>

@@ -27,7 +27,6 @@ import Withdraw from "./Withdraw";
 import BetlockModal from "./BetlockModal";
 import { useLazySuperuserListQuery } from "../../store/service/supermasteAccountStatementServices";
 import {
-  useDepositAndWithdrawQuery,
   usePartnershipMutation,
   useUpDateStatusMutation,
 } from "../../store/service/userlistService";

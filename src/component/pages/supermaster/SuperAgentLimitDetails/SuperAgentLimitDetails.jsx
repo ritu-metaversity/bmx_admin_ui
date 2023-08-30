@@ -4,7 +4,7 @@ import React from "react";
 import { Tabs } from "antd";
 import AddSuperLimites from "./AddSuperLimites";
 import MinusLimit from "./MinusLimit";
-import { useDepositAndWithdrawQuery } from "../../../../store/service/userlistService";
+
 
 const SuperAgentLimitDetails = () => {
   const nav = useNavigate();
@@ -13,23 +13,17 @@ const SuperAgentLimitDetails = () => {
     nav("/client/list-super");
   };
 
-  const {id} = useParams()
-
-  const { data } = useDepositAndWithdrawQuery({
-    userId: id,
-  });
-
-
   const items = [
     {
       key: "1",
       label: `Add`,
-      children: <AddSuperLimites data={data?.data}/>,
+      children: <AddSuperLimites />,
     },
     {
       key: "2",
       label: `Minus`,
-      children: <MinusLimit  data={data?.data}/>,
+      children: <MinusLimit  />,
+      color:"red"
     },
   ];
 

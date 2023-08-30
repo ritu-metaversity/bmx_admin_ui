@@ -4,12 +4,19 @@ import { useLocation, useNavigate } from "react-router-dom";
 import TransactionTable from "../TransactionTable";
 import { useEffect, useState } from "react";
 import { useCreateTransactionMutation, useLazyFilterbyClientQuery, useLazyUserListQuery } from "../../../../store/service/supermasteAccountStatementServices";
+import moment from "moment";
 
 const dateFormat = "YYYY/MM/DD";
 
 const AgentTransactions = ({ userType, Listname }) => {
   const [api, contextHolder] = notification.useNotification();
   const [userTranstionData, setUserTranstionData] = useState([]);
+  var curr = new Date();
+  const time = moment(curr).format("YYYY-MM-DD");
+
+  const [clientId, setClientId] = useState("");
+
+  const [startDate, setStartDate] = useState(time);
   const [form]= Form.useForm();
   const {pathname} = useLocation();
 
@@ -24,7 +31,6 @@ const AgentTransactions = ({ userType, Listname }) => {
   const { Option } = Select;
 
   const [getClient, result] = useLazyFilterbyClientQuery();
-  const [clientId, setClientId] = useState("");
 
 
   const [createTran, { data: createTranstions, error, isLoading }] = useCreateTransactionMutation();
@@ -62,6 +68,10 @@ const AgentTransactions = ({ userType, Listname }) => {
 
   const [userList, resultData] = useLazyUserListQuery();
 
+  const onSelectDate = (date, dateString) => {
+    setStartDate(dateString);
+  };
+
   const handleChange = (value) => {
     userList({
       userType: userType,
@@ -69,6 +79,7 @@ const AgentTransactions = ({ userType, Listname }) => {
     });
     getClient({
       userId: value,
+      userType: userType
     });
   };
   const handleSelect = (value) => {
@@ -78,6 +89,7 @@ const AgentTransactions = ({ userType, Listname }) => {
   useEffect(() => {
     getClient({
       userId: clientId,
+      userType:userType,
     });
   }, [clientId, result?.data,]);
 
@@ -86,6 +98,7 @@ const AgentTransactions = ({ userType, Listname }) => {
     if (createTranstions?.status === true) {
       getClient({
         userId: clientId,
+        userType: userType
       });
       openNotification(createTranstions?.message);
       form?.resetFields();
@@ -184,9 +197,11 @@ const AgentTransactions = ({ userType, Listname }) => {
                     },
                   ]}>
                   <DatePicker
+                  onChange = {onSelectDate}
                     className="transations_date"
-                    // defaultValue={dayjs(date, dateFormat)}
+                    // defaultValue={moment()}
                     format={dateFormat}
+                    defaultValue={dayjs(startDate)}
                   />
                 </Form.Item>
               </Col>

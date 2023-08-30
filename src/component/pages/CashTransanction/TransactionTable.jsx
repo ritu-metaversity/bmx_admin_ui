@@ -118,7 +118,7 @@ const TransactionTable = ({ data, clientId, balanceData }) => {
             {balanceData?.balance > 0 ? "(Lena)" : "(Dena)"}
           </h3>
         </div>
-        <div>
+        <div className="deleted_sec">
           <Button onClick={fetchDeletedTran}>Deleted</Button>
         </div>
       </div>

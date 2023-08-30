@@ -88,7 +88,7 @@ useEffect(()=>{
 
             <div className="deposit_btn">
           <Form.Item>
-            <Button type="primary" >
+            <Button onClick={()=>handleClose()} type="primary" >
               Return
             </Button>
           </Form.Item>

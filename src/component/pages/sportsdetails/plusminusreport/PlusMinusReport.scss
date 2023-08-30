@@ -155,5 +155,10 @@
   display: inline-block;
   flex: 1 1;
   overflow: hidden;
-  white-space: nowrap;
+  // white-space: nowrap;
+}
+.back_show{
+  button{
+    margin: 0px 5px;
+  }
 }

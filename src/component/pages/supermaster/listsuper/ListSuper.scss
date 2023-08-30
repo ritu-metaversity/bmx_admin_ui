@@ -2,9 +2,10 @@
   background: #fff;
   .create_btn {
     display: flex;
-    justify-content: space-around;
+    // justify-content: space-around;
     flex-wrap: wrap;
     align-items: center;
+    margin-left: 12px;
     a {
       color: #fff;
       background-color: #5d7074;
@@ -278,4 +279,22 @@ ul.ant-menu.ant-menu-root.ant-menu-vertical.ant-menu-light.menu_item{
   z-index: 2;
   top: 0;
   left: 0;
+}
+
+
+@media screen and (min-width: 800px) {
+ 
+  .ant-drawer-body{
+    margin: 24px 0px !important;
+  }
+}
+@media screen and (max-width: 800px) {
+  .partnership{
+    width: 100%;
+    overflow: scroll;
+  }
+  .ant-modal-content {
+    border-radius: 2px !important;
+    padding: 24px 10px !important;
+}
 }

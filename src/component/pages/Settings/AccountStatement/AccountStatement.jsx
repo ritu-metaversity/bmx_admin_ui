@@ -52,28 +52,28 @@ const AccountStatement = () => {
         children: <AllStatement gameType={1} clientId={clientId} dateData={dateData} />,
       },
       {
-        key: "2",
+        key: "3",
         label: `P&L`,
         children: <AllStatement gameType={2} clientId={clientId} dateData={dateData} />,
       },
-      {
-        key: "3",
-        label: `PDC`,
-        children: <AllStatement gameType={3} clientId={clientId} dateData={dateData} />,
-        type: 1,
-      },
-      {
-        key: "4",
-        label: `Comm.`,
-        children: <AllStatement gameType={4} clientId={clientId} dateData={dateData} />,
-        type: 1,
-      },
-      {
-        key: "5",
-        label: `Account`,
-        children: <AllStatement gameType={5} clientId={clientId} dateData={dateData} />,
-        type: 1,
-      },
+      // {
+      //   key: "3",
+      //   label: `PDC`,
+      //   children: <AllStatement gameType={3} clientId={clientId} dateData={dateData} />,
+      //   type: 1,
+      // },
+      // {
+      //   key: "4",
+      //   label: `Comm.`,
+      //   children: <AllStatement gameType={4} clientId={clientId} dateData={dateData} />,
+      //   type: 1,
+      // },
+      // {
+      //   key: "5",
+      //   label: `Account`,
+      //   children: <AllStatement gameType={5} clientId={clientId} dateData={dateData} />,
+      //   type: 1,
+      // },
     ]
 
   const data = useSelector(globalSelector);

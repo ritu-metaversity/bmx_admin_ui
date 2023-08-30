@@ -123,11 +123,6 @@ const EventProfitLoss = () => {
           <div
             className="sport_detail my_ledger main_match_ledger"
             style={{ padding: "0px", margin: "0px", width: "100%" }}>
-            {/* <Table
-              className="live_table limit_update"
-              bordered
-              columns={columns}
-              dataSource={profitLoss?.data?.data}></Table> */}
             <div className="table_section statement_tabs_data ant-spin-nested-loading">
               <table className="live_table" style={{ marginBottom: "8px" }}>
                 <tr>
@@ -151,8 +146,6 @@ const EventProfitLoss = () => {
                 {profitLoss?.data?.data?.map((res, id) => {
                   return (
                     <tr
-                      className={res?.pnl > 0 ? "bg_green" : "bg_red"}
-                      style={{ color: "#fff" }}
                       key={id}>
                       <td>{res?.userId}</td>
                       <td>{res?.date}</td>
@@ -162,7 +155,7 @@ const EventProfitLoss = () => {
                       <td>{res?.value}</td>
                       <td>{res?.volume}</td>
                       <td>{res?.stake}</td>
-                      <td>{Math.abs(res?.pnl)}</td>
+                      <td className={res?.pnl > 0? "text_success":"text_danger"}>{res?.pnl}</td>
                     </tr>
                   );
                 })}

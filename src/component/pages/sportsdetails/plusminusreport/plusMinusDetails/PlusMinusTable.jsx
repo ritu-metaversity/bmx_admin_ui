@@ -108,7 +108,7 @@ const RecursiveTable = ({ data, title }) => {
                       ? ""
                       : "d_none"
                   }>
-                  {data[item][userKey].matchAmount}
+                  {(data[item][userKey].matchAmount)?.toFixed(2)}
                 </td>
                 <td
                   className={
@@ -116,7 +116,7 @@ const RecursiveTable = ({ data, title }) => {
                       ? ""
                       : "d_none"
                   }>
-                  {data[item][userKey].sessionAmount}
+                  {(data[item][userKey].sessionAmount)?.toFixed(2)}
                 </td>
                 <td
                   className={
@@ -124,7 +124,7 @@ const RecursiveTable = ({ data, title }) => {
                       ? ""
                       : "d_none"
                   }>
-                  <strong>{data[item][userKey].totalAmount}</strong>
+                  <strong>{(data[item][userKey].totalAmount)?.toFixed(2)}</strong>
                 </td>
                 <td
                   className={
@@ -132,7 +132,7 @@ const RecursiveTable = ({ data, title }) => {
                       ? ""
                       : "d_none"
                   }>
-                  {data[item][userKey].dealer?.matchComm}
+                  {(data[item][userKey].dealer?.matchComm)?.toFixed(2)}
                 </td>
                 <td
                   className={
@@ -140,7 +140,7 @@ const RecursiveTable = ({ data, title }) => {
                       ? ""
                       : "d_none"
                   }>
-                  {data[item][userKey].dealer?.sessionComm}
+                  {(data[item][userKey].dealer?.sessionComm)?.toFixed(2)}
                 </td>
                 <td
                   className={
@@ -148,7 +148,7 @@ const RecursiveTable = ({ data, title }) => {
                       ? ""
                       : "d_none"
                   }>
-                  <strong>{data[item][userKey].dealer?.totalComm}</strong>
+                  <strong>{(data[item][userKey].dealer?.totalComm)?.toFixed(2)}</strong>
                 </td>
                 <td
                   className={
@@ -156,7 +156,7 @@ const RecursiveTable = ({ data, title }) => {
                       ? ""
                       : "d_none"
                   }>
-                  {data[item][userKey].dealer?.netAmount}
+                  {(data[item][userKey].dealer?.netAmount)?.toFixed(2)}
                 </td>
                 <td
                   className={
@@ -164,7 +164,7 @@ const RecursiveTable = ({ data, title }) => {
                       ? ""
                       : "d_none"
                   }>
-                  {data[item][userKey].dealer?.shareAmount}
+                  {(data[item][userKey].dealer?.shareAmount)?.toFixed(2)}
                 </td>
                 <td
                   className={
@@ -176,37 +176,37 @@ const RecursiveTable = ({ data, title }) => {
                     borderRightWidth: 2,
                     borderRightColor: "rgb(174, 174, 174)",
                   }}>
-                  <strong>{data[item][userKey].dealer?.finalAmount}</strong>
+                  <strong>{(data[item][userKey].dealer?.finalAmount)?.toFixed(2)}</strong>
                 </td>
                 <td
                   className={
                     uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
                   }>
-                  {data[item][userKey].master?.matchComm}
+                  {(data[item][userKey].master?.matchComm)?.toFixed(2)}
                 </td>
                 <td
                   className={
                     uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
                   }>
-                  {data[item][userKey].master?.sessionComm}
+                  {(data[item][userKey].master?.sessionComm)?.toFixed(2)}
                 </td>
                 <td
                   className={
                     uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
                   }>
-                  <strong>{data[item][userKey].master?.totalComm}</strong>
+                  <strong>{(data[item][userKey].master?.totalComm)?.toFixed(2)}</strong>
                 </td>
                 <td
                   className={
                     uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
                   }>
-                  {data[item][userKey].master?.netAmount}
+                  {(data[item][userKey].master?.netAmount)?.toFixed(2)}
                 </td>
                 <td
                   className={
                     uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
                   }>
-                  {data[item][userKey].master?.shareAmount}
+                  {(data[item][userKey].master?.shareAmount)?.toFixed(2)}
                 </td>
                 <td
                   className={
@@ -216,22 +216,22 @@ const RecursiveTable = ({ data, title }) => {
                     borderRightWidth: 2,
                     borderRightColor: "rgb(174, 174, 174)",
                   }}>
-                  <strong>{data[item][userKey].master?.finalAmount}</strong>
+                  <strong>{(data[item][userKey].master?.finalAmount)?.toFixed(2)}</strong>
                 </td>
                 <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
-                  {data[item][userKey].superMaster?.matchComm}
+                  {(data[item][userKey].superMaster?.matchComm)?.toFixed(2)}
                 </td>
                 <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
-                  {data[item][userKey].superMaster?.sessionComm}
+                  {(data[item][userKey].superMaster?.sessionComm)?.toFixed(2)}
                 </td>
                 <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
-                  <strong>{data[item][userKey].superMaster?.totalComm}</strong>
+                  <strong>{(data[item][userKey].superMaster?.totalComm)?.toFixed(2)}</strong>
                 </td>
                 <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
-                  {data[item][userKey].superMaster?.netAmount}
+                  {(data[item][userKey].superMaster?.netAmount)?.toFixed(2)}
                 </td>
                 <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
-                  {data[item][userKey].superMaster?.shareAmount}
+                  {(data[item][userKey].superMaster?.shareAmount)?.toFixed(2)}
                 </td>
                 <td
                   className={uType == 5 || uType == 0 ? "" : "d_none"}
@@ -240,23 +240,23 @@ const RecursiveTable = ({ data, title }) => {
                     borderRightColor: "rgb(174, 174, 174)",
                   }}>
                   <strong>
-                    {data[item][userKey].superMaster?.finalAmount}
+                    {(data[item][userKey].superMaster?.finalAmount)?.toFixed(2)}
                   </strong>
                 </td>
                 <td className={uType != 5 ? "d_none" : ""}>
-                  {data[item][userKey].subAdmin?.matchComm}
+                  {(data[item][userKey].subAdmin?.matchComm)?.toFixed(2)}
                 </td>
                 <td className={uType != 5 ? "d_none" : ""}>
-                  {data[item][userKey].subAdmin?.sessionComm}
+                  {(data[item][userKey].subAdmin?.sessionComm)?.toFixed(2)}
                 </td>
                 <td className={uType != 5 ? "d_none" : ""}>
-                  <strong>{data[item][userKey].subAdmin?.totalComm}</strong>
+                  <strong>{(data[item][userKey].subAdmin?.totalComm)?.toFixed(2)}</strong>
                 </td>
                 <td className={uType != 5 ? "d_none" : ""}>
-                  {data[item][userKey].subAdmin?.netAmount}
+                  {(data[item][userKey].subAdmin?.netAmount)?.toFixed(2)}
                 </td>
                 <td className={uType != 5 ? "d_none" : ""}>
-                  {data[item][userKey].subAdmin?.shareAmount}
+                  {(data[item][userKey].subAdmin?.shareAmount)?.toFixed(2)}
                 </td>
                 <td
                   className={uType != 5 ? "d_none" : ""}
@@ -264,7 +264,7 @@ const RecursiveTable = ({ data, title }) => {
                     borderRightWidth: 2,
                     borderRightColor: "rgb(174, 174, 174)",
                   }}>
-                  <strong>{data[item][userKey].subAdmin?.finalAmount}</strong>
+                  <strong>{(data[item][userKey].subAdmin?.finalAmount)?.toFixed(2)}</strong>
                 </td>
               </tr>
             </>
@@ -497,7 +497,7 @@ const RecursiveTable = ({ data, title }) => {
                     ? ""
                     : "d_none"
                 }>
-                {data?.total?.matchAmount}
+                {(data?.total?.matchAmount)?.toFixed(2)}
               </td>
               <td
                 className={
@@ -505,7 +505,7 @@ const RecursiveTable = ({ data, title }) => {
                     ? ""
                     : "d_none"
                 }>
-                {data?.total?.sessionAmount}
+                {(data?.total?.sessionAmount)?.toFixed(2)}
               </td>
               <td
                 className={
@@ -513,7 +513,7 @@ const RecursiveTable = ({ data, title }) => {
                     ? ""
                     : "d_none"
                 }>
-                {data?.total?.totalAmount}
+                {(data?.total?.totalAmount)?.toFixed(2)}
               </td>
               <td
                 className={
@@ -521,7 +521,7 @@ const RecursiveTable = ({ data, title }) => {
                     ? ""
                     : "d_none"
                 }>
-                {data?.total?.dealer?.matchComm}
+                {(data?.total?.dealer?.matchComm)?.toFixed(2)}
               </td>
               <td
                 className={
@@ -529,7 +529,7 @@ const RecursiveTable = ({ data, title }) => {
                     ? ""
                     : "d_none"
                 }>
-                {data?.total?.dealer?.sessionComm}
+                {(data?.total?.dealer?.sessionComm)?.toFixed(2)}
               </td>
               <td
                 className={
@@ -537,7 +537,7 @@ const RecursiveTable = ({ data, title }) => {
                     ? ""
                     : "d_none"
                 }>
-                {data?.total?.dealer?.totalComm}
+                {(data?.total?.dealer?.totalComm)?.toFixed(2)}
               </td>
               <td
                 className={
@@ -545,7 +545,7 @@ const RecursiveTable = ({ data, title }) => {
                     ? ""
                     : "d_none"
                 }>
-                {data?.total?.dealer?.netAmount}
+                {(data?.total?.dealer?.netAmount)?.toFixed(2)}
               </td>
               <td
                 className={
@@ -553,7 +553,7 @@ const RecursiveTable = ({ data, title }) => {
                     ? ""
                     : "d_none"
                 }>
-                {data?.total?.dealer?.shareAmount}
+                {(data?.total?.dealer?.shareAmount)?.toFixed(2)}
               </td>
               <td
                 className={
@@ -565,37 +565,37 @@ const RecursiveTable = ({ data, title }) => {
                   borderRightWidth: 2,
                   borderRightColor: "rgb(174, 174, 174)",
                 }}>
-                {data?.total?.dealer?.finalAmount}
+                {(data?.total?.dealer?.finalAmount)?.toFixed(2)}
               </td>
               <td
                 className={
                   uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
                 }>
-                {data?.total?.master?.matchComm}
+                {(data?.total?.master?.matchComm).toFixed(2)}
               </td>
               <td
                 className={
                   uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
                 }>
-                {data?.total?.master?.sessionComm}
+                {(data?.total?.master?.sessionComm).toFixed(2)}
               </td>
               <td
                 className={
                   uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
                 }>
-                {data?.total?.master?.totalComm}
+                {(data?.total?.master?.totalComm).toFixed(2)}
               </td>
               <td
                 className={
                   uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
                 }>
-                {data?.total?.master?.netAmount}
+                {(data?.total?.master?.netAmount)?.toFixed(2)}
               </td>
               <td
                 className={
                   uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
                 }>
-                {data?.total?.master?.shareAmount}
+                {(data?.total?.master?.shareAmount)?.toFixed(2)}
               </td>
               <td
                 className={
@@ -605,22 +605,22 @@ const RecursiveTable = ({ data, title }) => {
                   borderRightWidth: 2,
                   borderRightColor: "rgb(174, 174, 174)",
                 }}>
-                {data?.total?.master?.finalAmount}
+                {(data?.total?.master?.finalAmount)?.toFixed(2)}
               </td>
               <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
-                {data?.total?.superMaster?.matchComm}
+                {(data?.total?.superMaster?.matchComm)?.toFixed(2)}
               </td>
               <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
-                {data?.total?.superMaster?.sessionComm}
+                {(data?.total?.superMaster?.sessionComm)?.toFixed(2)}
               </td>
               <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
-                {data?.total?.superMaster?.totalComm}
+                {(data?.total?.superMaster?.totalComm)?.toFixed(2)}
               </td>
               <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
-                {data?.total?.superMaster?.netAmount}
+                {(data?.total?.superMaster?.netAmount)?.toFixed(2)}
               </td>
               <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
-                {data?.total?.superMaster?.shareAmount}
+                {(data?.total?.superMaster?.shareAmount)?.toFixed(2)}
               </td>
               <td
                 className={uType == 5 || uType == 0 ? "" : "d_none"}
@@ -628,22 +628,22 @@ const RecursiveTable = ({ data, title }) => {
                   borderRightWidth: 2,
                   borderRightColor: "rgb(174, 174, 174)",
                 }}>
-                {data?.total?.superMaster?.finalAmount}
+                {(data?.total?.superMaster?.finalAmount)?.toFixed(2)}
               </td>
               <td className={uType != 5 ? "d_none" : ""}>
-                {data?.total?.subAdmin?.matchComm}
+                {(data?.total?.subAdmin?.matchComm)?.toFixed(2)}
               </td>
               <td className={uType != 5 ? "d_none" : ""}>
-                {data?.total?.subAdmin?.sessionComm}
+                {(data?.total?.subAdmin?.sessionComm)?.toFixed(2)}
               </td>
               <td className={uType != 5 ? "d_none" : ""}>
-                {data?.total?.subAdmin?.totalComm}
+                {(data?.total?.subAdmin?.totalComm)?.toFixed(2)}
               </td>
               <td className={uType != 5 ? "d_none" : ""}>
-                {data?.total?.subAdmin?.netAmount}
+                {(data?.total?.subAdmin?.netAmount)?.toFixed(2)}
               </td>
               <td className={uType != 5 ? "d_none" : ""}>
-                {data?.total?.subAdmin?.shareAmount}
+                {(data?.total?.subAdmin?.shareAmount)?.toFixed(2)}
               </td>
               <td
                 className={uType != 5 ? "d_none" : ""}
@@ -651,7 +651,7 @@ const RecursiveTable = ({ data, title }) => {
                   borderRightWidth: 2,
                   borderRightColor: "rgb(174, 174, 174)",
                 }}>
-                {data?.total?.subAdmin?.finalAmount}
+                {(data?.total?.subAdmin?.finalAmount)?.toFixed(2)}
               </td>
             </tr>
           </>

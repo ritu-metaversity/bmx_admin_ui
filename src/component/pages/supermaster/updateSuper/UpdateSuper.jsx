@@ -11,12 +11,13 @@ import {
   notification,
 } from "antd";
 import "./UpdateSuper.scss";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useLazyGetUserQuery, useUpdateUserMutation } from "../../../../store/service/userlistService";
 
 const UpdateSuper = ({ updateName }) => {
   const [api, contextHolder] = notification.useNotification();
   const [commType, setCommType] = useState("");
+  const nav = useNavigate();
 
   const [form] = Form.useForm();
   const [data, setData] = useState();
@@ -104,14 +105,13 @@ const UpdateSuper = ({ updateName }) => {
       <div className="main_live_section">
         <div className="_match">
           <div
-            className="sub_live_section live_report"
-            // style={{ marginTop: "35px" }}
-          >
+            className="sub_live_section live_report">
             <div
               style={{ padding: "5px 8px", fontSize: "22px" }}
               className="team_name">
               Update {updateName}
             </div>
+            <div className="show_btn"><button onClick={()=>nav(-1)}>Back</button></div>
           </div>
         </div>
         <div className="ant-spin-nested-loading">

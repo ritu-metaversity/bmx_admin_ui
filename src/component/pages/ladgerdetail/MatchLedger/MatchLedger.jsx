@@ -76,7 +76,7 @@ const MatchLedger = () => {
   return (
     <Card
       className="sport_detail my_ledger main_match_ledger"
-      title="Proft/Loss"
+      title="Profit/Loss"
       extra={<button onClick={() => nav(-1)}>Back</button>}>
       <Row className="main_super_super_ledger">
         <Col lg={8} xs={24} className="match_ladger">

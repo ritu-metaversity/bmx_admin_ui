@@ -26,18 +26,10 @@ const columns = [
       title: "Comm.",
       dataIndex: "comm",
       key: "comm",
-      render: (text, record) => (
-        <span>
-         0
-        </span>
-      ),
     }
   ];
 
 const MasterProfitLoss = ({name, data}) => {
-  // console.log(data)
-
-  // console.log(data, "fsdfsdsfs")
   return (
     <>
       <div className="main_live_section">

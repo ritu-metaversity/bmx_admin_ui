@@ -89,10 +89,24 @@
       }
     }
   }
+  .ant-drawer{
+  .ant-drawer-body {
+    margin: 24px -18px !important;
+    ul{
+      margin-top: -30px;
+      margin-left: 0px !important;
+      color: #fff;
+    }
+}}
 }
 .mob_view_sidebar {
   display: none;
 }
 .mob_side {
   display: none;
+}
+
+
+header.ant-layout-header{
+  z-index: 99999 !important;
 }

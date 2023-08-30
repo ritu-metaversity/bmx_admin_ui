@@ -59,7 +59,7 @@
 
 @media screen and (max-width: 800px) {
   .form_data {
-    padding: 0px 6px 0px 6px;
+    padding: 4px 6px 0px 6px;
   }
   .super_agent {
     .ant-col.ant-col-12{
@@ -98,4 +98,16 @@
     outline: unset;
     box-shadow: unset;
   }
+}
+.add_minus{
+  .ant-tabs-tab-btn{
+    font-size: 18px;
+    font-weight: 500;
+  }
+  div#rc-tabs-2-tab-1 {
+    color: green;
+}
+div#rc-tabs-2-tab-2 {
+  color: red;
+}
 }

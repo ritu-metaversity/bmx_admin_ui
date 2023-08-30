@@ -26,10 +26,10 @@ a:hover {
   background: #f9c9d4;
 }
 .back {
-  background: #63b7f7;
+  background: #63b7f7 !important;
 }
 .lay {
-  background: #ef839b;
+  background: #ef839b !important;
 }
 .text_success {
   color: green;
@@ -160,4 +160,22 @@ button {
 
 li.ant-pagination-options {
   margin-right: 12px;
+}
+
+
+@media screen and (max-width: 800px) {
+  .ant-picker-panel-container {
+    margin-left: 0px;
+    width: 100% !important;
+    overflow: scroll !important;
+}
+.ant-picker-dropdown.ant-picker-dropdown-range.ant-picker-dropdown-placement-bottomLeft {
+  width: 100%;
+  min-width: 90%;
+  max-width: 100%;
+  overflow: scroll;
+}
+.ant-picker-dropdown.ant-picker-dropdown-range.ant-picker-dropdown-placement-bottomLeft {
+  left: 0px !important;
+}
 }

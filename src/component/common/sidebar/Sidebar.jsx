@@ -249,7 +249,7 @@ const Sidebar = (props) => {
           closable={false}
           onClose={onClose}
           open={open}
-          width="250"
+          width="275"
           // key={placement}
         >
           <Menu
@@ -391,7 +391,7 @@ const Sidebar = (props) => {
                       <Link
                         onClick={() => setOpen(false)}
                         to="/client/ledger-super">
-                        Super Ledger
+                        Super Master Ledger
                       </Link>
                     ),
                   },

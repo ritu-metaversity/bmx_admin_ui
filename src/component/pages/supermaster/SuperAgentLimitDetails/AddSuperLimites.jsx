@@ -1,10 +1,10 @@
 import { Button, Form, Input, Space, Table, notification } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 
-import {useDepositMutation, useUpDateLimitesQuery } from "../../../../store/service/userlistService";
+import {useDepositMutation, useLazyUpDateLimitesQuery } from "../../../../store/service/userlistService";
 import { useLocation, useParams } from "react-router-dom";
 
-const AddSuperLimites = ({ data }) => {
+const AddSuperLimites = () => {
   const [addTotal, setAddTotal] = useState(0);
   const [chipsValue, setChipsValue] = useState();
   const [passWord, setPassword] = useState("");
@@ -13,8 +13,6 @@ const AddSuperLimites = ({ data }) => {
   const {state} = useLocation();
 
   const {id} = useParams()
-
-  console.log(id, "dsadsa")
 
   const handelAddLimit = (e) => {
     setChipsValue(e.target.value);
@@ -44,22 +42,31 @@ const AddSuperLimites = ({ data }) => {
 
 
   const [trigger, { data: addData, error, isLoading }] = useDepositMutation();
-  const {data: updateLimite} = useUpDateLimitesQuery({
-    userId:id
-  })
+  const [updateLimites, {data: updateLimite}] = useLazyUpDateLimitesQuery()
+
+
+  useEffect(()=>{
+    updateLimites({
+      userId:id
+    })
+  }, [id])
 
   const onFinish = (values) => {
     const addList = {
         amount:Number(values?.amount),
         remark:"Creadit deposit",
         lupassword:values?.pass,
-        userId:data?.childId
+        userId:id
     };
     trigger(addList);
   };
 
   useEffect(() => {
     if (addData?.status === true) {
+      updateLimites({
+        userId:id
+      })
+      setAddTotal(0)
       openNotification(addData?.message);
       form?.resetFields();
     } else if (addData?.status === false || error?.data?.message) {

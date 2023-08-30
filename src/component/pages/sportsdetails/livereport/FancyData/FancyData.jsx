@@ -107,10 +107,10 @@ const FancyData = ({ data, keyData }) => {
                 <Col className="b-bottom" span={5}>
                   <Row>
                     <Col span={12} className="lay lagai lagai1">
-                      <div>No</div>
+                      <div>{keyData === "Bookmaker"?"KHAI":"NO"}</div>
                     </Col>
                     <Col span={12} className="back khai">
-                      <div>Yes</div>
+                      <div>{keyData === "Bookmaker"?"LAGAI":"YES"}</div>
                     </Col>
                   </Row>
                 </Col>

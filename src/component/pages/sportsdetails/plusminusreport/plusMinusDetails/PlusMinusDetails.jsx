@@ -1,8 +1,6 @@
-import { React, useState } from "react";
-// import { Divider, Radio, Table } from "antd";
+import  React from "react";
 import "./PlusMinusDetails.scss";
-import { Checkbox, Col, Row, Table } from "antd";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { globalSelector } from "../../../../../store/global/slice";
 import PlusMinusTable from "./PlusMinusTable";
@@ -10,6 +8,7 @@ import PlusMinusTable from "./PlusMinusTable";
 const PlusMinusDetails = () => {
   const { state } = useLocation()
   const sportName = useSelector(globalSelector);
+  const nav = useNavigate()
 
   return (
     <>
@@ -22,6 +21,7 @@ const PlusMinusDetails = () => {
               {state?.state?.dataNameee}
             </div>
             <div className="show_btn">
+              <button onClick={()=>nav(-1)}>Back</button>
             </div>
           </div>
           <div className="main_table_section">

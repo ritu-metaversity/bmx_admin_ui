@@ -1,38 +1,40 @@
 import { Card, Empty, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { setData } from "../../../../../store/global/slice";
-import { useCompleteFancyQuery } from "../../../../../store/service/supermasteAccountStatementServices";
+import { useLazyCompleteFancyQuery } from "../../../../../store/service/supermasteAccountStatementServices";
 
 const CompeleteFancy = () => {
   const [marketId, setMarketId] = useState("");
-  const [completeFancy, setCompleteFancy] = useState([]);
+  const { pathname } = useLocation();
+
 
   const dispatch = useDispatch();
   const nav = useNavigate();
 
   const { id } = useParams();
 
-  const {
-    data: completeFancyData,
-    isLoading,
-    isFetching,
-  } = useCompleteFancyQuery({
-    matchid: Number(id),
-  });
+  const [trigger, { data: completeFancyData, isLoading, isFetching }] =
+    useLazyCompleteFancyQuery();
+
   useEffect(() => {
-    setCompleteFancy(completeFancyData?.data);
-  }, [completeFancyData]);
+    trigger({
+      matchid: Number(id),
+    });
+  }, [completeFancyData, id]);
 
   const handleShowBets = (val) => {
-    console.log(val)
     setMarketId(val);
     dispatch(setData(val));
-    nav(`/Events/${id}/pl/live-report`, { state: {id: val} });
+    nav(`/Events/${id}/pl/live-report`, { state: { id: val } });
   };
 
-
+  const handleRefresh = () => {
+    trigger({
+      matchid: Number(id),
+    });
+  };
 
 
 
@@ -46,9 +48,15 @@ const CompeleteFancy = () => {
           }}
           className="sport_detail completed_fancy"
           title="Completed fancy"
-          extra={<button>Refresh</button>}>
+          extra={
+            <div>
+              <button onClick={handleRefresh}>Refresh</button>
+              {pathname?.includes("completed-fancy-slips") && (
+                <button style={{marginLeft:"10px"}} onClick={()=>nav(-1)}>Back</button>
+              )}
+            </div>
+          }>
           <div className="table_section ant-spin-nested-loading">
-            
             <table className="">
               <tr>
                 <th>Title</th>
@@ -64,14 +72,33 @@ const CompeleteFancy = () => {
               ) : (
                 ""
               )}
-              {/* <tr>
-                <td>Total</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr> */}
-              {completeFancy?.map((res) => {
+
+              {(completeFancyData?.data?.list?.length != null ||
+                completeFancyData?.data?.list?.length == 0) && (
+                <tr>
+                  <td>Total</td>
+                  <td
+                    className={
+                      completeFancyData?.data?.total?.pnl < 0
+                        ? "text_danger"
+                        : "text_success"
+                    }>
+                    {completeFancyData?.data?.total?.pnl}
+                  </td>
+                  <td></td>
+                  <td
+                    className={
+                      completeFancyData?.data?.total?.netpnl > 0
+                        ? "text_success"
+                        : "text_danger"
+                    }>
+                    {completeFancyData?.data?.total?.netpnl}
+                  </td>
+                  <td></td>
+                </tr>
+              )}
+
+              {completeFancyData?.data?.list?.map((res) => {
                 return (
                   <tr key={res?.key}>
                     <td>{res?.selectionname}</td>
@@ -100,7 +127,7 @@ const CompeleteFancy = () => {
               })}
               <tr>
                 <td colSpan={5}>
-                  {completeFancy?.length == undefined && (
+                  {completeFancyData?.data?.list?.length == undefined && (
                     <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                   )}
                 </td>

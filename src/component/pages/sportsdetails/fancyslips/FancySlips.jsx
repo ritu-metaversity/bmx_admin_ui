@@ -11,11 +11,17 @@ const columns = [
     title: "Rate",
     dataIndex: "stake",
     key: "stake",
+    render: (text, record)=>(
+      <p className="text-right">{record?.stake}</p>
+      )
   },
   {
     title: "Amount",
-    dataIndex: "stake",
-    key: "stake",
+    dataIndex: "pricevalue",
+    key: "pricevalue",
+    render: (text, record)=>(
+      <p className="text-right">{record?.pricevalue}</p>
+      )
   },
   {
     title: "Type",
@@ -26,6 +32,11 @@ const columns = [
     title: "Team",
     dataIndex: "matchname",
     key: "matchname",
+  },
+  {
+    title: "Selection Name",
+    dataIndex: "selectionname",
+    key: "selectionname",
   },
   {
     title: "Client",
@@ -43,11 +54,19 @@ const columns = [
     key: "date",
   },
   {
+    title: "Odds",
+    dataIndex: "odds",
+    key: "odds",
+    render: (text, record)=>(
+      <p className="text-right">{record?.pricevalue}</p>
+      )
+  },
+  {
     title: "Profit/Loss",
     dataIndex: "netpnl",
     key: "netpnl",
     render: (text, record)=>(
-      <span className={record?.netpnl>0?"text_success":"text_danger"}>{record?.netpnl}</span>
+      <p className={record?.netpnl>0?"text-right text_success":"text-right text_danger"}>{record?.netpnl}</p>
       )
   },
 
@@ -85,11 +104,6 @@ const FancySlips = ({ type, name }) => {
       userId: values?.username,
     });
   };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-
   const handleSelect = (value) => {
     setClientId(value);
   };
@@ -112,19 +126,19 @@ const FancySlips = ({ type, name }) => {
               margin: "0px",
               width: "100%",
             }}
-            className="sport_detail"
+            className="sport_detail session_bet"
             title={name}
             extra={<button onClick={handleBackClick}>Back</button>}>
             <Form
               name="basic"
               onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
               autoComplete="off"
               className="form_data"
               >
               <Row
-                className="rejected_row fancy_data_sess"
-                style={{ margin: "2px 0px 25px 28px" }}>
+                className="rejected_row fancy_data_sess mr"
+                // style={{ margin: "2px 0px 25px 28px" }}
+                >
                 <Col xs={24} md={24} lg={6} xl={6}>
                   <Form.Item
                     // label="Client"
@@ -154,7 +168,8 @@ const FancySlips = ({ type, name }) => {
                   <Form.Item>
                     <Button
                       type="primary"
-                      loading={isFetching}
+                      className="fancy_btn"
+                      loading={isLoading}
                       htmlType="submit">
                       Submit
                     </Button>
@@ -168,7 +183,8 @@ const FancySlips = ({ type, name }) => {
               <Table
                 columns={columns}
                 dataSource={result?.data}
-                loading={isLoading}
+                rowClassName={(record) => record?.isback ? 'back' :  'lay'}
+                loading={isLoading || isFetching}
               />
             </div>
           </Card>

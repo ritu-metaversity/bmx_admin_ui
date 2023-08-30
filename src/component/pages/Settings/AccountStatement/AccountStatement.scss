@@ -8,13 +8,21 @@
     .ant-tabs-nav {
       position: absolute;
       top: 55px;
-      right: 0px;
+      right: 145px;
       margin: 14px 35px;
       border-bottom: unset !important;
       .ant-tabs-tab {
+        width: 82px;
+        min-width: 82px;
+        max-width: 82px;
+        height: 38px;
         padding: 5px 14px;
         border-radius: 0px;
         margin: 0px !important;
+        text-align: center;
+        display: block;
+        padding-top: 6px;
+        background-color: #ddd;
       }
     }
     .ant-tabs-nav-more {
@@ -28,9 +36,9 @@
       }
     }
   }
-  .ant-tabs-nav{
-    &::before{
-        display: none !important;
+  .ant-tabs-nav {
+    &::before {
+      display: none !important;
     }
   }
 }
@@ -73,6 +81,7 @@
         position: relative;
         top: unset;
         left: unset;
+        right: unset !important;
         margin: 14px 2px !important;
         .ant-tabs-tab {
           padding: 5px 14px;
@@ -100,4 +109,9 @@
       }
     }
   }
+}
+
+
+@media screen and (max-width: 800px) {
+  
 }

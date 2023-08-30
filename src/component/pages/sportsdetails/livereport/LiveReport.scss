@@ -179,7 +179,7 @@
 .completed_fancy {
   margin: 0 !important;
   .ant-card-head-title {
-    font-size: 16px !important;
+    font-size: 20px !important;
   }
 }
 .event_section {
@@ -429,14 +429,27 @@
   }
 }
 
+@media screen and (min-width: 300px) and (max-width: 350px) {
+  .bookData {
+    margin-left: 4px !important;
+  }
+  .sub_fancy {
+    width: 54%;
+    min-width: 50%;
+    max-width: 50%;
+}
+  
+}
+
 @media screen and (max-width: 800px) {
   .bookData {
-    width: 30% !important;
-    min-width: 30% !important;
-    max-width: 55% !important;
+    width: 20% !important;
+    min-width: 20% !important;
+    max-width: 41% !important;
+      
     button {
       margin: 2px;
-      padding: 4px 8px;
+      padding: 4px 2px;
     }
   }
   .lagai1 {
@@ -462,4 +475,19 @@
 .activeMyBook {
   background: #64b7f7 !important;
   color: #fff !important;
+}
+
+
+.sub_live_section{
+  display: flex;
+  justify-content: space-between;
+  .show_btn {button{
+    border: unset;
+    border-radius: unset;
+    outline: unset;
+    background: #5d7074;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 12px;
+  }}
 }

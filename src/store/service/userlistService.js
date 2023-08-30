@@ -150,6 +150,6 @@ export const {
   useUpDateStatusMutation,
   useLazyIsUserIdQuery,
   useBlockBettingMutation,
-  useUpDateLimitesQuery
+  useLazyUpDateLimitesQuery
 
 } = userlistApi;

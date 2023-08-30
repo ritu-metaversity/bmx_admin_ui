@@ -1,9 +1,9 @@
 import { Button, Form, Input, notification } from "antd";
 import React, { useEffect, useState } from "react";
-import { useUpDateLimitesQuery, useWithdrawMutation } from "../../../../store/service/userlistService";
+import { useLazyUpDateLimitesQuery, useWithdrawMutation } from "../../../../store/service/userlistService";
 import { useLocation, useParams } from "react-router-dom";
 
-const MinusLimit = ({ data }) => {
+const MinusLimit = () => {
   const [addTotal, setAddTotal] = useState(0);
   const [chipsValue, setChipsValue] = useState();
   const [passWord, setPassword] = useState("");
@@ -22,9 +22,13 @@ const MinusLimit = ({ data }) => {
   };
 
   const [trigger, { data: addData, error,isLoading }] = useWithdrawMutation();
-  const {data: updateLimite} = useUpDateLimitesQuery({
-    userId:id
-  })
+  const [updateLimitsData, {data: updateLimite}] = useLazyUpDateLimitesQuery()
+
+  useEffect(()=>{
+    updateLimitsData({
+      userId:id
+    })
+  }, [id])
 
   const openNotification = (mess) => {
     api.success({
@@ -48,12 +52,16 @@ const MinusLimit = ({ data }) => {
       amount: Number(values?.amount),
       remark: "deposit",
       lupassword: values?.pass,
-      userId: data?.childId,
+      userId: id,
     };
     trigger(addList);
   };
   useEffect(() => {
     if (addData?.status === true) {
+      updateLimitsData({
+        userId:id,
+      });
+      setAddTotal(0);
       openNotification(addData?.message);
       form?.resetFields();
     } else if (addData?.status === false || error?.data?.message) {

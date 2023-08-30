@@ -1,4 +1,22 @@
-.fancy_data_sess{
-    display: flex;
-    align-items: center;
+.fancy_data_sess {
+  display: flex;
+  align-items: center;
+}
+@media screen and (max-width: 800px) {
+  .fancy_btn {
+    margin-left: 8px;
+  }
+}
+
+.session_bet {
+  .table_section {
+    table {
+      tr {
+        &:nth-child(even) {
+            
+          background-color: unset;
+        }
+      }
+    }
+  }
 }

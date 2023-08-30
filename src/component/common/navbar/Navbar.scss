@@ -111,7 +111,7 @@
   }
   .nav {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     // margin-left: 55px;
     width: 88%;
@@ -277,8 +277,39 @@ ul.nav_droupdown{
   margin: -25px 2px !important;
 }
 
+p.ant-dropdown-trigger.user_deatils.droup_nav {
+  display: flex;
+  justify-content: space-evenly;
+  p{
+    margin: 2px;
+  }
+}
+
 @media screen and (max-width: 800px) {
   p.user_deatils{
     margin-right: 6px !important;
 }
+
+.mob_side{
+  button.ant-btn{
+    svg{
+      z-index: 999999 !important;
+    }
+  }
 }
+
+}
+
+.ant-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 999999 !important;
+  pointer-events: none;
+}
+
+.ant-dropdown.ant-dropdown-placement-bottomRight {
+  z-index: 99999;
+}
+
+
+

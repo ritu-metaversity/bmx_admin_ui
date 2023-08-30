@@ -364,7 +364,7 @@ const CreateSuperAgent = ({ createName }) => {
                       className="number_field"
                       min={0}
                       type="number"
-                      placeholder="Super Agent Coins"
+                      placeholder="Enter Coins"
                       onKeyDown={(e) => {
                         if (e.key == ".") {
                           e.preventDefault();
@@ -460,7 +460,7 @@ const CreateSuperAgent = ({ createName }) => {
                           min={0}
                           step="1"
                           type="number"
-                          placeholder="Super Agent Match Share"
+                          placeholder="Enter Match Share"
                           onKeyDown={(e) => {
                             if (e.key == ".") {
                               e.preventDefault();

@@ -80,6 +80,10 @@ const LiveReport = () => {
         [results?.data?.[0].selection3]: results?.data?.[0].pnl3,
       }
     : {};
+
+    
+
+
   return (
     <>
       {isLoading ? (

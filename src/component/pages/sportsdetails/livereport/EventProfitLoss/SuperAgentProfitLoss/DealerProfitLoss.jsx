@@ -26,11 +26,6 @@ const columns = [
       title: "Comm.",
       dataIndex: "comm",
       key: "comm",
-      render: (text, record) => (
-        <span>
-         0
-        </span>
-      ),
       
     }
   ];
