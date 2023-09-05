@@ -5,7 +5,7 @@ import LadgerDetails from "../../pages/ladgerdetail/LadgerDetails";
 import SportsDetails from "../../pages/sportsdetails/SportsDetails";
 import LiveReport from "../../pages/sportsdetails/livereport/LiveReport";
 import PlusMinusReport from "../../pages/sportsdetails/plusminusreport/PlusMinusReport";
-import PlusMinusDetails from "../../pages/sportsdetails/plusminusreport/plusMinusDetails/plusMinusDetails";
+import PlusMinusDetails from "../../pages/sportsdetails/plusminusreport/plusMinusDetails/PlusMinusDetails";
 import MatchSlips from "../../pages/sportsdetails/matchslips/MatchSlips";
 import FancySlips from "../../pages/sportsdetails/fancyslips/FancySlips";
 import CompletedFancySlips from "../../pages/sportsdetails/completedFancySlips/CompletedFancySlips";
