@@ -49,7 +49,7 @@ const RouletteAllGame = () => {
     <Card
     className="sport_detail main_match_ledger"
     title="Roulette 04-07-2023"
-    extra={<button onClick={() => nav("/Casino/roulette-details")}>Back</button>}>
+    extra={<button onClick={() => nav(-1)}>Back</button>}>
     <div className="matchladger_total">
       <p
         style={{

@@ -89,7 +89,7 @@
           }
       }
         form {
-          .ant-form-item-control.css-dev-only-do-not-override-12jzuas {
+          .ant-form-item-control{
             min-width: 100% !important;
             width: 100% !important;
             max-width: 100%;
@@ -126,7 +126,7 @@
 
 
 
-@media screen and (max-width: 575px) {
+@media screen and (max-width: 800px) {
     .gx-app-logo-content {
         width: 100% !important;
         padding: 20px 20px 10px !important;

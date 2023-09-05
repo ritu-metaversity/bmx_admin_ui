@@ -12,7 +12,7 @@ const AgentLimitDetails = () => {
   const nav = useNavigate();
 
   const handleBackClick = () => {
-    nav("/client/list-agent");
+    nav(-1);
   };
 
   const [searchText, setSearchText] = useState("");

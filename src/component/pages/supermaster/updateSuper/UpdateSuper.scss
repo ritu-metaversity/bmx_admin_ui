@@ -59,10 +59,10 @@
 
 @media screen and (max-width: 800px) {
   .form_data {
-    padding: 0px 6px 0px 6px;
+    padding: 4px 6px 0px 6px;
   }
   .super_agent {
-    .ant-col.ant-col-12.css-dev-only-do-not-override-12jzuas {
+    .ant-col.ant-col-12{
       width: 100%;
       min-width: 100%;
       max-width: 100%;
@@ -75,7 +75,7 @@
       width: 100% !important;
       margin-left: 0% !important;
     }
-    .ant-form-item.css-dev-only-do-not-override-12jzuas {
+    .ant-form-item{
       margin-bottom: 7px;
     }
     button.ant-btn.ant-btn-primary {
@@ -98,4 +98,16 @@
     outline: unset;
     box-shadow: unset;
   }
+}
+.add_minus{
+  .ant-tabs-tab-btn{
+    font-size: 18px;
+    font-weight: 500;
+  }
+  div#rc-tabs-2-tab-1 {
+    color: green;
+}
+div#rc-tabs-2-tab-2 {
+  color: red;
+}
 }

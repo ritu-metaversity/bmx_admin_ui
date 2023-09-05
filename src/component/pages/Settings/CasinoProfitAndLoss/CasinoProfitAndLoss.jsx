@@ -17,7 +17,7 @@ console.log(data?.length);
 const CasinoProfitAndLoss = () => {
   const nav = useNavigate();
   const handleBackClick = () => {
-    nav("/markets");
+    nav(-1);
   };
   //   const onChange = (key) => {
   //     console.log(key);

@@ -9,7 +9,7 @@ import { Button, Input, Space, Table } from "antd";
 const AndarBaharPlusMinus = () => {
   const nav = useNavigate();
   const handleBackClick = () => {
-    nav("Casino/andar-bahar-details");
+    nav(-1);
   };
 
 //   const [isDepositeModalOpen, SetisDepositeModalOpen] = useState(false);
@@ -228,7 +228,6 @@ const AndarBaharPlusMinus = () => {
               dataSource={data}
               pagination={false}
               rowClassName={(record) => {
-                console.log(record.key, "sdfdf")
                 return record?.key  == 2 ? "dateHiglight" : "";
               }}
              ></Table>

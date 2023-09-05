@@ -1,17 +1,23 @@
-import { createApi } from "@reduxjs/toolkit/dist/query/react";
-import { dynamicBaseQuery } from "./dynamicBaseQuery";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
 export const oddsPnlApi = createApi({
   reducerPath: "oddsPnlApi",
-  baseQuery: dynamicBaseQuery,
+  baseQuery: fetchBaseQuery({
+    baseUrl: import.meta.env.VITE_BASE_URL,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem("token");
+      headers.set("Authorization", `Bearer ${token}`);
+      return headers;
+    },
+  }),
   endpoints: (build) => ({
-    oddsPnl: build.mutation({
-      query: (body) => ({
-        url: "/bets/odds-pnl",
-        method: "POST",
-        body
-      }),
-    }),
+    // oddsPnl: build.mutation({
+    //   query: (body) => ({
+    //     url: "/bets/odds-pnl",
+    //     method: "POST",
+    //     body
+    //   }),
+    // }),
     oddsQuPnl: build.query({
       query: (body) => ({
         url: "/bets/odds-pnl",
@@ -19,7 +25,14 @@ export const oddsPnlApi = createApi({
         body
       }),
     }),
+    fancyPnl: build.query({
+      query: (body) => ({
+        url: "/bets/fancy-pnl",
+        method: "POST",
+        body
+      }),
+    }),
   }),
 });
 
-export const {useOddsPnlMutation, useOddsQuPnlQuery} = oddsPnlApi;
+export const {useLazyOddsQuPnlQuery, useFancyPnlQuery} = oddsPnlApi;

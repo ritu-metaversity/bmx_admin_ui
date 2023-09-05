@@ -1,9 +1,15 @@
-import { createApi } from "@reduxjs/toolkit/dist/query/react";
-import { dynamicBaseQuery } from "./dynamicBaseQuery";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
 export const fancyBookApi = createApi({
   reducerPath: "fancyBookApi",
-  baseQuery: dynamicBaseQuery,
+  baseQuery: fetchBaseQuery({
+    baseUrl: import.meta.env.VITE_BASE_URL,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem("token");
+      headers.set("Authorization", `Bearer ${token}`);
+      return headers;
+    },
+  }),
   endpoints: (build) => ({
     fancyBook: build.query({
       query: (body) => ({

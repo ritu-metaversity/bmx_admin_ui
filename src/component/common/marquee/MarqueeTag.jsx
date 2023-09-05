@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import "./MarqueeTag.scss";
 
 const MarqueeTag = () => {
-  const host = window.location.hostname.split(".");
+  const host = window.location.hostname.split(".")[1];
 
   return (
     <>

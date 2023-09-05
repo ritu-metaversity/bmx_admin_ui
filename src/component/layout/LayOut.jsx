@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Sidebar from "../common/sidebar/Sidebar";
 const { Header, Content } = Layout;
 import Navbar from "../common/navbar/Navbar";
-import "./LayOut.scss";
+import "./Layout.scss";
 import MarqueeTag from "../common/marquee/MarqueeTag";
 import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import Signin from "../common/signin/Signin";

@@ -10,7 +10,7 @@ const Rulespage = () => {
       <Card
         className="sport_detail rules_page ledger_data"
         title="Rules "
-        extra={<button onClick={() => nav("/")}>Back</button>}>
+        extra={<button onClick={() => nav(-1)}>Back</button>}>
         <div>
           <div className="term-and-condition">
             <h1 style={{ textAlign: "center" }}>

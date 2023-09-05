@@ -28,7 +28,7 @@ const AndarBaharDetail = () => {
   const navigate = useNavigate();
 
   const handleBackbtn = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   const [rouletteKey, setRouletteKey] = useState()

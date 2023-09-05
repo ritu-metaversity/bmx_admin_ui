@@ -54,7 +54,7 @@
       }
     }
     .ant-checkbox-inner,
-    :where(.css-dev-only-do-not-override-12jzuas).ant-checkbox-checked:not(
+    .ant-checkbox-checked:not(
         .ant-checkbox-disabled
       ) {
       &:hover {
@@ -140,7 +140,7 @@
         margin-bottom: 37px;
       }
     }
-    .ant-col.ant-col-12.css-dev-only-do-not-override-12jzuas {
+    .ant-col.ant-col-12{
       width: 100%;
       min-width: 100%;
       max-width: 100%;
@@ -155,5 +155,10 @@
   display: inline-block;
   flex: 1 1;
   overflow: hidden;
-  white-space: nowrap;
+  // white-space: nowrap;
+}
+.back_show{
+  button{
+    margin: 0px 5px;
+  }
 }

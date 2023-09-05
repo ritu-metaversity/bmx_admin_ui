@@ -52,7 +52,7 @@ const AnderBaharShowBets = () => {
     <Card
     className="sport_detail show_bet"
     title={`All Bets - ${id}`}
-    extra={<button onClick={() => nav("Casino/andar-bahar-details")}><LeftOutlined /> Back</button>}>
+    extra={<button onClick={() => nav(-1)}><LeftOutlined /> Back</button>}>
     <div className=" show_bet_table" style={{marginBottom:"12px"}}>
       <table>
         <thead>

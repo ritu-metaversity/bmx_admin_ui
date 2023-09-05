@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
-import "./ListSuper.Scss";
-import UserListTable from "../../../common/userListTable";
+import "./ListSuper.scss";
+import UserListTable from "../../../common/UserListTable";
 
 const ListSuper = ({userTyep, Listname}) => {
  
@@ -13,11 +13,11 @@ const ListSuper = ({userTyep, Listname}) => {
   };
 
   const handleCreate = () => {
-    if(Listname === "Super Agent"){
+    if(Listname === "Super Master"){
       nav("/client/create-super");
     }else if(Listname === "Master"){
       nav("/client/create-agent");
-    }else if(Listname === "Dealer"){
+    }else if(Listname === "Agent"){
       nav("/client/create-dealer");
     }
     else{

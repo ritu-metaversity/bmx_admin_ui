@@ -5,7 +5,7 @@ import LadgerDetails from "../../pages/ladgerdetail/LadgerDetails";
 import SportsDetails from "../../pages/sportsdetails/SportsDetails";
 import LiveReport from "../../pages/sportsdetails/livereport/LiveReport";
 import PlusMinusReport from "../../pages/sportsdetails/plusminusreport/PlusMinusReport";
-import PlusMinusDetails from "../../pages/sportsdetails/plusminusreport/plusMinusDetails/plusMinusDetails";
+import PlusMinusDetails from "../../pages/sportsdetails/plusminusreport/plusMinusDetails/PlusMinusDetails";
 import MatchSlips from "../../pages/sportsdetails/matchslips/MatchSlips";
 import FancySlips from "../../pages/sportsdetails/fancyslips/FancySlips";
 import CompletedFancySlips from "../../pages/sportsdetails/completedFancySlips/CompletedFancySlips";
@@ -69,27 +69,27 @@ const Main = ({setOpenRules}) => {
               <Route path="/completed-fancy-slips/:id" element={<CompletedFancySlips/>} />
               <Route path="/rejectedBetsByEvent/:id" element={<RejectedBetsByEvent />} />
 
-              <Route path="/client/list-super" element={<ListSuper userTyep={0} Listname={"Super Agent"}/>} />
+              <Route path="/client/list-super" element={<ListSuper userTyep={0} Listname={"Super Master"}/>} />
               <Route path="/client/list-agent" element={<ListSuper userTyep={1} Listname={"Master"} /> } />
-              <Route path="/client/list-dealer" element={<ListSuper userTyep={2} Listname={"Dealer"}/> } />
+              <Route path="/client/list-dealer" element={<ListSuper userTyep={2} Listname={"Agent"}/> } />
               <Route path="/client/list-client" element={<ListSuper userTyep={3} Listname={"Client"}/> } />
 
-              <Route path="/client/list-super/:id" element={<ListSuper userTyep={0} Listname={"Super Agent"}/> } />
+              <Route path="/client/list-super/:id" element={<ListSuper userTyep={0} Listname={"Super Master"}/> } />
               <Route path="/client/list-agent/:id" element={<ListSuper userTyep={1} Listname={"Master"}/> } />
-              <Route path="/client/list-dealer/:id" element={<ListSuper userTyep={2} Listname={"Dealer"}/> } />
+              <Route path="/client/list-dealer/:id" element={<ListSuper userTyep={2} Listname={"Agent"}/> } />
               <Route path="/client/list-clent/:id" element={<ListSuper userTyep={3} Listname={"Client"}/> } />
 
-              <Route path="/client/update-super/:id" element={<UpdateSuper updateName={"Super Agent"}/>} />
+              <Route path="/client/update-super/:id" element={<UpdateSuper updateName={"Super Master"}/>} />
               <Route path="/client/update-agent/:id" element={<UpdateSuper updateName={"Master"}/>} />
               <Route path="/client/update-client/:id" element={<UpdateSuper updateName={"Client"}/>} />
-              <Route path="/client/update-dealer/:id" element={<UpdateSuper updateName={"Dealer"}/>} />
+              <Route path="/client/update-dealer/:id" element={<UpdateSuper updateName={"Agent"}/>} />
               <Route path="/client/account-operations/:id" element={<AccountOperations />} />
               <Route path="/account-operation" element={<AccountOperations />} />
               <Route path="/client/login-report" element={<LoginReport />} />
               <Route path="/client/login-report/:id" element={<LoginReport />} />
-              <Route path="/client/create-super" element={<CreateSuperAgent createName={"Super Agent"}/>}/>
+              <Route path="/client/create-super" element={<CreateSuperAgent createName={"Super Master"}/>}/>
               <Route path="/client/create-agent" element={<CreateSuperAgent createName={"Master"}/>}/>
-              <Route path="/client/create-dealer" element={<CreateSuperAgent createName={"Dealer"}/>} />
+              <Route path="/client/create-dealer" element={<CreateSuperAgent createName={"Agent"}/>} />
               <Route path="/client/create-client" element={<CreateSuperAgent createName={"Client"}/>} />
               <Route path="/client/limitplusminus-super/:id" element={<SuperAgentLimitDetails />} />
               <Route path="/client/limitplusminus-agent" element={<AgentLimitDetails />} />
@@ -97,16 +97,16 @@ const Main = ({setOpenRules}) => {
               <Route path="/client/limitplusminus-client" element={<ClientLimitDetails />}/>
               <Route path="/client/my-ledger" element={<MyLedger />}/>
 
-              <Route path="/client/ledger-super" element={<SuperAgentLedger userTyep={0} Listname={"Super Agent"}/>}/>
+              <Route path="/client/ledger-super" element={<SuperAgentLedger userTyep={0} Listname={"Super Master"}/>}/>
               <Route path="/client/ledger-master" element={<SuperAgentLedger userTyep={1} Listname={"Master"}/>}/>
-              <Route path="/client/ledger-agent" element={<SuperAgentLedger userTyep={2} Listname={"Delear"}/>}/>
+              <Route path="/client/ledger-agent" element={<SuperAgentLedger userTyep={2} Listname={"Agent"}/>}/>
               <Route path="/client/ledger-client" element={<SuperAgentLedger userTyep={3} Listname={"Client"}/>}/>
 
               <Route path="/Events/matchledger" element={<MatchLedger/>}/>
               <Route path="/client/cash-transanction" element={<CashTransanction/>}/>
               {/* <Route path="/client/txn-super" element={<SuperAgentTransactions/>}/> */}
-              <Route path="/client/txn-super" element={<AgentTransactions  userType={0} Listname={"Super Agent"}/>}/>
-              <Route path="/client/txn-agent" element={<AgentTransactions userType={2} Listname={"Delear"}/>}/>
+              <Route path="/client/txn-super" element={<AgentTransactions  userType={0} Listname={"Super Master"}/>}/>
+              <Route path="/client/txn-agent" element={<AgentTransactions userType={2} Listname={"Agent"}/>}/>
               <Route path="/client/txn-client" element={<AgentTransactions userType={3} Listname={"Client"}/>}/>
               <Route path="/client/txn-master" element={<AgentTransactions userType={1} Listname={"Master"}/>}/>
               {/* <Route path="/client/txn-client" element={<ClientTransactions/>}/> */}

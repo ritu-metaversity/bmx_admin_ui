@@ -31,28 +31,22 @@
     .match_slip {
         padding: 1% 0%;
     }
-    .ant-row.css-dev-only-do-not-override-12jzuas {
-        // display: block;
-        // width: 100%;
-        // min-width: 100%;
-        // max-width: 100%;
-    }
     .match_slip_selected {
         width: 87% !important;
         min-width: 87vw !important;
         max-width: 87% !important;
         margin-bottom: 13px;
     }
-    .ant-col.ant-col-8.css-dev-only-do-not-override-12jzuas {
+    .ant-col.ant-col-8{
         width: 100%;
-        min-width: 100%;
+        // min-width: 100%;
         max-width: 100%;
     }
 }
 
 .pnl{
     .ant-card-head-title {
-        font-size: 16px !important;
+        font-size: 20px !important;
     }
 }
 

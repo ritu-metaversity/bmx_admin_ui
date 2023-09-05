@@ -15,7 +15,6 @@ const Signin = () => {
       message.error(authData?.message || error.data?.message);
     } else if (authData?.token !== null && authData?.token !== undefined) {
       localStorage.setItem("token", authData?.token);
-      // localStorage.setItem("userId", JSON.stringify(authData));
       localStorage.setItem("rulesStatus", true)
       localStorage.setItem("userId", authData?.userId);
       localStorage.setItem("userType", authData?.userType);
@@ -25,13 +24,18 @@ const Signin = () => {
 
   const onFinish = (values) => {
     const authData = {
-      userId: values?.username,
-      password: values?.password,
-      appUrl: "subadmin.localhost",
-      // appUrl: window.location.appUrl,
+      userId: (values?.username?.trim()),
+      password: (values?.password?.trim()),
+      appUrl: window.location.hostname,
+      // appUrl: "master.247idhub.com",
+      // appUrl: "supermaster.247idhub.com", 
+      // appUrl: "agent.247idhub.com",
+      // appUrl: "subadmin.247idhub.com",
+      // appUrl: "subadmin.localhost",
     };
     trigger(authData);
   };
+
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);

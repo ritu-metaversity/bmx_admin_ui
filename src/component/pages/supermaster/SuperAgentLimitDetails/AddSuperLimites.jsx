@@ -1,17 +1,22 @@
 import { Button, Form, Input, Space, Table, notification } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 
-import { useAddLimitMutation } from "../../../../store/service/userlistService";
+import {useDepositMutation, useLazyUpDateLimitesQuery } from "../../../../store/service/userlistService";
+import { useLocation, useParams } from "react-router-dom";
 
-const AddSuperLimites = ({ data }) => {
+const AddSuperLimites = () => {
   const [addTotal, setAddTotal] = useState(0);
   const [chipsValue, setChipsValue] = useState();
   const [passWord, setPassword] = useState("");
   const [api, contextHolder] = notification.useNotification();
+  const [form]= Form.useForm();
+  const {state} = useLocation();
+
+  const {id} = useParams()
 
   const handelAddLimit = (e) => {
     setChipsValue(e.target.value);
-    setAddTotal(Number(e.target.value) + Number(data?.childAmount));
+    setAddTotal(Number(e.target.value) + Number(updateLimite?.data?.childAmount));
   };
 
   const handelPassword = (e) => {
@@ -35,21 +40,35 @@ const AddSuperLimites = ({ data }) => {
     });
   };
 
-  const [trigger, { data: addData, error, isLoading }] = useAddLimitMutation();
+
+  const [trigger, { data: addData, error, isLoading }] = useDepositMutation();
+  const [updateLimites, {data: updateLimite}] = useLazyUpDateLimitesQuery()
+
+
+  useEffect(()=>{
+    updateLimites({
+      userId:id
+    })
+  }, [id])
 
   const onFinish = (values) => {
     const addList = {
-      amount: Number(values?.amount),
-      remark: "deposit",
-      lupassword: values?.pass,
-      userId: data?.childId,
+        amount:Number(values?.amount),
+        remark:"Creadit deposit",
+        lupassword:values?.pass,
+        userId:id
     };
     trigger(addList);
   };
 
   useEffect(() => {
     if (addData?.status === true) {
+      updateLimites({
+        userId:id
+      })
+      setAddTotal(0)
       openNotification(addData?.message);
+      form?.resetFields();
     } else if (addData?.status === false || error?.data?.message) {
       openNotificationError(addData?.message || error?.data?.message);
     }
@@ -62,6 +81,7 @@ const AddSuperLimites = ({ data }) => {
         <div className="table_section statement_tabs_data ant-spin-nested-loading">
           <Form
             onFinish={onFinish}
+            form={form}
             // onFinishFailed={onFinishFailed}
             autoComplete="off">
             <table className="live_table  limit_update">
@@ -71,14 +91,14 @@ const AddSuperLimites = ({ data }) => {
                 <th width="10%">C. Chips</th>
                 <th width="30%">Add limit </th>
                 <th width="5%">Total Limit</th>
-                <th width="30%">Lu Password</th>
+                <th width="30%">Transaction Password</th>
                 <th width="5%">Action</th>
               </tr>
 
               <tr>
-                <td>{data?.childId}</td>
-                <td>{data?.childName}</td>
-                <td>{data?.childAmount}</td>
+                <td>{updateLimite?.data?.childId}</td>
+                <td>{updateLimite?.data?.childName}</td>
+                <td>{updateLimite?.data?.childAmount}</td>
 
                 <td>
                   <div>
@@ -112,7 +132,8 @@ const AddSuperLimites = ({ data }) => {
                       <Input
                         onChange={(e) => handelPassword(e)}
                         type="password"
-                        placeholder="Enter Password"
+                        placeholder="Enter Transaction Password"
+                        autoComplete="off"
                       />
                     </Form.Item>
                   </div>
@@ -122,6 +143,7 @@ const AddSuperLimites = ({ data }) => {
                     <Button
                       style={{ height: "unset" }}
                       className="add"
+                      loading={isLoading}
                       htmlType="submit">
                       Add
                     </Button>

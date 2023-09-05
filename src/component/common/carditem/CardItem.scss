@@ -26,6 +26,9 @@
     background: unset !important;
     .ant-card-grid {
       padding: 15px 20px !important;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
   }
 }
   
@@ -35,7 +38,7 @@
       .ant-card {
           margin-bottom: 20px !important;
           .ant-card-grid {
-              width: 43% !important;
+              width: 43% ;
               text-align: left !important;
               .icon_card_section{
               svg{

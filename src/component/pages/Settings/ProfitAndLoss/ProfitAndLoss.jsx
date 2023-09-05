@@ -13,6 +13,8 @@ import "./ProfitAndLoss.scss";
 import { useEffect, useState } from "react";
 import { useLazyProfitLossQuery } from "../../../../store/service/supermasteAccountStatementServices";
 import moment from "moment";
+import dayjs from "dayjs"
+
 
 const { RangePicker } = DatePicker;
 
@@ -24,12 +26,12 @@ const ProfitAndLoss = () => {
   const [dateData, setDateData] = useState([timeBefore, time]);
   const [ProfitLossData, setProfitLossData] = useState([]);
   const [totalPage, setTotalPage] = useState();
-  const [paginationTotal, setPaginationTotal] = useState(10);
+  const [paginationTotal, setPaginationTotal] = useState(50);
   const [indexData, setIndexData] = useState(0);
   const nav = useNavigate();
 
   const handleBackClick = () => {
-    nav("/markets");
+    nav(-1);
   };
 
   const [getProftLossData, results, { isLoading }] = useLazyProfitLossQuery();
@@ -87,7 +89,7 @@ const ProfitAndLoss = () => {
               <Row className="profit_apply">
                 <Col xs={24} xl={8} lg={8} md={24}>
                   <div className="profit_date">
-                    <RangePicker onChange={onChange} />
+                    <RangePicker defaultValue={[dayjs(timeBefore), dayjs(time)]} onChange={onChange} />
                   </div>
                 </Col>
                 <Col xs={24} xl={4} lg={4} md={24} className="text-center">
@@ -133,7 +135,7 @@ const ProfitAndLoss = () => {
                     <Pagination
                       className="pagination_main ledger_pagination"
                       onShowSizeChange={(c, s) => setPaginationTotal(s)}
-                      total={totalPage && totalPage * paginationTotal}
+                      total={totalPage}
                       onChange={(e) => setIndexData(e - 1)}
                     />
                   </div>

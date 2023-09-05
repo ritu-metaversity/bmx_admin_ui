@@ -35,9 +35,24 @@
       }
 }
 
-@media screen and (max-width: 800px) {
-  
+.last_item{
+  margin-left: 10px;
+}
 
+@media screen and (max-width: 800px) {
+  .last_item{
+    margin-left: 0px !important;
+  }
+  
+.item3{
+  margin-top:4px;
+}
+.item1{
+  margin-top:4px;
+}
+.item2{
+  margin-top:4px;
+}
 .ant-row.main_super_super_ledger{
   margin: 24px 0;
   .ant-col.ant-col-8{
@@ -77,3 +92,4 @@
     }
 }
 }
+

@@ -4,7 +4,7 @@ import React from "react";
 import { Tabs } from "antd";
 import AddSuperLimites from "./AddSuperLimites";
 import MinusLimit from "./MinusLimit";
-import { useDepositAndWithdrawQuery } from "../../../../store/service/userlistService";
+
 
 const SuperAgentLimitDetails = () => {
   const nav = useNavigate();
@@ -13,24 +13,17 @@ const SuperAgentLimitDetails = () => {
     nav("/client/list-super");
   };
 
-  const {id} = useParams()
-
-  const { data } = useDepositAndWithdrawQuery({
-    userId: id,
-  });
-
-  console.log(data?.data, "dsdsdsd");
-
   const items = [
     {
       key: "1",
       label: `Add`,
-      children: <AddSuperLimites data={data?.data}/>,
+      children: <AddSuperLimites />,
     },
     {
       key: "2",
       label: `Minus`,
-      children: <MinusLimit  data={data?.data}/>,
+      children: <MinusLimit  />,
+      color:"red"
     },
   ];
 
@@ -38,6 +31,8 @@ const SuperAgentLimitDetails = () => {
     console.log(key);
   };
 
+
+  const uType = localStorage.getItem("userType")
 
 
   return (
@@ -50,7 +45,7 @@ const SuperAgentLimitDetails = () => {
             <div
               style={{ padding: "9px 8px", fontSize: "22px" }}
               className="team_name">
-              Super Agent Limit Details
+              {uType == 5? "Super Master Limit Details": uType == 0?"Master Limit Details ":uType == 1?"Agent Limit Details": uType == 2?"Client Limit Details":""}
             </div>
             <div className="show_btn">
               <button onClick={handleBackClick}>Back</button>

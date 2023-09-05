@@ -1,9 +1,15 @@
-import { createApi } from "@reduxjs/toolkit/dist/query/react";
-import { dynamicBaseQuery } from "./dynamicBaseQuery";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
 export const sportDetailsApi = createApi({
   reducerPath: "sportDetailsApi",
-  baseQuery: dynamicBaseQuery,
+  baseQuery: fetchBaseQuery({
+    baseUrl: import.meta.env.VITE_BASE_URL,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem("token");
+      headers.set("Authorization", `Bearer ${token}`);
+      return headers;
+    },
+  }),
   endpoints: (build) => ({
     sportDetail: build.query({
       query: (body) => ({
@@ -26,7 +32,29 @@ export const sportDetailsApi = createApi({
         body,
       }),
     }),
-    })
+    sportPlusMinus: build.query({
+      query: (body) => ({
+        url: "/bmx/report/match-and-fancy-plus-minus",
+        method: "POST",
+        body,
+      }),
+    }),
+    searchUserDownline: build.query({
+      query: (args) => {
+        const { term } = args;
+        return {
+          url: `/user/search-user-downline?term=${term}&_type=${term}&q=${term}`,
+          method: "POST",
+        }
+      },
+    }),
+  }),
 });
 
-export const {useSportDetailQuery,useRejectedBetDetailQuery,useLazySessionFancyBetDetailQuery} = sportDetailsApi;
+export const {
+  useSportDetailQuery,
+  useRejectedBetDetailQuery,
+  useLazySessionFancyBetDetailQuery,
+  useSportPlusMinusQuery,
+  useLazySearchUserDownlineQuery
+} = sportDetailsApi;

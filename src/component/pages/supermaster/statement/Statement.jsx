@@ -23,7 +23,7 @@ const Statement = () => {
   const [dateData, setDateData] = useState([timeBefore,time])
   const nav = useNavigate();
   const handleBackClick = () => {
-    nav("/Events/sports-details");
+    nav(-1);
   };
 
   const onChange = (e,date,dateString) => {

@@ -22,7 +22,7 @@
     border-radius: 2px 2px 0 0 !important;
     // padding: 15px;
     .ant-card-head-title {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 500 !important;
       padding: 0px 0px;
     }
@@ -77,9 +77,9 @@
         padding: 0 3px;
       }
       tr {
-        &:hover {
-          background-color: #a8b3b3 !important;
-        }
+        // &:hover {
+        //   background-color: #a8b3b3 !important;
+        // }
         .setting_btn {
           background: rgb(82, 196, 26) !important;
           padding: 4px 7px;

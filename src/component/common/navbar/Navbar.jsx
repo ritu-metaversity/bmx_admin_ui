@@ -13,10 +13,11 @@ const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInfo, setUserInfo] = useState();
   const nav = useNavigate();
+
   const handleLogout = () => {
+    trigger();
     localStorage.clear();
     nav("/");
-    trigger();
   };
 
   const items = [
@@ -46,30 +47,39 @@ const Navbar = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const handleDashbordHome = () => {
+    nav("/dashboard");
+  };
+
   return (
     <>
       <div className="nav1"></div>
       {localStorage.getItem("token") !== null && (
-        <div style={{cursor:"pointer"}} className="nav">
+        <div className="nav">
           <div>
-            <Link to="/">
-              <img src="/Images/logo.png" alt="" />
-            </Link>
-          </div>
-          <Dropdown
-            menu={{
-              className: "nav_droupdown",
-              items,
-              onClick: handleModal,
-            }}
-            trigger={["click"]}>
-            <p className="user_deatils" style={{cursor:"pointer"}} onClick={(e) => e.preventDefault()}>
-              <Space className="">
-                {localStorage.getItem("userId")}
-                <DownOutlined />
-              </Space>
+            <p>
+              <img onClick={handleDashbordHome} src="/Images/logo.png" alt="" />
             </p>
-          </Dropdown>
+          </div>
+          <div className="nav_drop">
+            <Dropdown
+              style={{ zIndex: "999999" }}
+              className="droup_nav"
+              menu={{
+                className: "nav_droupdown",
+                items,
+                onClick: handleModal,
+              }}
+              trigger={["click"]}>
+              <p className="user_deatils" style={{cursor:"pointer"}} onClick={(e) => e.preventDefault()}>
+                <p style={{fontWeight: 600, fontSize:"16px"}}>{localStorage.getItem("userId")}</p>
+                <p >
+                  <DownOutlined />
+                </p>
+              </p>
+            </Dropdown>
+          </div>
         </div>
       )}
 

@@ -1,15 +1,20 @@
 import React, { useEffect } from "react";
-import { Button, Form, Input, InputNumber, Spin, notification } from "antd";
+import { Button, Form, Input, InputNumber, Spin} from "antd";
 import "./Deposit.scss";
 import {
-  useDepositMutation,
-  useWithdrawMutation,
+  useDepositAndWithdrawQuery,
+  useMinusLimitMutation,
 } from "../../store/service/userlistService";
+import { openNotification, openNotificationError } from "../../App";
 
-const Withdraw = ({ balance, userIdData, handleClose }) => {
-  const [api, contextHolder] = notification.useNotification();
+const Withdraw = ({ data:datadeposit, userIdData, handleClose }) => {
+  const [form]= Form.useForm();
 
-  const [trigger, { data, error, isLoading }] = useWithdrawMutation();
+
+  const [trigger, { data, error, isLoading }] = useMinusLimitMutation();
+  const {data: depositeWithdraw} = useDepositAndWithdrawQuery({
+    userId:datadeposit
+  });
 
   const onFinish = (values) => {
     const withdrawData = {
@@ -19,42 +24,23 @@ const Withdraw = ({ balance, userIdData, handleClose }) => {
       userId: userIdData,
     };
     trigger(withdrawData);
-    console.log("Success:", values);
-  };
-
-  const openNotification = (mess) => {
-    api.success({
-      message: mess,
-      description: "Success",
-      closeIcon: false,
-      placement: "top",
-    });
-  };
-
-  const openNotificationError = (mess) => {
-    api.error({
-      message: mess,
-      closeIcon: false,
-      placement: "top",
-    });
+    form?.resetFields();
   };
 
   useEffect(() => {
     if (data?.status === true) {
       openNotification(data?.message);
+      form?.resetFields();
       handleClose();
     } else if (data?.status === false || error?.data?.message) {
       openNotificationError(data?.message || error?.data?.message);
+      handleClose();
     }
-  }, [data?.data]);
+  }, [data?.data, error]);
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
 
   return (
     <>
-      {contextHolder}
       <div className="ant-spin-nested-loading">
       {isLoading && (
           <>
@@ -62,13 +48,13 @@ const Withdraw = ({ balance, userIdData, handleClose }) => {
           </>
         )}
       <div>
-        <p>Curr Coins : {balance}</p>
+        <p>Curr Coins : {depositeWithdraw?.data?.childUplineAmount}</p>
       </div>
       <div className="form_modals">
        
         <Form
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
+          form={form}
           autoComplete="off">
           <Form.Item
             required

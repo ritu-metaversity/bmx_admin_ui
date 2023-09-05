@@ -2,6 +2,7 @@ import { Card, Col, Divider, Pagination, Row, Table } from "antd";
 import "./SuperAgentLedger.scss";
 import { useDownlineLedgerQuery } from "../../../../store/service/ledgerServices";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const columns = [
@@ -14,6 +15,11 @@ const columns = [
     title: "Balance",
     dataIndex: "balance",
     key: "balance",
+    render: (text, record) => (
+      <span>
+       {Math.abs(record?.balance)}
+      </span>
+    ),
   }
 ];
 
@@ -23,9 +29,9 @@ const SuperAgentLedger = ({userTyep, Listname}) => {
   const [leneBalance, setLenaBalance] = useState(0)
   const [denaData, setDenaBalance] = useState(0)
   const [clearData, setClearData] = useState(0)
-
+const nav = useNavigate()
   const handleBackbtn = () => {
-    console.log("heloo");
+   nav(-1)
   };
 
   const {data: ledger, isFetching, isLoading} = useDownlineLedgerQuery({
@@ -50,12 +56,12 @@ const SuperAgentLedger = ({userTyep, Listname}) => {
         title={`${Listname} Ledger`}
         extra={<button onClick={handleBackbtn}>Back</button>}>
         <Row className="main_super_super_ledger">
-          <Col span={8}>
+          <Col  xl={8} xs={24} lg={8} md={24} span={8}>
             <div className="super_ledger item1">
               <div>Lena</div>
               <div>{leneBalance}</div>
             </div>
-            <div>
+            <div >
               <div className="table_section">
               <Table
               className="live_table limit_update"
@@ -68,10 +74,10 @@ const SuperAgentLedger = ({userTyep, Listname}) => {
               </div>
             </div>
           </Col>
-          <Col span={8}>
-            <div className="super_ledger item2">
+          <Col  xl={8} xs={24} lg={8} md={24}>
+            <div className="super_ledger item2" >
               <div>Dena</div>
-              <div>{denaData}</div>
+              <div>{Math.abs(denaData)}</div>
             </div>
             <div>
               <div className="table_section">
@@ -86,7 +92,8 @@ const SuperAgentLedger = ({userTyep, Listname}) => {
               </div>
             </div>
           </Col>
-          <Col span={8}>
+          <Col   xl={8} xs={24} lg={8} md={24}>
+            <div className="last_item">
             <div className="super_ledger item3">
               <div>Clear</div>
               <div>{clearData}</div>
@@ -103,6 +110,8 @@ const SuperAgentLedger = ({userTyep, Listname}) => {
             </Table>
               </div>
             </div>
+            </div>
+            
           </Col>
         </Row>
       </Card>

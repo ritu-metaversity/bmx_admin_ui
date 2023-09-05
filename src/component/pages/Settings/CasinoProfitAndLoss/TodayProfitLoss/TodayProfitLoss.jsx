@@ -17,7 +17,7 @@ console.log(data?.length);
 const TodayProfitLoss = () => {
   const nav = useNavigate();
   const handleBackClick = () => {
-    nav("/casinoprofitandloss");
+    nav(-1);
   };
   //   const onChange = (key) => {
   //     console.log(key);

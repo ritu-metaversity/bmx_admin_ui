@@ -11,22 +11,16 @@ import {
   notification,
 } from "antd";
 import "./UpdateSuper.scss";
-import { useSelector } from "react-redux";
-import { globalSelector } from "../../../../store/global/slice";
-import {
-  useLazyGetUserQuery,
-  useUpdateUserMutation,
-} from "../../../../store/service/createUserServices";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useLazyGetUserQuery, useUpdateUserMutation } from "../../../../store/service/userlistService";
 
 const UpdateSuper = ({ updateName }) => {
   const [api, contextHolder] = notification.useNotification();
   const [commType, setCommType] = useState("");
+  const nav = useNavigate();
 
-  const [form]= Form.useForm();
+  const [form] = Form.useForm();
   const [data, setData] = useState();
-
- 
 
   const { id } = useParams();
   const [trigger, { data: updateData, isLoading, error }] =
@@ -53,7 +47,6 @@ const UpdateSuper = ({ updateName }) => {
   const passw = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,}$/;
 
   const onFinish = (values) => {
-    // console.log(values?.comm_type, "dfdsfsd");
     const userData = {
       userId: id,
       userName: values?.name,
@@ -70,7 +63,6 @@ const UpdateSuper = ({ updateName }) => {
 
     trigger(userData);
     form?.resetFields();
-
   };
   useEffect(() => {
     if (updateData?.status === true) {
@@ -99,16 +91,13 @@ const UpdateSuper = ({ updateName }) => {
 
   useEffect(() => {
     if (resuilt?.data?.status === true) setData(resuilt?.data?.data);
-    setCommType(
-      data?.data?.matchComm == 0 || data?.data?.sessionComm == 0
-        ? "no-comm"
-        : "bbb"
-    );
+    setCommType(Number(resuilt?.data?.data?.matchComm) == 0 || Number(resuilt?.data?.data?.sessionComm) == 0? "no-comm": "bbb");
   }, [resuilt?.data?.data]);
 
   const onCommissionType = (e) => {
     setCommType(e);
   };
+
 
   return (
     <>
@@ -116,14 +105,13 @@ const UpdateSuper = ({ updateName }) => {
       <div className="main_live_section">
         <div className="_match">
           <div
-            className="sub_live_section live_report"
-            // style={{ marginTop: "35px" }}
-          >
+            className="sub_live_section live_report">
             <div
               style={{ padding: "5px 8px", fontSize: "22px" }}
               className="team_name">
               Update {updateName}
             </div>
+            <div className="show_btn"><button onClick={()=>nav(-1)}>Back</button></div>
           </div>
         </div>
         <div className="ant-spin-nested-loading">
@@ -140,7 +128,7 @@ const UpdateSuper = ({ updateName }) => {
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            // initialValues={{ remember: true }} 
+            // initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             onFocus={onFinishFailed}
@@ -224,7 +212,7 @@ const UpdateSuper = ({ updateName }) => {
             ]}>
             <div>
               <Row className="super_agent  update_agent">
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="Name"
                     name="name"
@@ -280,24 +268,12 @@ const UpdateSuper = ({ updateName }) => {
                       {
                         pattern: passw,
                         message:
-                          "Minimun 6 charecter, must contain letters and numbers!",
+                          "Minimun 6 character, must contain letters and numbers!",
                       },
                     ]}>
-                    <Input type="text" placeholder="Password" />
+                    <Input type="password" placeholder="Password" />
                   </Form.Item>
-                  <Form.Item
-                    label="Lu Password"
-                    name="lupassword"
-                    required
-                    
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please Enter Password!",
-                      },
-                    ]}>
-                    <Input type="text" autoComplete="off" placeholder="Password" />
-                  </Form.Item>
+
                   <Form.Item
                     name="status"
                     label="Status"
@@ -317,7 +293,7 @@ const UpdateSuper = ({ updateName }) => {
                     </Select>
                   </Form.Item>
                 </Col>
-                <Col span={12}></Col>
+                <Col lg={12} xs={24}></Col>
               </Row>
               <div>
                 <h2 style={{ marginLeft: "0px" }} className="update_agent_text">
@@ -325,7 +301,7 @@ const UpdateSuper = ({ updateName }) => {
                 </h2>
               </div>
               <Row className="super_agent  update_agent">
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="MASTER Comm type"
                     name="commType"
@@ -333,7 +309,7 @@ const UpdateSuper = ({ updateName }) => {
                     <Input disabled />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     name="comm_type"
                     label="SUPER comm type"
@@ -354,7 +330,7 @@ const UpdateSuper = ({ updateName }) => {
                 </Col>
                 {commType == "bbb" ? (
                   <>
-                    <Col span={12}>
+                    <Col lg={12} xs={24}>
                       <Form.Item
                         label="MASTER match comm(%)"
                         name="matchcomm"
@@ -362,7 +338,7 @@ const UpdateSuper = ({ updateName }) => {
                         <Input type="number" disabled />
                       </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col lg={12} xs={24}>
                       <Form.Item
                         label="SUPER match comm(%)"
                         name="Supermatchcomm"
@@ -375,7 +351,7 @@ const UpdateSuper = ({ updateName }) => {
                           {
                             validator: async (_, values) => {
                               if (
-                                resuilt?.data?.data.parentMatchComm < values &&
+                                values > 3 && values < 0 &&
                                 values != "" &&
                                 values != null
                               ) {
@@ -394,7 +370,7 @@ const UpdateSuper = ({ updateName }) => {
                         />
                       </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col lg={12} xs={24}>
                       <Form.Item
                         label="MASTER sess comm(%)"
                         name="sesscomm"
@@ -402,7 +378,7 @@ const UpdateSuper = ({ updateName }) => {
                         <Input type="number" disabled />
                       </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col lg={12} xs={24}>
                       <Form.Item
                         label="SUPER sess comm(%)"
                         name="sess_comm"
@@ -415,8 +391,7 @@ const UpdateSuper = ({ updateName }) => {
                           {
                             validator: async (_, values) => {
                               if (
-                                resuilt?.data?.data.parentSessionComm <
-                                  values &&
+                                values > 3 && values < 0 &&
                                 values != "" &&
                                 values != null
                               ) {
@@ -440,8 +415,26 @@ const UpdateSuper = ({ updateName }) => {
                   ""
                 )}
 
-                <Col span={12}></Col>
-                <Col span={12}>
+
+                <Col lg={12} xs={24}>
+                <Form.Item
+                  label="Transaction Password"
+                  name="lupassword"
+                  required
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Enter Transaction Password!",
+                    },
+                  ]}>
+                  <Input
+                    type="password"
+                    autoComplete="off"
+                    placeholder="Transaction Password"
+                  />
+                </Form.Item>
+                </Col>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     wrapperCol={{
                       offset: 19,
@@ -459,7 +452,7 @@ const UpdateSuper = ({ updateName }) => {
                 </h2>
               </div>
               <Row className="super_agent  update_agent">
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="MASTER casino Share(%)"
                     name="casinoshare"
@@ -467,7 +460,7 @@ const UpdateSuper = ({ updateName }) => {
                     <Input type="number" disabled />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="SUPER casino Share(%)"
                     name="supercasinoShare"
@@ -481,7 +474,7 @@ const UpdateSuper = ({ updateName }) => {
                     <InputNumber className="number_field" min={0} step="0.1" />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="MASTER casino comm(%)"
                     name="casinoComm"
@@ -489,7 +482,7 @@ const UpdateSuper = ({ updateName }) => {
                     <Input disabled />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="SUPER casino comm(%)"
                     name="Supercasinocomm"

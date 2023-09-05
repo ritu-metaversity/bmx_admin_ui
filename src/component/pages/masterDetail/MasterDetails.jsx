@@ -22,7 +22,7 @@ const MasterDetails = () => {
     },
     {
       image: <BiUserCircle />,
-      name: "Dealer",
+      name: "Agent",
       path: `/client/list-dealer`,
       size: "20",
       userType:2

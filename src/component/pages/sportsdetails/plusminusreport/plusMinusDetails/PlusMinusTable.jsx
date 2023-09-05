@@ -1,340 +1,667 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { useSportPlusMinusQuery } from "../../../../../store/service/SportDetailServices";
+import { MapInteractionCSS } from "react-map-interaction";
+import { Empty } from "antd";
 
 const PlusMinusTable = () => {
+  const { state } = useLocation();
+  const parmes = useParams();
+  const { data } = useSportPlusMinusQuery({
+    eventId: parmes?.id,
+    marketId: state?.first,
+    parentIds: state?.secondUserid,
+    parentKey: state?.ParentKey,
+    userId: state?.thirdUserid,
+  });
+
   return (
     <>
-      <table className="plus-table">
-        <tbody>
-          <tr className="master_color">
-            <td>&nbsp;</td>
-            <td>MASTER </td>
-            <td colSpan={30}>
-              <strong>MA14106 - jbl</strong>
-            </td>
-          </tr>
-          <tr className="super_color">
-            <td colSpan={3}>&nbsp;</td> <td>SUPER </td>
-            <td colSpan={28}>
-              <strong>SA154548 - super1</strong>
-            </td>
-          </tr>
-          <tr className="agent_color">
-            <td colSpan={4}>&nbsp;</td>
-            <td>AGENT </td>
-            <td colSpan={27}>
-              <strong>A154552 - power1</strong>
-            </td>
-          </tr>
-          <tr style={{ textAlign: "center", color: "#545454" }}>
-            <td> &nbsp; </td>
-            <th className="sub_agent_heading" colSpan={10}>
-              AGENT PLUS MINUS
-            </th>
-            <th className="sub_agent_heading" colSpan={7}>
-              SUPER PLUS MINUS
-            </th>
-            <th className="sub_agent_heading" colSpan={7}>
-              MASTER PLUS MINUS
-            </th>
-          </tr>
-          <tr style={{ textAlign: "center" }} className="border_tr">
-            <td>
-              <strong>CLIENT</strong>
-            </td>
-            <td>
-              <strong>M AMT</strong>
-            </td>
-            <td>
-              <strong>SESS.</strong>
-            </td>
-            <td>
-              <strong>TOT. AMT</strong>
-            </td>
-            <td>
-              <strong>M. COM</strong>
-            </td>
-            <td>
-              <strong>S. COM</strong>
-            </td>
-            <td>
-              <strong>TOL. COM</strong>
-            </td>
-            <td>
-              <strong>NET AMT</strong>
-            </td>
-            <td>
-              <strong>SHR AMT</strong>
-            </td>
-            <td>
-              <strong>MOB. APP</strong>
-            </td>
-            <td
-              style={{
-                borderRightWidth: 2,
-                borderRightColor: "rgb(174, 174, 174)",
-              }}>
-              <strong>FINAL</strong>
-            </td>
-            <td>
-              <strong>M. COM</strong>
-            </td>
-            <td>
-              <strong>S. COM</strong>
-            </td>
-            <td>
-              <strong>TOL. COM</strong>
-            </td>
-            <td>
-              <strong>NET AMT</strong>
-            </td>
-            <td>
-              <strong>SHR AMT</strong>
-            </td>
-            <td>
-              <strong>MOB. APP</strong>
-            </td>
-            <td
-              style={{
-                borderRightWidth: 2,
-                borderRightColor: "rgb(174, 174, 174)",
-              }}>
-              <strong>FINAL</strong>
-            </td>
-            <td>
-              <strong>M. COM</strong>
-            </td>
-            <td>
-              <strong>S. COM</strong>
-            </td>
-            <td>
-              <strong>TOL. COM</strong>
-            </td>
-            <td>
-              <strong>NET AMT</strong>
-            </td>
-            <td>
-              <strong>SHR AMT</strong>
-            </td>
-            <td>
-              <strong>MOB. APP</strong>
-            </td>
-            <td
-              style={{
-                borderRightWidth: 2,
-                borderRightColor: "rgb(174, 174, 174)",
-              }}>
-              <strong>FINAL</strong>
-            </td>
-          </tr>
-          <tr className="border_tr">
-            <td>
-              <strong>C154555-client1</strong>
-            </td>
-            <td>0.00</td>
-            <td>100.00</td>
-            <td>
-              <strong>100.00</strong>
-            </td>
-            <td>0.00</td>
-            <td>1.90</td>
-            <td>
-              <strong>1.90</strong>
-            </td>
-            <td>98.10</td>
-            <td>9.81</td>
-            <td>0.00</td>
-            <td
-              style={{
-                borderRightWidth: 2,
-                borderRightColor: "rgb(174, 174, 174)",
-              }}>
-              <strong>88.29</strong>
-            </td>
-            <td>0.00</td>
-            <td>1.90</td>
-            <td>
-              <strong>1.90</strong>
-            </td>
-            <td>98.10</td>
-            <td>9.81</td>
-            <td>0.00</td>
-            <td
-              style={{
-                borderRightWidth: 2,
-                borderRightColor: "rgb(174, 174, 174)",
-              }}>
-              <strong>88.29</strong>
-            </td>
-            <td>0.00</td>
-            <td>3.00</td>
-            <td>
-              <strong>3.00</strong>
-            </td>
-            <td>97.00</td>
-            <td>91.18</td>
-            <td>0.00</td>
-            <td
-              style={{
-                borderRightWidth: 2,
-                borderRightColor: "rgb(174, 174, 174)",
-              }}>
-              <strong>5.82 </strong>
-            </td>
-          </tr>
-          <tr className="border_tr">
-            <td>&nbsp;</td>
-          </tr>
-          <tr className="border_tr">
-            <td>
-              <strong>Ag.TOTAL</strong>
-            </td>
-            <td>0.00</td>
-            <td>100.00</td>
-            <td>100.00</td>
-            <td>0.00</td>
-            <td>1.90</td>
-            <td>1.90</td>
-            <td>98.10</td>
-            <td>9.81</td>
-            <td>0.00</td>
-            <td
-              style={{
-                borderRightWidth: 2,
-                borderRightColor: "rgb(174, 174, 174)",
-              }}>
-              88.29
-            </td>
-            <td>0.00</td>
-            <td>1.90</td>
-            <td>1.90</td>
-            <td>98.10</td>
-            <td>9.81</td>
-            <td>0.00</td>
-            <td
-              style={{
-                borderRightWidth: 2,
-                borderRightColor: "rgb(174, 174, 174)",
-              }}>
-              88.29
-            </td>
-            <td>0.00</td>
-            <td>3.00</td>
-            <td>3.00</td>
-            <td>97.00</td>
-            <td>91.18</td>
-            <td>0.00</td>
-            <td
-              style={{
-                borderRightWidth: 2,
-                borderRightColor: "rgb(174, 174, 174)",
-              }}>
-              5.82
-            </td>
-          </tr>
-          <tr className="border_tr">
-            <td>&nbsp;</td>
-          </tr>
-          <tr className="border_tr">
-            <td>
-              <strong>SAg.TOTAL</strong>
-            </td>
-            <td>0.00</td>
-            <td>100.00</td>
-            <td>100.00</td>
-            <td>0.00</td>
-            <td>1.90</td>
-            <td>1.90</td>
-            <td>98.10</td>
-            <td>9.81</td>
-            <td>0.00</td>
-            <td
-              style={{
-                borderRightWidth: 2,
-                borderRightColor: "rgb(174, 174, 174)",
-              }}>
-              88.29
-            </td>
-            <td>0.00</td>
-            <td>1.90</td>
-            <td>1.90</td>
-            <td>98.10</td>
-            <td>9.81</td>
-            <td>0.00</td>
-            <td
-              style={{
-                borderRightWidth: 2,
-                borderRightColor: "rgb(174, 174, 174)",
-              }}>
-              88.29
-            </td>
-            <td>0.00</td>
-            <td>3.00</td>
-            <td>3.00</td>
-            <td>97.00</td>
-            <td>91.18</td>
-            <td>0.00</td>
-            <td
-              style={{
-                borderRightWidth: 2,
-                borderRightColor: "rgb(174, 174, 174)",
-              }}>
-              5.82
-            </td>
-          </tr>
-          <tr className="border_tr">
-            <td>&nbsp;</td>
-          </tr>
-          <tr className="border_tr">
-            <td>
-              <strong>Ms.TOTAL</strong>
-            </td>
-            <td>0.00</td>
-            <td>100.00</td>
-            <td>100.00</td>
-            <td>0.00</td>
-            <td>1.90</td>
-            <td>1.90</td>
-            <td>98.10</td>
-            <td>9.81</td>
-            <td>0.00</td>
-            <td
-              style={{
-                borderRightWidth: 2,
-                borderRightColor: "rgb(174, 174, 174)",
-              }}>
-              88.29
-            </td>
-            <td>0.00</td>
-            <td>1.90</td>
-            <td>1.90</td>
-            <td>98.10</td>
-            <td>9.81</td>
-            <td>0.00</td>
-            <td
-              style={{
-                borderRightWidth: 2,
-                borderRightColor: "rgb(174, 174, 174)",
-              }}>
-              88.29
-            </td>
-            <td>0.00</td>
-            <td>3.00</td>
-            <td>3.00</td>
-            <td>97.00</td>
-            <td>91.18</td>
-            <td>0.00</td>
-            <td
-              style={{
-                borderRightWidth: 2,
-                borderRightColor: "rgb(174, 174, 174)",
-              }}>
-              5.82
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <MapInteractionCSS
+        //  showControls
+        defaultValue={{
+          scale: 1,
+          translation: { x: 0, y: 0 },
+        }}
+        minScale={0.2}
+        maxScale={2}>
+        <table className="plus-table">
+          <tbody>
+            {data?.data &&
+              Object.keys(data.data).map((item) => (
+                <RecursiveTable data={data.data[item]} title={item} />
+              ))}
+            
+          </tbody>
+        </table>
+      </MapInteractionCSS>
     </>
   );
 };
 
 export default PlusMinusTable;
+
+const RecursiveTable = ({ data, title }) => {
+  const [arrayState, setArrayState] = useState([]);
+
+  const uType = localStorage.getItem("userType");
+  useEffect(() => {
+    let returnArr = [];
+
+    if (data?.groupName === "subadmin") {
+      returnArr.push(
+        <tr className="sub_color">
+          <td>&nbsp;</td>
+          <td style={{ whiteSpace: "nowrap" }}>Sub Admin </td>
+          <td colSpan={30}>
+            <strong>{title}</strong>
+          </td>
+        </tr>
+      );
+    } else if (data?.groupName === "supermaster") {
+      returnArr.push(
+        <tr className="master_color">
+          <td colSpan={2}>&nbsp;</td>
+          <td style={{ whiteSpace: "nowrap" }}>SUPER Master </td>
+          <td colSpan={28}>
+            <strong>{title}</strong>
+          </td>
+        </tr>
+      );
+    } else if (data?.groupName === "master") {
+      returnArr.push(
+        <tr className="super_color">
+          <td colSpan={3}>&nbsp;</td> <td>MASTER </td>
+          <td colSpan={27}>
+            <strong>{title}</strong>
+          </td>
+        </tr>
+      );
+    } else if (data?.groupName === "agent") {
+      returnArr.push(
+        <tr className="agent_color">
+          <td colSpan={4}>&nbsp;</td> <td>Agent </td>
+          <td colSpan={25}>
+            <strong>{title}</strong>
+          </td>
+        </tr>
+      );
+    }
+
+    if (data) {
+      Object.keys(data).forEach((item) => {
+        if (!["groupName", "total", "users"].includes(item)) {
+          returnArr = [
+            ...returnArr,
+            <RecursiveTable data={data[item]} title={item} />,
+          ];
+        } else if (item === "users") {
+          const clientRows = Object.keys(data[item]).map((userKey) => (
+            <>
+              <tr className="border_tr">
+                <td>
+                  <strong>{userKey}</strong>
+                </td>
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 || uType == 2
+                      ? ""
+                      : "d_none"
+                  }>
+                  {(data[item][userKey].matchAmount)?.toFixed(2)}
+                </td>
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 || uType == 2
+                      ? ""
+                      : "d_none"
+                  }>
+                  {(data[item][userKey].sessionAmount)?.toFixed(2)}
+                </td>
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 || uType == 2
+                      ? ""
+                      : "d_none"
+                  }>
+                  <strong>{(data[item][userKey].totalAmount)?.toFixed(2)}</strong>
+                </td>
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 || uType == 2
+                      ? ""
+                      : "d_none"
+                  }>
+                  {(data[item][userKey].dealer?.matchComm)?.toFixed(2)}
+                </td>
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 || uType == 2
+                      ? ""
+                      : "d_none"
+                  }>
+                  {(data[item][userKey].dealer?.sessionComm)?.toFixed(2)}
+                </td>
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 || uType == 2
+                      ? ""
+                      : "d_none"
+                  }>
+                  <strong>{(data[item][userKey].dealer?.totalComm)?.toFixed(2)}</strong>
+                </td>
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 || uType == 2
+                      ? ""
+                      : "d_none"
+                  }>
+                  {(data[item][userKey].dealer?.netAmount)?.toFixed(2)}
+                </td>
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 || uType == 2
+                      ? ""
+                      : "d_none"
+                  }>
+                  {(data[item][userKey].dealer?.shareAmount)?.toFixed(2)}
+                </td>
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 || uType == 2
+                      ? ""
+                      : "d_none"
+                  }
+                  style={{
+                    borderRightWidth: 2,
+                    borderRightColor: "rgb(174, 174, 174)",
+                  }}>
+                  <strong>{(data[item][userKey].dealer?.finalAmount)?.toFixed(2)}</strong>
+                </td>
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                  }>
+                  {(data[item][userKey].master?.matchComm)?.toFixed(2)}
+                </td>
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                  }>
+                  {(data[item][userKey].master?.sessionComm)?.toFixed(2)}
+                </td>
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                  }>
+                  <strong>{(data[item][userKey].master?.totalComm)?.toFixed(2)}</strong>
+                </td>
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                  }>
+                  {(data[item][userKey].master?.netAmount)?.toFixed(2)}
+                </td>
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                  }>
+                  {(data[item][userKey].master?.shareAmount)?.toFixed(2)}
+                </td>
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                  }
+                  style={{
+                    borderRightWidth: 2,
+                    borderRightColor: "rgb(174, 174, 174)",
+                  }}>
+                  <strong>{(data[item][userKey].master?.finalAmount)?.toFixed(2)}</strong>
+                </td>
+                <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
+                  {(data[item][userKey].superMaster?.matchComm)?.toFixed(2)}
+                </td>
+                <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
+                  {(data[item][userKey].superMaster?.sessionComm)?.toFixed(2)}
+                </td>
+                <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
+                  <strong>{(data[item][userKey].superMaster?.totalComm)?.toFixed(2)}</strong>
+                </td>
+                <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
+                  {(data[item][userKey].superMaster?.netAmount)?.toFixed(2)}
+                </td>
+                <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
+                  {(data[item][userKey].superMaster?.shareAmount)?.toFixed(2)}
+                </td>
+                <td
+                  className={uType == 5 || uType == 0 ? "" : "d_none"}
+                  style={{
+                    borderRightWidth: 2,
+                    borderRightColor: "rgb(174, 174, 174)",
+                  }}>
+                  <strong>
+                    {(data[item][userKey].superMaster?.finalAmount)?.toFixed(2)}
+                  </strong>
+                </td>
+                <td className={uType != 5 ? "d_none" : ""}>
+                  {(data[item][userKey].subAdmin?.matchComm)?.toFixed(2)}
+                </td>
+                <td className={uType != 5 ? "d_none" : ""}>
+                  {(data[item][userKey].subAdmin?.sessionComm)?.toFixed(2)}
+                </td>
+                <td className={uType != 5 ? "d_none" : ""}>
+                  <strong>{(data[item][userKey].subAdmin?.totalComm)?.toFixed(2)}</strong>
+                </td>
+                <td className={uType != 5 ? "d_none" : ""}>
+                  {(data[item][userKey].subAdmin?.netAmount)?.toFixed(2)}
+                </td>
+                <td className={uType != 5 ? "d_none" : ""}>
+                  {(data[item][userKey].subAdmin?.shareAmount)?.toFixed(2)}
+                </td>
+                <td
+                  className={uType != 5 ? "d_none" : ""}
+                  style={{
+                    borderRightWidth: 2,
+                    borderRightColor: "rgb(174, 174, 174)",
+                  }}>
+                  <strong>{(data[item][userKey].subAdmin?.finalAmount)?.toFixed(2)}</strong>
+                </td>
+              </tr>
+            </>
+          ));
+          const dynamicHeader = (
+            <tr style={{ textAlign: "center", color: "#545454" }}>
+              <td> &nbsp; </td>
+              <th
+                className={`sub_agent_heading ${
+                  uType == 0 || uType == 1 || uType == 2 || uType == 5
+                    ? ""
+                    : "d_none"
+                }`}
+                colSpan={9}>
+                AGENT PLUS MINUS
+              </th>
+              <th
+                className={`sub_agent_heading ${
+                  uType == 0 || uType == 1 || uType == 5 ? "" : "d_none"
+                }`}
+                colSpan={6}>
+                MASTER PLUS MINUS
+              </th>
+              <th
+                className={`sub_agent_heading ${
+                  uType == 0 || uType == 5 ? "" : "d_none"
+                }`}
+                colSpan={6}>
+                SUPERMASTER PLUS MINUS
+              </th>
+              <th
+                className={`sub_agent_heading ${uType != 5 ? "d_none" : ""}`}
+                colSpan={6}>
+                SUBADMIN PLUS MINUS
+              </th>
+            </tr>
+          );
+
+          const dynamicSubHeader = (
+            <tr style={{ textAlign: "center" }} className="border_tr">
+              <td>
+                <strong>CLIENT</strong>
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                <strong>M AMT</strong>
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                <strong>SESS.</strong>
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                <strong>TOT. AMT</strong>
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                <strong>M. COM</strong>
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                <strong>S. COM</strong>
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                <strong>TOL. COM</strong>
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                <strong>NET AMT</strong>
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                <strong>SHR AMT</strong>
+              </td>
+
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }
+                style={{
+                  borderRightWidth: 2,
+                  borderRightColor: "rgb(174, 174, 174)",
+                }}>
+                <strong>FINAL</strong>
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                }>
+                <strong>M. COM</strong>
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                }>
+                <strong>S. COM</strong>
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                }>
+                <strong>TOL. COM</strong>
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                }>
+                <strong>NET AMT</strong>
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                }>
+                <strong>SHR AMT</strong>
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                }
+                style={{
+                  borderRightWidth: 2,
+                  borderRightColor: "rgb(174, 174, 174)",
+                }}>
+                <strong>FINAL</strong>
+              </td>
+              <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
+                <strong>M. COM</strong>
+              </td>
+              <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
+                <strong>S. COM</strong>
+              </td>
+              <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
+                <strong>TOL. COM</strong>
+              </td>
+              <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
+                <strong>NET AMT</strong>
+              </td>
+              <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
+                <strong>SHR AMT</strong>
+              </td>
+              <td
+                className={uType == 5 || uType == 0 ? "" : "d_none"}
+                style={{
+                  borderRightWidth: 2,
+                  borderRightColor: "rgb(174, 174, 174)",
+                }}>
+                <strong>FINAL</strong>
+              </td>
+              <td className={uType != 5 ? "d_none" : ""}>
+                <strong>M. COM</strong>
+              </td>
+              <td className={uType != 5 ? "d_none" : ""}>
+                <strong>S. COM</strong>
+              </td>
+              <td className={uType != 5 ? "d_none" : ""}>
+                <strong>TOL. COM</strong>
+              </td>
+              <td className={uType != 5 ? "d_none" : ""}>
+                <strong>NET AMT</strong>
+              </td>
+              <td className={uType != 5 ? "d_none" : ""}>
+                <strong>SHR AMT</strong>
+              </td>
+              <td
+                className={uType != 5 ? "d_none" : ""}
+                style={{
+                  borderRightWidth: 2,
+                  borderRightColor: "rgb(174, 174, 174)",
+                }}>
+                <strong>FINAL</strong>
+              </td>
+            </tr>
+          );
+          returnArr = [
+            ...returnArr,
+            dynamicHeader,
+            dynamicSubHeader,
+            ...clientRows,
+          ];
+        }
+      });
+      if (data.total) {
+        const totalRows = (
+          <>
+            <tr className="border_tr">
+              <td>&nbsp;</td>
+            </tr>
+            <tr className="border_tr">
+              <td>
+                <strong>{data.groupName} .TOTAL</strong>
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                {(data?.total?.matchAmount)?.toFixed(2)}
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                {(data?.total?.sessionAmount)?.toFixed(2)}
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                {(data?.total?.totalAmount)?.toFixed(2)}
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                {(data?.total?.dealer?.matchComm)?.toFixed(2)}
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                {(data?.total?.dealer?.sessionComm)?.toFixed(2)}
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                {(data?.total?.dealer?.totalComm)?.toFixed(2)}
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                {(data?.total?.dealer?.netAmount)?.toFixed(2)}
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                {(data?.total?.dealer?.shareAmount)?.toFixed(2)}
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }
+                style={{
+                  borderRightWidth: 2,
+                  borderRightColor: "rgb(174, 174, 174)",
+                }}>
+                {(data?.total?.dealer?.finalAmount)?.toFixed(2)}
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                }>
+                {(data?.total?.master?.matchComm).toFixed(2)}
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                }>
+                {(data?.total?.master?.sessionComm).toFixed(2)}
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                }>
+                {(data?.total?.master?.totalComm).toFixed(2)}
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                }>
+                {(data?.total?.master?.netAmount)?.toFixed(2)}
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                }>
+                {(data?.total?.master?.shareAmount)?.toFixed(2)}
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 ? "" : "d_none"
+                }
+                style={{
+                  borderRightWidth: 2,
+                  borderRightColor: "rgb(174, 174, 174)",
+                }}>
+                {(data?.total?.master?.finalAmount)?.toFixed(2)}
+              </td>
+              <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
+                {(data?.total?.superMaster?.matchComm)?.toFixed(2)}
+              </td>
+              <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
+                {(data?.total?.superMaster?.sessionComm)?.toFixed(2)}
+              </td>
+              <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
+                {(data?.total?.superMaster?.totalComm)?.toFixed(2)}
+              </td>
+              <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
+                {(data?.total?.superMaster?.netAmount)?.toFixed(2)}
+              </td>
+              <td className={uType == 5 || uType == 0 ? "" : "d_none"}>
+                {(data?.total?.superMaster?.shareAmount)?.toFixed(2)}
+              </td>
+              <td
+                className={uType == 5 || uType == 0 ? "" : "d_none"}
+                style={{
+                  borderRightWidth: 2,
+                  borderRightColor: "rgb(174, 174, 174)",
+                }}>
+                {(data?.total?.superMaster?.finalAmount)?.toFixed(2)}
+              </td>
+              <td className={uType != 5 ? "d_none" : ""}>
+                {(data?.total?.subAdmin?.matchComm)?.toFixed(2)}
+              </td>
+              <td className={uType != 5 ? "d_none" : ""}>
+                {(data?.total?.subAdmin?.sessionComm)?.toFixed(2)}
+              </td>
+              <td className={uType != 5 ? "d_none" : ""}>
+                {(data?.total?.subAdmin?.totalComm)?.toFixed(2)}
+              </td>
+              <td className={uType != 5 ? "d_none" : ""}>
+                {(data?.total?.subAdmin?.netAmount)?.toFixed(2)}
+              </td>
+              <td className={uType != 5 ? "d_none" : ""}>
+                {(data?.total?.subAdmin?.shareAmount)?.toFixed(2)}
+              </td>
+              <td
+                className={uType != 5 ? "d_none" : ""}
+                style={{
+                  borderRightWidth: 2,
+                  borderRightColor: "rgb(174, 174, 174)",
+                }}>
+                {(data?.total?.subAdmin?.finalAmount)?.toFixed(2)}
+              </td>
+            </tr>
+          </>
+        );
+        returnArr = [...returnArr, totalRows];
+      }
+    }
+    setArrayState(returnArr);
+  }, [data]);
+
+  return arrayState;
+  if (data) return <></>;
+};

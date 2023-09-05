@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import "./RoulettePlusMinus.Scss";
+import "./RoulettePlusMinus.scss";
 import {React, useRef, useState } from "react";
 import {
   SearchOutlined,

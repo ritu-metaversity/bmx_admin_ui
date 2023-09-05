@@ -8,7 +8,7 @@ const ClientTransactions = () => {
   const nav = useNavigate();
 
   const handleBackbtn = () => {
-    nav("/client/cash-transanction");
+    nav(-1);
   };
 
   const onFinish = (values) => {

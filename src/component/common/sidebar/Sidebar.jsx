@@ -27,11 +27,6 @@ const Sidebar = (props) => {
     setOpen(false);
   };
 
-  // const handleDashBoard = (e)=>{
-  //   e.preventDefault()
-  //   console.log("helooo")
-  // }
-
   const nav = useNavigate();
 
   const userType = localStorage.getItem("userType");
@@ -44,7 +39,8 @@ const Sidebar = (props) => {
       setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
     }
   };
-  // console.log(openKeys, "fafasda")
+
+  const uType = localStorage.getItem("userType")
 
   return (
     <>
@@ -99,7 +95,7 @@ const Sidebar = (props) => {
             {
               key: "2",
               icon: <BiUserCircle />,
-              label: "Master Details",
+              label: <div>{uType == 5? "Sub Admin Details": uType == 0?"Super Master Detail":uType == 1?"Master Detail": uType == 2?"Agent Detail":""}</div>,
               children: [
                 {
                   className: `${userType != "5" ? "d-none" : ""}`,
@@ -111,7 +107,7 @@ const Sidebar = (props) => {
                 },
                 {
                   className: `${userType === "1" ? "" : "d-none"}`,
-                  label: <Link to="/client/list-agent">Dealer</Link>,
+                  label: <Link to="/client/list-dealer">Agent</Link>,
                 },
                 {
                   label: <Link to="client/list-client">Client</Link>,
@@ -143,9 +139,9 @@ const Sidebar = (props) => {
                 //     </Link>
                 //   ),
                 // },
-                {
-                  label: <Link to="/Casino/casino-details">Casino Detail</Link>,
-                },
+                // {
+                //   label: <Link to="/Casino/casino-details">Casino Detail</Link>,
+                // },
               ],
             },
             {
@@ -161,7 +157,7 @@ const Sidebar = (props) => {
                 },
                 {
                   className: `${userType != "5" ? "d-none" : ""}`,
-                  label: <Link to="/client/ledger-super">Super Ledger</Link>,
+                  label: <Link to="/client/ledger-super">Super Master Ledger</Link>,
                 },
                 {
                   className: `${userType === "0" ? "" : "d-none"}`,
@@ -169,7 +165,7 @@ const Sidebar = (props) => {
                 },
                 {
                   className: `${userType === "1" ? "" : "d-none"}`,
-                  label: <Link to="/client/ledger-agent">Deler Ledger</Link>,
+                  label: <Link to="/client/ledger-agent">Agent Ledger</Link>,
                 },
                 {
                   label: <Link to="/client/ledger-client">Client Ledger</Link>,
@@ -193,9 +189,9 @@ const Sidebar = (props) => {
                   ),
                 },
                 {
-                  lassName: `${userType != "5" ? "d-none" : ""}`,
+                  className: `${userType == "5" ? "" : "d-none"}`,
                   label: (
-                    <Link to="/client/txn-super">Debit/Credit Entry(SA)</Link>
+                    <Link to="/client/txn-super">Debit/Credit Entry(SM)</Link>
                   ),
                 },
                 {
@@ -253,7 +249,7 @@ const Sidebar = (props) => {
           closable={false}
           onClose={onClose}
           open={open}
-          width="250"
+          width="275"
           // key={placement}
         >
           <Menu
@@ -275,7 +271,7 @@ const Sidebar = (props) => {
               {
                 key: "2",
                 icon: <BiUserCircle />,
-                label: "Master Details",
+                label: <div>{uType == 5? "Sub Admin Details": uType == 0?"Super Master Detail":uType == 1?"Master Detail": uType == 2?"Agent Detail":""}</div>,
                 children: [
                   {
                     className: `${userType != "5" ? "d-none" : ""}`,
@@ -303,7 +299,7 @@ const Sidebar = (props) => {
                       <Link
                         to="/client/list-agent"
                         onClick={() => setOpen(false)}>
-                        Dealer
+                        Agent
                       </Link>
                     ),
                   },
@@ -359,11 +355,11 @@ const Sidebar = (props) => {
                   //     </Link>
                   //   ),
                   // },
-                  {
-                    label: (
-                      <Link to="/Casino/casino-details">Casino Detail</Link>
-                    ),
-                  },
+                  // {
+                  //   label: (
+                  //     <Link to="/Casino/casino-details">Casino Detail</Link>
+                  //   ),
+                  // },
                 ],
               },
               {
@@ -395,7 +391,7 @@ const Sidebar = (props) => {
                       <Link
                         onClick={() => setOpen(false)}
                         to="/client/ledger-super">
-                        Super Ledger
+                        Super Master Ledger
                       </Link>
                     ),
                   },
@@ -415,7 +411,7 @@ const Sidebar = (props) => {
                       <Link
                         onClick={() => setOpen(false)}
                         to="/client/ledger-agent">
-                        Deler Ledger
+                        Agent Ledger
                       </Link>
                     ),
                   },
@@ -455,17 +451,17 @@ const Sidebar = (props) => {
                     ),
                   },
                   {
-                    lassName: `${userType != "5" ? "d-none" : ""}`,
+                    className: `${userType == "5" ? "" : "d-none"}`,
                     label: (
                       <Link
                         to="/client/txn-super"
                         onClick={() => setOpen(false)}>
-                        Debit/Credit Entry(SA)
+                        Debit/Credit Entry(SM)
                       </Link>
                     ),
                   },
                   {
-                    className: `${userType === "0" ? "" : "d-none"}`,
+                    className: `${userType == "0" ? "" : "d-none"}`,
                     label: (
                       <Link
                         to="/client/txn-master"

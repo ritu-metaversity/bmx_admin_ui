@@ -77,7 +77,7 @@ const AccountsStatement = () => {
           {data?.map((res) => {
             return (
               <tr key={res?.key}>
-                <td>{moment(res?.Date).format("DD-MM-YYYY, h:mm a")}</td>
+                <td>{moment(res?.Date).format("YYYY-MM-DD, h:mm A")}</td>
                 <td>{res?.Description}</td>
                 <td>{res?.PrevBal}</td>
                 <td className="text_success">{res?.CR}</td>

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ScoreCard = ({ mid }) => {
   const [showTv, setShowTv] = useState(false);
   const [scoreTv, setScoreTv] = useState(false);
+  const nav = useNavigate()
 
   const handleShowTv = ()=>{
     if(setShowTv === true){
@@ -34,6 +36,9 @@ const ScoreCard = ({ mid }) => {
           <button onClick={handleShowTv} className="fs fs_img">
             <img src="/Images/tv_icon.png" style={{ width: "20px" }} />
           </button>
+        </div>
+        <div className="show_btn">
+          <button onClick={()=>nav(-1)}>Back</button>
         </div>
       </div>
       {showTv && (

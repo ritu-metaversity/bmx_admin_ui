@@ -4,8 +4,6 @@ import { useRef, useState } from "react";
 import { Button, Dropdown, Form, Input, Space, Table } from "antd";
 import {
   SearchOutlined,
-  CaretDownOutlined,
-  PlusOutlined,
 } from "@ant-design/icons";
 
 const ClientLimitDetails = () => {
