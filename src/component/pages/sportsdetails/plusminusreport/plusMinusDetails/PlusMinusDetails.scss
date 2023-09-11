@@ -3,6 +3,7 @@
   background-color: transparent;
   width: 100%;
   max-width: 100%;
+  min-height: 150px;
   margin-bottom: 1rem;
   background-color: initial;
   .master_color {
@@ -106,4 +107,11 @@ table {
 
 .d_none{
   display: none;
+}
+
+.plus_spin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

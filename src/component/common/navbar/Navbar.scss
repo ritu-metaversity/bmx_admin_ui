@@ -104,6 +104,9 @@
   //   top: 47px  !important;
   // }
 }
+.sub_open_btn {
+display: none;
+}
 
 @media screen and (max-width: 800px) {
   .logo_icon {
@@ -114,9 +117,9 @@
     justify-content: space-between;
     align-items: center;
     // margin-left: 55px;
-    width: 88%;
+    width: 100%;
     img {
-      width: 30%;
+      width: 80px;
       margin-top: 28px;
       display: initial !important;
     }
@@ -124,6 +127,11 @@
       text-decoration: none;
       color: #fff;
       font-weight: 600;
+    }
+    .sub_open_btn {
+      display: block !important;
+      font-size: 23px;
+      color: #fff;
     }
   }
 
@@ -307,9 +315,8 @@ p.ant-dropdown-trigger.user_deatils.droup_nav {
   pointer-events: none;
 }
 
-// .ant-dropdown.ant-dropdown-placement-bottomRight {
-//   z-index: 99999;
-// }
+
+
 
 
 

@@ -5,25 +5,24 @@ const { Header, Content } = Layout;
 import Navbar from "../common/navbar/Navbar";
 import "./Layout.scss";
 import MarqueeTag from "../common/marquee/MarqueeTag";
-import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
-import Signin from "../common/signin/Signin";
-import Main from "../common/main/Main";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useJwtTokenQuery } from "../../store/service/jwtTokenServices";
 import HomeRules from "../pages/HomeRules";
 
 const LayOut = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState();
   const [openRules, setOpenRules] = useState(false);
   const [open, setOpen] = useState(false);
+  
   const collll = (val) => {
     setCollapsed(val);
   };
 
+  const toggleDarawer = () => setOpen(prev => !prev);
+
   const openDrawer = (val) => {
     setOpen(val);
   };
-
-  const pathName = window.location.pathname;
 
   const nav = useNavigate();
 
@@ -35,38 +34,46 @@ const LayOut = () => {
 
   const { data } = useJwtTokenQuery(undefined, { pollingInterval: 1000 });
 
+  const handleOk = () => {};
 
-  const handleOk = () => {
-  
-  };
-
-  useEffect(()=>{
-    setOpenRules(localStorage.getItem("rulesStatus"))
+  useEffect(() => {
+    setOpenRules(localStorage.getItem("rulesStatus"));
   }, []);
 
-  const handleCloseBtn = ()=>{
+  const handleCloseBtn = () => {
     localStorage.removeItem("rulesStatus");
     setOpenRules(false);
-  }
+  };
 
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+
+  console.log(open, "fdefefgdd")
+
+  
   return (
     <>
       <Layout className="main_layout">
-        <Sidebar collll={collll} open={open} />
+        <Sidebar collll={collll} open={open} action={toggleDarawer} />
         <Layout>
           <Header
+            className="header_com"
             style={{
               padding: 0,
               display: "flex",
               alignItems: "center",
               height: "72px",
-              zIndex: "2",
+              zIndex: "3",
             }}>
-            <Navbar openDrawer={openDrawer} />
+            <Navbar open={open} action={toggleDarawer}/>
           </Header>
-          <MarqueeTag />
+          <div className="marqu_tag">
+            <MarqueeTag />
+          </div>
           <Content
-            style={{ margin: "2px 1px", padding: 1, minHeight: 280 }}
+            style={{ margin: "2px 1px", padding: 1 }}
             className="main_section">
             <Outlet />
           </Content>
@@ -83,7 +90,7 @@ const LayOut = () => {
             Close
           </Button>,
         ]}>
-        <HomeRules/>
+        <HomeRules />
       </Modal>
     </>
   );

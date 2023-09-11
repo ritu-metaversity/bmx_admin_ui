@@ -44,23 +44,28 @@ const SportsDetails = () => {
   const [paginationTotal, setPaginationTotal] = useState(50);
   const [indexData, setIndexData] = useState(0);
   const [dataNameee, setDataNameee] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [dropdownStates, setDropdownStates] = useState([]);
   const navigate = useNavigate();
-
-  const dispatch = useDispatch();
 
   const getMatchId = (matchId, inPlay, sportName) => {
     setMatchId(matchId);
     setDataNameee(sportName);
-    dispatch(setData(sportName));
     setInPlay(inPlay);
   };
 
   const nav = useNavigate();
 
+  const handlePlusMinus = (matchId)=>{
+    setDropdownStates(false)
+    nav(`/plus-minus-report/${matchId}`, { state: { dataNameee } })
+  }
+
   const items = [
     {
       label: (
         <Link
+        onClick={()=>setDropdownStates(false)}
           to={`/Events/${matchId}/live-report`}
           className="title_section"
           style={{ display: `${InPlay ? "block" : "none"}` }}>
@@ -73,9 +78,7 @@ const SportsDetails = () => {
       label: (
         <p
           className="title_section"
-          onClick={() =>
-            nav(`/plus-minus-report/${matchId}`, { state: { dataNameee } })
-          }>
+          onClick={() =>handlePlusMinus(matchId)}>
           Match and Session Plus Minus
         </p>
       ),
@@ -83,7 +86,7 @@ const SportsDetails = () => {
     },
     {
       label: (
-        <Link className="title_section" to={`/match-slips/${matchId}`}>
+        <Link onClick={()=>setDropdownStates(false)} className="title_section" to={`/match-slips/${matchId}`}>
           Display Match Bets
         </Link>
       ),
@@ -91,7 +94,7 @@ const SportsDetails = () => {
     },
     {
       label: (
-        <Link className="title_section" to={`/fancy-slips/${matchId}`}>
+        <Link onClick={()=>setDropdownStates(false)} className="title_section" to={`/fancy-slips/${matchId}`}>
           Display Session Bets
         </Link>
       ),
@@ -99,7 +102,7 @@ const SportsDetails = () => {
     },
     {
       label: (
-        <Link
+        <Link onClick={()=>setDropdownStates(false)}
           className="title_section"
           to={`/completed-fancy-slips/${matchId}`}>
           Completed Fancies
@@ -109,7 +112,7 @@ const SportsDetails = () => {
     },
     {
       label: (
-        <Link className="title_section" to={`/rejectedBetsByEvent/${matchId}`}>
+        <Link onClick={()=>setDropdownStates(false)} className="title_section" to={`/rejectedBetsByEvent/${matchId}`}>
           Rejected Bet
         </Link>
       ),
@@ -141,6 +144,35 @@ const SportsDetails = () => {
   useEffect(() => {
     setTotalPage(sportDetail?.data?.totalPages);
   }, [sportDetail]);
+  useEffect(() => {
+    const initialStates = new Array(sportDetail?.data?.data?.length).fill(false);
+    setDropdownStates(initialStates);
+  }, [sportDetail?.data?.data]);
+
+  const handleScroll = () => {
+    const updatedDropdownStates = dropdownStates.map(() => false);
+    setDropdownStates(updatedDropdownStates)
+    setIsDropdownOpen(false);
+  };
+
+  const toggleDropdown = (index) => {
+    const updatedDropdownStates = [...dropdownStates];
+    updatedDropdownStates[index] = !updatedDropdownStates[index];
+    setDropdownStates(updatedDropdownStates);
+  };
+
+  useEffect(() => {
+    if(!isDropdownOpen){
+      window.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isDropdownOpen]);
+
+
+
   return (
     <>
       <Card
@@ -176,12 +208,14 @@ const SportsDetails = () => {
             ) : (
               ""
             )}
-            {sportDetail?.data?.data?.map((res) => {
+            {sportDetail?.data?.data?.map((res, id) => {
               return (
                 <tr key={res?.key}>
                   <td>
                     <Dropdown
                       className="table_dropdown sport_droupdown"
+                      open={dropdownStates[id]}
+                          onOpenChange={() => toggleDropdown(id)}
                       menu={{
                         items,
                         className: "sport_list",
@@ -236,7 +270,7 @@ const SportsDetails = () => {
           style={{ marginBottom: "12px" }}
           className="pagination_main ledger_pagination pagination_main"
           onShowSizeChange={(c, s) => setPaginationTotal(s)}
-          total={totalPage && totalPage * paginationTotal}
+          total={totalPage && (totalPage) * paginationTotal}
           defaultPageSize={50}
           pageSizeOptions={[50, 100, 150, 200, 250]}
           onChange={(e) => setIndexData(e - 1)}

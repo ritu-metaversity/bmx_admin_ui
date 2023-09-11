@@ -124,7 +124,7 @@ const FancyData = ({ data, keyData }) => {
                       <div className="title">{res?.nation}</div>
                       {
                         !res?.mid?.includes("BM") &&  <span>
-                        {(fancyPnl?.data ) && Object?.keys(fancyPnl?.data)?.find(key => fancyPnl?.data[key] === res?.sid) || 0}
+                        {/* {(fancyPnl?.data ) && Object?.keys(fancyPnl?.data)?.find(key => (fancyPnl?.data[key] === res?.sid)? fancyPnl?.data[res?.sid]:"0") || 0} */}
                         </span>
                       }
                      

@@ -163,10 +163,10 @@ li.ant-pagination-options {
 }
 
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 650px) {
   .ant-picker-panel-container {
-    margin-left: 0px;
-    width: 100% !important;
+    margin-left: 4px !important;
+    width: 100vw !important;
     overflow: scroll !important;
 }
 .ant-picker-dropdown.ant-picker-dropdown-range.ant-picker-dropdown-placement-bottomLeft {
@@ -176,6 +176,9 @@ li.ant-pagination-options {
   overflow: scroll;
 }
 .ant-picker-dropdown.ant-picker-dropdown-range.ant-picker-dropdown-placement-bottomLeft {
+  left: 0px !important;
+}
+.ant-picker-dropdown.ant-picker-dropdown-range.ant-picker-dropdown-placement-bottomRight {
   left: 0px !important;
 }
 }
@@ -201,3 +204,7 @@ div#rc-tabs-0-tab-2{
 // .ant-dropdown.ant-dropdown-placement-bottomLeft {
 //   z-index: 99999 !important;
 // }
+
+.d_none{
+  display: none !important;
+}

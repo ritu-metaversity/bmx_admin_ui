@@ -18,14 +18,9 @@ const Sidebar = (props) => {
   const [openKeys, setOpenKeys] = useState(["1"]);
 
   props.collll(collapsed);
+  const toggleDarawer = () => setOpen(prev => !prev);
 
-  const [open, setOpen] = useState(false);
-  const showDrawer = () => {
-    setOpen(true);
-  };
-  const onClose = () => {
-    setOpen(false);
-  };
+  console.log(open, "dfsdfgdg")
 
   const nav = useNavigate();
 
@@ -236,19 +231,14 @@ const Sidebar = (props) => {
       </Sider>
 
       <div className="mob_side">
-        <Space className="open_btn">
-          <Button type="" className="sub_open_btn" onClick={showDrawer}>
-            <MdMenu />
-          </Button>
-        </Space>
 
         <Drawer
-          title={<img onClick={() => setOpen(false)} src="/Images/logo.png" />}
+          title={<img onClick={props.action} src="/Images/logo.png" />}
           className="drawer_main"
           placement="left"
           closable={false}
-          onClose={onClose}
-          open={open}
+          onClose={toggleDarawer}
+          open={props.open}
           width="275"
           // key={placement}
         >
@@ -263,7 +253,7 @@ const Sidebar = (props) => {
                 key: "1",
                 icon: <AiOutlineHome />,
                 label: (
-                  <Link to="/dashboard" onClick={(() => {setOpen(false); setOpenKeys([])})}>
+                  <Link to="/dashboard" onClick={(() => {props.action(); setOpenKeys([])})}>
                     Dashboard
                   </Link>
                 ),
@@ -278,7 +268,7 @@ const Sidebar = (props) => {
                     label: (
                       <Link
                         to="/client/list-super"
-                        onClick={() => setOpen(false)}>
+                        onClick={() => props.action()}>
                         Super Master
                       </Link>
                     ),
@@ -288,7 +278,7 @@ const Sidebar = (props) => {
                     label: (
                       <Link
                         to="/client/list-agent"
-                        onClick={() => setOpen(false)}>
+                        onClick={() => props.action()}>
                         Master
                       </Link>
                     ),
@@ -298,7 +288,7 @@ const Sidebar = (props) => {
                     label: (
                       <Link
                         to="/client/list-agent"
-                        onClick={() => setOpen(false)}>
+                        onClick={() => props.action()}>
                         Agent
                       </Link>
                     ),
@@ -307,7 +297,7 @@ const Sidebar = (props) => {
                     label: (
                       <Link
                         to="client/list-client"
-                        onClick={() => setOpen(false)}>
+                        onClick={() => props.action()}>
                         Client
                       </Link>
                     ),
@@ -323,7 +313,7 @@ const Sidebar = (props) => {
                     label: (
                       <Link
                         to="/Events/sports-details"
-                        onClick={() => setOpen(false)}>
+                        onClick={() => props.action()}>
                         Sports Detail
                       </Link>
                     ),
@@ -332,7 +322,7 @@ const Sidebar = (props) => {
                   //   label: (
                   //     <Link
                   //       to="/Casino/roulette-details"
-                  //       onClick={() => setOpen(false)}>
+                  //       onClick={() => props.action()}>
                   //       Roulette Detail
                   //     </Link>
                   //   ),
@@ -341,7 +331,7 @@ const Sidebar = (props) => {
                   //   label: (
                   //     <Link
                   //       to="/Casino/dus-ka-dum-details"
-                  //       onClick={() => setOpen(false)}>
+                  //       onClick={() => props.action()}>
                   //       DusKaDum Detail
                   //     </Link>
                   //   ),
@@ -350,7 +340,7 @@ const Sidebar = (props) => {
                   //   label: (
                   //     <Link
                   //       to="/Casino/andar-bahar-details"
-                  //       onClick={() => setOpen(false)}>
+                  //       onClick={() => props.action()}>
                   //       AndarBahar Detail
                   //     </Link>
                   //   ),
@@ -370,7 +360,7 @@ const Sidebar = (props) => {
                   {
                     label: (
                       <Link
-                        onClick={() => setOpen(false)}
+                        onClick={() => props.action()}
                         to="/Events/matchledger">
                         Profit/Loss
                       </Link>
@@ -379,7 +369,7 @@ const Sidebar = (props) => {
                   {
                     label: (
                       <Link
-                        onClick={() => setOpen(false)}
+                        onClick={() => props.action()}
                         to="/client/my-ledger">
                         My Ledger
                       </Link>
@@ -389,7 +379,7 @@ const Sidebar = (props) => {
                     className: `${userType != "5" ? "d-none" : ""}`,
                     label: (
                       <Link
-                        onClick={() => setOpen(false)}
+                        onClick={() => props.action()}
                         to="/client/ledger-super">
                         Super Master Ledger
                       </Link>
@@ -399,7 +389,7 @@ const Sidebar = (props) => {
                     className: `${userType === "0" ? "" : "d-none"}`,
                     label: (
                       <Link
-                        onClick={() => setOpen(false)}
+                        onClick={() => props.action()}
                         to="/client/ledger-master">
                         Master Ledger
                       </Link>
@@ -409,7 +399,7 @@ const Sidebar = (props) => {
                     className: `${userType === "1" ? "" : "d-none"}`,
                     label: (
                       <Link
-                        onClick={() => setOpen(false)}
+                        onClick={() => props.action()}
                         to="/client/ledger-agent">
                         Agent Ledger
                       </Link>
@@ -418,7 +408,7 @@ const Sidebar = (props) => {
                   {
                     label: (
                       <Link
-                        onClick={() => setOpen(false)}
+                        onClick={() => props.action()}
                         to="/client/ledger-client">
                         Client Ledger
                       </Link>
@@ -435,7 +425,7 @@ const Sidebar = (props) => {
                     label: (
                       <Link
                         to="/client/txn-client"
-                        onClick={() => setOpen(false)}>
+                        onClick={() => props.action()}>
                         Debit/Credit Entry(C)
                       </Link>
                     ),
@@ -445,7 +435,7 @@ const Sidebar = (props) => {
                     label: (
                       <Link
                         to="/client/txn-agent"
-                        onClick={() => setOpen(false)}>
+                        onClick={() => props.action()}>
                         Debit/Credit Entry(A)
                       </Link>
                     ),
@@ -455,7 +445,7 @@ const Sidebar = (props) => {
                     label: (
                       <Link
                         to="/client/txn-super"
-                        onClick={() => setOpen(false)}>
+                        onClick={() => props.action()}>
                         Debit/Credit Entry(SM)
                       </Link>
                     ),
@@ -465,7 +455,7 @@ const Sidebar = (props) => {
                     label: (
                       <Link
                         to="/client/txn-master"
-                        onClick={() => setOpen(false)}>
+                        onClick={() => props.action()}>
                         Debit/Credit Entry(M)
                       </Link>
                     ),
@@ -481,7 +471,7 @@ const Sidebar = (props) => {
                     label: (
                       <Link
                         to="/client/login-report"
-                        onClick={() => setOpen(false)}>
+                        onClick={() => props.action()}>
                         Login Report
                       </Link>
                     ),
@@ -490,7 +480,7 @@ const Sidebar = (props) => {
                   //   label: (
                   //     <Link
                   //       to="/client/mobile-app-report"
-                  //       onClick={() => setOpen(false)}>
+                  //       onClick={() => props.action()}>
                   //       Mobile App Report
                   //     </Link>
                   //   ),
@@ -499,7 +489,7 @@ const Sidebar = (props) => {
                   //   label: (
                   //     <Link
                   //       to="/client/secure-code-report"
-                  //       onClick={() => setOpen(false)}>
+                  //       onClick={() => props.action()}>
                   //       Secure Code Report
                   //     </Link>
                   //   ),
@@ -510,7 +500,7 @@ const Sidebar = (props) => {
                 key: "7",
                 icon: <SlDiamond />,
                 label: (
-                  <Link to="/markets" onClick={() => {setOpen(false); setOpenKeys([])}}>
+                  <Link to="/markets" onClick={() => {props.action(); setOpenKeys([])}}>
                     WBT Setting
                   </Link>
                 ),

@@ -67,7 +67,7 @@ const [ParentKey, setParentKey] = useState("")
 
 
   const handleShowBtn = () => {
-    if (showOdds === false) {
+    if (showOdds === false && secondUserid?.length === 0 ) {
       api.error({
         message: "Please Select at least one fancy or odds",
         closeIcon: false,
@@ -82,7 +82,7 @@ const [ParentKey, setParentKey] = useState("")
       });
     } else {
       nav(`/Events/${id}/plus-minus-report`, {
-        state: { first, secondUserid, state, thirdUserid, ParentKey },
+        state: { first, secondUserid, state, thirdUserid, ParentKey, showOdds },
       });
     }
   };
