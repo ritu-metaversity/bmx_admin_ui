@@ -123,7 +123,7 @@ const AllStatement = ({clientId, dateData, gameType }) => {
                 onClick: event => { 
                    handelAccountModals(event,record?.marketid, record?.remark)
                 }, 
-              };
+              };  
             }}
             loading={isFetching || isLoading}
             columns={columns}

@@ -11,7 +11,7 @@ const Deposit = ({data: datadeposit, userIdData, handleClose}) => {
     const [trigger , {data, error, isLoading}] = useAddLimitMutation()
     const {data: depositeWithdraw} = useDepositAndWithdrawQuery({
       userId:datadeposit
-    });
+    }, {refetchOnMountOrArgChange:true});
 
   const onFinish = (values) => {
     const depositData = {

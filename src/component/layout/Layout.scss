@@ -31,6 +31,21 @@
   .mob_view {
     display: block !important;
   }
+  .header_com{
+    position: sticky;
+    top: 0px;
+  }
+  .marqu_tag{
+    position: sticky;
+    top: 50px;
+    z-index: 2;
+  }
+  .main_section {
+    height: unset !important;
+    overflow-y: unset !important
+  
+  }
+  
 }
 
 .main_section {
@@ -38,6 +53,10 @@
   background-repeat: repeat !important;
   height: calc(100vh - 100px);
   overflow-y: scroll;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
 
 }
+
+
+
+

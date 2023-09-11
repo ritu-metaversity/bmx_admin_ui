@@ -26,6 +26,8 @@
         outline: unset !important;
         margin-top: 9px;
         margin-left: 10px;
+        position: fixed;
+        z-index: 22;
         svg {
           color: #fff;
           font-size: 26px;

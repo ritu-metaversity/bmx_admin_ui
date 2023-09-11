@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Button,
   Divider,
@@ -9,11 +9,14 @@ import {
   Menu,
   Modal,
   Pagination,
+  Select,
   Space,
   Spin,
   notification,
 } from "antd";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   SearchOutlined,
   CaretDownOutlined,
@@ -31,6 +34,7 @@ import {
   useUpDateStatusMutation,
 } from "../../store/service/userlistService";
 import { openNotification } from "../../App";
+import { globalSelector, setData } from "../../store/global/slice";
 
 const routeFromUSerType = {
   0: "/client/list-agent/",
@@ -46,7 +50,7 @@ const UserListTable = ({ userType, Listname }) => {
   const [betLockModals, setBetLockModals] = useState(false);
   const [balance, setBalance] = useState();
   const [parentUserId, setParentUserId] = useState();
-  const [data, setData] = useState();
+  const [dataVal, setDataVal] = useState();
   const [paginationTotal, setPaginationTotal] = useState(50);
   const [indexData, setIndexData] = useState(0);
   const [partnershipDetails, setPartnershipDetails] = useState({});
@@ -54,6 +58,17 @@ const UserListTable = ({ userType, Listname }) => {
   const [parentUserids, setParentUserIds] = useState("");
   const [betStatus, setBetStatus] = useState(true);
   const [droupSearch, setDroupSearch] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userBalance, setUserBalance] = useState(0);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [dropdownStates, setDropdownStates] = useState([]);
+
+  // console.log(dropdownStates, "dropdownStates");
+
+
+  console.log(dropdownStates, "fsdfdsfdsfsd")
+
+  
   const [form] = Form.useForm();
 
   const [partnerShipData, { data: partnerShipDetail, isLoading: loading }] =
@@ -74,31 +89,36 @@ const UserListTable = ({ userType, Listname }) => {
 
   const showWithdrawnModal = () => {
     SetWithdrawnModal(true);
+    setDropdownStates([]);
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+     setDropdownStates([]);
   };
   const handleDepositeOk = () => {
     SetisDepositeModalOpen(false);
+     setDropdownStates([]);
   };
   const handleDepositeCancel = () => {
     SetisDepositeModalOpen(false);
+     setDropdownStates([]);
   };
   const showDepositModal = () => {
     SetisDepositeModalOpen(true);
+    setDropdownStates([]);
   };
 
   const { id } = useParams();
   //API CALL
-  const [getData, { data: results, isLoading, isFetching, isError }] = useLazySuperuserListQuery();
+  const [getData, { data: results, isLoading, isFetching, isError }] =
+    useLazySuperuserListQuery();
   const [activeData, { data: Activestatus }] = useUpDateStatusMutation();
- 
-  
 
   const handleActive = () => {
+     setDropdownStates([]);
     activeData({
-      userId: data,
+      userId: dataVal,
     });
   };
   useEffect(() => {
@@ -109,7 +129,7 @@ const UserListTable = ({ userType, Listname }) => {
       index: indexData,
       userId: "",
     });
-  }, [id, userType, paginationTotal, indexData, Activestatus?.status === true]);
+  }, [id, userType, paginationTotal, indexData, Activestatus?.status]);
 
   const [userIdData, setUserIdData] = useState("");
 
@@ -120,11 +140,10 @@ const UserListTable = ({ userType, Listname }) => {
     setParentUserIds(parentUserID);
   };
 
-  const [userName, setUserName] = useState("");
-  const [userBalance, setUserBalance] = useState(0);
+
 
   const handleEditData = (val, active, userName, balanc) => {
-    setData(val);
+    setDataVal(val);
     setActiveStatus(active);
     setUserBalance(balanc);
     setUserName(userName);
@@ -133,45 +152,36 @@ const UserListTable = ({ userType, Listname }) => {
   const userId = localStorage.getItem("userId");
 
   const handleBlockBettting = () => {
+     setDropdownStates([]);
     setBetLockModals(true);
   };
 
   const nav = useNavigate();
 
   const handleUpdateLimites = (data) => {
+    setDropdownStates([])
     const infoData = {
       name: userName,
       uBalance: userBalance,
     };
-    nav(`/client/limitplusminus-super/${data}`, { state: infoData });
+    nav(`/client/limitplusminus-super/${dataVal}`, { state: infoData });
   };
 
   const items = [
     {
-      label: (
-        <div
-          className={parentUserids == userId ? "" : "d_none"}
-          onClick={showDepositModal}>
-          Deposit
-        </div>
-      ),
+      className: `${parentUserids == userId ? "" : "d_none"}`,
+      label: <div onClick={showDepositModal}>Deposit</div>,
       key: "0",
     },
     {
-      label: (
-        <div
-          className={parentUserids == userId ? "" : "d_none"}
-          onClick={showWithdrawnModal}>
-          Withdrawn
-        </div>
-      ),
+      className: `${parentUserids == userId ? "" : "d_none"}`,
+      label: <div onClick={showWithdrawnModal}>Withdrawn</div>,
       key: "1",
     },
     {
+      className: `${parentUserids == userId ? "" : "d_none"}`,
       label: (
-        <div
-          className={parentUserids == userId ? "" : "d_none"}
-          onClick={handleActive}>{`${
+        <div onClick={handleActive}>{`${
           activeStatus === true ? "inActive" : "Active"
         }`}</div>
       ),
@@ -182,20 +192,18 @@ const UserListTable = ({ userType, Listname }) => {
       key: "3",
     },
     {
-      type: "divider",
-    },
-    {
+      className: `${parentUserids == userId ? "" : "d_none"}`,
       label: (
         <Link
-          className={parentUserids == userId ? "" : "d_none"}
+        onClick={()=> setDropdownStates([])}
           to={`${
             Listname === "Super Agent"
-              ? `/client/update-super/${data}`
+              ? `/client/update-super/${dataVal}`
               : Listname === "Master"
-              ? `/client/update-agent/${data}`
+              ? `/client/update-agent/${dataVal}`
               : Listname === "Dealer"
-              ? `/client/update-dealer/${data}`
-              : `/client/update-client/${data}`
+              ? `/client/update-dealer/${dataVal}`
+              : `/client/update-client/${dataVal}`
           }`}>
           Edit
         </Link>
@@ -203,34 +211,31 @@ const UserListTable = ({ userType, Listname }) => {
       key: "5",
     },
     {
+      className: `${parentUserids == userId ? "" : "d_none"}`,
       label: (
-        <div
-          className={parentUserids == userId ? "" : "d_none"}
-          onClick={() => handleUpdateLimites(data)}>
-          Update Limit
-        </div>
+        <div onClick={() => handleUpdateLimites(dataVal)}>Update Limit</div>
       ),
       key: "6",
     },
     {
-      label: <Link to={`/account-statement/${data}`}>Statement</Link>,
+      label: <Link onClick={()=> setDropdownStates([])} to={`/account-statement/${dataVal}`}>Statement</Link>,
       key: "7",
     },
     {
       label: (
-        <Link to={`/client/account-operations/${data}`}>
+        <Link onClick={()=> setDropdownStates([])} to={`/client/account-operations/${dataVal}`}>
           Account Operations
         </Link>
       ),
       key: "8",
     },
     {
-      label: <Link to={`/client/login-report/${data}`}>Login Report</Link>,
+      label: <Link onClick={()=> setDropdownStates([])} to={`/client/login-report/${dataVal}`}>Login Report</Link>,
       key: "9",
     },
     {
       label: (
-        <Link
+        <Link onClick={()=> setDropdownStates([])}
           className={userType == 3 ? "d_none" : ""}
           to={routeFromUSerType[userType] + parentUserId}>
           Downline
@@ -239,8 +244,6 @@ const UserListTable = ({ userType, Listname }) => {
       key: "10",
     },
   ];
-
-
 
   useEffect(() => {
     if (Activestatus?.status === true) {
@@ -262,18 +265,54 @@ const UserListTable = ({ userType, Listname }) => {
     }
   };
 
-  const uType = localStorage.getItem("userType")
+  const uType = localStorage.getItem("userType");
+
+  useEffect(() => {
+    const initialStates = new Array(results?.data?.user?.length).fill(false);
+    setDropdownStates(initialStates);
+  }, [results?.data?.user]);
+
+  const handleScroll = () => {
+    const updatedDropdownStates = dropdownStates.map(() => false);
+    setDropdownStates(updatedDropdownStates)
+    setIsDropdownOpen(false);
+  };
+
+  const toggleDropdown = (index) => {
+    const updatedDropdownStates = [...dropdownStates];
+    updatedDropdownStates[index] = !updatedDropdownStates[index];
+    setDropdownStates(updatedDropdownStates);
+  };
+
+  useEffect(() => {
+    if(!isDropdownOpen){
+      window.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isDropdownOpen]);
+
+
 
   return (
     <div>
       {droupSearch && (
         <div className="over_view" onClick={() => setDroupSearch(false)}></div>
       )}
-
-      <div className="table_section sport_detail m-0 ant-spin-nested-loading">
+      <div  className="sport_detail m-0 ant-spin-nested-loading" >
         {
-          <div className="table_section statement_tabs_data ant-spin-nested-loading">
+          <div className="table_section statement_tabs_data ant-spin-nested-loading" style={{overflow:`${(isLoading || isFetching) ?"hidden":"scroll"}`}}>
+             {isLoading || isFetching ? (
+                <div className="spin_icon user_spin">
+                  <Spin size="large" />
+                </div>
+              ) : (
+                ""
+              )}
             <table className="live_table">
+           
               <tr>
                 <th rowSpan={2}>#</th>
                 <th rowSpan={2}></th>
@@ -328,7 +367,17 @@ const UserListTable = ({ userType, Listname }) => {
                   </div>
                 </th>
                 <th rowSpan={2}>Name</th>
-                <th rowSpan={2}>{uType == 5? "Sub Admin": uType == 0?"Super Master":uType == 1?"Master": uType == 2?"Agent":""}</th>
+                <th rowSpan={2}>
+                  {uType == 5
+                    ? "Sub Admin"
+                    : uType == 0
+                    ? "Super Master"
+                    : uType == 1
+                    ? "Master"
+                    : uType == 2
+                    ? "Agent"
+                    : ""}
+                </th>
                 <th rowSpan={2}>Contact</th>
                 <th rowSpan={2}>D.O.J </th>
                 <th rowSpan={2}>Share%</th>
@@ -344,96 +393,99 @@ const UserListTable = ({ userType, Listname }) => {
                 <th>Match</th>
                 <th>SSN</th>
               </tr>
-              {isLoading || isFetching ? (
-                <div className="spin_icon">
-                  <Spin size="large" />
-                </div>
-              ) : (
-                ""
-              )}
-              {!isError && results?.data?.users?.map((res, id) => {
-                return (
-                  <tr key={id}>
-                    <td>
-                      <div
-                        onClick={() => showModal(res?.userid)}
-                        className="plus_btn">
-                        <PlusOutlined />
-                      </div>
-                    </td>
-                    <td
-                      onClick={() =>
-                        handleParentId(
-                          res?.id,
-                          res?.availablebalance,
-                          res?.userid,
-                          res?.parent
-                        )
-                      }>
-                      <Dropdown
-                        className="droup_menu"
-                        menu={{ items, className: "menu_data" }}
-                        trigger={["click"]}>
+         
+              {!isError &&
+                results?.data?.users?.map((res, id) => {
+                  return (
+                    <tr key={id}>
+                      <td>
                         <div
-                          className="droup_link"
-                          style={{ cursor: "pointer" }}
-                          onClick={() =>
-                            handleEditData(
-                              res?.userid,
-                              res?.active,
-                              res?.username,
-                              res?.availablebalance
-                            )
-                          }>
-                          <Space>
-                            <CaretDownOutlined />
-                          </Space>
+                          onClick={() => showModal(res?.userid)}
+                          className="plus_btn">
+                          <PlusOutlined />
                         </div>
-                      </Dropdown>
-                    </td>
-                    <td>{res?.userid}</td>
-                    <td>{res?.username}</td>
-                    <td>{res?.parent}</td>
-                    <td>{res?.mobile}</td>
-                    <td>
-                      {moment(res?.dateOfJoining).format("YYYY-MM-DD, h:mm A")}
-                    </td>
-                    <td>{res?.partnerShip}</td>
-                    <td>{res?.password}</td>
-                    <td>
-                      {res?.matchCommission == 0 && res?.sessionCommission == 0
-                        ? "No Comm"
-                        : "bbb"}
-                    </td>
-                    <td>{Number(res?.matchCommission)?.toFixed(2)}</td>
-                    <td>{Number(res?.sessionCommission)?.toFixed(2)}</td>
-                    <td>{res?.availablebalance}</td>
-                    <td>{res?.active === true ? "Active" : "inActive"}</td>
-                  </tr>
-                );
-              })}
+                      </td>
+                      <td
+                        onClick={() =>
+                          handleParentId(
+                            res?.id,
+                            res?.availablebalance,
+                            res?.userid,
+                            res?.parent
+                          )
+                        }> 
+                        <Dropdown
+                          className="droup_menu"
+                          open={dropdownStates[id]}
+                          onOpenChange={() => toggleDropdown(id)}
+                          menu={{ items, className: "menu_data" }}
+                          trigger={["click"]}
+                          >
+                          <div
+                            className="droup_link"
+                            style={{ cursor: "pointer" }}
+                            onClick={() =>
+                              handleEditData(
+                                res?.userid,
+                                res?.active,
+                                res?.username,
+                                res?.availablebalance
+                              )
+                            }>
+                            <Space>
+                              <CaretDownOutlined />
+                            </Space>
+                          </div>
+                        </Dropdown>
+                      </td>
+                      <td>{res?.userid}</td>
+                      <td>{res?.username}</td>
+                      <td>{res?.parent}</td>
+                      <td>{res?.mobile}</td>
+                      <td>
+                        {moment(res?.dateOfJoining).format(
+                          "YYYY-MM-DD, h:mm A"
+                        )}
+                      </td>
+                      <td>{res?.partnerShip}</td>
+                      <td>{res?.password}</td>
+                      <td>
+                        {res?.matchCommission == 0 &&
+                        res?.sessionCommission == 0
+                          ? "No Comm"
+                          : "bbb"}
+                      </td>
+                      <td>{Number(res?.matchCommission)?.toFixed(2)}</td>
+                      <td>{Number(res?.sessionCommission)?.toFixed(2)}</td>
+                      <td>{res?.availablebalance}</td>
+                      <td>{res?.active === true ? "Active" : "InActive"}</td>
+                    </tr>
+                  );
+                })}
             </table>
-
-            {results?.data?.users === undefined || isError ? (
-              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-            ) : (
-              <>
-                <Divider />
-                <div className="pagination_cus">
-                  <Pagination
-                    className="pagination_main ledger_pagination"
-                    onShowSizeChange={(c, s) => setPaginationTotal(s)}
-                    total={results?.data?.totalPages && results?.data?.totalPages * paginationTotal}
-                    defaultPageSize={50}
-                    pageSizeOptions={[50, 100, 150, 200, 250]}
-                    onChange={(e) => setIndexData(e - 1)}
-                  />
-                </div>
-              </>
-            )}
           </div>
         }
 
+        {results?.data?.users === undefined || isError ? (
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        ) : (
+          <>
+            <Divider />
+            <div className="pagination_cus">
+              <Pagination
+                className="pagination_main ledger_pagination"
+                onShowSizeChange={(c, s) => setPaginationTotal(s)}
+                total={
+                  results?.data?.totalPages &&
+                  results?.data?.totalPages * paginationTotal
+                }
+                defaultPageSize={50}
+                pageSizeOptions={[50, 100, 150, 200, 250]}
+                onChange={(e) => setIndexData(e - 1)}
+              />
+            </div>
+          </>
+        )}
         <Modal
           className="partnership"
           title={`Partnership Info - ${userIds}`}
@@ -460,7 +512,7 @@ const UserListTable = ({ userType, Listname }) => {
         <Deposit
           handleClose={() => SetisDepositeModalOpen(false)}
           userIdData={userIdData}
-          data={data}
+          data={dataVal}
         />
       </Modal>
 
@@ -481,7 +533,7 @@ const UserListTable = ({ userType, Listname }) => {
         <Withdraw
           userIdData={userIdData}
           handleClose={() => SetWithdrawnModal(false)}
-          data={data}
+          data={dataVal}
         />
       </Modal>
 

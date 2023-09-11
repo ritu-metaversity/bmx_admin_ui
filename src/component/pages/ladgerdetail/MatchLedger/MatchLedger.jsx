@@ -52,7 +52,7 @@ const MatchLedger = () => {
   const [dateData, setDateData] = useState([timeBefore, time]);
   const [totalPage, setTotalPage] = useState();
   const [paginationTotal, setPaginationTotal] = useState(50);
-  const [indexData, setIndexData] = useState(0);
+  const [indexData, setIndexData] = useState(1);
 
   const onChange = (date, dateString) => {
     setDateData(dateString);
@@ -137,7 +137,7 @@ const MatchLedger = () => {
             );
           })}
         </table>
-        {data?.list?.length === 0 ? (
+        {data?.list?.length === 0 || data?.list == undefined ? (
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
         ) : (
           <>

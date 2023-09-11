@@ -77,7 +77,7 @@ const AccountOperations = () => {
             className="sport_detail acc_name"
             title={`List Of All Transactions ( ${data?.data?.data?.length} )`}
             extra={<button onClick={handleBackClick}>Back</button>}>
-            <div className="">
+            <div className="" style={{margin:"10px 2px"}}>
               <RangePicker defaultValue={[dayjs(timeBefore), dayjs(time)]} onChange={onChange}/>
             </div>
 

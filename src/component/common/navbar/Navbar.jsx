@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import "./Navbar.scss";
 // import { AiOutlineDown } from "react-icons/ai";
-import { Dropdown, Input, Space, Modal } from "antd";
+import { Dropdown, Input, Space, Modal, Button } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { Form, Link, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../../../store/service/authService";
 import ChangePassword from "../ChangePassword/ChangePassword";
 import { useForm } from "antd/es/form/Form";
+import { MdMenu } from "react-icons/md";
 
-const Navbar = () => {
+const Navbar = ({ action }) => {
   const [trigger, { error, isLoading, isError }] = useLogoutMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInfo, setUserInfo] = useState();
@@ -54,13 +55,19 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="nav1"></div>
       {localStorage.getItem("token") !== null && (
         <div className="nav">
-          <div>
-            <p>
-              <img onClick={handleDashbordHome} src="/Images/logo.png" alt="" />
-            </p>
+          <div
+            style={{
+              marginTop: "0px",
+            }}>
+            <Space className="open_btn">
+              <Button type="" className="sub_open_btn" onClick={action}>
+                <MdMenu />
+              </Button>
+            </Space>
+
+            <img onClick={handleDashbordHome} src="/Images/logo.png" alt="" />
           </div>
           <div className="nav_drop">
             <Dropdown
@@ -72,9 +79,14 @@ const Navbar = () => {
                 onClick: handleModal,
               }}
               trigger={["click"]}>
-              <p className="user_deatils" style={{cursor:"pointer"}} onClick={(e) => e.preventDefault()}>
-                <p style={{fontWeight: 600, fontSize:"16px"}}>{localStorage.getItem("userId")}</p>
-                <p >
+              <p
+                className="user_deatils"
+                style={{ cursor: "pointer" }}
+                onClick={(e) => e.preventDefault()}>
+                <p style={{ fontWeight: 600, fontSize: "16px" }}>
+                  {localStorage.getItem("userId")}
+                </p>
+                <p>
                   <DownOutlined />
                 </p>
               </p>

@@ -13,8 +13,8 @@ const Rulespage = () => {
         extra={<button onClick={() => nav(-1)}>Back</button>}>
         <div>
           <div className="term-and-condition">
-            <h1 style={{ textAlign: "center" }}>
-              <span style={{ fontSize: 20 }}>
+            <h1 style={{ textAlign: "center", marginTop:"12px" }}>
+              <span style={{ fontSize: "20px" }}>
                 <em style={{ boxSizing: "border-box" }}>
                   <strong>
                     <a className="btn btn-secondary btn-lg" href="#">
@@ -24,7 +24,7 @@ const Rulespage = () => {
                 </em>
               </span>
               <span> </span>
-              <span style={{ fontSize: 20 }}>
+              <span style={{ fontSize: "20px" }}>
                 <em>
                   <strong>
                     <a

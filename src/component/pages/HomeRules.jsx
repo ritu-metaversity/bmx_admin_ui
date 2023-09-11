@@ -9,7 +9,6 @@ const HomeRules = () => {
 
   const nameHost = "ram.shyam.com"
 
-  console.log(nameHost.split(".")[1], "sdfdsfd")
 
   return (
     <>
