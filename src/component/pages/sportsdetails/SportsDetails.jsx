@@ -1,11 +1,14 @@
 import "./SportsDetails.scss";
 import {
   Card,
+  Col,
   DatePicker,
   Divider,
   Empty,
   Modal,
   Pagination,
+  Row,
+  Select,
   Spin,
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
@@ -18,6 +21,7 @@ import moment from "moment";
 import { useDispatch } from "react-redux";
 import { setData } from "../../../store/global/slice";
 import dayjs from "dayjs";
+import { useSportListbyIDQuery } from "../../../store/service/supermasteAccountStatementServices";
 
 const { confirm } = Modal;
 const showConfirm = () => {
@@ -46,6 +50,8 @@ const SportsDetails = () => {
   const [dataNameee, setDataNameee] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownStates, setDropdownStates] = useState([]);
+  const [SportId, setSportId] = useState(4);
+
   const navigate = useNavigate();
 
   const getMatchId = (matchId, inPlay, sportName) => {
@@ -56,16 +62,23 @@ const SportsDetails = () => {
 
   const nav = useNavigate();
 
-  const handlePlusMinus = (matchId)=>{
-    setDropdownStates(false)
-    nav(`/plus-minus-report/${matchId}`, { state: { dataNameee } })
-  }
+  const handlePlusMinus = (matchId) => {
+    setDropdownStates(false);
+    nav(`/plus-minus-report/${matchId}`, { state: { dataNameee } });
+  };
+
+
+  const {data: sportData} = useSportListbyIDQuery()
+
+
+  console?.log(SportId, "ccfsaddasdas")
+
 
   const items = [
     {
       label: (
         <Link
-        onClick={()=>setDropdownStates(false)}
+          onClick={() => setDropdownStates(false)}
           to={`/Events/${matchId}/live-report`}
           className="title_section"
           style={{ display: `${InPlay ? "block" : "none"}` }}>
@@ -76,9 +89,7 @@ const SportsDetails = () => {
     },
     {
       label: (
-        <p
-          className="title_section"
-          onClick={() =>handlePlusMinus(matchId)}>
+        <p className="title_section" onClick={() => handlePlusMinus(matchId)}>
           Match and Session Plus Minus
         </p>
       ),
@@ -86,7 +97,10 @@ const SportsDetails = () => {
     },
     {
       label: (
-        <Link onClick={()=>setDropdownStates(false)} className="title_section" to={`/match-slips/${matchId}`}>
+        <Link
+          onClick={() => setDropdownStates(false)}
+          className="title_section"
+          to={`/match-slips/${matchId}`}>
           Display Match Bets
         </Link>
       ),
@@ -94,7 +108,10 @@ const SportsDetails = () => {
     },
     {
       label: (
-        <Link onClick={()=>setDropdownStates(false)} className="title_section" to={`/fancy-slips/${matchId}`}>
+        <Link
+          onClick={() => setDropdownStates(false)}
+          className="title_section"
+          to={`/fancy-slips/${matchId}`}>
           Display Session Bets
         </Link>
       ),
@@ -102,7 +119,8 @@ const SportsDetails = () => {
     },
     {
       label: (
-        <Link onClick={()=>setDropdownStates(false)}
+        <Link
+          onClick={() => setDropdownStates(false)}
           className="title_section"
           to={`/completed-fancy-slips/${matchId}`}>
           Completed Fancies
@@ -112,7 +130,10 @@ const SportsDetails = () => {
     },
     {
       label: (
-        <Link onClick={()=>setDropdownStates(false)} className="title_section" to={`/rejectedBetsByEvent/${matchId}`}>
+        <Link
+          onClick={() => setDropdownStates(false)}
+          className="title_section"
+          to={`/rejectedBetsByEvent/${matchId}`}>
           Rejected Bet
         </Link>
       ),
@@ -137,6 +158,7 @@ const SportsDetails = () => {
       endDate: dateData[1],
       noOfRecords: paginationTotal,
       index: indexData < 0 ? 0 : indexData || 0,
+      sportId:SportId
     },
     { refetchOnMountOrArgChange: true }
   );
@@ -145,13 +167,15 @@ const SportsDetails = () => {
     setTotalPage(sportDetail?.data?.totalPages);
   }, [sportDetail]);
   useEffect(() => {
-    const initialStates = new Array(sportDetail?.data?.data?.length).fill(false);
+    const initialStates = new Array(sportDetail?.data?.data?.length).fill(
+      false
+    );
     setDropdownStates(initialStates);
   }, [sportDetail?.data?.data]);
 
   const handleScroll = () => {
     const updatedDropdownStates = dropdownStates.map(() => false);
-    setDropdownStates(updatedDropdownStates)
+    setDropdownStates(updatedDropdownStates);
     setIsDropdownOpen(false);
   };
 
@@ -162,7 +186,7 @@ const SportsDetails = () => {
   };
 
   useEffect(() => {
-    if(!isDropdownOpen){
+    if (!isDropdownOpen) {
       window.addEventListener("scroll", handleScroll);
     }
 
@@ -171,22 +195,37 @@ const SportsDetails = () => {
     };
   }, [isDropdownOpen]);
 
-
-
   return (
     <>
       <Card
         className="sport_detail"
         title="Sports Detail"
         extra={<button onClick={handleBackbtn}>Back</button>}>
-        <div className="date_picker" style={{}}>
-          <RangePicker
-            defaultValue={[dayjs(timeBefore), dayjs(time)]}
-            style={{ margin: "10px" }}
-            onChange={onChange}
-            bordered={false}
-          />
-        </div>
+        <Row className="date_picker" style={{}}>
+          <Col xl={6} lg={6} md={24} xs={24} className="datepicker_sport" style={{padding:"0px 10px"}}>
+            <RangePicker
+              defaultValue={[dayjs(timeBefore), dayjs(time)]}
+              onChange={onChange}
+              bordered={false}
+            />
+          </Col>
+          <Col xl={6} lg={6} md={24} xs={24} style={{padding:"10px 0px"}}>
+            <Select
+            className="sport_select"
+            onChange={(value)=>setSportId(value)}
+            defaultValue={SportId}
+            >
+              {
+                sportData?.data?.map((res, id)=>{
+                  console.log(res, "Dsdfasdas")
+                  return(
+                    <Select.Option value={res?.sportId}  key={id}>{res?.sportName}</Select.Option>
+                  )
+                })
+              }
+            </Select>
+          </Col>
+        </Row>
         <div className="table_section">
           {/* <Table columns={columns} dataSource={data} /> */}
           <table className="ant-spin-nested-loading">
@@ -215,7 +254,7 @@ const SportsDetails = () => {
                     <Dropdown
                       className="table_dropdown sport_droupdown"
                       open={dropdownStates[id]}
-                          onOpenChange={() => toggleDropdown(id)}
+                      onOpenChange={() => toggleDropdown(id)}
                       menu={{
                         items,
                         className: "sport_list",
@@ -238,16 +277,18 @@ const SportsDetails = () => {
                   </td>
                   <td>{res?.eventId}</td>
                   <td>{res?.eventName}</td>
-                  <td>
-                    {res?.statusStr}
-                  </td>
+                  <td>{res?.statusStr}</td>
                   <td>{moment(res?.eventDate).format("YYYY-MM-DD, h:mm A")}</td>
                   {/* <td>{res?.competition}</td> */}
                   <td>{res?.winner === null ? "" : "YES"}</td>
                   <td>{res?.winner === null ? "" : res?.winner}</td>
                   <td
                     className={`text-right ${
-                      res?.plusMinus < 0 ? "text_danger" :res?.plusMinus > 0? "text_success":""
+                      res?.plusMinus < 0
+                        ? "text_danger"
+                        : res?.plusMinus > 0
+                        ? "text_success"
+                        : ""
                     }`}>
                     {res?.plusMinus === null ? "0" : res?.plusMinus}
                   </td>
@@ -270,7 +311,7 @@ const SportsDetails = () => {
           style={{ marginBottom: "12px" }}
           className="pagination_main ledger_pagination pagination_main"
           onShowSizeChange={(c, s) => setPaginationTotal(s)}
-          total={totalPage && (totalPage) * paginationTotal}
+          total={totalPage && totalPage * paginationTotal}
           defaultPageSize={50}
           pageSizeOptions={[50, 100, 150, 200, 250]}
           onChange={(e) => setIndexData(e - 1)}

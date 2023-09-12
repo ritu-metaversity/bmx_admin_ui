@@ -9,12 +9,16 @@ import {
   notification,
 } from "antd";
 import "./Deposit.scss";
-import { useBlockBettingMutation } from "../../store/service/userlistService";
+import { useBlockBettingMutation } from "../../store/service/supermasteAccountStatementServices";
 import { openNotification, openNotificationError } from "../../App";
 
-const BetlockModal = ({ betStatus, setBetStatus, userIdData, handleClose }) => {
+const BetlockModal = ({ betStatus, setBetStatus, userIdData, handleClose, setAccStatus, accStatus }) => {
+
   const [accountBetStatus, setAccountBetStatus] = useState(false)
   const [form] = Form.useForm();
+
+
+  console.log(accStatus, "dasdasds")
 
   const [trigger, { data, error, isLoading }] = useBlockBettingMutation();
 
@@ -23,8 +27,8 @@ const BetlockModal = ({ betStatus, setBetStatus, userIdData, handleClose }) => {
     setAccountBetStatus(values?.type == "acc"  ? true : false)
     const bettingPayload = {
       userId: userIdData,
-      betLock: values?.type == "bet" && betStatus ? true : false,
-      accountLock: values?.type == "acc"  ? true : false,
+      betLock: values?.type == "bet" && !betStatus,
+      accountLock: values?.type == "acc" && !accStatus,
       isactive: true,
       liveCasinoLock: false,
       virtualCasinoLock: false,
@@ -36,7 +40,6 @@ const BetlockModal = ({ betStatus, setBetStatus, userIdData, handleClose }) => {
 
   useEffect(() => {
     if (data?.status === true) {
-      setBetStatus(!betStatus);
       openNotification(data?.message);
       form?.resetFields();
       handleClose();
@@ -71,11 +74,11 @@ const BetlockModal = ({ betStatus, setBetStatus, userIdData, handleClose }) => {
                 options={[
                   {
                     value: "bet",
-                    label: <div>{betStatus ? "Block Betting":"UnBlock Betting"}</div>
+                    label: <div>{betStatus ? "UnBlock Betting":"Block Betting"}</div>
                   },
                   {
                     value: "acc",
-                    label: <div>{accountBetStatus ? "Account UnBlock":"Account Block"}</div>
+                    label: <div>{accStatus ? "UnBlock Account":"Account Block"}</div>
                   },
                 ]}
               />

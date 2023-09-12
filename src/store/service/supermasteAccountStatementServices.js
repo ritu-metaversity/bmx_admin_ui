@@ -10,6 +10,7 @@ export const supermasteAccountStatementApi = createApi({
       return headers;
     },
   }),
+  tagTypes:["deleteByUser", 'superUserList'],
   endpoints: (build) => ({
     accountstatement: build.query({
       query: (body) => ({
@@ -103,19 +104,14 @@ export const supermasteAccountStatementApi = createApi({
         body
       }),
     }),
-    SuperuserList: build.query({
+    superuserList: build.query({
       query: (body) => ({
         url: "/bmx/user/get-user-list",
         method: "POST",
         body
       }),
-    }),
-    super_User_List: build.mutation({
-      query: (body) => ({
-        url: "/bmx/user/get-user-list",
-        method: "POST",
-        body
-      }),
+      providesTags: ['superUserList']
+
     }),
     profitLoss: build.query({
       query: (body) => ({
@@ -123,7 +119,24 @@ export const supermasteAccountStatementApi = createApi({
         method: "POST",
         body
       }),
-    })
+    }),
+    blockBetting: build.mutation({
+      query: (body) => ({
+        url: "/user/update-bet-account-status",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ['superUserList']
+
+    }),
+    sportListbyID: build.query({
+      query: (body) => ({
+        url: "/sport/active-sport-list",
+        method: "POST",
+        body,
+      }),
+
+    }),
   }),
 });
 
@@ -142,7 +155,8 @@ export const {
   useDeleteByUserIDMutation,
   useFetchDeleteTransectionQuery,
   useLazyTtlBookQuery,
-  useLazySuperuserListQuery,
+  useSuperuserListQuery,
   useProfitLossQuery,
-  useSuper_User_ListMutation
+  useBlockBettingMutation,
+  useSportListbyIDQuery
 } = supermasteAccountStatementApi;

@@ -63,14 +63,8 @@ const UpdateAgent = () => {
                 <Form.Item
                   label="Contact No."
                   name="number"
-                  required
-                  rules={[
-                    {
-                      required: true,
-                      message: "Invalid Contact NO!",
-                    },
-                  ]}>
-                  <Input type="number" placeholder="Enter Reference" />
+                  >
+                  <Input type="number" placeholder="Enter Contact No." />
                 </Form.Item>
                 <Form.Item
                   label="Password"

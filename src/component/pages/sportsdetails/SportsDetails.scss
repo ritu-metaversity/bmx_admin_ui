@@ -47,7 +47,7 @@
   }
   .date_picker {
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
     .ant-picker {
       border: 1px solid #00000063 !important;
@@ -185,6 +185,9 @@
       margin-left: 0px !important;
     }
   }
+  .datepicker_sport{
+    padding-top: 10px !important;
+  }
 }
 .button.ant-pagination-item-link {
   svg {
@@ -217,4 +220,12 @@
 
 }
  
+}
+.sport_select{
+  padding: 10px;
+  width: 100%;
+  .ant-select-selector {
+    height: 41px !important;
+    padding: 4px 14px !important;
+}
 }
