@@ -90,12 +90,12 @@ const CreateSuperAgent = ({ createName }) => {
     setLuPassword("");
     const userData = {
       userId: hostname.includes("create-super")
-        ? "S" + createUserId
+        ? "S" + (createUserId)?.trim()
         : hostname.includes("create-agent")
-        ? "M" + createUserId
+        ? "M" +  (createUserId)?.trim()
         : hostname.includes("create-dealer")
-        ? "A" + createUserId
-        : "C" + createUserId,
+        ? "A" +  (createUserId)?.trim()
+        : "C" +  (createUserId)?.trim(),
       username: values?.Name,
       mobile: values?.mobile,
       city: "",
@@ -257,7 +257,7 @@ const CreateSuperAgent = ({ createName }) => {
                     ]}>
                     <Input
                       type="text"
-                      placeholder="Enter full name"
+                      placeholder="Enter user id"
                       onChange={(e) => handelUseId(e)}
                       onKeyDown={(e) => {
                         if (

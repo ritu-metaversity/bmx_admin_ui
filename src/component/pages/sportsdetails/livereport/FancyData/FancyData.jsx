@@ -106,12 +106,13 @@ const FancyData = ({ data, keyData }) => {
                 </Col>
                 <Col className="b-bottom" span={5}>
                   <Row>
+                  <Col span={12} className="back khai">
+                      <div>{keyData === "Bookmaker"?"LAGAI":"YES"}</div>
+                    </Col>
                     <Col span={12} className="lay lagai lagai1">
                       <div>{keyData === "Bookmaker"?"KHAI":"NO"}</div>
                     </Col>
-                    <Col span={12} className="back khai">
-                      <div>{keyData === "Bookmaker"?"LAGAI":"YES"}</div>
-                    </Col>
+                    
                   </Row>
                 </Col>
               </Row>
@@ -188,16 +189,17 @@ const FancyData = ({ data, keyData }) => {
                       className={`${res.gstatus === "" ? "" : "after_Effect"}`}
                       span={5}>
                       <Row>
+                      <Col span={12}>
+                          <div className="back p-16" style={{ height: "44px" }}>
+                            <div>{res?.b1}</div>
+                          </div>
+                        </Col>
                         <Col span={12}>
                           <div className="lay p-16" style={{ height: "44px" }}>
                             <div>{res?.l1}</div>
                           </div>
                         </Col>
-                        <Col span={12}>
-                          <div className="back p-16" style={{ height: "44px" }}>
-                            <div>{res?.b1}</div>
-                          </div>
-                        </Col>
+
                       </Row>
                     </Col>
                   </Row>

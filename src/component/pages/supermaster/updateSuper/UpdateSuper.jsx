@@ -227,25 +227,13 @@ const UpdateSuper = ({ updateName }) => {
                   </Form.Item>
                   <Form.Item
                     label="Reference"
-                    name="reference"
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please specify reference!",
-                      },
-                    ]}>
+                    name="reference">
                     <Input placeholder="Enter Reference" />
                   </Form.Item>
                   <Form.Item
                     label="Contact No."
                     name="number"
-                    required
                     rules={[
-                      {
-                        required: true,
-                        message: "Invalid Contact NO!",
-                      },
                       { pattern: mobileNum, message: "Invalid Contact NO!" },
                     ]}>
                     <InputNumber
@@ -253,7 +241,7 @@ const UpdateSuper = ({ updateName }) => {
                       min={0}
                       width={"100%"}
                       type="number"
-                      placeholder="Enter Reference"
+                      placeholder="Enter Contact No."
                     />
                   </Form.Item>
                   <Form.Item

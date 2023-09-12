@@ -66,7 +66,7 @@ const columns = [
     dataIndex: "netpnl",
     key: "netpnl",
     render: (text, record)=>(
-      <p className={record?.netpnl>0?"text-right text_success":"text-right text_danger"}>{record?.netpnl}</p>
+      <p className={record?.netpnl<0?"text-right text_danger":"text-right text_success"}>{record?.netpnl}</p>
       )
   },
 

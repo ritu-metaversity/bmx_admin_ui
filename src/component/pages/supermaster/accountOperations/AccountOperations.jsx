@@ -78,7 +78,7 @@ const AccountOperations = () => {
             title={`List Of All Transactions ( ${data?.data?.data?.length} )`}
             extra={<button onClick={handleBackClick}>Back</button>}>
             <div className="" style={{margin:"10px 2px"}}>
-              <RangePicker defaultValue={[dayjs(timeBefore), dayjs(time)]} onChange={onChange}/>
+              <RangePicker className="acc_datepicker" defaultValue={[dayjs(timeBefore), dayjs(time)]} onChange={onChange}/>
             </div>
 
 

@@ -28,7 +28,7 @@ import moment from "moment";
 import Deposit from "./Deposit";
 import Withdraw from "./Withdraw";
 import BetlockModal from "./BetlockModal";
-import { useLazySuperuserListQuery } from "../../store/service/supermasteAccountStatementServices";
+import {  useSuperuserListQuery } from "../../store/service/supermasteAccountStatementServices";
 import {
   usePartnershipMutation,
   useUpDateStatusMutation,
@@ -56,7 +56,8 @@ const UserListTable = ({ userType, Listname }) => {
   const [partnershipDetails, setPartnershipDetails] = useState({});
   const [userIds, setUserIds] = useState("");
   const [parentUserids, setParentUserIds] = useState("");
-  const [betStatus, setBetStatus] = useState(true);
+  const [betStatus, setBetStatus] = useState(false);
+  const [accStatus, setAccStatus] = useState(false);
   const [droupSearch, setDroupSearch] = useState(false);
   const [userName, setUserName] = useState("");
   const [userBalance, setUserBalance] = useState(0);
@@ -111,8 +112,14 @@ const UserListTable = ({ userType, Listname }) => {
 
   const { id } = useParams();
   //API CALL
-  const [getData, { data: results, isLoading, isFetching, isError }] =
-    useLazySuperuserListQuery();
+  const { data: results, isLoading, isFetching, isError } =
+    useSuperuserListQuery({
+      userType: userType,
+      parentUserId: id || null,
+      noOfRecords: paginationTotal,
+      index: indexData,
+      userId: "",
+    },{refetchOnMountOrArgChange:true});
   const [activeData, { data: Activestatus }] = useUpDateStatusMutation();
 
   const handleActive = () => {
@@ -121,23 +128,25 @@ const UserListTable = ({ userType, Listname }) => {
       userId: dataVal,
     });
   };
-  useEffect(() => {
-    getData({
-      userType: userType,
-      parentUserId: id || null,
-      noOfRecords: paginationTotal,
-      index: indexData,
-      userId: "",
-    });
-  }, [id, userType, paginationTotal, indexData, Activestatus?.status]);
+  // useEffect(() => {
+  //   getData({
+  //     userType: userType,
+  //     parentUserId: id || null,
+  //     noOfRecords: paginationTotal,
+  //     index: indexData,
+  //     userId: "",
+  //   });
+  // }, [id, userType, paginationTotal, indexData, Activestatus?.status]);
 
   const [userIdData, setUserIdData] = useState("");
 
-  const handleParentId = (val, bal, user, parentUserID) => {
+  const handleParentId = (val, bal, user, parentUserID, betStatus, accStatus) => {
     setParentUserId(val);
     setBalance(bal);
     setUserIdData(user);
     setParentUserIds(parentUserID);
+    setBetStatus(betStatus),
+    setAccStatus(accStatus)
   };
 
 
@@ -411,7 +420,9 @@ const UserListTable = ({ userType, Listname }) => {
                             res?.id,
                             res?.availablebalance,
                             res?.userid,
-                            res?.parent
+                            res?.parent,
+                            res?.betlock,
+                            res?.accountlock
                           )
                         }> 
                         <Dropdown
@@ -502,7 +513,7 @@ const UserListTable = ({ userType, Listname }) => {
       <Modal
         className="modal_deposit"
         destroyOnClose
-        title={<h1>Deposite Chips</h1>}
+        title={<h1>Deposit Chips</h1>}
         open={isDepositeModalOpen}
         onOk={handleDepositeOk}
         onCancel={handleDepositeCancel}
@@ -521,7 +532,7 @@ const UserListTable = ({ userType, Listname }) => {
         destroyOnClose
         title={
           <h1>
-            <span>Withdrawal Chips</span>
+            <span>Withdraw Chips</span>
           </h1>
         }
         open={WithdrawnModal}
@@ -555,6 +566,8 @@ const UserListTable = ({ userType, Listname }) => {
           userIdData={userIdData}
           setBetStatus={setBetStatus}
           betStatus={betStatus}
+          setAccStatus={setAccStatus}
+          accStatus= {accStatus}
           handleClose={() => setBetLockModals(false)}
         />
       </Modal>

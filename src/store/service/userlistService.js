@@ -116,13 +116,6 @@ export const userlistApi = createApi({
         body,
       }),
     }),
-    blockBetting: build.mutation({
-      query: (body) => ({
-        url: "/user/update-bet-account-status",
-        method: "POST",
-        body,
-      }),
-    }),
     upDateLimites: build.query({
       query: (body) => ({
         url: "/dwc/creditdata",
@@ -149,7 +142,6 @@ export const {
   useAccountOprationQuery,
   useUpDateStatusMutation,
   useLazyIsUserIdQuery,
-  useBlockBettingMutation,
   useLazyUpDateLimitesQuery
 
 } = userlistApi;

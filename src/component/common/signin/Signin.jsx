@@ -28,9 +28,9 @@ const Signin = () => {
       password: (values?.password?.trim()),
       appUrl: window.location.hostname,
       // appUrl: "master.247idhub.com",
-      // appUrl: "supermaster.247idhub.com", 
-      // appUrl: "agent.247idhub.com",
-      // appUrl: "subadmin.247idhub.com",
+      // appUrl: "supermaster.11bet24.com",
+      // appUrl: "agent.247idhub.com",  
+      // appUrl: "subadmin.11bet24.com",
       // appUrl: "subadmin.localhost",
     };
     trigger(authData);
