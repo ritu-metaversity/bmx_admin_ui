@@ -290,7 +290,7 @@ const Sidebar = (props) => {
                     className: `${userType === "1" ? "" : "d-none"}`,
                     label: (
                       <Link
-                        to="/client/list-agent"
+                        to="/client/list-dealer"
                         onClick={() => props?.action()}>
                         Agent
                       </Link>
