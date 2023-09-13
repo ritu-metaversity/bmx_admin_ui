@@ -18,26 +18,11 @@ import { Dropdown, Space } from "antd";
 import { useSportDetailQuery } from "../../../store/service/SportDetailServices";
 import { useEffect, useState } from "react";
 import moment from "moment";
-import { useDispatch } from "react-redux";
-import { setData } from "../../../store/global/slice";
 import dayjs from "dayjs";
 import { useSportListbyIDQuery } from "../../../store/service/supermasteAccountStatementServices";
 
-const { confirm } = Modal;
-const showConfirm = () => {
-  confirm({
-    title: "Confirm Changes",
-    icon: <QuestionCircleOutlined />,
-    onOk() {
-      console.log("OK");
-    },
-    onCancel() {
-      console.log("Cancel");
-    },
-  });
-};
-
 const { RangePicker } = DatePicker;
+
 const SportsDetails = () => {
   const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
   const time = moment().format("YYYY-MM-DD");
@@ -51,27 +36,24 @@ const SportsDetails = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownStates, setDropdownStates] = useState([]);
   const [SportId, setSportId] = useState(4);
-
-  const navigate = useNavigate();
-
-  const getMatchId = (matchId, inPlay, sportName) => {
-    setMatchId(matchId);
-    setDataNameee(sportName);
-    setInPlay(inPlay);
-  };
+  const [statusStr, setStatusStr] = useState("");
 
   const nav = useNavigate();
 
+  const getMatchId = (matchId, inPlay, sportName, statusStraVal) => {
+    setMatchId(matchId);
+    setDataNameee(sportName);
+    setInPlay(inPlay);
+    setStatusStr(statusStraVal)
+  };
+
   const handlePlusMinus = (matchId) => {
     setDropdownStates(false);
-    nav(`/plus-minus-report/${matchId}`, { state: { dataNameee } });
+    nav(`/plus-minus-report/${matchId}`, {state: { dataNameee }});
   };
 
 
   const {data: sportData} = useSportListbyIDQuery()
-
-
-  console?.log(SportId, "ccfsaddasdas")
 
 
   const items = [
@@ -81,7 +63,7 @@ const SportsDetails = () => {
           onClick={() => setDropdownStates(false)}
           to={`/Events/${matchId}/live-report`}
           className="title_section"
-          style={{ display: `${InPlay ? "block" : "none"}` }}>
+          style={{ display: `${statusStr === "In Play" ? "block" : "none"}` }}>
           Match and Session Position
         </Link>
       ),
@@ -142,7 +124,7 @@ const SportsDetails = () => {
   ];
 
   const handleBackbtn = () => {
-    navigate(-1);
+    nav(-1);
   };
 
   const onChange = (data, dateString) => {
@@ -266,7 +248,8 @@ const SportsDetails = () => {
                             getMatchId(
                               res?.eventId,
                               res?.inPlay,
-                              res?.eventName
+                              res?.eventName,
+                              res?.statusStr
                             );
                         }}>
                         <Space>

@@ -62,12 +62,14 @@ const [ParentKey, setParentKey] = useState("")
 
   const nav = useNavigate();
   const handleBackClick = () => {
-    nav("/Events/sports-details");
+    nav(-1);
   };
 
 
+
   const handleShowBtn = () => {
-    if (showOdds === false && secondUserid?.length === 0 ) {
+    console.log(showOdds,first?.length, "Dsadas")
+    if (showOdds === false && first?.length === 0 ) {
       api.error({
         message: "Please Select at least one fancy or odds",
         closeIcon: false,

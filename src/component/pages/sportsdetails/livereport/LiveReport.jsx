@@ -95,7 +95,7 @@ const LiveReport = () => {
           <ScoreCard mid={id} />
           <div>
             <Row gutter={[16, 24]}>
-              <Col className="gutter-row" span={20}>
+              <Col className="gutter-row" span={21}>
                 <div className="match_section">
                   <Row>
                     <Col span={19} className="back-lay-bg">

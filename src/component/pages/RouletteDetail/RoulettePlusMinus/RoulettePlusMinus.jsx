@@ -12,7 +12,7 @@ import { Button,  Input,  Space, Table } from "antd";
 const RoulettePlusMinus = () => {
   const nav = useNavigate();
   const handleBackClick = () => {
-    nav("/Casino/roulette-details");
+    nav(-1);
   };
 
   const [isDepositeModalOpen, SetisDepositeModalOpen] = useState(false);

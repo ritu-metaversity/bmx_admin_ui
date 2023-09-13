@@ -9,7 +9,7 @@ const ListSuper = ({userTyep, Listname}) => {
 
   const nav = useNavigate();
   const handleBackClick = () => {
-    nav("/client/details-master");
+    nav(-1);
   };
 
   const handleCreate = () => {
