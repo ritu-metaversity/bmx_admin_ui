@@ -250,14 +250,14 @@
         display: block !important;
       }
       .ant-col.ant-col-19 {
-        width: 60%;
-        min-width: 60%;
-        max-width: 60%;
+        width: 64%;
+        min-width: 64%;
+        max-width: 64%;
       }
       .ant-col.ant-col-5 {
-        width: 40%;
-        min-width: 40%;
-        max-width: 40%;
+        width: 36%;
+        min-width: 36%;
+        max-width: 36%;
       }
       .lagai {
         div {
@@ -267,20 +267,15 @@
     }
     .scor {
       .ant-col.ant-col-5 {
-        min-width: 40%;
-        max-width: 40%;
-        width: 40%;
+        min-width: 36%;
+        max-width: 36%;
+        width: 36%;
       }
     }
     .ant-col.ant-col-20.gutter-row {
       width: 100% !important;
       min-width: 100% !important;
       max-width: 100% !important;
-    }
-    .tital_sectin {
-      width: 60%;
-      min-width: 60%;
-      max-width: 60%;
     }
   }
   .main_live_section1 {
@@ -309,9 +304,9 @@
     }
     .scor {
       .ant-col.ant-col-5 {
-        min-width: 40%;
-        max-width: 40%;
-        width: 39%;
+        min-width: 36%;
+        max-width: 36%;
+        width: 36%;
       }
     }
     .ant-col.ant-col-20.gutter-row {
@@ -320,9 +315,9 @@
       max-width: 100% !important;
     }
     .tital_sectin {
-      width: 60%;
-      min-width: 60%;
-      max-width: 60%;
+      width: 64%;
+      min-width: 64%;
+      max-width: 64%;
     }
   }
   .match_title {
@@ -422,7 +417,7 @@
   }
 }
 .bookData {
-  margin-left: -24px;
+  // margin-left: -24px;
   button {
     margin: 2px;
     padding: 4px 8px;

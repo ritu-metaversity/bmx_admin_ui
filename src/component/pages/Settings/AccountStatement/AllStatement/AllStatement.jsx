@@ -4,6 +4,7 @@ import { useLazyAccountstatementQuery } from "../../../../../store/service/super
 import { useDispatch } from "react-redux";
 import { setData } from "../../../../../store/global/slice";
 import AccountModals from "../AccountModals";
+import { useParams } from "react-router-dom";
 
 const AllStatement = ({clientId, dateData, gameType }) => {
   const [trigger, {data, isFetching, isLoading}] = useLazyAccountstatementQuery();
@@ -11,17 +12,19 @@ const AllStatement = ({clientId, dateData, gameType }) => {
   const [marketId, setMarketId] = useState("");
   const [remark, setRemark] = useState("");
 
+  const {id} = useParams()
+
   useEffect(()=>{
     const AccData = {
       index: 0,
       noOfRecords: "200",
       fromDate: dateData[0],
       toDate: dateData[1],
-      userid: clientId || "",
+      userid: clientId || id || "",
       type: gameType,
     }
     trigger(AccData)
-  }, [data, gameType,clientId, dateData ])
+  }, [data, gameType,clientId, dateData])
 
   const dispatch = useDispatch();
 

@@ -52,7 +52,7 @@ const MatchLedger = () => {
   const [dateData, setDateData] = useState([timeBefore, time]);
   const [totalPage, setTotalPage] = useState();
   const [paginationTotal, setPaginationTotal] = useState(50);
-  const [indexData, setIndexData] = useState(1);
+  const [indexData, setIndexData] = useState(0);
 
   const onChange = (date, dateString) => {
     setDateData(dateString);
@@ -72,6 +72,8 @@ const MatchLedger = () => {
   }, [data?.data, dateData, paginationTotal, indexData]);
 
   const nav = useNavigate();
+
+  // console.log(data?.data?.list?.length , "sdasdas")
 
   return (
     <Card
@@ -137,7 +139,7 @@ const MatchLedger = () => {
             );
           })}
         </table>
-        {data?.list?.length === 0 || data?.list == undefined ? (
+        {data?.data?.list?.length === 0 || data?.data?.list?.length == undefined ? (
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
         ) : (
           <>

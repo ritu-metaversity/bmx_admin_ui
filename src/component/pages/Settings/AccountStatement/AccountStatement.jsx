@@ -80,8 +80,9 @@ const AccountStatement = () => {
   
 
   
-  const pName = window.location.pathname
-  console.log(pName, "dfsafdf")
+  const pName = window.location.pathname;
+
+  console.log(clientId, "clientId")
 
   return (
     <>
@@ -125,7 +126,7 @@ const AccountStatement = () => {
                       },
                     ]}>
                     <Select
-                      placeholder="Select User"
+                      placeholder={id ? id : "Select User"}
                       options={
                         resultData.isError ?[] :resultData.data?.data?.map((i) => ({
                           label: i.text,

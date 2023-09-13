@@ -131,7 +131,7 @@ const CreateSuperAgent = ({ createName }) => {
   const nav = useNavigate();
 
   const handleBackClick = () => {
-    nav("/client/list-super");
+    nav(-1);
   };
 
   useEffect(() => {

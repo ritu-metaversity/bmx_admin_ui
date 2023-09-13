@@ -10,7 +10,7 @@ const ClientLimitDetails = () => {
     const nav = useNavigate();
 
   const handleBackClick = () => {
-    nav("/client/list-client");
+    nav(-1);
   };
 
   const [searchText, setSearchText] = useState("");

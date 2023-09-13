@@ -64,11 +64,6 @@ const UserListTable = ({ userType, Listname }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownStates, setDropdownStates] = useState([]);
 
-  // console.log(dropdownStates, "dropdownStates");
-
-
-  console.log(dropdownStates, "fsdfdsfdsfsd")
-
   
   const [form] = Form.useForm();
 

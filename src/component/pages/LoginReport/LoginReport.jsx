@@ -1,57 +1,53 @@
 import {
-  Button,
   Card,
   Col,
   Divider,
   Empty,
   Form,
-  Input,
-  Menu,
   Pagination,
   Row,
   Select,
-  Space,
   Spin,
-  Table,
+  Tooltip,
 } from "antd";
-import { useLoaderData, useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import "./LoginReport.scss";
 import { useLazyLoginReportQuery } from "../../../store/service/loginReportServices";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useLazyUserListQuery } from "../../../store/service/supermasteAccountStatementServices";
 import { CaretDownOutlined, CaretUpOutlined } from "@ant-design/icons";
+import { AiFillEye } from "react-icons/ai";
 
 const LoginReport = () => {
   // const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
   // const time = moment().format("YYYY-MM-DD");
 
   const userId = localStorage.getItem("userId");
-  const {id} = useParams()
+  const { id } = useParams();
 
+  const { pathname } = useLocation();
 
-  const {pathname} = useLocation()
-
-  console.log(pathname?.includes(id), "ddasdas")
+  console.log(pathname?.includes(id), "ddasdas");
 
   const [clientId, setClientId] = useState(userId);
   const [paginationTotal, setPaginationTotal] = useState(50);
   const [indexData, setIndexData] = useState(0);
   const [ipOrder, setipOrder] = useState(false);
 
-
-
   const nav = useNavigate();
   const handleBackClick = () => {
     nav(-1);
   };
 
-
-  useEffect(()=>{
-    if(pathname?.includes(id)){
-      setClientId(id)
+  useEffect(() => {
+    if (pathname?.includes(id)) {
+      setClientId(id);
     }
-  }, [pathname])
+  }, [pathname]);
 
   const [userList, resultData] = useLazyUserListQuery();
 
@@ -185,8 +181,8 @@ const LoginReport = () => {
                 <th>
                   <div className="ip_section">
                     <p>IP-Address</p>
-                    <p onClick={()=>setipOrder(!ipOrder)}>
-                      {ipOrder?<CaretUpOutlined />:<CaretDownOutlined />}
+                    <p onClick={() => setipOrder(!ipOrder)}>
+                      {ipOrder ? <CaretUpOutlined /> : <CaretDownOutlined />}
                     </p>
                   </div>
                 </th>
@@ -200,18 +196,23 @@ const LoginReport = () => {
               ) : (
                 ""
               )}
-              {!isError && data?.data?.list?.map((res, id) => {
-                return (
-                  <tr key={id}>
-                    <td>{res?.userid}</td>
-                    <td>{res?.ip}</td>
-                    <td>
-                      {moment(res?.lastLogin).format("YYYY-MM-DD, h:mm A")}
-                    </td>
-                    <td>{res?.deviceInfo}</td>
-                  </tr>
-                );
-              })}
+              {!isError &&
+                data?.data?.list?.map((res, id) => {
+                  return (
+                    <tr key={id}>
+                      <td>{res?.userid}</td>
+                      <td>{res?.ip}</td>
+                      <td>{res?.lastLogin}</td>
+                      <td style={{cursor:"pointer"}} className="divice-info">
+                        <Tooltip title={res?.deviceInfo}>
+                          <span>
+                            <AiFillEye />
+                          </span>
+                        </Tooltip>
+                      </td>
+                    </tr>
+                  );
+                })}
             </table>
 
             {data?.data?.list === undefined || isError ? (

@@ -13,7 +13,7 @@ const ClientUpline = () => {
   const nav = useNavigate();
 
   const handleBackClick = () => {
-    nav("/client/list-super");
+    nav(-1);
   };
 
   const items = [
