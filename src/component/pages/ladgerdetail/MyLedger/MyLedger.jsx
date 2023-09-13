@@ -89,7 +89,7 @@ const MyLedger = () => {
 
         <div className="my_ledger">
         <Col lg={8} xs={24} className="match_ladger">
-          <DatePicker.RangePicker defaultValue={[dayjs(timeBefore), dayjs(time)]}  onChange={onChange}/>
+          <DatePicker.RangePicker style={{margin: "10px 0px 0px 0px"}} defaultValue={[dayjs(timeBefore), dayjs(time)]}  onChange={onChange}/>
         </Col>
           <div>
             <h3 style={{ padding: "5px", color: "rgb(51, 181, 28)" }}>
