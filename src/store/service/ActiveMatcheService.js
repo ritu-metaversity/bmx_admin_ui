@@ -12,10 +12,12 @@ export const activeMatchesApi = createApi({
   }),
   endpoints: (build) => ({
     activeMatch: build.query({
-      query: () => ({
-        url: "/betfair_api/active_match/4",
-        method: "GET",
-      }),
+      query: (args) => {
+        return {
+          url: `/betfair_api/active_match/${args}`,
+          method: "GET",
+        }
+      },
     })
   }),
 });
