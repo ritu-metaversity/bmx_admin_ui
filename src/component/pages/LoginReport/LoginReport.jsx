@@ -29,9 +29,9 @@ const LoginReport = () => {
   const userId = localStorage.getItem("userId");
   const { id } = useParams();
 
-  const { pathname } = useLocation();
+  console.log(id?id:userId, "dsadfsdsdsa")
 
-  console.log(pathname?.includes(id), "ddasdas");
+
 
   const [clientId, setClientId] = useState(userId);
   const [paginationTotal, setPaginationTotal] = useState(50);
@@ -43,49 +43,12 @@ const LoginReport = () => {
     nav(-1);
   };
 
-  useEffect(() => {
-    if (pathname?.includes(id)) {
-      setClientId(id);
-    }
-  }, [pathname]);
 
   const [userList, resultData] = useLazyUserListQuery();
 
   const [loginReport, { data, isLoading, isFetching, isError }] =
     useLazyLoginReportQuery();
 
-  useEffect(() => {
-    loginReport({
-      index: indexData,
-      noOfRecords: paginationTotal,
-      parentId: id || userId,
-      orderByIp: ipOrder,
-    });
-  }, [id, data?.data]);
-
-  const columns = [
-    {
-      title: "User Name",
-      dataIndex: "userid",
-      key: "userid",
-    },
-    {
-      title: "IP-Address",
-      dataIndex: "ip",
-      key: "ip",
-    },
-    {
-      title: "Login Date",
-      dataIndex: "lastLogin",
-      key: "lastLogin",
-    },
-    {
-      title: "Detail",
-      dataIndex: "deviceInfo",
-      key: "deviceInfo",
-      width: "5%",
-    },
-  ];
 
   const handleChange = (value) => {
     userList({
@@ -95,7 +58,7 @@ const LoginReport = () => {
     loginReport({
       index: indexData,
       noOfRecords: paginationTotal,
-      parentId: id || value || userId,
+      parentId: id || value || clientId,
       orderByIp: ipOrder,
     });
   };
@@ -104,14 +67,15 @@ const LoginReport = () => {
     setClientId(value);
   };
 
+
   useEffect(() => {
     loginReport({
       index: indexData,
       noOfRecords: paginationTotal,
-      parentId: id || clientId || userId,
+      parentId: id ? id : clientId,
       orderByIp: ipOrder,
     });
-  }, [clientId, data?.data, paginationTotal, indexData, ipOrder]);
+  }, [clientId, paginationTotal, indexData, ipOrder, id]);
 
   return (
     <>
@@ -146,7 +110,7 @@ const LoginReport = () => {
                     },
                   ]}>
                   <Select
-                    placeholder={clientId}
+                    placeholder={id? id: clientId }
                     options={
                       resultData.data?.data.map((i) => ({
                         label: i,
