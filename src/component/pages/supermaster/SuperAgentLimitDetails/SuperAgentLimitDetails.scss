@@ -150,3 +150,11 @@
   }
 }
 
+@media screen and (max-width: 370px) {
+  .add_minus{
+    .ant-tabs-tab{  
+      width: 125px !important;
+    }
+  }
+}
+
