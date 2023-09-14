@@ -149,10 +149,6 @@ const UpdateSuper = ({ updateName }) => {
                 name: "status",
                 value: resuilt?.data?.data.status ? "active" : "inActive",
               },
-              // {
-              //   name: "Supermatchcomm",
-              //   value: resuilt?.data?.data.matchCommission,
-              // },
               {
                 name: "sess_comm",
                 value: resuilt?.data?.data.sessionComm,
