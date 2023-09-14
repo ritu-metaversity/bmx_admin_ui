@@ -5,14 +5,12 @@ import {
   DatePicker,
   Divider,
   Empty,
-  Modal,
   Pagination,
   Row,
   Select,
   Spin,
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { QuestionCircleOutlined } from "@ant-design/icons";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
 import { useSportDetailQuery } from "../../../store/service/SportDetailServices";
@@ -63,7 +61,7 @@ const SportsDetails = () => {
           onClick={() => setDropdownStates(false)}
           to={`/Events/${matchId}/live-report`}
           className="title_section"
-          style={{ display: `${statusStr === "In Play" ? "block" : "none"}` }}>
+          style={{ display: `${statusStr === "In Play" || statusStr === "Upcoming" ? "block" : "none"}` }}>
           Match and Session Position
         </Link>
       ),
@@ -217,7 +215,6 @@ const SportsDetails = () => {
               <th>Name</th>
               <th>Setting</th>
               <th>Time</th>
-              {/* <th>Competition</th> */}
               <th>Declare</th>
               <th>Won by</th>
               <th className="text-right">Plus Minus</th>
@@ -234,7 +231,6 @@ const SportsDetails = () => {
                 <tr key={res?.key}>
                   <td style={{cursor:"pointer"}}>
                     <Dropdown
-                      
                       className="table_dropdown sport_droupdown"
                       open={dropdownStates[id]}
                       onOpenChange={() => toggleDropdown(id)}

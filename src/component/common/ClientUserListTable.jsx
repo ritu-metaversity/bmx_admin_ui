@@ -9,14 +9,10 @@ import {
   Menu,
   Modal,
   Pagination,
-  Select,
   Space,
   Spin,
-  notification,
 } from "antd";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
 import {
   SearchOutlined,
   CaretDownOutlined,
@@ -34,7 +30,6 @@ import {
   useUpDateStatusMutation,
 } from "../../store/service/userlistService";
 import { openNotification } from "../../App";
-import { globalSelector, setData } from "../../store/global/slice";
 
 const routeFromUSerType = {
   0: "/client/list-agent/",
@@ -42,7 +37,7 @@ const routeFromUSerType = {
   2: "/client/list-clent/",
 };
 
-const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, UserId }) => {
+const ClientUserListTable = ({ userType, Listname, UserId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeStatus, setActiveStatus] = useState();
   const [isDepositeModalOpen, SetisDepositeModalOpen] = useState(false);
@@ -55,7 +50,7 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
   const [indexData, setIndexData] = useState(0);
   const [partnershipDetails, setPartnershipDetails] = useState({});
   const [userIds, setUserIds] = useState("");
-  
+  const [parentUserids, setParentUserIds] = useState("");
   const [betStatus, setBetStatus] = useState(false);
   const [accStatus, setAccStatus] = useState(false);
   const [droupSearch, setDroupSearch] = useState(false);
@@ -88,8 +83,6 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
     setDropdownStates([]);
   };
 
-
-
   const handleCancel = () => {
     setIsModalOpen(false);
      setDropdownStates([]);
@@ -118,10 +111,6 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
       userId: "",
     },{refetchOnMountOrArgChange:true});
   const [activeData, { data: Activestatus }] = useUpDateStatusMutation();
-
-  useEffect(()=>{
-    setParentUserIds(results?.data?.users[0]?.parent)
-  }, [parentUserids, results?.data?.users[0]?.parent])
 
   const handleActive = () => {
      setDropdownStates([]);
@@ -243,16 +232,16 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
       label: <Link onClick={()=> setDropdownStates([])} to={`/client/login-report/${dataVal}`}>Login Report</Link>,
       key: "9",
     },
-    {
-      label: (
-        <Link onClick={()=> setDropdownStates([])}
-          className={userType == 3 ? "d_none" : ""}
-          to={routeFromUSerType[userType] + parentUserId}>
-          Downline
-        </Link>
-      ),
-      key: "10",
-    },
+    // {
+    //   label: (
+    //     <Link onClick={()=> setDropdownStates([])}
+    //       className={userType == 3 ? "d_none" : ""}
+    //       to={routeFromUSerType[userType] + parentUserId}>
+    //       Downline
+    //     </Link>
+    //   ),
+    //   key: "10",
+    // },
   ];
 
   useEffect(() => {
@@ -576,4 +565,4 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
   );
 };
 
-export default UserListTable;
+export default ClientUserListTable;

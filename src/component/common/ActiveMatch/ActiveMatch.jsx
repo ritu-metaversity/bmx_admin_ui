@@ -36,7 +36,6 @@ console.log("huihuihiu");
         <div className="active_sport_list">
           <div className="sub_list_sport_list">
               {activeSportList?.data?.map((item, id) => {
-                // console.log(item?.sportId,"dsssds");
                 return (
                     <div key={id} onClick={()=>handleSportId(item?.sportId)} className={`tab_section_active_sport ${activeTabData == item?.sportId?"activeList":""}`}>
                       <p>{item?.sportName}</p>

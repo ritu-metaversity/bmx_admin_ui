@@ -40,6 +40,13 @@ export const supermasteAccountStatementApi = createApi({
         body,
       }),
     }),
+    changePasswordSelf: build.mutation({
+      query: (body) => ({
+        url: "/user/first-login-cp",
+        method: "POST",
+        body,
+      }),
+    }),
     dashboard: build.query({
       query: () => ({
         url: "/bmx/user/bmx-dashboard",
@@ -158,5 +165,6 @@ export const {
   useSuperuserListQuery,
   useProfitLossQuery,
   useBlockBettingMutation,
-  useSportListbyIDQuery
+  useSportListbyIDQuery,
+  useChangePasswordSelfMutation
 } = supermasteAccountStatementApi;

@@ -22,7 +22,7 @@ const CompeleteFancy = () => {
     trigger({
       matchid: Number(id),
     });
-  }, [completeFancyData, id]);
+  }, [id]);
 
   const handleShowBets = (val) => {
     setMarketId(val);

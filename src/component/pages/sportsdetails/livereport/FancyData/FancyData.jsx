@@ -124,11 +124,10 @@ const FancyData = ({ data, keyData }) => {
                     <Col span={19} className="match_title">
                       <div className="title">{res?.nation}</div>
                       {
-                        !res?.mid?.includes("BM") &&  <span>
-                        {/* {(fancyPnl?.data ) && Object?.keys(fancyPnl?.data)?.find(key => (fancyPnl?.data[key] === res?.sid)? fancyPnl?.data[res?.sid]:"0") || 0} */}
+                        !res?.mid?.includes("BM") &&  <span className={fancyPnl?.data && fancyPnl?.data[res?.sid]<0?"text_danger":"text_success"}>
+                        {(fancyPnl?.data ) && fancyPnl.data[res?.sid]||"0"}
                         </span>
                       }
-                     
                       {keyData !== "Bookmaker" && (
                         <span 
                           className="fancy_book_data"
