@@ -232,8 +232,9 @@ const SportsDetails = () => {
             {sportDetail?.data?.data?.map((res, id) => {
               return (
                 <tr key={res?.key}>
-                  <td>
+                  <td style={{cursor:"pointer"}}>
                     <Dropdown
+                      
                       className="table_dropdown sport_droupdown"
                       open={dropdownStates[id]}
                       onOpenChange={() => toggleDropdown(id)}
