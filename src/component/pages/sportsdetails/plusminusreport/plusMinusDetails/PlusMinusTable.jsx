@@ -17,21 +17,26 @@ const PlusMinusTable = () => {
   });
 
   return (
-    <div style={{position:"relative"}}>
-      <MapInteractionCSS        //  showControls
+    <div  style={{position:"relative"}}>
+      <MapInteractionCSS  
         defaultValue={{
           scale: 1,
           translation: { x: 0, y: 0 },
+          
         }}
         minScale={0.2}
-        maxScale={2}>
-        <table className="plus-table">
+        maxScale={3}
+        translationBounds={{
+          xMax: 200,
+          yMax: 100,
+        }}
+        >
+        <table className="plus-table plus_minus_sec">
           <tbody>
             {data?.data &&
               Object.keys(data.data).map((item) => (
                 <RecursiveTable data={data.data[item]} title={item} />
               ))}
-            
           </tbody>
         </table>
       </MapInteractionCSS>
@@ -58,7 +63,7 @@ const RecursiveTable = ({ data, title }) => {
         <tr className="sub_color">
           <td>&nbsp;</td>
           <td style={{ whiteSpace: "nowrap" }}>Sub Admin </td>
-          <td colSpan={30}>
+          <td colSpan={34}>
             <strong>{title}</strong>
           </td>
         </tr>
@@ -68,7 +73,7 @@ const RecursiveTable = ({ data, title }) => {
         <tr className="master_color">
           <td colSpan={2}>&nbsp;</td>
           <td style={{ whiteSpace: "nowrap" }}>SUPER Master </td>
-          <td colSpan={28}>
+          <td colSpan={32}>
             <strong>{title}</strong>
           </td>
         </tr>
@@ -77,7 +82,7 @@ const RecursiveTable = ({ data, title }) => {
       returnArr.push(
         <tr className="super_color">
           <td colSpan={3}>&nbsp;</td> <td>MASTER </td>
-          <td colSpan={27}>
+          <td colSpan={31}>
             <strong>{title}</strong>
           </td>
         </tr>
@@ -86,7 +91,7 @@ const RecursiveTable = ({ data, title }) => {
       returnArr.push(
         <tr className="agent_color">
           <td colSpan={4}>&nbsp;</td> <td>Agent </td>
-          <td colSpan={25}>
+          <td colSpan={29}>
             <strong>{title}</strong>
           </td>
         </tr>
@@ -131,6 +136,39 @@ const RecursiveTable = ({ data, title }) => {
                   }>
                   <strong>{data[item][userKey].totalAmount?.toFixed(2)}</strong>
                 </td>
+
+
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 || uType == 2
+                      ? ""
+                      : "d_none"
+                  }>
+                  {data[item][userKey]?.matchComm?.toFixed(2)}
+                </td>
+                <td
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 || uType == 2
+                      ? ""
+                      : "d_none"
+                  }>
+                  {data[item][userKey]?.sessionComm?.toFixed(2)}
+                </td>
+               
+                <td
+                style={{
+                  borderRightWidth: 2,
+                  borderRightColor: "rgb(174, 174, 174)",
+                }}
+                  className={
+                    uType == 5 || uType == 0 || uType == 1 || uType == 2
+                      ? ""
+                      : "d_none"
+                  }>
+                  {data[item][userKey]?.totalComm?.toFixed(2)}
+                </td>
+
+
                 <td
                   className={
                     uType == 5 || uType == 0 || uType == 1 || uType == 2
@@ -148,6 +186,7 @@ const RecursiveTable = ({ data, title }) => {
                   {data[item][userKey].dealer?.sessionComm?.toFixed(2)}
                 </td>
                 <td
+                
                   className={
                     uType == 5 || uType == 0 || uType == 1 || uType == 2
                       ? ""
@@ -297,7 +336,16 @@ const RecursiveTable = ({ data, title }) => {
                     ? ""
                     : "d_none"
                 }`}
-                colSpan={9}>
+                colSpan={6}>
+                
+              </th>
+              <th
+                className={`sub_agent_heading ${
+                  uType == 0 || uType == 1 || uType == 2 || uType == 5
+                    ? ""
+                    : "d_none"
+                }`}
+                colSpan={6}>
                 AGENT PLUS MINUS
               </th>
               <th
@@ -344,6 +392,7 @@ const RecursiveTable = ({ data, title }) => {
                 <strong>SESS.</strong>
               </td>
               <td
+              
                 className={
                   uType == 5 || uType == 0 || uType == 1 || uType == 2
                     ? ""
@@ -368,41 +417,16 @@ const RecursiveTable = ({ data, title }) => {
                 <strong>S. COM</strong>
               </td>
               <td
+              style={{
+                borderRightWidth: 2,
+                borderRightColor: "rgb(174, 174, 174)",
+              }}
                 className={
                   uType == 5 || uType == 0 || uType == 1 || uType == 2
                     ? ""
                     : "d_none"
                 }>
-                <strong>TOL. COM</strong>
-              </td>
-              <td
-                className={
-                  uType == 5 || uType == 0 || uType == 1 || uType == 2
-                    ? ""
-                    : "d_none"
-                }>
-                <strong>NET AMT</strong>
-              </td>
-              <td
-                className={
-                  uType == 5 || uType == 0 || uType == 1 || uType == 2
-                    ? ""
-                    : "d_none"
-                }>
-                <strong>SHR AMT</strong>
-              </td>
-
-              <td
-                className={
-                  uType == 5 || uType == 0 || uType == 1 || uType == 2
-                    ? ""
-                    : "d_none"
-                }
-                style={{
-                  borderRightWidth: 2,
-                  borderRightColor: "rgb(174, 174, 174)",
-                }}>
-                <strong>FINAL</strong>
+                <strong>TOL. COM </strong>
               </td>
               <td
                 className={
@@ -490,6 +514,29 @@ const RecursiveTable = ({ data, title }) => {
                 }}>
                 <strong>FINAL</strong>
               </td>
+              <td className={uType != 5 ? "d_none" : ""}>
+                <strong>M. COM</strong>
+              </td>
+              <td className={uType != 5 ? "d_none" : ""}>
+                <strong>S. COM</strong>
+              </td>
+              <td className={uType != 5 ? "d_none" : ""}>
+                <strong>TOL. COM</strong>
+              </td>
+              <td className={uType != 5 ? "d_none" : ""}>
+                <strong>NET AMT</strong>
+              </td>
+              <td className={uType != 5 ? "d_none" : ""}>
+                <strong>SHR AMT</strong>
+              </td>
+              <td
+                className={uType != 5 ? "d_none" : ""}
+                style={{
+                  borderRightWidth: 2,
+                  borderRightColor: "rgb(174, 174, 174)",
+                }}>
+                <strong>FINAL</strong>
+              </td>
             </tr>
           );
           returnArr = [
@@ -534,6 +581,39 @@ const RecursiveTable = ({ data, title }) => {
                 }>
                 {data?.total?.totalAmount?.toFixed(2)}
               </td>
+
+
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                {data?.total?.matchComm?.toFixed(2)}
+              </td>
+              <td
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                {data?.total?.sessionComm?.toFixed(2)}
+              </td>
+              <td
+              style={{
+                borderRightWidth: 2,
+                borderRightColor: "rgb(174, 174, 174)",
+              }}
+                className={
+                  uType == 5 || uType == 0 || uType == 1 || uType == 2
+                    ? ""
+                    : "d_none"
+                }>
+                {data?.total?.totalComm?.toFixed(2)}
+              </td>
+
+
+              
               <td
                 className={
                   uType == 5 || uType == 0 || uType == 1 || uType == 2

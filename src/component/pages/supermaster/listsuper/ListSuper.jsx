@@ -1,11 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
 import "./ListSuper.scss";
 import UserListTable from "../../../common/UserListTable";
+import ClientUserListTable from "../../../common/ClientUserListTable";
+import { useSuperuserListQuery } from "../../../../store/service/supermasteAccountStatementServices";
 
-const ListSuper = ({userTyep, Listname}) => {
+const ListSuper = ({ userTyep, Listname }) => {
+
+  const UserId = localStorage.getItem("userId");
+
+
+  const [parentUserids, setParentUserIds] = useState(UserId);
+  // const {
+  //   data: results,
+  //   isLoading,
+  //   isFetching,
+  //   isError,
+  // } = useSuperuserListQuery(
+  //   {
+  //     userType: userTyep,
+  //     parentUserId: null,
+  //     noOfRecords: 10,
+  //     index: 0,
+  //     userId: "",
+  //   },
+  //   { refetchOnMountOrArgChange: true }
+  // );
+
  
+
 
   const nav = useNavigate();
   const handleBackClick = () => {
@@ -13,26 +37,24 @@ const ListSuper = ({userTyep, Listname}) => {
   };
 
   const handleCreate = () => {
-    if(Listname === "Super Master"){
+    if (Listname === "Super Master") {
       nav("/client/create-super");
-    }else if(Listname === "Master"){
+    } else if (Listname === "Master") {
       nav("/client/create-agent");
-    }else if(Listname === "Agent"){
+    } else if (Listname === "Agent") {
       nav("/client/create-dealer");
-    }
-    else{
-      nav("/client/create-client")
+    } else {
+      nav("/client/create-client");
     }
   };
 
+  console.log(parentUserids, "ddfasdas")
 
   return (
     <>
       <div className="main_live_section list_supers">
         <div className="_match">
-          <div
-            className="sub_live_section live_report"
-          >
+          <div className="sub_live_section live_report">
             <div
               style={{ padding: "5px 8px", fontSize: "22px" }}
               className="team_name">
@@ -42,10 +64,12 @@ const ListSuper = ({userTyep, Listname}) => {
               <button onClick={handleBackClick}>Back</button>
             </div>
           </div>
-          <div className="table_section "></div>
+          {UserId == parentUserids && <div className="table_section "></div> }
+          
         </div>
         <div>
-          <div className="create_btn">
+          {
+            UserId == parentUserids && <div className="create_btn">
             <div onClick={handleCreate}>
               <p>
                 <Link to="">
@@ -57,13 +81,49 @@ const ListSuper = ({userTyep, Listname}) => {
             </div>
             <div></div>
           </div>
+          }
+          
           <div className="table_section sport_detail m-0">
-             <UserListTable Listname={Listname} userType={userTyep}/>
+            <UserListTable Listname={Listname} userType={userTyep} UserId={UserId} parentUserids={parentUserids} setParentUserIds = {setParentUserIds}/>
           </div>
         </div>
       </div>
 
-     
+      {(parentUserids !== UserId && Listname !== "Client") && (
+        <div className="main_live_section list_supers">
+          <div className="_match">
+            <div className="sub_live_section live_report">
+              <div
+                style={{ padding: "5px 8px", fontSize: "22px" }}
+                className="team_name">
+                Client Details
+              </div>
+              {/* <div className="show_btn">
+                <button onClick={handleBackClick}>Back</button>
+              </div> */}
+            </div>
+          </div>
+          <div>
+          {
+            UserId == parentUserids && <div className="create_btn">
+            <div onClick={handleCreate}>
+              <p>
+                <Link to="">
+                  <AiOutlinePlus />
+                  {""}
+                  Create
+                </Link>
+              </p>
+            </div>
+            <div></div>
+          </div>
+          }
+            <div className={"table_section sport_detail m-0"}>
+              <ClientUserListTable Listname={Listname} userType={3} parentUserids ={parentUserids} UserId={UserId}/>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

@@ -3,7 +3,7 @@ import { Radio, Table } from "antd";
 import "./AccountModals.scss";
 import { useLazySearchBetMarketIdQuery } from "../../../../store/service/supermasteAccountStatementServices";
 
-const AccountModals = ({marketId,remark}) => {
+const AccountModals = ({marketId,remark, id}) => {
   const columns = [
     {
       title: "userId",
@@ -63,7 +63,7 @@ const AccountModals = ({marketId,remark}) => {
   useEffect(()=>{
     const betData= {
         marketId:marketId,
-        userId:"",
+        userId:id? id:"",
         betType:value
     }
     trigger(betData)

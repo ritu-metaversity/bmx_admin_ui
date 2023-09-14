@@ -8,17 +8,18 @@ import MarqueeTag from "../common/marquee/MarqueeTag";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useJwtTokenQuery } from "../../store/service/jwtTokenServices";
 import HomeRules from "../pages/HomeRules";
+import JwtToken from "./JwtToken";
 
 const LayOut = () => {
   const [collapsed, setCollapsed] = useState();
   const [openRules, setOpenRules] = useState(false);
   const [open, setOpen] = useState(false);
-  
+
   const collll = (val) => {
     setCollapsed(val);
   };
 
-  const toggleDarawer = () => setOpen(prev => !prev);
+  const toggleDarawer = () => setOpen((prev) => !prev);
 
   const openDrawer = (val) => {
     setOpen(val);
@@ -32,12 +33,16 @@ const LayOut = () => {
     }
   }, [nav]);
 
-  const { data } = useJwtTokenQuery(undefined, { pollingInterval: 1000 });
+  // const { data } = useJwtTokenQuery(undefined, { pollingInterval: 1000 });
 
   const handleOk = () => {};
 
   useEffect(() => {
-    setOpenRules(localStorage.getItem("rulesStatus"));
+    if((pType == "old" || pType == "Old") && uType == "5"){
+      setOpenRules(localStorage.getItem("false"));
+    }else{
+      setOpenRules(localStorage.getItem("rulesStatus"));
+    }
   }, []);
 
   const handleCloseBtn = () => {
@@ -48,13 +53,15 @@ const LayOut = () => {
   const showDrawer = () => {
     setOpen(true);
   };
-
-
-  console.log(open, "fdefefgdd")
+  const pType = localStorage.getItem("passType");
+  const uType = localStorage.getItem("userType");
 
   
+
   return (
     <>
+      {(pType == "New" || pType == "new")  && <JwtToken />}
+
       <Layout className="main_layout">
         <Sidebar collll={collll} open={open} action={toggleDarawer} />
         <Layout>
@@ -67,7 +74,7 @@ const LayOut = () => {
               height: "72px",
               zIndex: "3",
             }}>
-            <Navbar open={open} action={toggleDarawer}/>
+            <Navbar open={open} action={toggleDarawer} />
           </Header>
           <div className="marqu_tag">
             <MarqueeTag />

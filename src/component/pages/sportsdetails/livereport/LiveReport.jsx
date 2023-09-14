@@ -53,7 +53,7 @@ const LiveReport = () => {
 
   const handleMyBook = () => {
     setShowMyBook(2);
-    setActiveBookData(1)
+    setActiveBookData(1);
     const oddsPnl = {
       matchId: Number(id),
     };
@@ -64,7 +64,7 @@ const LiveReport = () => {
 
   const handleTtlBook = (mrktid) => {
     setShowMyBook(1);
-    setActiveBookData(2)
+    setActiveBookData(2);
     getData({
       matchid: Number(id),
       marketid: mrktid,
@@ -80,10 +80,6 @@ const LiveReport = () => {
         [results?.data?.[0].selection3]: results?.data?.[0].pnl3,
       }
     : {};
-
-    
-
-
   return (
     <>
       {isLoading ? (
@@ -99,8 +95,14 @@ const LiveReport = () => {
                 <div className="match_section">
                   <Row>
                     <Col span={19} className="back-lay-bg">
-                      <button className={activeBookData == 1?"activeMyBook":""} onClick={() => handleMyBook()}>My Book</button>
-                      <button className={activeBookData == 2?"activeMyBook":""} onClick={() => handleTtlBook(marketId)}>
+                      <button
+                        className={activeBookData == 1 ? "activeMyBook" : ""}
+                        onClick={() => handleMyBook()}>
+                        My Book
+                      </button>
+                      <button
+                        className={activeBookData == 2 ? "activeMyBook" : ""}
+                        onClick={() => handleTtlBook(marketId)}>
                         Ttl Book
                       </button>
                     </Col>

@@ -13,7 +13,7 @@ const PlusMinusDetails = () => {
   return (
     <>
       <div className="main_live_section">
-        <div className="_match">
+        <div className="_match plus_minus_sec">
           <div className="sub_live_section live_report">
             <div
               style={{ padding: "5px 8px", fontSize: "22px" }}

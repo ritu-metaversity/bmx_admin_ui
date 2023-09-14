@@ -578,14 +578,14 @@ const CreateSuperAgent = ({ createName }) => {
                               value: '2.00',
                               label: '2.00',
                             },
-                            {
-                              value: '2.25',
-                              label: '2.25',
-                            },
-                            {
-                              value: '2.50',
-                              label: '2.50',
-                            },
+                            // {
+                            //   value: '2.25',
+                            //   label: '2.25',
+                            // },
+                            // {
+                            //   value: '2.50',
+                            //   label: '2.50',
+                            // },
                           ]}
                         />
                         {/* <InputNumber

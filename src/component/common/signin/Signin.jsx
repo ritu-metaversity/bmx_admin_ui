@@ -18,6 +18,7 @@ const Signin = () => {
       localStorage.setItem("rulesStatus", true)
       localStorage.setItem("userId", authData?.userId);
       localStorage.setItem("userType", authData?.userType);
+      localStorage.setItem("passType", authData?.passwordtype);
       nav("/dashboard");
     }
   }, [authData, error]);
@@ -29,7 +30,7 @@ const Signin = () => {
       appUrl: window.location.hostname,
       // appUrl: "master.11bet24.com",
       // appUrl: "supermaster.11bet24.com",
-      // appUrl: "agent.11bet24.com",  
+        // appUrl: "agent.11bet24.com",  
       // appUrl: "subadmin.11bet24.com",
       // appUrl: "subadmin.247idhub.com",
       // appUrl: "subadmin.localhost",

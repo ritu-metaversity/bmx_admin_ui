@@ -148,7 +148,7 @@ const AllStatement = ({clientId, dateData, gameType }) => {
         onCancel={handleCancel}
         footer={null}
         >
-         <AccountModals marketId={marketId} remark={remark}/>
+         <AccountModals marketId={marketId} remark={remark} id={id}/>
         </Modal>
       }
       

@@ -46,12 +46,28 @@ const Navbar = ({ action }) => {
     setIsModalOpen(false);
   };
   const handleCancel = () => {
-    setIsModalOpen(false);
+    if((pType == "old" || pType == "Old") && uType == "5"){
+      setIsModalOpen(true);
+    }else{
+      setIsModalOpen(false);
+    }
+   
   };
 
   const handleDashbordHome = () => {
     nav("/dashboard");
   };
+
+
+  const pType = localStorage.getItem("passType");
+  const uType = localStorage.getItem("userType");
+
+  useEffect(()=>{
+    if((pType == "old" || pType == "Old") && uType == "5"){
+      setIsModalOpen(true)
+    }
+  }, [pType])
+  
 
   return (
     <>
