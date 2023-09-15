@@ -144,6 +144,14 @@ export const supermasteAccountStatementApi = createApi({
       }),
 
     }),
+    userMessage: build.query({
+      query: (body) => ({
+        url: "/enduser/get-user-message",
+        method: "POST",
+        body,
+      }),
+
+    }),
   }),
 });
 
@@ -166,5 +174,6 @@ export const {
   useProfitLossQuery,
   useBlockBettingMutation,
   useSportListbyIDQuery,
-  useChangePasswordSelfMutation
+  useChangePasswordSelfMutation, 
+  useUserMessageQuery
 } = supermasteAccountStatementApi;
