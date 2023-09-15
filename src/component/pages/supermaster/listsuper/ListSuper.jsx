@@ -48,7 +48,6 @@ const ListSuper = ({ userTyep, Listname }) => {
     }
   };
 
-  console.log(parentUserids, "ddfasdas")
 
   return (
     <>

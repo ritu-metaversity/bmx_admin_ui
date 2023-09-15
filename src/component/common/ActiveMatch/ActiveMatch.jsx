@@ -10,19 +10,21 @@ const ActiveMatch = () => {
   const [activeTabData, setActtiveTabData] = useState(4);
 
   const { data: activeSportList } = useSportListbyIDQuery();
- 
+
   const nav = useNavigate();
 
   const handleDetails = (id) => {
     nav(`/Events/${id}/live-report`);
   };
 
-  const handleSportId = (id)=>{
-    setActtiveTabData(id)
+  const handleSportId = (id) => {
+    setActtiveTabData(id);
     // console.log(id, "dsdfsdds")
-  }
-console.log("huihuihiu");
-  const { data, isLoading, isFetching } = useActiveMatchQuery(activeTabData, {refetchOnMountOrArgChange:true});
+  };
+  console.log("huihuihiu");
+  const { data, isLoading, isFetching } = useActiveMatchQuery(activeTabData, {
+    refetchOnMountOrArgChange: true,
+  });
 
   return (
     <div className="active_slip login_report" style={{ marginBottom: "12px" }}>
@@ -35,17 +37,22 @@ console.log("huihuihiu");
         title="Active Matches">
         <div className="active_sport_list">
           <div className="sub_list_sport_list">
-              {activeSportList?.data?.map((item, id) => {
-                return (
-                    <div key={id} onClick={()=>handleSportId(item?.sportId)} className={`tab_section_active_sport ${activeTabData == item?.sportId?"activeList":""}`}>
-                      <p>{item?.sportName}</p>
-                    </div>
-                );
-              })}
+            {activeSportList?.data?.map((item, id) => {
+              return (
+                <div
+                  key={id}
+                  onClick={() => handleSportId(item?.sportId)}
+                  className={`tab_section_active_sport ${
+                    activeTabData == item?.sportId ? "activeList" : ""
+                  }`}>
+                  <p>{item?.sportName}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {isLoading||isFetching ? (
+        {isLoading || isFetching ? (
           <Spin className="loading_active" tip="Loading..." size="large">
             <div className="content" />
           </Spin>

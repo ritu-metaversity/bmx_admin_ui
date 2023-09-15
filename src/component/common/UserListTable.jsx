@@ -198,6 +198,7 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
       key: "2",
     },
     {
+      className: `${parentUserids == userId ? "" : "d_none"}`,
       label: <div onClick={handleBlockBettting}>Block Betting</div>,
       key: "3",
     },
@@ -395,7 +396,8 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
                 <th colSpan={3} className="text-center">
                   Super Agent Comm %
                 </th>
-                <th rowSpan={2}>C.Chips</th>
+                <th rowSpan={2} className="text-right">C.Chips</th>
+                <th rowSpan={2} className="text-right">Credit Reference</th>
                 <th rowSpan={2}>Status</th>
               </tr>
               <tr>
@@ -469,7 +471,8 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
                       </td>
                       <td>{Number(res?.matchCommission)?.toFixed(2)}</td>
                       <td>{Number(res?.sessionCommission)?.toFixed(2)}</td>
-                      <td>{res?.availablebalance}</td>
+                      <td className="text-right">{userType == 3? res?.balancePlusPnl : res?.availablebalance}</td>
+                      <td className="text-right">{res?.creditref}</td>
                       <td>{res?.active === true ? "Active" : "InActive"}</td>
                     </tr>
                   );

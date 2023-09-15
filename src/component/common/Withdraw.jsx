@@ -48,7 +48,7 @@ const Withdraw = ({ data:datadeposit, userIdData, handleClose }) => {
           </>
         )}
       <div>
-        <p>Curr Coins : {depositeWithdraw?.data?.childUplineAmount}</p>
+        <p>Curr Coins : <span className={depositeWithdraw?.data?.childUplineAmount < 0?"text_danger":"text_success"}>{depositeWithdraw?.data?.childUplineAmount}</span></p>
       </div>
       <div className="form_modals">
        
