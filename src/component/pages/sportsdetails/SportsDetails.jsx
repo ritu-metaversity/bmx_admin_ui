@@ -33,8 +33,9 @@ const SportsDetails = () => {
   const [dataNameee, setDataNameee] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownStates, setDropdownStates] = useState([]);
-  const [SportId, setSportId] = useState(4);
+  // const [SportId, setSportId] = useState(4);
   const [statusStr, setStatusStr] = useState("");
+  const [activeTabData, setActtiveTabData] = useState(4);
 
   const nav = useNavigate();
 
@@ -42,17 +43,15 @@ const SportsDetails = () => {
     setMatchId(matchId);
     setDataNameee(sportName);
     setInPlay(inPlay);
-    setStatusStr(statusStraVal)
+    setStatusStr(statusStraVal);
   };
 
   const handlePlusMinus = (matchId) => {
     setDropdownStates(false);
-    nav(`/plus-minus-report/${matchId}`, {state: { dataNameee }});
+    nav(`/plus-minus-report/${matchId}`, { state: { dataNameee } });
   };
 
-
-  const {data: sportData} = useSportListbyIDQuery()
-
+  const { data: sportData } = useSportListbyIDQuery();
 
   const items = [
     {
@@ -61,7 +60,13 @@ const SportsDetails = () => {
           onClick={() => setDropdownStates(false)}
           to={`/Events/${matchId}/live-report`}
           className="title_section"
-          style={{ display: `${statusStr === "In Play" || statusStr === "Upcoming" ? "block" : "none"}` }}>
+          style={{
+            display: `${
+              statusStr === "In Play" || statusStr === "Upcoming"
+                ? "block"
+                : "none"
+            }`,
+          }}>
           Match and Session Position
         </Link>
       ),
@@ -138,7 +143,7 @@ const SportsDetails = () => {
       endDate: dateData[1],
       noOfRecords: paginationTotal,
       index: indexData < 0 ? 0 : indexData || 0,
-      sportId:SportId
+      sportId: activeTabData,
     },
     { refetchOnMountOrArgChange: true }
   );
@@ -175,6 +180,11 @@ const SportsDetails = () => {
     };
   }, [isDropdownOpen]);
 
+  const handleSportId = (id) => {
+    setActtiveTabData(id);
+    // console.log(id, "dsdfsdds")
+  };
+
   return (
     <>
       <Card
@@ -182,29 +192,58 @@ const SportsDetails = () => {
         title="Sports Detail"
         extra={<button onClick={handleBackbtn}>Back</button>}>
         <Row className="date_picker" style={{}}>
-          <Col xl={6} lg={6} md={24} xs={24} className="datepicker_sport" style={{padding:"0px 10px"}}>
+          <Col xl={24} lg={24} md={24} xs={24} style={{ padding: "10px 0px" }}>
+            <div className="active_sport_list">
+              <div className="sub_list_sport_list">
+                {sportData?.data?.map((item, id) => {
+                  return (
+                    <div
+                      key={id}
+                      onClick={() => handleSportId(item?.sportId)}
+                      className={`tab_section_active_sport
+                   ${activeTabData == item?.sportId ? "activeList" : ""}
+                  `}>
+                      <p>{item?.sportName}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </Col>
+        </Row>
+        <Row className="date_picker" style={{}}>
+          <Col
+            xl={6}
+            lg={6}
+            md={24}
+            xs={24}
+            className="datepicker_sport"
+            style={{ padding: "0px 10px" }}>
             <RangePicker
+            style={{marginBottom:"10px"}}
               defaultValue={[dayjs(timeBefore), dayjs(time)]}
               onChange={onChange}
               bordered={false}
             />
           </Col>
-          <Col xl={6} lg={6} md={24} xs={24} style={{padding:"10px 0px"}}>
-            <Select
-            className="sport_select"
-            onChange={(value)=>setSportId(value)}
-            defaultValue={SportId}
-            >
-              {
-                sportData?.data?.map((res, id)=>{
-                  console.log(res, "Dsdfasdas")
-                  return(
-                    <Select.Option value={res?.sportId}  key={id}>{res?.sportName}</Select.Option>
-                  )
-                })
-              }
-            </Select>
-          </Col>
+          {/* <Col xl={17} lg={17} md={24} xs={24} style={{ padding: "10px 0px" }}>
+            <div className="active_sport_list">
+              <div className="sub_list_sport_list">
+                {sportData?.data?.map((item, id) => {
+                  return (
+                    <div
+                      key={id}
+                      onClick={() => handleSportId(item?.sportId)}
+                      className={`tab_section_active_sport
+                   ${activeTabData == item?.sportId ? "activeList" : ""}
+                  `}>
+                      <p>{item?.sportName}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </Col> */}
         </Row>
         <div className="table_section">
           {/* <Table columns={columns} dataSource={data} /> */}
@@ -218,6 +257,7 @@ const SportsDetails = () => {
               <th>Declare</th>
               <th>Won by</th>
               <th className="text-right">Plus Minus</th>
+              <th className="text-right">Upline Amount</th>
             </tr>
             {isLoading || isFetching ? (
               <div className="spin_icon comp_spin">
@@ -229,7 +269,7 @@ const SportsDetails = () => {
             {sportDetail?.data?.data?.map((res, id) => {
               return (
                 <tr key={res?.key}>
-                  <td style={{cursor:"pointer"}}>
+                  <td style={{ cursor: "pointer" }}>
                     <Dropdown
                       className="table_dropdown sport_droupdown"
                       open={dropdownStates[id]}
@@ -259,8 +299,7 @@ const SportsDetails = () => {
                   <td>{res?.eventName}</td>
                   <td>{res?.statusStr}</td>
                   <td>{moment(res?.eventDate).format("YYYY-MM-DD, h:mm A")}</td>
-                  {/* <td>{res?.competition}</td> */}
-                  <td>{res?.winner === null ? "" : "YES"}</td>
+                  <td>{res?.isLedgerCreated === true ? "YES" : "NO"}</td>
                   <td>{res?.winner === null ? "" : res?.winner}</td>
                   <td
                     className={`text-right ${
@@ -272,6 +311,16 @@ const SportsDetails = () => {
                     }`}>
                     {res?.plusMinus === null ? "0" : res?.plusMinus}
                   </td>
+                  <td
+                    className={`text-right ${
+                      res?.upLineAmount < 0
+                        ? "text_danger"
+                        : res?.upLineAmount > 0
+                        ? "text_success"
+                        : ""
+                    }`}>
+                    {res?.upLineAmount === null  ? "0" : res?.upLineAmount}
+                  </td>
                 </tr>
               );
             })}
@@ -279,7 +328,7 @@ const SportsDetails = () => {
               sportDetail?.data?.data?.length === 0) && (
               <tr>
                 {" "}
-                <td colSpan={8}>
+                <td colSpan={9}>
                   <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                 </td>
               </tr>
