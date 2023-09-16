@@ -123,7 +123,7 @@ const Sidebar = (props) => {
                 },
                 // {
                 //   label: (
-                //     <Link to="/Casino/roulette-details">Roulette Detail</Link>
+                //     <Link to="/casino/roulette-details">Roulette Detail</Link>
                 //   ),
                 // },
                 // {

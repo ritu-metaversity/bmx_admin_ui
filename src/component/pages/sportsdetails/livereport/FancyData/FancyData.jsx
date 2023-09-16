@@ -82,43 +82,41 @@ const FancyData = ({ data, keyData }) => {
             <div
               className="fancy_data_main"
             >
-              <Row>
-                <Col span={19} className="back-lay-bg">
-                  <div className="fancy_data">
-                    <div className="sub_fancy">
-                      <p>{keyData}</p>
-                    </div>
-                    {keyData === "Bookmaker" && (
-                      <Col span={19} className="back-lay-bg bookData">
-                         <button className={activeBook ==1?"activeMyBook":""} onClick={(e) => handleMyBook(e)}>
-                          My Book
-                        </button>
-                        <button className={activeBook ==2?"activeMyBook":""} onClick={(e) => handleTtlBook(e)}>
-                          Ttl Book
-                        </button>
-                       
+              {
+                      keyData != "Bookmaker" &&  <Row>
+              
+                      <Col span={19} className="back-lay-bg">
+                        <div className="fancy_data">
+                          
+      
+                          <div className="sub_fancy">
+                            <p>{keyData}</p>
+                          </div>
+                          <div>
+                            <span className="fancy_icon">i</span>
+                          </div>
+                        </div>
                       </Col>
-                    )}
-                    <div>
-                      <span className="fancy_icon">i</span>
-                    </div>
-                  </div>
-                </Col>
-                <Col className="b-bottom" span={5}>
-                  <Row>
-                  <Col span={12} className="back khai">
-                      <div>{keyData === "Bookmaker"?"LAGAI":"YES"}</div>
-                    </Col>
-                    <Col span={12} className="lay lagai lagai1">
-                      <div>{keyData === "Bookmaker"?"KHAI":"NO"}</div>
-                    </Col>
-                    
-                  </Row>
-                </Col>
-              </Row>
+                      <Col className="b-bottom" span={5}>
+                        <Row>
+                        <Col span={12} className="lay lagai lagai1">
+                            <div>{keyData === "Bookmaker"?"KHAI":"NO"}</div>
+                          </Col>
+                        <Col span={12} className="back khai">
+                            <div>{keyData === "Bookmaker"?"LAGAI":"YES"}</div>
+                          </Col>
+                          
+                          
+                        </Row>
+                      </Col>
+                    </Row>
+                    }
+             
             </div>
             <div>
               {data?.map((res, index) => {
+                console.log(res, "Fdsfsdf");
+                if(res?.mid?.includes("BM")) return <></>
                 return (
                   <Row key={index} className="scor fancy_all_data">
                     <Col span={19} className="match_title">
@@ -188,14 +186,15 @@ const FancyData = ({ data, keyData }) => {
                       className={`${res.gstatus === "" ? "" : "after_Effect"}`}
                       span={5}>
                       <Row>
-                      <Col span={12}>
-                          <div className="back p-16" style={{ height: "44px" }}>
-                            <div>{res?.b1}</div>
-                          </div>
-                        </Col>
+                      
                         <Col span={12}>
                           <div className="lay p-16" style={{ height: "44px" }}>
                             <div>{res?.l1}</div>
+                          </div>
+                        </Col>
+                        <Col span={12}>
+                          <div className="back p-16" style={{ height: "44px" }}>
+                            <div>{res?.b1}</div>
                           </div>
                         </Col>
 
