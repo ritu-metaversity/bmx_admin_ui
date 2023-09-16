@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 import FancyData from "./FancyData/FancyData";
 import { useLazyOddsQuPnlQuery } from "../../../../store/service/OddsPnlServices";
 import { useLazyTtlBookQuery } from "../../../../store/service/supermasteAccountStatementServices";
+import BookMakerData from "./BookMakerData/BookMakerData";
 
 const LiveReport = () => {
   const [oddsData, setOddsData] = useState([]);
@@ -28,8 +29,6 @@ const LiveReport = () => {
       setMarketId(res?.marketId);
     });
   }, [data]);
-
-  console.log(marketId, "dadadwd");
 
   const [trigger, { data: PnlOdds }] = useLazyOddsQuPnlQuery();
 
@@ -223,6 +222,11 @@ const LiveReport = () => {
               </Col>
             </Row>
           </div>
+
+          {/* {
+            console.log(data?.Bookmaker, "FDsfsdfs")
+          } */}
+          <BookMakerData keyData={"Bookmaker"}  data={data?.Bookmaker}/>
           {data &&
             Object.keys(data).map(
               (key) =>

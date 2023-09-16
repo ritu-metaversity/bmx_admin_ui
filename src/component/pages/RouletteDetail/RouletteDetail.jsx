@@ -1,24 +1,12 @@
 import "./RouletteDetail.scss";
-import { Card, DatePicker} from "antd";
+import { Card, DatePicker, Divider, Pagination, Table} from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
 import { useState } from "react";
-
-// const { confirm } = Modal;
-// const showConfirm = () => {
-//   confirm({
-//     title: "Confirm Changes",
-//     icon: <QuestionCircleOutlined />,
-//     onOk() {
-//       console.log("OK");
-//     },
-//     onCancel() {
-//       console.log("Cancel");
-//     },
-//   });
-// };
-
+import dayjs from "dayjs";
+import moment from "moment";
+import { useRouletteDetailsQuery } from "../../../store/service/CasinoServices";
 
 
 const { RangePicker } = DatePicker;
@@ -26,6 +14,13 @@ const { RangePicker } = DatePicker;
 
 
 const RouletteDetail = () => {
+
+  const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
+  const time = moment().format("YYYY-MM-DD");
+  const [dateData, setDateData] = useState([timeBefore, time]);
+  const [paginationTotal, setPaginationTotal] = useState(50);
+  const [indexData, setIndexData] = useState(0);
+
   const navigate = useNavigate();
 
   const handleBackbtn = () => {
@@ -71,6 +66,69 @@ const RouletteDetail = () => {
   ];
 
 
+  const onChange = (data, dateString) => {
+    setDateData(dateString);
+  };
+
+
+  const columns = [
+    {
+      title: <span></span>,
+      dataIndex: "",
+      key: "dateStr",
+      render: (text, record) => (
+        <Dropdown
+        className="table_dropdown sport_droupdown"
+        menu={{
+          items,
+        }}
+        trigger={["click"]}>
+        <a onClick={()=>handleDroupDown()}>
+          <Space>
+            <CaretDownOutlined />
+          </Space>
+        </a>
+      </Dropdown>
+    ),
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      render: (text, record) => (
+        <span>{record?.name}{' '}{record?.date}</span>
+    ),
+    },
+    {
+      title: "Plus Minu",
+      dataIndex: "netPnl",
+      key: "netPnl",
+      align: "right",
+      render: (text, record) => (<span className={record?.netPnl <0 ?"text_danger":"text_success"}>{record?.netPnl}</span>),
+    },
+    {
+      title: "Comm",
+      dataIndex: "comm",
+      key: "comm",
+      align: "right",
+    },
+    {
+      title: "Pnl",
+      dataIndex: "pnl",
+      key: "pnl",
+      align: "right",
+      render: (text, record) => (<span className={(record?.netPnl - record?.comm) <0 ?"text_danger":"text_success"}>{record?.netPnl - record?.comm}</span>),
+    },
+  ];
+
+ const {data: rouletteData} = useRouletteDetailsQuery(
+  {
+    casinoId: 323334,
+    index: indexData,
+    noOfRecords: paginationTotal,
+    startDate: dateData[0],
+    endDate: dateData[1]
+ })
   return (
     <>
       <Card
@@ -78,24 +136,34 @@ const RouletteDetail = () => {
         title="Roulette Detail"
         extra={
           <>
-            <button onClick={handleBackbtn}>Book</button>
+            <button onClick={console.log("helllo")}>Book</button>
             <button onClick={handleBackbtn}>Back</button>
           </>
         }>
         <div className="date_picker m-12">
-          <RangePicker bordered={false} />
+        <RangePicker
+            style={{marginBottom:"10px"}}
+              defaultValue={[dayjs(timeBefore), dayjs(time)]}
+              onChange={onChange}
+              bordered={false}
+            />
         </div>
         <div className="table_section">
-          {/* <Table columns={columns} dataSource={data} /> */}
-          <table className="">
+          {/* <table className="">
             <tr>
               <th width="15%"></th>
               <th width="65%">Name</th>
               <th className="text-right" width="20%">
                 Plus Minu
               </th>
+              <th className="text-right" width="20%">
+                Comm
+              </th>
+              <th className="text-right" width="20%">
+                Pnl
+              </th>
             </tr>
-            {data?.map((res) => {
+            {rouletteData?.data?.data?.map((res) => {
               return (
                 <tr key={res?.key}>
                   <td className="roulette_droupdown" width="15%">
@@ -112,17 +180,41 @@ const RouletteDetail = () => {
                       </a>
                     </Dropdown>
                   </td>
-                  <td width="65%">{res?.name}</td>
-                  <td className={`text-right ${res?.plusminu > 0 ?"text_success": res?.plusminu<0? "text_danger":""}`} width="20%">
-                    {res?.plusminu}
+                  <td width="65%">{res?.name}{" "}{res?.date}</td>
+                  <td className={`text-right ${res?.netPnl >= 0 ?"text_success": "text_danger"}`} width="20%">
+                    {res?.netPnl}
+                  </td>
+                  <td className="text-right" width="20%">
+                    {res?.comm}
+                  </td>
+                  <td className="text-right " width="20%">
+                    {res?.netPnl - res?.comm}
                   </td>
                 </tr>
               );
             })}
-          </table>
+          </table> */}
+
+          <div className="table_section">
+          <Table
+            className="live_table limit_update"
+            bordered
+            columns={columns}
+            // loading={isFetching||isLoading}
+            pagination={{ defaultPageSize: 50, pageSizeOptions:[50, 100, 150, 200, 250]}}
+            dataSource={rouletteData?.data?.data}/>
         </div>
-        {/* <Divider /> */}
-        {/* <Pagination className="pagination_main" defaultCurrent={1} total={50} /> */}
+        </div>
+        {/* <Divider />
+        <Pagination
+          style={{ marginBottom: "12px" }}
+          className="pagination_main ledger_pagination pagination_main"
+          onShowSizeChange={(c, s) => setPaginationTotal(s)}
+          total={totalPage && totalPage * paginationTotal}
+          defaultPageSize={50}
+          pageSizeOptions={[50, 100, 150, 200, 250]}
+          onChange={(e) => setIndexData(e - 1)}
+        /> */}
       </Card>
     </>
   );

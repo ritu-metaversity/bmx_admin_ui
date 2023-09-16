@@ -1,17 +1,102 @@
-import { Col, Row } from "antd";
-import React from "react";
+import { Button, Col, Modal, Row } from "antd";
+import React, { useEffect, useState } from "react";
+import FancyBets from "../fancyBets/FancyBets";
+import FancyBookModals from "../FancyBookModals/FancyBookModals";
+import { useParams } from "react-router-dom";
+import { useFancyPnlQuery, useLazyOddsQuPnlQuery } from "../../../../../store/service/OddsPnlServices";
+import { useLazyTtlBookQuery } from "../../../../../store/service/supermasteAccountStatementServices";
 
-const BookMakerData = ({bookmakerData}) => {
+const BookMakerData = ({ data, keyData }) => {
+  const [FancyId, setFancyID] = useState("");
+  const [open, setOpen] = useState(false);
+  const [matchid, setMatchID] = useState("");
+  const [showMyBook, setShowMyBook] = useState(2);
+  const [activeBook, setActiveBook] = useState(1);
+
+  const { id } = useParams();
+
+  const hanldeBookSection = (val) => {
+    setOpen(true);
+    setFancyID(val);
+  };
+  const handleCancel = () => {
+    setOpen(false);
+  };
+  
+  const [getData, { data: results }] = useLazyTtlBookQuery();
+
+  useEffect(() => {
+    data?.map((res) => {
+      if (!res?.mid.includes("BM")) return <></>;
+      setMatchID(res?.mid);
+    });
+  }, [data]);
+
+  const [trigger, { data: PnlOdds }] = useLazyOddsQuPnlQuery();
+
+  
+  const {data: fancyPnl} = useFancyPnlQuery({
+    matchId: id
+  })
+  const handleMyBook = (e) => {
+    setActiveBook(1)
+    e.preventDefault();
+    setShowMyBook(2);
+    const oddsPnl = {
+      matchId: Number(id),
+    };
+    trigger(oddsPnl);
+  };
+
+  useEffect(()=>{
+   id && matchid&& getData({
+      matchid: Number(id),
+      marketid: matchid,
+    });
+    const oddsPnl = {
+      matchId: Number(id),
+    };
+    trigger(oddsPnl);
+  }, [ matchid])
+
+  const handleTtlBook = (e) => {
+    setActiveBook(2)
+    e.preventDefault();
+    setShowMyBook(1);
+    getData({
+      matchid: Number(id),
+      marketid: matchid,
+    });
+  };
+  const ttl = results?.data?.[0] ?({
+    [results?.data?.[0].selection1]:results?.data?.[0].pnl1,
+    [results?.data?.[0].selection2]:results?.data?.[0].pnl2,
+    [results?.data?.[0].selection3]:results?.data?.[0].pnl3,
+    
+  }):({})
   return (
     <>
       <div className="fancy_section">
         <Row gutter={[16, 24]}>
           <Col className="gutter-row" span={21}>
-            <div className="">
+            <div
+              className="fancy_data_main"
+            >
               <Row>
                 <Col span={19} className="back-lay-bg">
                   <div className="fancy_data">
-                    <div className="sub_fancy">Bookmaker</div>
+                    <div className="sub_fancy">
+                      <p>{keyData}</p>
+                    </div>
+                      <Col span={19} className="back-lay-bg bookData">
+                         <button className={activeBook ==1?"activeMyBook":""} onClick={(e) => handleMyBook(e)}>
+                          My Book
+                        </button>
+                        <button className={activeBook ==2?"activeMyBook":""} onClick={(e) => handleTtlBook(e)}>
+                          Ttl Book
+                        </button>
+                       
+                      </Col>
                     <div>
                       <span className="fancy_icon">i</span>
                     </div>
@@ -19,38 +104,99 @@ const BookMakerData = ({bookmakerData}) => {
                 </Col>
                 <Col className="b-bottom" span={5}>
                   <Row>
-                    <Col span={12} className="lay lagai">
-                      <div>No</div>
+                  <Col span={12} className="back khai">
+                      <div>LAGAI</div>
                     </Col>
-                    <Col span={12} className="back khai">
-                      <div>Yes</div>
+                    <Col span={12} className="lay lagai lagai1">
+                      <div>KHAI</div>
                     </Col>
+                    
                   </Row>
                 </Col>
               </Row>
             </div>
             <div>
-              {bookmakerData?.map((res, id) => {
+              {data?.map((res, index) => {
                 return (
-                  <Row key={id} className="scor fancy_all_data">
+                  <Row key={index} className="scor fancy_all_data">
                     <Col span={19} className="match_title">
                       <div className="title">{res?.nation}</div>
-                      <span className="fancy_book_data">Book</span>
+                      {
+                        !res?.mid?.includes("BM") &&  <span className={fancyPnl?.data && fancyPnl?.data[res?.sid]<0?"text_danger":"text_success"}>
+                        {(fancyPnl?.data ) && fancyPnl.data[res?.sid]||"0"}
+                        </span>
+                      }
+                      {keyData !== "Bookmaker" && (
+                        <span 
+                          className="fancy_book_data"
+                          onClick={() => hanldeBookSection(res?.sid)}>
+                          Book
+                        </span>
+                      )}
+                      
+                      <>
+                       {showMyBook===1&&<span className={ttl[res.sid] < 0 ?"text_danger":"text_success"}>{ttl[res.sid]||"0.0"}</span>}
+                        {PnlOdds?.data?.map((res, id) => {
+                          if (!res?.marketId?.includes("BM")) return <></>;
+                          return (
+                            <>
+                              {showMyBook === 2 && (
+                                <div className="sub_title" key={id}>
+                                  {index === 0 ? (
+                                    <span
+                                      className={
+                                        res?.pnl1 < 0
+                                          ? "text_danger"
+                                          : "text_success"
+                                      }>
+                                      {res?.pnl1 || 0}
+                                    </span>
+                                  ) : index === 1 ? (
+                                    <span
+                                      className={
+                                        res?.pnl2 < 0
+                                          ? "text_danger"
+                                          : "text_success"
+                                      }>
+                                      {res?.pnl2 || 0}
+                                    </span>
+                                  ) : index === 3 ? (
+                                    <span
+                                      className={
+                                        res?.pnl3 < 0
+                                          ? "text_danger"
+                                          : "text_success"
+                                      }>
+                                      {res?.pnl3 || 0}
+                                    </span>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              )}
+                            </>
+                          );
+                        })}
+                      </>
+
+                      <div></div>
                     </Col>
-                    <Col span={5}>
+                    <Col
+                      data-before-content={res?.gstatus}
+                      className={`${res.gstatus === "" ? "" : "after_Effect"}`}
+                      span={5}>
                       <Row>
+                      <Col span={12}>
+                          <div className="back p-16" style={{ height: "44px" }}>
+                            <div>{res?.b1}</div>
+                          </div>
+                        </Col>
                         <Col span={12}>
                           <div className="lay p-16" style={{ height: "44px" }}>
                             <div>{res?.l1}</div>
-                            <div>{res?.ls1}</div>
                           </div>
                         </Col>
-                        <Col span={12}>
-                          <div className="back p-16" style={{ height: "44px" }}>
-                            <div>{res?.b1}</div>
-                            <div>{res?.bs1}</div>
-                          </div>
-                        </Col>
+
                       </Row>
                     </Col>
                   </Row>
@@ -60,6 +206,15 @@ const BookMakerData = ({bookmakerData}) => {
           </Col>
         </Row>
       </div>
+
+      <Modal
+        open={open}
+        title="Run Amount"
+        onCancel={handleCancel}
+        footer={null}
+        className="run_amount_modals">
+        <FancyBookModals id={id} FancyId={FancyId} />
+      </Modal>
     </>
   );
 };

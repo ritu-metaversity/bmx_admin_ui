@@ -187,6 +187,7 @@ const ClientUserListTable = ({ userType, Listname, UserId }) => {
       key: "2",
     },
     {
+      className: `${parentUserids == userId ? "" : "d_none"}`,
       label: <div onClick={handleBlockBettting}>Block Betting</div>,
       key: "3",
     },
