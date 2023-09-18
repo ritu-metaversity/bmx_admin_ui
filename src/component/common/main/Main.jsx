@@ -129,7 +129,7 @@ const Main = ({setOpenRules}) => {
               <Route path="/Casino/show-bet/:id" element={<AnderBaharShowBets/>}/>
               <Route path="/Casino/casino-details" element={<CasinoDetail/>}/>
               <Route path="/Casino/roulette-book" element={<RouletteBook/>}/>
-              <Route path="/Events/:id/live-report" element={<LiveReport/>}/>
+              <Route path="/Events/:id/:id1/live-report" element={<LiveReport/>}/>
               <Route path="/Events/:id/pl/live-report" element={<EventProfitLoss/>}/>
               <Route path="/client/deletedlenden/:id" element={<DeletedLenden/>}/>
               <Route path="/rules" element={<Rulespage/>}/>

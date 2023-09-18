@@ -1,6 +1,6 @@
 import "./LiveReport.scss";
 import { Col, Row, Spin } from "antd";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import MoreEvent from "./MoreEvent/MoreEvent";
 import CompeleteFancy from "./compeleteFancy/CompeleteFancy";
 import { useEventDetailQuery } from "../../../../store/service/eventDetailServices";
@@ -17,7 +17,9 @@ const LiveReport = () => {
   const [marketId, setMarketId] = useState("");
   const [activeBookData, setActiveBookData] = useState(1);
 
-  const { id } = useParams();
+  const { id, id1 } = useParams();
+
+  // console.log(id1, "Dsfdsfsdf")
 
   const { data, isLoading } = useEventDetailQuery(id, {
     pollingInterval: 1000,
@@ -48,7 +50,6 @@ const LiveReport = () => {
     trigger(oddsPnl);
   }, [marketId]);
 
-  // console.log(PnlOdds?.data[0], "sdfsd")
 
   const handleMyBook = () => {
     setShowMyBook(2);
@@ -59,7 +60,6 @@ const LiveReport = () => {
     trigger(oddsPnl);
   };
 
-  // console.log(results, "fsdfsdf")
 
   const handleTtlBook = (mrktid) => {
     setShowMyBook(1);
@@ -69,7 +69,6 @@ const LiveReport = () => {
       marketid: mrktid,
       subadminid: localStorage.getItem("userId"),
     });
-    // setTtlBookData(results?.data);
   };
 
   const ttl = results?.data?.[0]
@@ -236,7 +235,7 @@ const LiveReport = () => {
                 )
             )}
           <CompeleteFancy />
-          <MoreEvent />
+          <MoreEvent id1={id1}/>
         </div>
       )}
     </>
