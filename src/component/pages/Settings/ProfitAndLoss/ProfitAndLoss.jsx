@@ -70,9 +70,6 @@ const ProfitAndLoss = () => {
     setProfitLossData(results?.data?.data?.market);
     setTotalPage(results?.data?.data?.totalRecord);
   };
-
-
-
   return (
     <>
       <div className="match_slip" style={{ paddingTop: "2%" }}>

@@ -9,7 +9,6 @@ const MinusLimit = () => {
   const [passWord, setPassword] = useState("");
   const [api, contextHolder] = notification.useNotification();
   const [form]= Form.useForm();
-  const {state} = useLocation();
   const {id} = useParams();
 
   const handelAddLimit = (e) => {

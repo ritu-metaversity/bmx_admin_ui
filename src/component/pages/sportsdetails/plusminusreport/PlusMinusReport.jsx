@@ -68,7 +68,6 @@ const [ParentKey, setParentKey] = useState("")
 
 
   const handleShowBtn = () => {
-    console.log(showOdds,first?.length, "Dsadas")
     if (showOdds === false && first?.length === 0 ) {
       api.error({
         message: "Please Select at least one fancy or odds",
