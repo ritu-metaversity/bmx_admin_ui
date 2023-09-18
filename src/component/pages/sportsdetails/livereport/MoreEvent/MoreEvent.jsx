@@ -3,15 +3,17 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { BiTimeFive } from "react-icons/bi";
 import { useActiveMatchQuery } from "../../../../../store/service/ActiveMatcheService";
 
-const MoreEvent = () => {
-  const { data } = useActiveMatchQuery();
+const MoreEvent = ({id1}) => {
+  const { data } = useActiveMatchQuery(id1, {refetchOnMountOrArgChange: true});
 
   const nav = useNavigate()
 
   const handleDetails = (id)=>{
-    nav(`/Events/${id}/live-report`)
+    nav(`/Events/${id}/${id1}/live-report`)
   }
   const {id: matchId} = useParams()
+
+
   return (
     <>
       <div>

@@ -14,14 +14,13 @@ const ActiveMatch = () => {
   const nav = useNavigate();
 
   const handleDetails = (id) => {
-    nav(`/Events/${id}/live-report`);
+    nav(`/Events/${id}/${activeTabData}/live-report`);
   };
 
   const handleSportId = (id) => {
     setActtiveTabData(id);
-    // console.log(id, "dsdfsdds")
   };
-  console.log("huihuihiu");
+  
   const { data, isLoading, isFetching } = useActiveMatchQuery(activeTabData, {
     refetchOnMountOrArgChange: true,
   });
