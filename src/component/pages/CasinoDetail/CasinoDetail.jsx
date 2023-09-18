@@ -53,7 +53,7 @@ const CasinoDetail = () => {
         <Link
           to={`/Casino/rouletteKey/plus-minus-type`}
           className="title_section">
-          Roulette Plus Minus
+          Aura Plus Minus
         </Link>
       ),
       key: "0",

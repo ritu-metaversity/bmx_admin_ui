@@ -18,8 +18,6 @@ const RouletteDetail = () => {
   const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
   const time = moment().format("YYYY-MM-DD");
   const [dateData, setDateData] = useState([timeBefore, time]);
-  const [paginationTotal, setPaginationTotal] = useState(50);
-  const [indexData, setIndexData] = useState(0);
 
   const navigate = useNavigate();
 
@@ -27,39 +25,36 @@ const RouletteDetail = () => {
     navigate(-1);
   };
 
-  const [rouletteKey, setRouletteKey] = useState()
+  const [rouletteDate, setRouletteDate] = useState()
 
   const handleDroupDown = (val)=>{
-    setRouletteKey(val)
+    setRouletteDate(val)
   }
 
-  const data = [
-    {
-      key: "1",
-      name: "Roulette 04-07-2023",
-      plusminu: 24,
-    },
-    {
-      key: "2",
-      name: "Roulette 04-07-2023",
-      plusminu: -4,
-    }
-  ];
-  
+  const handlePlusMinus = ()=>{
+    navigate(`/casino/${323334}/plus-minus-type`, {state: {rouletteDate}})
+  }
+
+  const handleDisplayGame = ()=>{
+    navigate(`/casino/${323334}/all-games`, {state: {rouletteDate}})
+  }
+
+
+
   const items = [
     {
       label: (
-        <Link to={`/Casino/rouletteKey/plus-minus-type`} className="title_section">
-          Roulette Plus Minus
-        </Link>
+        <p onClick={handlePlusMinus} className="title_section">
+          Aura Plus Minus
+        </p>
       ),
       key: "0",
     },
     {
       label: (
-        <Link className="title_section" to="/Casino/rouletteKey/all-games">
+        <p onClick={handleDisplayGame} className="title_section">
          Display Game
-        </Link>
+        </p>
       ),
       key: "1",
     }
@@ -83,7 +78,7 @@ const RouletteDetail = () => {
           items,
         }}
         trigger={["click"]}>
-        <a onClick={()=>handleDroupDown()}>
+        <a onClick={()=>handleDroupDown(record?.date)}>
           <Space>
             <CaretDownOutlined />
           </Space>
@@ -121,22 +116,21 @@ const RouletteDetail = () => {
     },
   ];
 
- const {data: rouletteData} = useRouletteDetailsQuery(
+ const {data: rouletteData, isLoading, isFetching} = useRouletteDetailsQuery(
   {
     casinoId: 323334,
-    index: indexData,
-    noOfRecords: paginationTotal,
     startDate: dateData[0],
     endDate: dateData[1]
- })
+ }, {refetchOnMountOrArgChange: true});
+
   return (
     <>
       <Card
         className="sport_detail roulette"
-        title="Roulette Detail"
+        title="AURA Detail"
         extra={
           <>
-            <button onClick={console.log("helllo")}>Book</button>
+            <button onClick={console.log("")}>Book</button>
             <button onClick={handleBackbtn}>Back</button>
           </>
         }>
@@ -149,60 +143,14 @@ const RouletteDetail = () => {
             />
         </div>
         <div className="table_section">
-          {/* <table className="">
-            <tr>
-              <th width="15%"></th>
-              <th width="65%">Name</th>
-              <th className="text-right" width="20%">
-                Plus Minu
-              </th>
-              <th className="text-right" width="20%">
-                Comm
-              </th>
-              <th className="text-right" width="20%">
-                Pnl
-              </th>
-            </tr>
-            {rouletteData?.data?.data?.map((res) => {
-              return (
-                <tr key={res?.key}>
-                  <td className="roulette_droupdown" width="15%">
-                    <Dropdown
-                      className="table_dropdown sport_droupdown"
-                      menu={{
-                        items,
-                      }}
-                      trigger={["click"]}>
-                      <a onClick={()=>handleDroupDown(res?.key)}>
-                        <Space>
-                          <CaretDownOutlined />
-                        </Space>
-                      </a>
-                    </Dropdown>
-                  </td>
-                  <td width="65%">{res?.name}{" "}{res?.date}</td>
-                  <td className={`text-right ${res?.netPnl >= 0 ?"text_success": "text_danger"}`} width="20%">
-                    {res?.netPnl}
-                  </td>
-                  <td className="text-right" width="20%">
-                    {res?.comm}
-                  </td>
-                  <td className="text-right " width="20%">
-                    {res?.netPnl - res?.comm}
-                  </td>
-                </tr>
-              );
-            })}
-          </table> */}
-
           <div className="table_section">
           <Table
             className="live_table limit_update"
             bordered
             columns={columns}
-            // loading={isFetching||isLoading}
+            loading={isFetching||isLoading}
             pagination={{ defaultPageSize: 50, pageSizeOptions:[50, 100, 150, 200, 250]}}
-            dataSource={rouletteData?.data?.data}/>
+            dataSource={rouletteData?.data}/>
         </div>
         </div>
         {/* <Divider />

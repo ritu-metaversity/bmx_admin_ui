@@ -1,208 +1,181 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./RoulettePlusMinus.scss";
-import {React, useRef, useState } from "react";
+import { React, useEffect, useRef, useState } from "react";
 import {
   SearchOutlined,
-  CaretDownOutlined,
-  PlusOutlined,
 } from "@ant-design/icons";
-import { Button,  Input,  Space, Table } from "antd";
-// import ModalsData from "./ModalsData/ModalsData";
+import { Button, Form, Input, Menu, Space, Table } from "antd";
+import { useRoulettePlusMinusQuery } from "../../../../store/service/CasinoServices";
 
 const RoulettePlusMinus = () => {
+  const [droupSearch, setDroupSearch] = useState(false);
   const nav = useNavigate();
   const handleBackClick = () => {
     nav(-1);
   };
 
-  const [isDepositeModalOpen, SetisDepositeModalOpen] = useState(false);
-  const [WithdrawnModal, SetWithdrawnModal] = useState(false);
-
-  //   const handleDepositeOk = () => {
-  //     SetisDepositeModalOpen(false);
-  //   };
-  //   const handleDepositeCancel = () => {
-  //     SetisDepositeModalOpen(false);
-  //   };
-  //   const showDepositModal = () => {
-  //     SetisDepositeModalOpen(true);
-  //   };
-
-  const handleWithdrawnOk = () => {
-    SetWithdrawnModal(false);
-  };
-  const handleWithdrawnCancel = () => {
-    SetWithdrawnModal(false);
-  };
-  const showWithdrawnModal = () => {
-    SetWithdrawnModal(true);
-  };
-
-  const [Active, setActive] = useState("inActive");
-  const [inActive, setInActive] = useState(true);
-
-  const handleActive = () => {
-    if (Active === "inActive") {
-      setActive("Active");
-      setInActive(false);
-    } else {
-      setActive("inActive");
-      setInActive(true);
-    }
-  };
-  const data = [
-    {
-      key: "1",
-      code: "SA152471",
-      name: "John Brown",
-      casino_amt: <span style={{color:"green"}}>240</span> ,
-      casino_comm: <span style={{color:"green"}}>0.00</span>,
-      total_amount: <span style={{color:"green"}}>240</span>,
-      my_share:<span style={{color:"red"}}>-90</span>,
-      m_app:<span style={{color:"green"}}>0.00</span>,
-      net_amount: <span style={{color:"green"}}>200</span>,
-    },
-    {
-      key: "2",
-      code: "SA152471",
-      name: "Joe Black",
-      casino_amt:<span style={{color:"red"}}>-40</span> ,
-      casino_comm:<span style={{color:"green"}}>0.00</span>,
-      total_amount: <span style={{color:"red"}}>-40</span>,
-      my_share: <span style={{color:"green"}}>90</span>,
-      m_app: <span style={{color:"green"}}>0.00</span>,
-      net_amount: <span style={{color:"green"}}>300</span>,
-    },
-  ];
-
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
-  const searchInput = useRef(null);
-
-  const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
-  const handleReset = (clearFilters) => {
-    clearFilters();
-    setSearchText("");
-  };
-
-  const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => (
-      <div
-        style={{
-          padding: 8,
-        }}
-        onKeyDown={(e) => e.stopPropagation()}>
-        <Input
-          ref={searchInput}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{
-            marginBottom: 8,
-            display: "block",
-          }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{
-              width: 90,
-            }}>
-            Search
-          </Button>
-          <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
-            size="small"
-            style={{
-              width: 90,
-            }}>
-            Reset
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered) => (
-      <SearchOutlined
-        style={{
-          color: filtered ? "#1677ff" : undefined,
-        }}
-      />
-    ),
-    onFilter: (value, record) =>
-      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{
-            backgroundColor: "#ffc069",
-            padding: 0,
-          }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ""}
-        />
-      ) : (
-        text
-      ),
-  });
   const columns = [
     {
-      title: "Code",
-      dataIndex: "code",
-      key: "code",
-      ...getColumnSearchProps("code"),
-    },
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: (
+        <>
+          <div className="main_search_droup ">
+            <p className="menu_search">Code</p>
+            {/* {droupSearch && (
+              <Menu className="menu_item search_menu">
+                <Form
+                  name="code"
+                  // form={form}
+                  initialValues={{
+                    remember: true,
+                  }}
+                  // onFinish={onFinish}
+                  autoComplete="off">
+                  <Form.Item name="username">
+                    <Input />
+                  </Form.Item>
+
+                  <div className="agent_search_deatil">
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        style={{
+                          width: "86px",
+                          marginRight: "8px",
+                        }}>
+                        <SearchOutlined /> Search
+                      </Button>
+                    </Form.Item>
+                    <Form.Item>
+                      <Button
+                        // onClick={() => form.resetFields()}
+                        className="ant_reset_btn"
+                        style={{ width: "86px" }}>
+                        Reset
+                      </Button>
+                    </Form.Item>
+                  </div>
+                </Form>
+              </Menu>
+            )}
+            <p className="search_code">
+              <Space>
+                <SearchOutlined onClick={() => setDroupSearch(!droupSearch)} />
+              </Space>
+            </p> */}
+          </div>
+        </>
+      ),
+      dataIndex: "userId",
+      key: "userId",
     },
     {
       title: "Casino Amt",
-      dataIndex: "casino_amt",
-      key: "casino_amt",
+      dataIndex: "casinoAmount",
+      key: "casinoAmount",
+      align: "right",
+      render: (text, record) => (
+        <span
+          className={`text-right ${
+            record?.casinoAmount < 0
+              ? "text_danger"
+              : record?.casinoAmount > 0
+              ? "text_success"
+              : ""
+          }`}>
+          {record?.casinoAmount}
+        </span>
+      ),
     },
     {
       title: "Casino Comm",
-      dataIndex: "casino_comm",
-      key: "casino_comm",
+      dataIndex: "comm",
+      key: "comm",
+      align: "right",
     },
     {
       title: "Total Amount",
-      dataIndex: "total_amount",
-      key: "total_amount",
+      dataIndex: "totalAmount",
+      key: "totalAmount",
+      align: "right",
+      render: (text, record) => (
+        <span
+          className={`text-right ${
+            record?.totalAmount < 0
+              ? "text_danger"
+              : record?.totalAmount > 0
+              ? "text_success"
+              : ""
+          }`}>
+          {record?.totalAmount}
+        </span>
+      ),
     },
     {
       title: "My Share",
-      dataIndex: "my_share",
-      key: "my_share",
-    },
-    {
-      title: "M.App",
-      dataIndex: "m_app",
-      key: "m_app",
+      dataIndex: "myShare",
+      key: "myShare",
+      align: "right",
+      render: (text, record) => (
+        <span
+          className={`text-right ${
+            record?.myShare < 0
+              ? "text_danger"
+              : record?.myShare > 0
+              ? "text_success"
+              : ""
+          }`}>
+          {record?.myShare}
+        </span>
+      ),
     },
     {
       title: "Net Amount",
-      dataIndex: "net_amount",
-      key: "net_amount",
+      dataIndex: "finalAmount",
+      key: "finalAmount",
+      align: "right",
+      render: (text, record) => (
+        <span
+          className={`text-right ${
+            record?.finalAmount < 0
+              ? "text_danger"
+              : record?.finalAmount > 0
+              ? "text_success"
+              : ""
+          }`}>
+          {record?.finalAmount}
+        </span>
+      ),
     },
   ];
+
+  const { state } = useLocation();
+  const { id } = useParams();
+
+  const {
+    data: plusMinus,
+    isFetching,
+    isLoading,
+  } = useRoulettePlusMinusQuery(
+    {
+      casinoId: id,
+      date: state?.rouletteDate,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
+
+  const [plusMinusData, setPlusMinusTable] = useState([]);
+
+  useEffect(() => {
+    if (plusMinus?.data) {
+      setPlusMinusTable([
+        plusMinus?.data,
+        { ...plusMinus?.data, userId: "Total" },
+      ]);
+    }
+  }, [plusMinus]);
+
+  const uType = localStorage.getItem("userType")
 
   return (
     <>
@@ -212,11 +185,14 @@ const RoulettePlusMinus = () => {
             <div
               style={{ padding: "5px 8px", fontSize: "22px" }}
               className="team_name">
-              <p>Super Agent Company Report</p>
-              <p style={{ fontSize: "16px" }}>Roulette 04-07-2023 </p>
+              <p>{
+                `${uType == 5? "Sub Admin ": uType == 0?"Super Master ":uType == 1?"Master ": uType == 2?"Agent ":""} Company Report`
+              }</p>
+              <p style={{ fontSize: "16px" }}>
+                {`AURA ${state?.rouletteDate}`}{" "}
+              </p>
             </div>
             <div className="show_btn">
-              {/* <button>Show</button> */}
               <button onClick={handleBackClick}>Back</button>
             </div>
           </div>
@@ -228,13 +204,13 @@ const RoulettePlusMinus = () => {
               className="live_table roulette_table"
               bordered
               columns={columns}
-              dataSource={data}
-              pagination={false}
+              loading={isFetching || isLoading}
+              dataSource={plusMinusData}
               rowClassName={(record) => {
-                console.log(record.key, "sdfdf")
-                return record?.key  == 2 ? "dateHiglight" : "";
+                return record?.userId == "Total" ? "dateHiglight" : "";
               }}
-             ></Table>
+              // pagination={false}
+            />
           </div>
         </div>
       </div>
