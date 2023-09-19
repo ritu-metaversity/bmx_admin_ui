@@ -9,27 +9,11 @@ import { useSuperuserListQuery } from "../../../../store/service/supermasteAccou
 const ListSuper = ({ userTyep, Listname }) => {
 
   const UserId = localStorage.getItem("userId");
-
-
   const [parentUserids, setParentUserIds] = useState(UserId);
-  // const {
-  //   data: results,
-  //   isLoading,
-  //   isFetching,
-  //   isError,
-  // } = useSuperuserListQuery(
-  //   {
-  //     userType: userTyep,
-  //     parentUserId: null,
-  //     noOfRecords: 10,
-  //     index: 0,
-  //     userId: "",
-  //   },
-  //   { refetchOnMountOrArgChange: true }
-  // );
 
- 
-
+  useEffect(()=>{
+    setParentUserIds(UserId);
+  }, [UserId])
 
   const nav = useNavigate();
   const handleBackClick = () => {
