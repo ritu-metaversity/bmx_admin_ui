@@ -49,7 +49,7 @@ const ShowBets = () => {
         </thead>
         <tbody>
           {data?.data?.map((res) => (
-            <tr key={res.key} className={res.netpnl<0? "bg-red":"bg-green"}>
+            <tr key={res.key} className={res.isBack? "back":"lay"}>
               <td>{res?.date}</td>
               <td>{res.clientId}</td>
               <td>{res.market}</td>
@@ -59,7 +59,7 @@ const ShowBets = () => {
               <td className="text-right">{res.stake}</td>
               <td className="text-right">{res.profit}</td>
               <td className="text-right">{res.loss}</td>
-              <td className="text-right">{res.netpnl}</td>
+              <td className={`text-right ${res.netpnl < 0?"text_danger":"text_success"}`}>{res.netpnl}</td>
              
             </tr>
           ))}

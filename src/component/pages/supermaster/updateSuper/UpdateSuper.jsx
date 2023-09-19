@@ -12,7 +12,10 @@ import {
 } from "antd";
 import "./UpdateSuper.scss";
 import { useNavigate, useParams } from "react-router-dom";
-import { useLazyGetUserQuery, useUpdateUserMutation } from "../../../../store/service/userlistService";
+import {
+  useLazyGetUserQuery,
+  useUpdateUserMutation,
+} from "../../../../store/service/userlistService";
 
 const UpdateSuper = ({ updateName }) => {
   const [api, contextHolder] = notification.useNotification();
@@ -91,7 +94,12 @@ const UpdateSuper = ({ updateName }) => {
 
   useEffect(() => {
     if (resuilt?.data?.status === true) setData(resuilt?.data?.data);
-    setCommType(Number(resuilt?.data?.data?.matchComm) == 0 || Number(resuilt?.data?.data?.sessionComm) == 0? "no-comm": "bbb");
+    setCommType(
+      Number(resuilt?.data?.data?.matchComm) == 0 ||
+        Number(resuilt?.data?.data?.sessionComm) == 0
+        ? "no-comm"
+        : "bbb"
+    );
   }, [resuilt?.data?.data]);
 
   const onCommissionType = (e) => {
@@ -99,19 +107,22 @@ const UpdateSuper = ({ updateName }) => {
   };
 
 
+  console.log(resuilt?.data?.data, "dsfsfdsfs")
+
   return (
     <>
       {contextHolder}
       <div className="main_live_section">
         <div className="_match">
-          <div
-            className="sub_live_section live_report">
+          <div className="sub_live_section live_report">
             <div
               style={{ padding: "5px 8px", fontSize: "22px" }}
               className="team_name">
               Update {updateName}
             </div>
-            <div className="show_btn"><button onClick={()=>nav(-1)}>Back</button></div>
+            <div className="show_btn">
+              <button onClick={() => nav(-1)}>Back</button>
+            </div>
           </div>
         </div>
         <div className="ant-spin-nested-loading">
@@ -221,9 +232,7 @@ const UpdateSuper = ({ updateName }) => {
                     ]}>
                     <Input disabled />
                   </Form.Item>
-                  <Form.Item
-                    label="Reference"
-                    name="reference">
+                  <Form.Item label="Reference" name="reference">
                     <Input placeholder="Enter Reference" />
                   </Form.Item>
                   <Form.Item
@@ -296,7 +305,7 @@ const UpdateSuper = ({ updateName }) => {
                 <Col lg={12} xs={24}>
                   <Form.Item
                     name="comm_type"
-                    label="SUPER comm type"
+                    label="Comm type"
                     rules={[
                       {
                         required: true,
@@ -324,7 +333,7 @@ const UpdateSuper = ({ updateName }) => {
                     </Col>
                     <Col lg={12} xs={24}>
                       <Form.Item
-                        label="SUPER match comm(%)"
+                        label="Match comm(%)"
                         name="Supermatchcomm"
                         required
                         rules={[
@@ -335,7 +344,8 @@ const UpdateSuper = ({ updateName }) => {
                           {
                             validator: async (_, values) => {
                               if (
-                                values > 3 && values < 0 &&
+                                values > 3 &&
+                                values < 0 &&
                                 values != "" &&
                                 values != null
                               ) {
@@ -364,7 +374,7 @@ const UpdateSuper = ({ updateName }) => {
                     </Col>
                     <Col lg={12} xs={24}>
                       <Form.Item
-                        label="SUPER sess comm(%)"
+                        label="Sess comm(%)"
                         name="sess_comm"
                         required
                         rules={[
@@ -375,7 +385,8 @@ const UpdateSuper = ({ updateName }) => {
                           {
                             validator: async (_, values) => {
                               if (
-                                values > 3 && values < 0 &&
+                                values > 3 &&
+                                values < 0 &&
                                 values != "" &&
                                 values != null
                               ) {
@@ -399,24 +410,84 @@ const UpdateSuper = ({ updateName }) => {
                   ""
                 )}
 
-
+                
+              </Row>
+              <div>
+                <h2 style={{marginLeft:"0px"}} className="update_agent_text">
+                  Casino Share and Commission
+                </h2>
+              </div>
+              <Row className="super_agent  update_agent">
+                {/* <Col lg={12} xs={24}>
+                  <Form.Item
+                    label="MASTER casino Share(%)"
+                    name="casinoshare"
+                    required={false}>
+                    <Input type="number" disabled />
+                  </Form.Item>
+                </Col>
                 <Col lg={12} xs={24}>
-                <Form.Item
-                  label="Transaction Password"
-                  name="lupassword"
-                  required
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please Enter Transaction Password!",
-                    },
-                  ]}>
-                  <Input
-                    type="password"
-                    autoComplete="off"
-                    placeholder="Transaction Password"
-                  />
-                </Form.Item>
+                  <Form.Item
+                    label="Casino Share(%)"
+                    name="supercasinoShare"
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: "Invalid Casino Share",
+                      },
+                    ]}>
+                    <InputNumber className="number_field" min={0} step="0.1" />
+                  </Form.Item>
+                </Col> */}
+                <Col lg={12} xs={24}>
+                  <Form.Item
+                    label="MASTER casino comm(%)"
+                    name="casinoComm"
+                    required={false}>
+                    <Input disabled />
+                  </Form.Item>
+                </Col>
+                <Col lg={12} xs={24}>
+                  <Form.Item
+                    label="Casino comm(%)"
+                    name="Supercasinocomm"
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter valid Casino commission",
+                      },
+                      {
+                        validator: async (_, values) => {
+                          if (values > 3 ) {
+                            return Promise.reject(
+                              new Error("Please enter session commission")
+                            );
+                          }
+                        },
+                      },
+                    ]}>
+                    <InputNumber className="number_field" min={0} step="0.1" />
+                  </Form.Item>
+                </Col>
+                <Col lg={12} xs={24}>
+                  <Form.Item
+                    label="Transaction Password"
+                    name="lupassword"
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please Enter Transaction Password!",
+                      },
+                    ]}>
+                    <Input
+                      type="password"
+                      autoComplete="off"
+                      placeholder="Transaction Password"
+                    />
+                  </Form.Item>
                 </Col>
                 <Col lg={12} xs={24}>
                   <Form.Item
@@ -430,67 +501,6 @@ const UpdateSuper = ({ updateName }) => {
                   </Form.Item>
                 </Col>
               </Row>
-              {/* <div>
-                <h2 className="update_agent_text">
-                  Casino Share and Commission
-                </h2>
-              </div>
-              <Row className="super_agent  update_agent">
-                <Col lg={12} xs={24}>
-                  <Form.Item
-                    label="MASTER casino Share(%)"
-                    name="casinoshare"
-                    required={false}>
-                    <Input type="number" disabled />
-                  </Form.Item>
-                </Col>
-                <Col lg={12} xs={24}>
-                  <Form.Item
-                    label="SUPER casino Share(%)"
-                    name="supercasinoShare"
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: "Invalid Casino Share",
-                      },
-                    ]}>
-                    <InputNumber className="number_field" min={0} step="0.1" />
-                  </Form.Item>
-                </Col>
-                <Col lg={12} xs={24}>
-                  <Form.Item
-                    label="MASTER casino comm(%)"
-                    name="casinoComm"
-                    required={false}>
-                    <Input disabled />
-                  </Form.Item>
-                </Col>
-                <Col lg={12} xs={24}>
-                  <Form.Item
-                    label="SUPER casino comm(%)"
-                    name="Supercasinocomm"
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter valid Casino commission",
-                      },
-                    ]}>
-                    <InputNumber className="number_field" min={0} step="0.1" />
-                  </Form.Item>
-
-                  <Form.Item
-                    wrapperCol={{
-                      offset: 20,
-                      span: 24,
-                    }}>
-                    <Button type="primary" htmlType="submit">
-                      Submit
-                    </Button>
-                  </Form.Item>
-                </Col>
-              </Row> */}
             </div>
           </Form>
         </div>

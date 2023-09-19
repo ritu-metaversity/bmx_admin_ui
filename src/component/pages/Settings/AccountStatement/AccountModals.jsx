@@ -37,7 +37,7 @@ const AccountModals = ({marketId,remark, id}) => {
       key: "netpnl",
       render:(text, record)=>(
         <span className={record?.netpnl > 0?"text_success":"text_danger"}>
-            {record?.netpnl}
+            {record?.netpnl?.toFixed(2)}
         </span>
       )
     },
@@ -48,7 +48,7 @@ const AccountModals = ({marketId,remark, id}) => {
     },
     {
       title: "IP",
-      dataIndex: "userIp",
+      dataIndex: "ipAddress",
       key: "userIp",
     },
   ];
