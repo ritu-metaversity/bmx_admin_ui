@@ -571,6 +571,7 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
           id={id}
           userType={userType}
           getData={getData}
+          
         />
       </Modal>
     </div>
