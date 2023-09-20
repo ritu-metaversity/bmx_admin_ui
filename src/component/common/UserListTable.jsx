@@ -28,13 +28,11 @@ import moment from "moment";
 import Deposit from "./Deposit";
 import Withdraw from "./Withdraw";
 import BetlockModal from "./BetlockModal";
-import {  useSuperuserListQuery } from "../../store/service/supermasteAccountStatementServices";
+import {  useSuperuserListMutation, useUpDateStatusMutation } from "../../store/service/supermasteAccountStatementServices";
 import {
   usePartnershipMutation,
-  useUpDateStatusMutation,
 } from "../../store/service/userlistService";
 import { openNotification } from "../../App";
-import { globalSelector, setData } from "../../store/global/slice";
 
 const routeFromUSerType = {
   0: "/client/list-agent/",
@@ -89,7 +87,6 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
   };
 
 
-
   const handleCancel = () => {
     setIsModalOpen(false);
      setDropdownStates([]);
@@ -108,15 +105,11 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
   };
 
   const { id } = useParams();
+
   //API CALL
-  const { data: results, isLoading, isFetching, isError } =
-    useSuperuserListQuery({
-      userType: userType,
-      parentUserId: id || null,
-      noOfRecords: paginationTotal,
-      index: indexData,
-      userId: "",
-    },{refetchOnMountOrArgChange:true});
+  const [getData, { data: results, isLoading, isFetching, isError }] =
+  useSuperuserListMutation();
+
   const [activeData, { data: Activestatus }] = useUpDateStatusMutation();
 
   useEffect(()=>{
@@ -129,15 +122,15 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
       userId: dataVal,
     });
   };
-  // useEffect(() => {
-  //   getData({
-  //     userType: userType,
-  //     parentUserId: id || null,
-  //     noOfRecords: paginationTotal,
-  //     index: indexData,
-  //     userId: "",
-  //   });
-  // }, [id, userType, paginationTotal, indexData, Activestatus?.status]);
+  useEffect(() => {
+    getData({
+      userType: userType,
+      parentUserId: id || null,
+      noOfRecords: paginationTotal,
+      index: indexData,
+      userId: "",
+    });
+  }, [id, userType, paginationTotal, indexData, Activestatus?.status]);
 
   const [userIdData, setUserIdData] = useState("");
 
@@ -322,7 +315,7 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
               ) : (
                 ""
               )}
-            <table className={`live_table ${parentUserids != UserId && "mt-0" }`}>
+            <table className={`live_table ${id && "mt-0" }`}>
            
               <tr>
                 <th rowSpan={2}>#</th>
@@ -573,6 +566,11 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
           setAccStatus={setAccStatus}
           accStatus= {accStatus}
           handleClose={() => setBetLockModals(false)}
+          paginationTotal={paginationTotal}
+          index={indexData}
+          id={id}
+          userType={userType}
+          getData={getData}
         />
       </Modal>
     </div>

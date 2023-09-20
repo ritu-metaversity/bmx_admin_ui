@@ -84,7 +84,7 @@ const CreateSuperAgent = ({ createName }) => {
     });
   }, [createUserId]);
   const hostname = window.location.pathname;
-  console.log(hostname.includes("create-super"), "dasds");
+  // console.log(hostname.includes("create-super"), "dasds");
 
   const onFinish = (values) => {
     setLuPassword("");
@@ -105,7 +105,7 @@ const CreateSuperAgent = ({ createName }) => {
       oddLossCommission: commiType === "nocomm" ? "0" : values?.Match_comm,
       lupassword: values?.lupassword,
       liveCasinoLock: false,
-      casinoPartnership: 1.0,
+      casinoPartnership: values?.casino_Share || 0,
       fancyLossCommission: commiType === "nocomm" ? "0" : values?.sess_comm,
       casinoCommission: values?.cassino_Comm || 0,
       commType: values?.Commtype,
@@ -185,7 +185,7 @@ const CreateSuperAgent = ({ createName }) => {
               },
               {
                 name: "MyCasinoShare",
-                value: data?.data?.mySessionCommission,
+                value: data?.data?.myCasinoShare,
               },
               {
                 name: "MyCommtype",
@@ -523,21 +523,6 @@ const CreateSuperAgent = ({ createName }) => {
                             required: true,
                             message: "Please select odds commission",
                           }
-                          // ,
-                          // {
-                          //   validator: async (_, values) => {
-                          //     if (
-                          //       values > 3 &&
-                          //       values >= 0 &&
-                          //       values != "" &&
-                          //       values != null
-                          //     ) {
-                          //       return Promise.reject(
-                          //         new Error("Please enter odds commission")
-                          //       );
-                          //     }
-                          //   },
-                          // },
                         ]}>
                         <Select
                           defaultValue="Select Match comm(%)"
@@ -588,13 +573,7 @@ const CreateSuperAgent = ({ createName }) => {
                             // },
                           ]}
                         />
-                        {/* <InputNumber
-                          className="number_field"
-                          min={0}
-                          step="0.1"
-                          type="number"
-                          placeholder="Match commission"
-                        /> */}
+                       
                       </Form.Item>
                     </Col>
 
@@ -688,20 +667,19 @@ const CreateSuperAgent = ({ createName }) => {
                 <h2 className="match_share">{createName} Casino Commission</h2>
               </div>
               <Row className="super_agent sub_super">
-                <Col span={12}>
+                {/* <Col span={12}>
                   <Form.Item
                     label="My Casino Share(%)"
                     name="MyCasinoShare"
                     required={false}>
                     <InputNumber
                       className="number_field"
-                      min={0}
-                      step="0.1"
+                      
                       disabled
                     />
                   </Form.Item>
-                </Col>
-                <Col span={12}>
+                </Col> */}
+                {/* <Col span={12}>
                   <Form.Item
                     label="Casino Share(%)"
                     name="casino_Share"
@@ -711,66 +689,38 @@ const CreateSuperAgent = ({ createName }) => {
                         required: true,
                         message: "Invalid Casino Share",
                       },
+                      {
+                        validator: async (_, values) => {
+                          if (
+                            data?.data?.myCasinoShare < values &&
+                            values != "" &&
+                            values != null
+                          ) {
+                            return Promise.reject(
+                              new Error(
+                                "Casino share can not be more than" +
+                                  " " +
+                                  `${data?.data?.myCasinoShare}`
+                              )
+                            );
+                          }
+                        },
+                      },
                     ]}>
 
-<Select
-                          defaultValue="Select Casino Share(%)"
-                          options={[
-                            {
-                              value: '0.00',
-                              label: '0.00',
-                            },
-                            {
-                              value: '0.25',
-                              label: '0.25',
-                            },
-                            {
-                              value: '0.50',
-                              label: '0.50',
-                            },
-                            {
-                              value: '0.75',
-                              label: '0.75',
-                            },
-                            {
-                              value: '1.00',
-                              label: '1.00',
-                            },
-                            {
-                              value: '1.25',
-                              label: '1.25',
-                            },
-                            {
-                              value: '1.50',
-                              label: '1.50',
-                            },
-                            {
-                              value: '1.75',
-                              label: '1.75',
-                            },
-                            {
-                              value: '2.00',
-                              label: '2.00',
-                            },
-                            // {
-                            //   value: '2.25',
-                            //   label: '2.25',
-                            // },
-                            // {
-                            //   value: '2.50',
-                            //   label: '2.50',
-                            // },
-                          ]}
-                        />
-
-                    {/* <InputNumber
+                    <InputNumber
                       className="number_field"
                       min={0}
-                      step="0.1"
+                      step="1"
+                      onKeyDown={(e) => {
+                        if (e.key == ".") {
+                          e.preventDefault();
+                        }
+                      }}
                       placeholder="Super Agent Casino Share"
-                    /> */}
+                    />
                   </Form.Item>
-                </Col>
+                </Col> */}
                 <Col span={12}>
                   <Form.Item
                     label="My Casino comm(%)"
@@ -855,8 +805,6 @@ const CreateSuperAgent = ({ createName }) => {
                     /> */}
                   </Form.Item>
                 </Col>
-
-
 
                 <Col lg={12} xs={24}>
                   <Form.Item

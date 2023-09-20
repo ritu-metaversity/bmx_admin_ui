@@ -134,7 +134,7 @@ const ModalsData = ({ partnershipDetails, loading }) => {
             </div>
           </div>
          
-          <div className="sub_partnership">
+          {/* <div className="sub_partnership">
             <div className="partnership_name">
               <p>Casino Share</p>
             </div>
@@ -183,7 +183,7 @@ const ModalsData = ({ partnershipDetails, loading }) => {
                 </tr>
               </table>
             </div>
-          </div>
+          </div> */}
         </div>
         <br />
       </div>

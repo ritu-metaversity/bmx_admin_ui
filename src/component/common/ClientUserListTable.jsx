@@ -24,10 +24,9 @@ import moment from "moment";
 import Deposit from "./Deposit";
 import Withdraw from "./Withdraw";
 import BetlockModal from "./BetlockModal";
-import {  useSuperuserListQuery } from "../../store/service/supermasteAccountStatementServices";
+import {  useSuperuserListMutation, useUpDateStatusMutation } from "../../store/service/supermasteAccountStatementServices";
 import {
   usePartnershipMutation,
-  useUpDateStatusMutation,
 } from "../../store/service/userlistService";
 import { openNotification } from "../../App";
 
@@ -102,14 +101,24 @@ const ClientUserListTable = ({ userType, Listname, UserId }) => {
 
   const { id } = useParams();
   //API CALL
-  const { data: results, isLoading, isFetching, isError } =
-    useSuperuserListQuery({
+
+  const onFinish = (values) => {
+    getData({
       userType: userType,
       parentUserId: id || null,
       noOfRecords: paginationTotal,
       index: indexData,
-      userId: "",
-    },{refetchOnMountOrArgChange:true});
+      userId: values?.username
+    });
+    if (results?.status === true) {
+      form.resetFields();
+      setDroupSearch(false);
+    }
+  };
+
+  const [getData, { data: results, isLoading, isFetching, isError }] =
+    useSuperuserListMutation();
+
   const [activeData, { data: Activestatus }] = useUpDateStatusMutation();
 
   const handleActive = () => {
@@ -118,15 +127,16 @@ const ClientUserListTable = ({ userType, Listname, UserId }) => {
       userId: dataVal,
     });
   };
-  // useEffect(() => {
-  //   getData({
-  //     userType: userType,
-  //     parentUserId: id || null,
-  //     noOfRecords: paginationTotal,
-  //     index: indexData,
-  //     userId: "",
-  //   });
-  // }, [id, userType, paginationTotal, indexData, Activestatus?.status]);
+
+  useEffect(() => {
+    getData({
+      userType: userType,
+      parentUserId: id || null,
+      noOfRecords: paginationTotal,
+      index: indexData,
+      userId: "",
+    });
+  }, [id, userType, paginationTotal, indexData, Activestatus?.status]);
 
   const [userIdData, setUserIdData] = useState("");
 
@@ -251,19 +261,7 @@ const ClientUserListTable = ({ userType, Listname, UserId }) => {
     }
   }, [Activestatus?.status]);
 
-  const onFinish = (values) => {
-    getData({
-      userType: userType,
-      parentUserId: id || null,
-      noOfRecords: paginationTotal,
-      index: indexData,
-      userId: values?.username,
-    });
-    if (results?.status === true) {
-      form.resetFields();
-      setDroupSearch(false);
-    }
-  };
+  
 
   const uType = localStorage.getItem("userType");
 
@@ -311,7 +309,7 @@ const ClientUserListTable = ({ userType, Listname, UserId }) => {
               ) : (
                 ""
               )}
-            <table className={`live_table ${parentUserids != UserId && "mt-0" }`}>
+            <table className={`live_table ${id && "mt-0" }`}>
            
               <tr>
                 <th rowSpan={2}>#</th>
