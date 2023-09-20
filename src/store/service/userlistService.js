@@ -102,13 +102,13 @@ export const userlistApi = createApi({
         body,
       }),
     }),
-    upDateStatus: build.mutation({
-      query: (body) => ({
-        url: "/bmx/user/update-status",
-        method: "POST",
-        body,
-      }),
-    }),
+    // upDateStatus: build.mutation({
+    //   query: (body) => ({
+    //     url: "/bmx/user/update-status",
+    //     method: "POST",
+    //     body,
+    //   }),
+    // }),
     isUserId: build.query({
       query: (body) => ({
         url: "/user/is-userid-available",
@@ -140,7 +140,7 @@ export const {
   useUpdateUserMutation,
   useLazyGetUserQuery,
   useAccountOprationQuery,
-  useUpDateStatusMutation,
+  // useUpDateStatusMutation,
   useLazyIsUserIdQuery,
   useLazyUpDateLimitesQuery
 

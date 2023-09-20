@@ -126,6 +126,7 @@ const Sidebar = (props) => {
                     <Link to="/casino/aura-details">Aura Detail</Link>
                   ),
                 },
+
                 // {
                 //   label: (
                 //     <Link to="/Casino/dus-ka-dum-details">DusKaDum Detail</Link>

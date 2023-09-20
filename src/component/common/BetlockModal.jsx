@@ -12,19 +12,25 @@ import "./Deposit.scss";
 import { useBlockBettingMutation } from "../../store/service/supermasteAccountStatementServices";
 import { openNotification, openNotificationError } from "../../App";
 
-const BetlockModal = ({ betStatus, setBetStatus, userIdData, handleClose, setAccStatus, accStatus }) => {
-
-  const [accountBetStatus, setAccountBetStatus] = useState(false)
+const BetlockModal = ({
+  betStatus,
+  userIdData,
+  handleClose,
+  accStatus,
+  paginationTotal,
+  index,
+  id,
+  userType,
+  getData,
+}) => {
+  const [accountBetStatus, setAccountBetStatus] = useState(false);
   const [form] = Form.useForm();
-
-
-  console.log(accStatus, "dasdasds")
 
   const [trigger, { data, error, isLoading }] = useBlockBettingMutation();
 
   const onFinish = (values) => {
-    console.log(values?.type, "fdfsdf")
-    setAccountBetStatus(values?.type == "acc"  ? true : false)
+    console.log(values?.type, "fdfsdf");
+    setAccountBetStatus(values?.type == "acc" ? true : false);
     const bettingPayload = {
       userId: userIdData,
       betLock: values?.type == "bet" && !betStatus,
@@ -37,9 +43,15 @@ const BetlockModal = ({ betStatus, setBetStatus, userIdData, handleClose, setAcc
     trigger(bettingPayload);
   };
 
-
   useEffect(() => {
     if (data?.status === true) {
+      getData({
+        userType: userType,
+        parentUserId: id || null,
+        noOfRecords: paginationTotal,
+        index: index,
+        userId: "",
+      });
       openNotification(data?.message);
       form?.resetFields();
       handleClose();
@@ -74,11 +86,19 @@ const BetlockModal = ({ betStatus, setBetStatus, userIdData, handleClose, setAcc
                 options={[
                   {
                     value: "bet",
-                    label: <div>{betStatus ? "UnBlock Betting":"Block Betting"}</div>
+                    label: (
+                      <div>
+                        {betStatus ? "UnBlock Betting" : "Block Betting"}
+                      </div>
+                    ),
                   },
                   {
                     value: "acc",
-                    label: <div>{accStatus ? "UnBlock Account":"Account Block"}</div>
+                    label: (
+                      <div>
+                        {accStatus ? "UnBlock Account" : "Account Block"}
+                      </div>
+                    ),
                   },
                 ]}
               />

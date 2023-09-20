@@ -48,6 +48,9 @@ const UpdateSuper = ({ updateName }) => {
 
   const mobileNum = /^[6-9][0-9]{9}$/;
   const passw = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,}$/;
+  const [getData, resuilt] = useLazyGetUserQuery();
+
+  console.log(resuilt?.data?.data?.casinoComm, "sdsadasas")
 
   const onFinish = (values) => {
     const userData = {
@@ -60,7 +63,7 @@ const UpdateSuper = ({ updateName }) => {
       commType: values?.comm_type == "bbb" ? "bbb" : "no-comm",
       matchComm: values?.Supermatchcomm || 0,
       sessionComm: values?.sess_comm || 0,
-      casinoComm: values?.Supercasinocomm || 0,
+      casinoComm: resuilt?.data?.data?.casinoComm || 0,
       reference: values?.reference,
     };
 
@@ -84,7 +87,6 @@ const UpdateSuper = ({ updateName }) => {
   };
   const { Option } = Select;
 
-  const [getData, resuilt] = useLazyGetUserQuery();
 
   useEffect(() => {
     getData({
@@ -106,8 +108,7 @@ const UpdateSuper = ({ updateName }) => {
     setCommType(e);
   };
 
-
-  console.log(resuilt?.data?.data, "dsfsfdsfs")
+  console.log(resuilt?.data?.data, "dsfsfdsfs");
 
   return (
     <>
@@ -409,16 +410,43 @@ const UpdateSuper = ({ updateName }) => {
                 ) : (
                   ""
                 )}
-
-                
+                <Col lg={12} xs={24}>
+                  <Form.Item
+                    label="Transaction Password"
+                    name="lupassword"
+                    required
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please Enter Transaction Password!",
+                      },
+                    ]}>
+                    <Input
+                      type="password"
+                      autoComplete="off"
+                      placeholder="Transaction Password"
+                    />
+                  </Form.Item>
+                </Col>
+                <Col lg={12} xs={24}>
+                  <Form.Item
+                    wrapperCol={{
+                      offset: 19,
+                      span: 24,
+                    }}>
+                    <Button type="primary" htmlType="submit">
+                      Submit
+                    </Button>
+                  </Form.Item>
+                </Col>
               </Row>
-              <div>
+              {/* <div>
                 <h2 style={{marginLeft:"0px"}} className="update_agent_text">
                   Casino Share and Commission
                 </h2>
               </div>
               <Row className="super_agent  update_agent">
-                {/* <Col lg={12} xs={24}>
+                <Col lg={12} xs={24}>
                   <Form.Item
                     label="MASTER casino Share(%)"
                     name="casinoshare"
@@ -439,7 +467,7 @@ const UpdateSuper = ({ updateName }) => {
                     ]}>
                     <InputNumber className="number_field" min={0} step="0.1" />
                   </Form.Item>
-                </Col> */}
+                </Col>
                 <Col lg={12} xs={24}>
                   <Form.Item
                     label="MASTER casino comm(%)"
@@ -500,7 +528,7 @@ const UpdateSuper = ({ updateName }) => {
                     </Button>
                   </Form.Item>
                 </Col>
-              </Row>
+              </Row> */}
             </div>
           </Form>
         </div>

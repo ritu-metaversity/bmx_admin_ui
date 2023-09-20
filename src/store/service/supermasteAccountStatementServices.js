@@ -111,7 +111,7 @@ export const supermasteAccountStatementApi = createApi({
         body
       }),
     }),
-    superuserList: build.query({
+    superuserList: build.mutation({
       query: (body) => ({
         url: "/bmx/user/get-user-list",
         method: "POST",
@@ -152,6 +152,14 @@ export const supermasteAccountStatementApi = createApi({
       }),
 
     }),
+    upDateStatus: build.mutation({
+      query: (body) => ({
+        url: "/bmx/user/update-status",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ['superUserList']
+    }),
   }),
 });
 
@@ -170,10 +178,12 @@ export const {
   useDeleteByUserIDMutation,
   useFetchDeleteTransectionQuery,
   useLazyTtlBookQuery,
-  useSuperuserListQuery,
+  // useSuperuserListQuery,
+  useSuperuserListMutation,
   useProfitLossQuery,
   useBlockBettingMutation,
   useSportListbyIDQuery,
   useChangePasswordSelfMutation, 
-  useUserMessageQuery
+  useUserMessageQuery,
+  useUpDateStatusMutation
 } = supermasteAccountStatementApi;
