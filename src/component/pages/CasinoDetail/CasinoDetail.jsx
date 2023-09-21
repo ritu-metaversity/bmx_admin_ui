@@ -5,19 +5,6 @@ import { CaretDownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
 import { useState } from "react";
 
-// const { confirm } = Modal;
-// const showConfirm = () => {
-//   confirm({
-//     title: "Confirm Changes",
-//     icon: <QuestionCircleOutlined />,
-//     onOk() {
-//       console.log("OK");
-//     },
-//     onCancel() {
-//       console.log("Cancel");
-//     },
-//   });
-// };
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
@@ -175,7 +162,7 @@ const CasinoDetail = () => {
                       menu={{
                         items,
                       }}
-                      trigger={["click"]}>
+                      trigger={["hover"]}>
                       <a onClick={() => handleDroupDown(res?.key)}>
                         <Space>
                           <CaretDownOutlined />

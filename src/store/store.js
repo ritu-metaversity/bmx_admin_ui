@@ -7,6 +7,7 @@ import { activeMatchesApi } from "./service/ActiveMatcheService";
 import { eventDerailApi } from "./service/eventDetailServices";
 import { fancyBookApi } from "./service/FancyBookServices";
 import global  from "./global/slice";
+import useref from './global/elementSlice'
 import { sportDetailsApi } from "./service/SportDetailServices";
 import { oddsPnlApi } from "./service/OddsPnlServices";
 import { ledgerApi } from "./service/ledgerServices";
@@ -16,6 +17,7 @@ import { casinoDetailsApi } from "./service/CasinoServices";
 export const store = configureStore({
   reducer: {
     global,
+    useref,
     [authApi.reducerPath]: authApi.reducer,
     [userlistApi.reducerPath]: userlistApi.reducer,
     [supermasteAccountStatementApi.reducerPath]:

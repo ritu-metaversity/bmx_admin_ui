@@ -281,14 +281,20 @@ const ClientUserListTable = ({ userType, Listname, UserId }) => {
     updatedDropdownStates[index] = !updatedDropdownStates[index];
     setDropdownStates(updatedDropdownStates);
   };
+  const myElementRef = useRef(null);
 
   useEffect(() => {
+    const element = myElementRef.current;
     if(!isDropdownOpen){
       window.addEventListener("scroll", handleScroll);
+    element.addEventListener("scroll", handleScroll);
+
     }
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      element.removeEventListener("scroll", handleScroll);
+
     };
   }, [isDropdownOpen]);
 
@@ -299,7 +305,7 @@ const ClientUserListTable = ({ userType, Listname, UserId }) => {
       {droupSearch && (
         <div className="over_view" onClick={() => setDroupSearch(false)}></div>
       )}
-      <div  className="sport_detail m-0 ant-spin-nested-loading" >
+      <div ref={myElementRef}  className="sport_detail m-0 ant-spin-nested-loading" >
         {
           <div className="table_section statement_tabs_data ant-spin-nested-loading" style={{overflow:`${(isLoading || isFetching) ?"hidden":"scroll"}`}}>
              {isLoading || isFetching ? (
@@ -420,7 +426,7 @@ const ClientUserListTable = ({ userType, Listname, UserId }) => {
                           open={dropdownStates[id]}
                           onOpenChange={() => toggleDropdown(id)}
                           menu={{ items, className: "menu_data" }}
-                          trigger={["click"]}
+                          trigger={["hover"]}
                           >
                           <div
                             className="droup_link"

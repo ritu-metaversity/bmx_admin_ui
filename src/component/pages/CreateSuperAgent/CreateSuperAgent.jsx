@@ -663,65 +663,17 @@ const CreateSuperAgent = ({ createName }) => {
                 
               </Row>
 
-              <div>
+              {
+                commiType === "bbb" &&  <div>
                 <h2 className="match_share">{createName} Casino Commission</h2>
               </div>
-              <Row className="super_agent sub_super">
-                {/* <Col span={12}>
-                  <Form.Item
-                    label="My Casino Share(%)"
-                    name="MyCasinoShare"
-                    required={false}>
-                    <InputNumber
-                      className="number_field"
-                      
-                      disabled
-                    />
-                  </Form.Item>
-                </Col> */}
-                {/* <Col span={12}>
-                  <Form.Item
-                    label="Casino Share(%)"
-                    name="casino_Share"
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: "Invalid Casino Share",
-                      },
-                      {
-                        validator: async (_, values) => {
-                          if (
-                            data?.data?.myCasinoShare < values &&
-                            values != "" &&
-                            values != null
-                          ) {
-                            return Promise.reject(
-                              new Error(
-                                "Casino share can not be more than" +
-                                  " " +
-                                  `${data?.data?.myCasinoShare}`
-                              )
-                            );
-                          }
-                        },
-                      },
-                    ]}>
+              }
 
-                    <InputNumber
-                      className="number_field"
-                      min={0}
-                      step="1"
-                      onKeyDown={(e) => {
-                        if (e.key == ".") {
-                          e.preventDefault();
-                        }
-                      }}
-                      placeholder="Super Agent Casino Share"
-                    />
-                  </Form.Item>
-                </Col> */}
-                <Col span={12}>
+             
+              <Row className="super_agent sub_super">
+                {
+                  commiType === "bbb" && <>
+                   <Col span={12}>
                   <Form.Item
                     label="My Casino comm(%)"
                     name="cassinoComm"
@@ -779,32 +731,13 @@ const CreateSuperAgent = ({ createName }) => {
                               value: '2.00',
                               label: '2.00',
                             },
-                            {
-                              value: '2.25',
-                              label: '2.25',
-                            },
-                            {
-                              value: '2.50',
-                              label: '2.50',
-                            },
-                            {
-                              value: '2.75',
-                              label: '2.75',
-                            },
-                            {
-                              value: '3.00',
-                              label: '3.00',
-                            }
                           ]}
                         />
-                    {/* <InputNumber
-                      className="number_field"
-                      min={0}
-                      step="0.1"
-                      placeholder="Casino Copmmission"
-                    /> */}
                   </Form.Item>
-                </Col>
+                </Col></>
+                }
+                
+               
 
                 <Col lg={12} xs={24}>
                   <Form.Item
