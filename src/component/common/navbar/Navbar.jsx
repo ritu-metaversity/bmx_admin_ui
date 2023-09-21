@@ -94,7 +94,7 @@ const Navbar = ({ action }) => {
                 items,
                 onClick: handleModal,
               }}
-              trigger={["click"]}>
+              trigger={["hover"]}>
               <p
                 className="user_deatils"
                 style={{ cursor: "pointer" }}

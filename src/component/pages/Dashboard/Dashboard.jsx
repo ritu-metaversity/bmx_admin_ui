@@ -218,6 +218,15 @@ const Dashboard = () => {
         </Card.Grid>
         <Card.Grid hoverable={false} style={gridStyle}>
           <div className="main_card_section">
+            <div className="icon_card_section"></div>
+            <div className="tital_card_section f-w">
+              <h2 style={{fontSize:"19px"}}>{dataDes?.data?.casinocomminssion || 0}%</h2>
+              <p>Casino Commission</p>
+            </div>
+          </div>
+        </Card.Grid>
+        <Card.Grid hoverable={false} style={gridStyle}>
+          <div className="main_card_section">
             <div className="icon_card_section">
               <HiUser />
             </div>

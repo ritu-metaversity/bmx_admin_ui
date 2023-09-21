@@ -103,7 +103,7 @@ const AndarBaharDetail = () => {
                       menu={{
                         items,
                       }}
-                      trigger={["click"]}>
+                      trigger={["hover"]}>
                       <a onClick={()=>handleDroupDown(res?.key)}>
                         <Space>
                           <CaretDownOutlined />

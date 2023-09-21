@@ -287,18 +287,22 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
     updatedDropdownStates[index] = !updatedDropdownStates[index];
     setDropdownStates(updatedDropdownStates);
   };
+  const myElementRef = useRef(null);
 
   useEffect(() => {
+    const element = myElementRef.current;
     if(!isDropdownOpen){
       window.addEventListener("scroll", handleScroll);
+    element.addEventListener("scroll", handleScroll);
+
     }
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      element.removeEventListener("scroll", handleScroll);
+
     };
   }, [isDropdownOpen]);
-
-
 
   return (
     <div>
@@ -307,7 +311,7 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
       )}
       <div  className="sport_detail m-0 ant-spin-nested-loading" >
         {
-          <div className="table_section statement_tabs_data ant-spin-nested-loading" style={{overflow:`${(isLoading || isFetching) ?"hidden":"scroll"}`}}>
+          <div ref={myElementRef} className="table_section statement_tabs_data ant-spin-nested-loading" style={{overflow:`${(isLoading || isFetching) ?"hidden":"scroll"}`}}>
              {isLoading || isFetching ? (
                 <div className="spin_icon user_spin">
                   <Spin size="large" />
@@ -316,7 +320,6 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
                 ""
               )}
             <table className={`live_table ${id && "mt-0" }`}>
-           
               <tr>
                 <th rowSpan={2}>#</th>
                 <th rowSpan={2}></th>
@@ -426,7 +429,7 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
                           open={dropdownStates[id]}
                           onOpenChange={() => toggleDropdown(id)}
                           menu={{ items, className: "menu_data" }}
-                          trigger={["click"]}
+                          trigger={["hover"]}
                           >
                           <div
                             className="droup_link"

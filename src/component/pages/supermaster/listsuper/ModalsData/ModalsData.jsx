@@ -158,7 +158,7 @@ const ModalsData = ({ partnershipDetails, loading }) => {
                 </tr>
               </table>
             </div>
-          </div>
+          </div> */}
           <div className="sub_partnership">
             <div className="partnership_name">
               <p>Casino Commission</p>
@@ -183,7 +183,7 @@ const ModalsData = ({ partnershipDetails, loading }) => {
                 </tr>
               </table>
             </div>
-          </div> */}
+          </div>
         </div>
         <br />
       </div>

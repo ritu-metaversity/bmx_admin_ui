@@ -150,7 +150,7 @@ const TransactionTable = ({ data, clientId, balanceData }) => {
                           className: "trans",
                           
                         }}
-                        trigger={["click"]}>
+                        trigger={["hover"]}>
                         <p
                           onClick={(e) => {
                             e.preventDefault();

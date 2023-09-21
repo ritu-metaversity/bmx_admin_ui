@@ -14,7 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
 import { useSportDetailQuery } from "../../../store/service/SportDetailServices";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import dayjs from "dayjs";
 import { useSportListbyIDQuery } from "../../../store/service/supermasteAccountStatementServices";
@@ -160,7 +160,7 @@ const SportsDetails = () => {
 
   const handleScroll = () => {
     const updatedDropdownStates = dropdownStates.map(() => false);
-    setDropdownStates(updatedDropdownStates);
+    setDropdownStates(updatedDropdownStates)
     setIsDropdownOpen(false);
   };
 
@@ -169,14 +169,20 @@ const SportsDetails = () => {
     updatedDropdownStates[index] = !updatedDropdownStates[index];
     setDropdownStates(updatedDropdownStates);
   };
+  const myElementRef = useRef(null);
 
   useEffect(() => {
-    if (!isDropdownOpen) {
+    const element = myElementRef.current;
+    if(!isDropdownOpen){
       window.addEventListener("scroll", handleScroll);
+    element.addEventListener("scroll", handleScroll);
+
     }
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      element.removeEventListener("scroll", handleScroll);
+
     };
   }, [isDropdownOpen]);
 
@@ -245,7 +251,7 @@ const SportsDetails = () => {
             </div>
           </Col> */}
         </Row>
-        <div className="table_section">
+        <div ref={myElementRef} className="table_section">
           {/* <Table columns={columns} dataSource={data} /> */}
           <table className="ant-spin-nested-loading">
             <tr>
@@ -278,7 +284,8 @@ const SportsDetails = () => {
                         items,
                         className: "sport_list",
                       }}
-                      trigger={["click"]}>
+
+                      trigger={[ "hover"]}>
                       <p
                         onClick={(e) => {
                           e.preventDefault(),
