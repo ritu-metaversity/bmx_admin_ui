@@ -47,7 +47,7 @@ const {state} = useLocation()
           <tr>
             <th>S no.</th>
             <th >Game ID</th>
-            <th className="text-right" >Winner</th>
+            {/* <th className="text-right" >Winner</th> */}
             <th className="text-right">Pnl</th>
             <th className="text-right">Comm</th>
             <th className="text-right">Net Pnl</th>
@@ -59,7 +59,7 @@ const {state} = useLocation()
             <tr key={res.key}>
               <td>{id + 1}</td>
               <td >{res?.roundId}</td>
-              <td className="text-right">{res?.result}</td>
+              {/* <td className="text-right">{res?.result}</td> */}
               <td className={`text-right ${(res?.netPnl - res?.comm) < 0? "text_danger":(res?.netPnl - res?.comm)>0?"text_success":""}`}>{res?.netPnl - res?.comm}</td>
               <td className="text-right">{res?.comm}</td>
               <td className={`text-right ${res?.netPnl  < 0? "text_danger":res?.netPnl>0?"text_success":""}`}>{res?.netPnl}</td>

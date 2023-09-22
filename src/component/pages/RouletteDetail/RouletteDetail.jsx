@@ -211,7 +211,7 @@ const RouletteDetail = () => {
           {/* <Table columns={columns} dataSource={data} /> */}
           <table className="ant-spin-nested-loading">
             <tr>
-              <th></th>
+              <th style={{width:"4%"}}></th>
               <th>Name</th>
               <th className="text-right">Plus Minus</th>
               <th className="text-right">Comm</th>
@@ -236,7 +236,7 @@ const RouletteDetail = () => {
                         items,
                         className: "sport_list",
                       }}
-                      trigger={["hover"]}>
+                      trigger={["click"]}>
                       <p>
                         <a onClick={() => handleDroupDown(res?.date)}>
                           <Space>

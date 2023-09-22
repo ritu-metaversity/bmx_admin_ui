@@ -199,7 +199,7 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
       className: `${parentUserids == userId ? "" : "d_none"}`,
       label: (
         <Link
-        onClick={()=> setDropdownStates([])}
+        onClick={()=>{ setDropdownStates([])}}
           to={`${
             Listname === "Super Agent"
               ? `/client/update-super/${dataVal}`
@@ -429,7 +429,7 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
                           open={dropdownStates[id]}
                           onOpenChange={() => toggleDropdown(id)}
                           menu={{ items, className: "menu_data" }}
-                          trigger={["hover"]}
+                          trigger={["click"]}
                           >
                           <div
                             className="droup_link"

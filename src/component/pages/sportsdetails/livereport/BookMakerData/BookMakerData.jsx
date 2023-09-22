@@ -3,7 +3,10 @@ import React, { useEffect, useState } from "react";
 import FancyBets from "../fancyBets/FancyBets";
 import FancyBookModals from "../FancyBookModals/FancyBookModals";
 import { useParams } from "react-router-dom";
-import { useFancyPnlQuery, useLazyOddsQuPnlQuery } from "../../../../../store/service/OddsPnlServices";
+import {
+  useFancyPnlQuery,
+  useLazyOddsQuPnlQuery,
+} from "../../../../../store/service/OddsPnlServices";
 import { useLazyTtlBookQuery } from "../../../../../store/service/supermasteAccountStatementServices";
 
 const BookMakerData = ({ data, keyData }) => {
@@ -22,7 +25,7 @@ const BookMakerData = ({ data, keyData }) => {
   const handleCancel = () => {
     setOpen(false);
   };
-  
+
   const [getData, { data: results }] = useLazyTtlBookQuery();
 
   useEffect(() => {
@@ -34,12 +37,11 @@ const BookMakerData = ({ data, keyData }) => {
 
   const [trigger, { data: PnlOdds }] = useLazyOddsQuPnlQuery();
 
-  
-  const {data: fancyPnl} = useFancyPnlQuery({
-    matchId: id
-  })
+  const { data: fancyPnl } = useFancyPnlQuery({
+    matchId: id,
+  });
   const handleMyBook = (e) => {
-    setActiveBook(1)
+    setActiveBook(1);
     e.preventDefault();
     setShowMyBook(2);
     const oddsPnl = {
@@ -48,19 +50,21 @@ const BookMakerData = ({ data, keyData }) => {
     trigger(oddsPnl);
   };
 
-  useEffect(()=>{
-   id && matchid&& getData({
-      matchid: Number(id),
-      marketid: matchid,
-    });
+  useEffect(() => {
+    id &&
+      matchid &&
+      getData({
+        matchid: Number(id),
+        marketid: matchid,
+      });
     const oddsPnl = {
       matchId: Number(id),
     };
     trigger(oddsPnl);
-  }, [ matchid])
+  }, [matchid]);
 
   const handleTtlBook = (e) => {
-    setActiveBook(2)
+    setActiveBook(2);
     e.preventDefault();
     setShowMyBook(1);
     getData({
@@ -68,35 +72,38 @@ const BookMakerData = ({ data, keyData }) => {
       marketid: matchid,
     });
   };
-  const ttl = results?.data?.[0] ?({
-    [results?.data?.[0].selection1]:results?.data?.[0].pnl1,
-    [results?.data?.[0].selection2]:results?.data?.[0].pnl2,
-    [results?.data?.[0].selection3]:results?.data?.[0].pnl3,
-    
-  }):({})
+  const ttl = results?.data?.[0]
+    ? {
+        [results?.data?.[0].selection1]: results?.data?.[0].pnl1,
+        [results?.data?.[0].selection2]: results?.data?.[0].pnl2,
+        [results?.data?.[0].selection3]: results?.data?.[0].pnl3,
+      }
+    : {};
+
   return (
     <>
       <div className="fancy_section">
         <Row gutter={[16, 24]}>
           <Col className="gutter-row" span={21}>
-            <div
-              className="fancy_data_main"
-            >
+            <div className="fancy_data_main">
               <Row>
                 <Col span={19} className="back-lay-bg">
                   <div className="fancy_data">
                     <div className="sub_fancy">
                       <p>{keyData}</p>
                     </div>
-                      <Col span={19} className="back-lay-bg bookData">
-                         <button className={activeBook ==1?"activeMyBook":""} onClick={(e) => handleMyBook(e)}>
-                          My Book
-                        </button>
-                        <button className={activeBook ==2?"activeMyBook":""} onClick={(e) => handleTtlBook(e)}>
-                          Ttl Book
-                        </button>
-                       
-                      </Col>
+                    <Col span={19} className="back-lay-bg bookData">
+                      <button
+                        className={activeBook == 1 ? "activeMyBook" : ""}
+                        onClick={(e) => handleMyBook(e)}>
+                        My Book
+                      </button>
+                      <button
+                        className={activeBook == 2 ? "activeMyBook" : ""}
+                        onClick={(e) => handleTtlBook(e)}>
+                        Ttl Book
+                      </button>
+                    </Col>
                     <div>
                       <span className="fancy_icon">i</span>
                     </div>
@@ -104,13 +111,12 @@ const BookMakerData = ({ data, keyData }) => {
                 </Col>
                 <Col className="b-bottom" span={5}>
                   <Row>
-                  <Col span={12} className="back khai">
+                    <Col span={12} className="back khai">
                       <div>LAGAI</div>
                     </Col>
                     <Col span={12} className="lay lagai lagai1">
                       <div>KHAI</div>
                     </Col>
-                    
                   </Row>
                 </Col>
               </Row>
@@ -121,57 +127,45 @@ const BookMakerData = ({ data, keyData }) => {
                   <Row key={index} className="scor fancy_all_data">
                     <Col span={19} className="match_title">
                       <div className="title">{res?.nation}</div>
-                      {
-                        !res?.mid?.includes("BM") &&  <span className={fancyPnl?.data && fancyPnl?.data[res?.sid]<0?"text_danger":"text_success"}>
-                        {(fancyPnl?.data ) && fancyPnl.data[res?.sid]||"0"}
-                        </span>
-                      }
-                      {keyData !== "Bookmaker" && (
-                        <span 
-                          className="fancy_book_data"
-                          onClick={() => hanldeBookSection(res?.sid)}>
-                          Book
+                      {!res?.mid?.includes("BM") && (
+                        <span
+                          className={
+                            fancyPnl?.data && fancyPnl?.data[res?.sid] < 0
+                              ? "text_danger"
+                              : "text_success"
+                          }>
+                          {(fancyPnl?.data && fancyPnl.data[res?.sid]) || "0"}
                         </span>
                       )}
-                      
                       <>
-                       {showMyBook===1&&<span className={ttl[res.sid] < 0 ?"text_danger":"text_success"}>{ttl[res.sid]||"0.0"}</span>}
-                        {PnlOdds?.data?.map((res, id) => {
-                          if (!res?.marketId?.includes("BM")) return <></>;
+                        {showMyBook === 1 && (
+                          <span
+                            className={
+                              ttl[res.sid] < 0 ? "text_danger" : "text_success"
+                            }>
+                            {ttl[res.sid] || "0.0"}
+                          </span>
+                        )}
+                        {PnlOdds?.data?.map((item, id) => {
+                          if (!item?.marketId?.includes("BM")) return <></>;
+                           const bookPnl = {
+                              [item?.selection1]: item?.pnl1,
+                              [item?.selection2]: item?.pnl2,
+                              [item?.selection3]: item?.pnl3,
+                            };
                           return (
                             <>
                               {showMyBook === 2 && (
                                 <div className="sub_title" key={id}>
-                                  {index === 0 ? (
+                                  {
                                     <span
                                       className={
-                                        res?.pnl1 < 0
+                                        bookPnl[res?.sid] < 0
                                           ? "text_danger"
                                           : "text_success"
                                       }>
-                                      {res?.pnl1 || 0}
-                                    </span>
-                                  ) : index === 1 ? (
-                                    <span
-                                      className={
-                                        res?.pnl2 < 0
-                                          ? "text_danger"
-                                          : "text_success"
-                                      }>
-                                      {res?.pnl2 || 0}
-                                    </span>
-                                  ) : index === 3 ? (
-                                    <span
-                                      className={
-                                        res?.pnl3 < 0
-                                          ? "text_danger"
-                                          : "text_success"
-                                      }>
-                                      {res?.pnl3 || 0}
-                                    </span>
-                                  ) : (
-                                    ""
-                                  )}
+                                      {bookPnl[res?.sid] || 0}
+                                    </span>}
                                 </div>
                               )}
                             </>
@@ -186,17 +180,16 @@ const BookMakerData = ({ data, keyData }) => {
                       className={`${res.gstatus === "" ? "" : "after_Effect"}`}
                       span={5}>
                       <Row>
-                      <Col span={12}>
-                          <div className="back p-16" style={{ height: "44px" }}>
+                        <Col span={12}>
+                          <div className="back p-16 ht">
                             <div>{res?.b1}</div>
                           </div>
                         </Col>
                         <Col span={12}>
-                          <div className="lay p-16" style={{ height: "44px" }}>
+                          <div className="lay p-16 ht">
                             <div>{res?.l1}</div>
                           </div>
                         </Col>
-
                       </Row>
                     </Col>
                   </Row>
