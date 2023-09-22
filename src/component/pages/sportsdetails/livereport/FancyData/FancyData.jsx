@@ -188,12 +188,12 @@ const FancyData = ({ data, keyData }) => {
                       <Row>
                       
                         <Col span={12}>
-                          <div className="lay p-16" style={{ height: "44px" }}>
+                          <div className="lay p-16 ht" >
                             <div>{res?.l1}</div>
                           </div>
                         </Col>
                         <Col span={12}>
-                          <div className="back p-16" style={{ height: "44px" }}>
+                          <div className="back p-16 ht" >
                             <div>{res?.b1}</div>
                           </div>
                         </Col>

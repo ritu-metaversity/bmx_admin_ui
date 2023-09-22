@@ -8,6 +8,7 @@ const UpdateClient = () => {
     console.log("Failed:", errorInfo);
   };
   const { Option } = Select;
+  
   return (
     <>
       <div className="main_live_section">
@@ -28,18 +29,17 @@ const UpdateClient = () => {
           </div>
         </div>
         <Form
-                className="form_data"
-                name="basic"
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 16 }}
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                autoComplete="off">
-        <div>
-          <Row className="super_agent update_agent">
-            <Col span={12}>
-              
+          className="form_data"
+          name="basic"
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off">
+          <div>
+            <Row className="super_agent update_agent">
+              <Col span={12}>
                 <Form.Item
                   label="Name"
                   name="name"
@@ -50,8 +50,8 @@ const UpdateClient = () => {
                   //     message: "Please input your username!",
                   //   },
                   // ]}
-                  >
-                  <Input disabled/>
+                >
+                  <Input disabled />
                 </Form.Item>
                 <Form.Item
                   label="Reference"
@@ -118,62 +118,40 @@ const UpdateClient = () => {
                   ]}>
                   <Input type="password" placeholder="Password" />
                 </Form.Item>
-                
-            
-            </Col>
-            <Col span={12}></Col>
-          </Row>
-          <div className="update_agent">
-            <h2 className="match_share">Match Share and Comm</h2>
-          </div>
-          <Row className="super_agent update_agent">
-          <Col span={12}>
-              
-               
-                <Form.Item
-                  name="AgentCommType"
-                  label="AGENT comm type"
-                  >
-                  <Select disabled
-                    allowClear>
+              </Col>
+              <Col span={12}></Col>
+            </Row>
+            <div className="update_agent">
+              <h2 className="match_share">Match Share and Comm</h2>
+            </div>
+            <Row className="super_agent update_agent">
+              <Col span={12}>
+                <Form.Item name="AgentCommType" label="AGENT comm type">
+                  <Select disabled allowClear>
                     <Option value="NoComm">No Comm</Option>
                     <Option value="Betbybet">Bet by bet</Option>
                   </Select>
                 </Form.Item>
-            
-            </Col>
-            <Col span={12}>
-             
-               
+              </Col>
+              <Col span={12}>
                 <Form.Item
-                required
+                  required
                   name="SupperCommType"
-                  label="CLIENT comm type"
-                  >
-                  <Select
-                    allowClear>
+                  label="CLIENT comm type">
+                  <Select allowClear>
                     <Option value="NoComm">No Comm</Option>
                     {/* <Option value="Betbybet">Bet by bet</Option> */}
                   </Select>
                 </Form.Item>
-            
-            </Col>
-            
-            <Col span={12}>
-             
-                <Form.Item
-                  label="AGENT casino comm(%)"
-                  name="casinoComm"
-                  >
-                  <Input type="number" placeholder="0" disabled/>
+              </Col>
+
+              <Col span={12}>
+                <Form.Item label="AGENT casino comm(%)" name="casinoComm">
+                  <Input type="number" placeholder="0" disabled />
                 </Form.Item>
-                  
-            
-            </Col>
-            
-            
-            <Col span={12}>
-             
+              </Col>
+
+              <Col span={12}>
                 <Form.Item
                   label="CLIENT casino comm(%)"
                   name="ClientcasinoComm"
@@ -182,9 +160,8 @@ const UpdateClient = () => {
                       required: true,
                       message: "Please enter valid Casino commission",
                     },
-                  ]}
-                  >
-                  <Input type="number" placeholder="0.0" value='0.0' />
+                  ]}>
+                  <Input type="number" placeholder="0.0" value="0.0" />
                 </Form.Item>
                 <Form.Item
                   wrapperCol={{
@@ -195,12 +172,9 @@ const UpdateClient = () => {
                     Submit
                   </Button>
                 </Form.Item>
-                  
-            
-            </Col>
-            
-          </Row>
-        </div>
+              </Col>
+            </Row>
+          </div>
         </Form>
       </div>
     </>

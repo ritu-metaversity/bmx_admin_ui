@@ -117,6 +117,7 @@ const LiveReport = () => {
                   </Row>
                 </div>
                 {oddsData?.runners?.map((res, index) => {
+
                   return (
                     <div key={index}>
                       <Row className="scor">
@@ -132,42 +133,25 @@ const LiveReport = () => {
                               {ttl[res.selectionId] || "0.0"}
                             </span>
                           )}
-                          {PnlOdds?.data?.map((res, id) => {
-                            console.log(res, "dsdsds");
-                            if (res?.marketId?.includes("BM")) return <></>;
+                          {PnlOdds?.data?.map((item, id) => {
+                            if (item?.marketId?.includes("BM")) return <></>;
+                            const oddsPnl = {
+                              [item?.selection1]: item?.pnl1,
+                              [item?.selection2]: item?.pnl2,
+                              [item?.selection3]: item?.pnl3,
+                            };
                             return (
                               <div className="sub_title" key={id}>
                                 {ShowMyBook === 2 &&
-                                  (index === 0 ? (
-                                    <span
-                                      className={
-                                        res?.pnl1 < 0
-                                          ? "text_danger"
-                                          : "text_success"
-                                      }>
-                                      {res?.pnl1}
-                                    </span>
-                                  ) : index === 1 ? (
-                                    <span
-                                      className={
-                                        res?.pnl2 < 0
-                                          ? "text_danger"
-                                          : "text_success"
-                                      }>
-                                      {res?.pnl2}
-                                    </span>
-                                  ) : index === 2 ? (
-                                    <span
-                                      className={
-                                        res?.pnl3 < 0
-                                          ? "text_danger"
-                                          : "text_success"
-                                      }>
-                                      {res?.pnl3}
-                                    </span>
-                                  ) : (
-                                    ""
-                                  ))}
+                                  <span
+                                  className={
+                                    oddsPnl[res.selectionId] < 0
+                                      ? "text_danger"
+                                      : "text_success"
+                                  }>
+                                  {oddsPnl[res.selectionId] || "0.0"}
+                                </span>
+                                  }
                               </div>
                             );
                           })}
@@ -186,8 +170,8 @@ const LiveReport = () => {
                                     span={12}
                                     key={index}>
                                     <div
-                                      className="lightback p-16"
-                                      style={{ height: "47px" }}>
+                                      className="lightback p-16 ht"
+                                      >
                                       <div>{backData?.price}</div>
                                     </div>
                                   </Col>
@@ -205,8 +189,8 @@ const LiveReport = () => {
                                   span={12}
                                   key={index}>
                                   <div
-                                    className="lightlay p-16"
-                                    style={{ height: "47px" }}>
+                                    className="lightlay p-16 ht"
+                                    >
                                     <div>{layData?.price}</div>
                                   </div>
                                 </Col>

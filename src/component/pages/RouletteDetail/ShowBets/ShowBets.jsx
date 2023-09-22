@@ -40,7 +40,7 @@ const ShowBets = () => {
             <th>Market</th>
             <th className="text-right">Rate</th>
             <th>Number</th>
-            <th>Winner</th>
+            {/* <th>Winner</th> */}
             <th className="text-right">Stake</th>
             <th className="text-right">Profit</th>
             <th className="text-right">Loss</th>
@@ -55,7 +55,7 @@ const ShowBets = () => {
               <td>{res.market}</td>
               <td className="text-right">{res.rate}</td>
               <td>{res.selection}</td>
-              <td>{res.result}</td>
+              {/* <td>{res.result}</td> */}
               <td className="text-right">{res.stake}</td>
               <td className="text-right">{res.profit}</td>
               <td className="text-right">{res.loss}</td>

@@ -285,7 +285,7 @@ const SportsDetails = () => {
                         className: "sport_list",
                       }}
 
-                      trigger={[ "hover"]}>
+                      trigger={[ "click"]}>
                       <p
                         onClick={(e) => {
                           e.preventDefault(),

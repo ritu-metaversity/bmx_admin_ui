@@ -486,3 +486,19 @@
     padding: 10px 12px;
   }}
 }
+
+.ht{
+  height: 47px;
+  @media screen and (max-width: 800px) {
+    height: 51px;
+    min-height: 51px;
+    max-height: 51px;
+  }
+}
+
+
+@media screen and (max-width: 450px) {
+  title {
+    font-size: 13px;
+}
+}
