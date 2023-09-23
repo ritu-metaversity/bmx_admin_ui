@@ -426,7 +426,7 @@ const ClientUserListTable = ({ userType, Listname, UserId }) => {
                           open={dropdownStates[id]}
                           onOpenChange={() => toggleDropdown(id)}
                           menu={{ items, className: "menu_data" }}
-                          trigger={["hover"]}
+                          trigger={["click", "contextMenu"]}
                           >
                           <div
                             className="droup_link"

@@ -61,6 +61,7 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
   const [userBalance, setUserBalance] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownStates, setDropdownStates] = useState([]);
+  const [layoutOpen, setLayoutOpen] = useState(false);
 
   
   const [form] = Form.useForm();
@@ -277,6 +278,7 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
   }, [results?.data?.user]);
 
   const handleScroll = () => {
+    setLayoutOpen(false)
     const updatedDropdownStates = dropdownStates.map(() => false);
     setDropdownStates(updatedDropdownStates)
     setIsDropdownOpen(false);
@@ -286,6 +288,7 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
     const updatedDropdownStates = [...dropdownStates];
     updatedDropdownStates[index] = !updatedDropdownStates[index];
     setDropdownStates(updatedDropdownStates);
+    setLayoutOpen(false)
   };
   const myElementRef = useRef(null);
 
@@ -305,10 +308,13 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
   }, [isDropdownOpen]);
 
   return (
+    <>{
+      layoutOpen && <div className="overlay_layout"></div>
+    }
     <div>
-      {droupSearch && (
+      {/* {droupSearch && (
         <div className="over_view" onClick={() => setDroupSearch(false)}></div>
-      )}
+      )} */}
       <div  className="sport_detail m-0 ant-spin-nested-loading" >
         {
           <div ref={myElementRef} className="table_section statement_tabs_data ant-spin-nested-loading" style={{overflow:`${(isLoading || isFetching) ?"hidden":"scroll"}`}}>
@@ -429,7 +435,7 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
                           open={dropdownStates[id]}
                           onOpenChange={() => toggleDropdown(id)}
                           menu={{ items, className: "menu_data" }}
-                          trigger={["click"]}
+                          trigger={["click", "contextMenu"]}
                           >
                           <div
                             className="droup_link"
@@ -578,6 +584,7 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
         />
       </Modal>
     </div>
+    </>
   );
 };
 

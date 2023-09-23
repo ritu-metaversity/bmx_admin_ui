@@ -33,6 +33,7 @@ const SportsDetails = () => {
   const [dataNameee, setDataNameee] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownStates, setDropdownStates] = useState([]);
+  const [layoutOpen, setLayoutOpen] = useState(false);
   // const [SportId, setSportId] = useState(4);
   const [statusStr, setStatusStr] = useState("");
   const [activeTabData, setActtiveTabData] = useState(4);
@@ -162,9 +163,11 @@ const SportsDetails = () => {
     const updatedDropdownStates = dropdownStates.map(() => false);
     setDropdownStates(updatedDropdownStates)
     setIsDropdownOpen(false);
+    setLayoutOpen(false)
   };
 
   const toggleDropdown = (index) => {
+    setLayoutOpen(false)
     const updatedDropdownStates = [...dropdownStates];
     updatedDropdownStates[index] = !updatedDropdownStates[index];
     setDropdownStates(updatedDropdownStates);
@@ -188,11 +191,16 @@ const SportsDetails = () => {
 
   const handleSportId = (id) => {
     setActtiveTabData(id);
-    // console.log(id, "dsdfsdds")
   };
+  
+  console.log(layoutOpen, "dsdfsdds")
 
   return (
     <>
+    {/* {
+      layoutOpen && <div className="overlay_layout"></div>
+    } */}
+    
       <Card
         className="sport_detail"
         title="Sports Detail"
@@ -232,27 +240,8 @@ const SportsDetails = () => {
               bordered={false}
             />
           </Col>
-          {/* <Col xl={17} lg={17} md={24} xs={24} style={{ padding: "10px 0px" }}>
-            <div className="active_sport_list">
-              <div className="sub_list_sport_list">
-                {sportData?.data?.map((item, id) => {
-                  return (
-                    <div
-                      key={id}
-                      onClick={() => handleSportId(item?.sportId)}
-                      className={`tab_section_active_sport
-                   ${activeTabData == item?.sportId ? "activeList" : ""}
-                  `}>
-                      <p>{item?.sportName}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </Col> */}
         </Row>
         <div ref={myElementRef} className="table_section">
-          {/* <Table columns={columns} dataSource={data} /> */}
           <table className="ant-spin-nested-loading">
             <tr>
               <th></th>
@@ -280,12 +269,13 @@ const SportsDetails = () => {
                       className="table_dropdown sport_droupdown"
                       open={dropdownStates[id]}
                       onOpenChange={() => toggleDropdown(id)}
+                      // onClick={()=>setLayoutOpen(true)}
                       menu={{
                         items,
                         className: "sport_list",
                       }}
 
-                      trigger={[ "click"]}>
+                      trigger={[ "click", "contextMenu"]}>
                       <p
                         onClick={(e) => {
                           e.preventDefault(),
