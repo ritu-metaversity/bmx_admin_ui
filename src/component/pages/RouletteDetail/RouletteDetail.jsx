@@ -236,7 +236,7 @@ const RouletteDetail = () => {
                         items,
                         className: "sport_list",
                       }}
-                      trigger={["click"]}>
+                      trigger={["click", "contextMenu"]}>
                       <p>
                         <a onClick={() => handleDroupDown(res?.date)}>
                           <Space>
