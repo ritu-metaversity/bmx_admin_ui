@@ -67,12 +67,14 @@ const CreateSuperAgent = ({ createName }) => {
     { refetchOnMountOrArgChange: true }
   );
 
+
   useEffect(() => {
     casinoDetalisData?.data?.map((key) => {
       setState((prev) => {
         return {
           ...prev,
-          [`is${key.casinoName}Allowed`]: key.casinoLock,
+          [`is${key.name.replace(" ", "")}Allowed`]:
+          !key.active,
         };
       });
     });
