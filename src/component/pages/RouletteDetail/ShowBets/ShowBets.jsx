@@ -57,9 +57,9 @@ const ShowBets = () => {
               <td>{res.selection}</td>
               {/* <td>{res.result}</td> */}
               <td className="text-right">{res.stake}</td>
-              <td className="text-right">{res.profit}</td>
+              <td className="text-right">{(res.profit)?.toFixed(2)}</td>
               <td className="text-right">{res.loss}</td>
-              <td className={`text-right ${res.netpnl < 0?"text_danger":"text_success"}`}>{res.netpnl}</td>
+              <td className={`text-right ${res.netpnl < 0?"text_danger":"text_success"}`}>{(res.netpnl)?.toFixed(2)}</td>
              
             </tr>
           ))}
