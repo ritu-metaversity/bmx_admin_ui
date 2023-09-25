@@ -33,6 +33,7 @@ import {
   usePartnershipMutation,
 } from "../../store/service/userlistService";
 import { openNotification } from "../../App";
+import CasinoLockModals from "./CasinoLockModals";
 
 const routeFromUSerType = {
   0: "/client/list-agent/",
@@ -41,11 +42,13 @@ const routeFromUSerType = {
 };
 
 const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, UserId }) => {
+  // console.log(Listname, "sdcdsdas")
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeStatus, setActiveStatus] = useState();
   const [isDepositeModalOpen, SetisDepositeModalOpen] = useState(false);
   const [WithdrawnModal, SetWithdrawnModal] = useState(false);
   const [betLockModals, setBetLockModals] = useState(false);
+  const [casinoLockModals, setCasinoLockModals] = useState(false);
   const [balance, setBalance] = useState();
   const [parentUserId, setParentUserId] = useState();
   const [dataVal, setDataVal] = useState();
@@ -159,6 +162,10 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
      setDropdownStates([]);
     setBetLockModals(true);
   };
+  const handleBlockCasino = () => {
+     setDropdownStates([]);
+    setCasinoLockModals(true);
+  };
 
   const nav = useNavigate();
 
@@ -198,15 +205,20 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
     },
     {
       className: `${parentUserids == userId ? "" : "d_none"}`,
+      label: <div onClick={handleBlockCasino}>Block Casino</div>,
+      key: "4",
+    },
+    {
+      className: `${parentUserids == userId ? "" : "d_none"}`,
       label: (
         <Link
         onClick={()=>{ setDropdownStates([])}}
           to={`${
-            Listname === "Super Agent"
+            Listname === "Super Master"
               ? `/client/update-super/${dataVal}`
               : Listname === "Master"
               ? `/client/update-agent/${dataVal}`
-              : Listname === "Dealer"
+              : Listname === "Agent"
               ? `/client/update-dealer/${dataVal}`
               : `/client/update-client/${dataVal}`
           }`}>
@@ -249,6 +261,8 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
       key: "10",
     },
   ];
+
+  console.log(Listname, "adasdsd")
 
   useEffect(() => {
     if (Activestatus?.status === true) {
@@ -396,7 +410,7 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
                 <th rowSpan={2}>Share%</th>
                 <th rowSpan={2}>PWD</th>
                 <th colSpan={3} className="text-center">
-                  Super Agent Comm %
+                  {Listname} Comm %
                 </th>
                 <th rowSpan={2} className="text-right">C.Chips</th>
                 <th rowSpan={2} className="text-right">Credit Reference</th>
@@ -583,6 +597,27 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
           
         />
       </Modal>
+
+      <Modal
+        className="modal_deposit"
+        destroyOnClose
+        title={
+          <h1>
+            <span>Casino Lock</span>
+          </h1>
+        }
+        open={casinoLockModals}
+        // onOk={handleBetLockOk}
+        onCancel={() => setCasinoLockModals(false)}
+        okButtonProps={{ style: { display: "none" } }}
+        cancelButtonProps={{ style: { display: "none" } }}
+        footer={null}>
+        <CasinoLockModals
+        userIdData={userIdData}
+        handleClose={() => setCasinoLockModals(false)}
+        />
+      </Modal>
+
     </div>
     </>
   );

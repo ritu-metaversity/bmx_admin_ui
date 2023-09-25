@@ -127,3 +127,13 @@ a.ant-notification-notice-close {
     }
 }
 
+.casino_details {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 20px;
+    flex-wrap: wrap;
+    gap: 21px;
+    @media screen and (max-width: 800px) {
+        margin: 0px !important;
+    }
+}

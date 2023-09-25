@@ -54,7 +54,7 @@ const AddSuperLimites = () => {
   const onFinish = (values) => {
     const addList = {
         amount:Number(values?.amount),
-        remark:"Creadit deposit",
+        remark:"Updated Limit",
         lupassword:values?.pass,
         userId:id
     };

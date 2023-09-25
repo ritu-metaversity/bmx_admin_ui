@@ -39,7 +39,8 @@ export const casinoDetailsApi = createApi({
         body
       }),
     }),
+    
   }),
 });
 
-export const {useRouletteDetailsQuery, useRoulettePlusMinusQuery, useAllGameQuery, useCasinoBetListQuery } = casinoDetailsApi;
+export const {useRouletteDetailsQuery, useRoulettePlusMinusQuery, useAllGameQuery, useCasinoBetListQuery, useCasinoListQuery } = casinoDetailsApi;

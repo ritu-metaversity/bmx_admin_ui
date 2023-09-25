@@ -67,7 +67,6 @@ const ListSuper = ({ userTyep, Listname }) => {
               <div></div>
             </div>
           )}
-
           <div className="table_section sport_detail m-0">
             <UserListTable
               Listname={Listname}

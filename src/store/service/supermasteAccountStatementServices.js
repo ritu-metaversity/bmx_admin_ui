@@ -160,6 +160,29 @@ export const supermasteAccountStatementApi = createApi({
       }),
       invalidatesTags: ['superUserList']
     }),
+
+    casinoList: build.query({
+      query: (body) => ({
+        url: `/user/get-casino-bet-lock`,
+        method: "POST",
+        body
+      }),
+    }),
+    updateCasinoLock: build.mutation({
+      query: (body) => ({
+        url: `/user/update-casino-lock`,
+        method: "POST",
+        body
+      }),
+    }),
+    createCasinoList: build.query({
+      query: (body) => ({
+        url: `/user/alloted-casino-list`,
+        method: "POST",
+        body
+      }),
+    }),
+
   }),
 });
 
@@ -178,12 +201,14 @@ export const {
   useDeleteByUserIDMutation,
   useFetchDeleteTransectionQuery,
   useLazyTtlBookQuery,
-  // useSuperuserListQuery,
   useSuperuserListMutation,
   useProfitLossQuery,
   useBlockBettingMutation,
   useSportListbyIDQuery,
   useChangePasswordSelfMutation, 
   useUserMessageQuery,
-  useUpDateStatusMutation
+  useUpDateStatusMutation,
+  useCasinoListQuery,
+  useUpdateCasinoLockMutation,
+  useCreateCasinoListQuery
 } = supermasteAccountStatementApi;
