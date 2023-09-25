@@ -33,7 +33,7 @@ const Signin = () => {
         // appUrl: "agent.11bet24.com",
       // appUrl: "subadmin.11bet24.com",
       // appUrl: "subadmin.247idhub.com",
-      // appUrl: "subadmin.localhost",
+      // appUrl: "supermaster.localhost",
     };
     trigger(authData);
   };

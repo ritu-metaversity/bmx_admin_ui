@@ -30,7 +30,7 @@ const TransactionTable = ({ data, clientId, balanceData }) => {
   //     ?.map((res) => res?.debit)
   //     .reduce((prev, curr) => Number(prev) + Number(curr), 0);
   //   const creditCal = data
-  //     ?.map((res) => res?.credit)
+  //     ?.map((res) =>  res?.credit)
   //     .reduce((prev, curr) => Number(prev) + Number(curr), 0);
   //   setDebitCal(debitCal);
   //   setCreditCal(creditCal);
@@ -138,6 +138,7 @@ const TransactionTable = ({ data, clientId, balanceData }) => {
           </tr>
           {data?.length != 0 &&
             data?.map((res) => {
+              console.log(res, "dasdasd")
               return (
                 <tr key={res?.key}>
                   <td>
@@ -163,10 +164,10 @@ const TransactionTable = ({ data, clientId, balanceData }) => {
                     )}
                   </td>
                   <td>
-                    {moment(res?.date?.$date).format("YYYY-MM-DD, h:mm a")}
+                    {res?.date?.$date || res?.date}
                   </td>
                   <td>
-                    {moment(res?.date?.$date).format("YYYY-MM-DD, h:mm a")}
+                  {res?.date?.$date || res?.date}
                   </td>
                   <td>{res?.collectionName}</td>
                   <td className="text-right">{res?.debit}</td>

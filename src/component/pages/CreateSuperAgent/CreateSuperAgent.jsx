@@ -9,6 +9,7 @@ import {
   Row,
   Select,
   Spin,
+  Switch,
   notification,
 } from "antd";
 import { useEffect, useState } from "react";
@@ -18,13 +19,13 @@ import {
   useLazyCreateUserDataQuery,
   useLazyIsUserIdQuery,
 } from "../../../store/service/userlistService";
+import {useCreateCasinoListQuery } from "../../../store/service/supermasteAccountStatementServices";
 
 const CreateSuperAgent = ({ createName }) => {
   const [userData, setUserData] = useState({});
   const [commiType, setCommiType] = useState("nocomm");
   const [LuPassword, setLuPassword] = useState("");
   const [createUserId, setCreateUserID] = useState();
-  const [userMatchSatus, setUserMatchSatus] = useState();
   const [api, contextHolder] = notification.useNotification();
   const [form] = Form.useForm();
 
@@ -53,6 +54,30 @@ const CreateSuperAgent = ({ createName }) => {
     });
   };
 
+  const userId = localStorage.getItem("userId");
+  const [state, setState] = useState({
+    isAuraAllowed: "",
+    isSuperNovaAllowed: "",
+    isQTechAllowed: "",
+    isVirtualAllowed: "",
+    isSportBookAllowed: "",
+  });
+  const { data: casinoDetalisData } = useCreateCasinoListQuery(
+    {},
+    { refetchOnMountOrArgChange: true }
+  );
+
+  useEffect(() => {
+    casinoDetalisData?.data?.map((key) => {
+      setState((prev) => {
+        return {
+          ...prev,
+          [`is${key.casinoName}Allowed`]: key.casinoLock,
+        };
+      });
+    });
+  }, [casinoDetalisData?.data]);
+
   const passw = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,15}$/;
   var mobileNum = /^[6-9][0-9]{9}$/;
 
@@ -61,8 +86,6 @@ const CreateSuperAgent = ({ createName }) => {
   const handelUseId = (e) => {
     setCreateUserID(e.target.value);
   };
-
-  console.log("C" + createUserId, "dss");
 
   const [createUser, { data: UserList, error, isLoading }] =
     useCreateUserMutation();
@@ -83,19 +106,19 @@ const CreateSuperAgent = ({ createName }) => {
         : "C" + createUserId,
     });
   }, [createUserId]);
+
   const hostname = window.location.pathname;
-  // console.log(hostname.includes("create-super"), "dasds");
 
   const onFinish = (values) => {
     setLuPassword("");
     const userData = {
       userId: hostname.includes("create-super")
-        ? "S" + (createUserId)?.trim()
+        ? "S" + createUserId?.trim()
         : hostname.includes("create-agent")
-        ? "M" +  (createUserId)?.trim()
+        ? "M" + createUserId?.trim()
         : hostname.includes("create-dealer")
-        ? "A" +  (createUserId)?.trim()
-        : "C" +  (createUserId)?.trim(),
+        ? "A" + createUserId?.trim()
+        : "C" + createUserId?.trim(),
       username: values?.Name,
       mobile: values?.mobile,
       city: "",
@@ -112,6 +135,11 @@ const CreateSuperAgent = ({ createName }) => {
       appId: 1,
       amount: values?.Coins,
       reference: values?.reference,
+      isAuraAllowed: state?.isAuraAllowed,
+      isSuperNovaAllowed: state?.isSuperNovaAllowed,
+      isQTechAllowed: state?.isQTechAllowed,
+      isVirtualAllowed: state?.isVirtualAllowed,
+      isSportBookAllowed: state?.isSportBookAllowed,
     };
     createUser(userData);
   };
@@ -137,9 +165,6 @@ const CreateSuperAgent = ({ createName }) => {
   useEffect(() => {
     setUserData(data?.data);
   }, [data?.data, UserList?.status]);
-
-
- 
 
   return (
     <>
@@ -285,10 +310,7 @@ const CreateSuperAgent = ({ createName }) => {
                       type="text"
                       placeholder="Enter full name"
                       onKeyDown={(e) => {
-                        if (
-                          !e.key.match(/^[a-zA-Z0-9]$/) &&
-                          e.key.length === 1
-                        ) {
+                        if (!e.key.match(/^[a-zA-Z ]$/) && e.key.length === 1) {
                           e.preventDefault();
                         }
                       }}
@@ -522,46 +544,46 @@ const CreateSuperAgent = ({ createName }) => {
                           {
                             required: true,
                             message: "Please select odds commission",
-                          }
+                          },
                         ]}>
                         <Select
                           defaultValue="Select Match comm(%)"
                           options={[
                             {
-                              value: '0.00',
-                              label: '0.00',
+                              value: "0.00",
+                              label: "0.00",
                             },
                             {
-                              value: '0.25',
-                              label: '0.25',
+                              value: "0.25",
+                              label: "0.25",
                             },
                             {
-                              value: '0.50',
-                              label: '0.50',
+                              value: "0.50",
+                              label: "0.50",
                             },
                             {
-                              value: '0.75',
-                              label: '0.75',
+                              value: "0.75",
+                              label: "0.75",
                             },
                             {
-                              value: '1.00',
-                              label: '1.00',
+                              value: "1.00",
+                              label: "1.00",
                             },
                             {
-                              value: '1.25',
-                              label: '1.25',
+                              value: "1.25",
+                              label: "1.25",
                             },
                             {
-                              value: '1.50',
-                              label: '1.50',
+                              value: "1.50",
+                              label: "1.50",
                             },
                             {
-                              value: '1.75',
-                              label: '1.75',
+                              value: "1.75",
+                              label: "1.75",
                             },
                             {
-                              value: '2.00',
-                              label: '2.00',
+                              value: "2.00",
+                              label: "2.00",
                             },
                             // {
                             //   value: '2.25',
@@ -573,7 +595,6 @@ const CreateSuperAgent = ({ createName }) => {
                             // },
                           ]}
                         />
-                       
                       </Form.Item>
                     </Col>
 
@@ -596,149 +617,170 @@ const CreateSuperAgent = ({ createName }) => {
                           {
                             required: true,
                             message: "Please select session commission",
-                          }
+                          },
                         ]}>
-                          <Select
+                        <Select
                           defaultValue="Select Sess Comm(%)"
                           options={[
                             {
-                              value: '0.00',
-                              label: '0.00',
+                              value: "0.00",
+                              label: "0.00",
                             },
                             {
-                              value: '0.25',
-                              label: '0.25',
+                              value: "0.25",
+                              label: "0.25",
                             },
                             {
-                              value: '0.50',
-                              label: '0.50',
+                              value: "0.50",
+                              label: "0.50",
                             },
                             {
-                              value: '0.75',
-                              label: '0.75',
+                              value: "0.75",
+                              label: "0.75",
                             },
                             {
-                              value: '1.00',
-                              label: '1.00',
+                              value: "1.00",
+                              label: "1.00",
                             },
                             {
-                              value: '1.25',
-                              label: '1.25',
+                              value: "1.25",
+                              label: "1.25",
                             },
                             {
-                              value: '1.50',
-                              label: '1.50',
+                              value: "1.50",
+                              label: "1.50",
                             },
                             {
-                              value: '1.75',
-                              label: '1.75',
+                              value: "1.75",
+                              label: "1.75",
                             },
                             {
-                              value: '2.00',
-                              label: '2.00',
+                              value: "2.00",
+                              label: "2.00",
                             },
                             {
-                              value: '2.25',
-                              label: '2.25',
+                              value: "2.25",
+                              label: "2.25",
                             },
                             {
-                              value: '2.50',
-                              label: '2.50',
+                              value: "2.50",
+                              label: "2.50",
                             },
                             {
-                              value: '2.75',
-                              label: '2.75',
+                              value: "2.75",
+                              label: "2.75",
                             },
                             {
-                              value: '3.00',
-                              label: '3.00',
-                            }
+                              value: "3.00",
+                              label: "3.00",
+                            },
                           ]}
                         />
-                       
                       </Form.Item>
                     </Col>
                   </>
                 )}
-                
               </Row>
 
-              {
-                commiType === "bbb" &&  <div>
-                <h2 className="match_share">{createName} Casino Commission</h2>
-              </div>
-              }
+              {commiType === "bbb" && (
+                <div>
+                  <h2 className="match_share">
+                    {createName} Casino Commission
+                  </h2>
+                </div>
+              )}
 
-             
               <Row className="super_agent sub_super">
-                {
-                  commiType === "bbb" && <>
-                   <Col span={12}>
-                  <Form.Item
-                    label="My Casino comm(%)"
-                    name="cassinoComm"
-                    required={false}>
-                    <Input type="number" disabled />
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item
-                    label="Casino comm(%)"
-                    name="cassino_Comm"
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter valid Casino commission",
-                      },
-                    ]}>
-                       <Select
+                {commiType === "bbb" && (
+                  <>
+                    <Col span={12}>
+                      <Form.Item
+                        label="My Casino comm(%)"
+                        name="cassinoComm"
+                        required={false}>
+                        <Input type="number" disabled />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item
+                        label="Casino comm(%)"
+                        name="cassino_Comm"
+                        required
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter valid Casino commission",
+                          },
+                        ]}>
+                        <Select
                           defaultValue="Select Casino Comm(%)"
                           options={[
                             {
-                              value: '0.00',
-                              label: '0.00',
+                              value: "0.00",
+                              label: "0.00",
                             },
                             {
-                              value: '0.25',
-                              label: '0.25',
+                              value: "0.25",
+                              label: "0.25",
                             },
                             {
-                              value: '0.50',
-                              label: '0.50',
+                              value: "0.50",
+                              label: "0.50",
                             },
                             {
-                              value: '0.75',
-                              label: '0.75',
+                              value: "0.75",
+                              label: "0.75",
                             },
                             {
-                              value: '1.00',
-                              label: '1.00',
+                              value: "1.00",
+                              label: "1.00",
                             },
                             {
-                              value: '1.25',
-                              label: '1.25',
+                              value: "1.25",
+                              label: "1.25",
                             },
                             {
-                              value: '1.50',
-                              label: '1.50',
+                              value: "1.50",
+                              label: "1.50",
                             },
                             {
-                              value: '1.75',
-                              label: '1.75',
+                              value: "1.75",
+                              label: "1.75",
                             },
                             {
-                              value: '2.00',
-                              label: '2.00',
+                              value: "2.00",
+                              label: "2.00",
                             },
                           ]}
                         />
-                  </Form.Item>
-                </Col></>
-                }
-                
-               
+                      </Form.Item>
+                    </Col>
+                  </>
+                )}
+              </Row>
 
+              <div>
+                <h2 className="match_share">Casino Details</h2>
+              </div>
+              <div className="casino_details">
+                {casinoDetalisData?.data?.map((item, id) => {
+                  console.log(item?.casinoLock, "sdsdasdas");
+                  return (
+                    <div key={id}>
+                      <div className="casino_name">{item?.name}</div>
+                      <div className="casino_switch">
+                        <Switch
+                          defaultChecked={item?.active}
+                          disabled
+                          // onChange={() => onChange(item?.casinoId)}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <Row className="super_agent sub_super">
                 <Col lg={12} xs={24}>
                   <Form.Item
                     label="Transaction Password"

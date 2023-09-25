@@ -49,7 +49,7 @@ const MinusLimit = () => {
   const onFinish = (values) => {
     const addList = {
       amount: Number(values?.amount),
-      remark: "deposit",
+      remark: "Updated Limit",
       lupassword: values?.pass,
       userId: id,
     };
