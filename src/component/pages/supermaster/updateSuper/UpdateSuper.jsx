@@ -159,7 +159,7 @@ const UpdateSuper = ({ updateName }) => {
               },
               {
                 name: "sess_comm",
-                value: resuilt?.data?.data.sessionComm,
+                value: (resuilt?.data?.data.sessionComm)?.toFixed(2),
               },
               {
                 name: "matchcomm",
@@ -183,11 +183,7 @@ const UpdateSuper = ({ updateName }) => {
               },
               {
                 name: "Supermatchcomm",
-                value: resuilt?.data?.data.matchComm,
-              },
-              {
-                name: "sess_comm",
-                value: resuilt?.data?.data.sessionComm,
+                value: (resuilt?.data?.data.matchComm)?.toFixed(2),
               },
               {
                 name: "supercasinoShare",
@@ -344,27 +340,48 @@ const UpdateSuper = ({ updateName }) => {
                           {
                             required: true,
                             message: "Please enter odds commission",
-                          },
-                          {
-                            validator: async (_, values) => {
-                              if (
-                                values > 3 &&
-                                values < 0 &&
-                                values != "" &&
-                                values != null
-                              ) {
-                                return Promise.reject(
-                                  new Error("Please enter odds commission")
-                                );
-                              }
-                            },
-                          },
+                          }
                         ]}>
-                        <InputNumber
-                          className="number_field"
-                          type="number"
-                          min={0}
-                          step="0.1"
+                       <Select
+                          defaultValue="Select Match comm(%)"
+                          options={[
+                            {
+                              value: "0.00",
+                              label: "0.00",
+                            },
+                            {
+                              value: "0.25",
+                              label: "0.25",
+                            },
+                            {
+                              value: "0.50",
+                              label: "0.50",
+                            },
+                            {
+                              value: "0.75",
+                              label: "0.75",
+                            },
+                            {
+                              value: "1.00",
+                              label: "1.00",
+                            },
+                            {
+                              value: "1.25",
+                              label: "1.25",
+                            },
+                            {
+                              value: "1.50",
+                              label: "1.50",
+                            },
+                            {
+                              value: "1.75",
+                              label: "1.75",
+                            },
+                            {
+                              value: "2.00",
+                              label: "2.00",
+                            }
+                          ]}
                         />
                       </Form.Item>
                     </Col>
@@ -385,63 +402,78 @@ const UpdateSuper = ({ updateName }) => {
                           {
                             required: true,
                             message: "Please enter session commission",
-                          },
-                          {
-                            validator: async (_, values) => {
-                              if (
-                                values > 3 &&
-                                values < 0 &&
-                                values != "" &&
-                                values != null
-                              ) {
-                                return Promise.reject(
-                                  new Error("Please enter session commission")
-                                );
-                              }
-                            },
-                          },
+                          }
                         ]}>
-                        <InputNumber
+                          <Select
+                          defaultValue="Select Sess Comm(%)"
+                          options={[
+                            {
+                              value: "0.00",
+                              label: "0.00",
+                            },
+                            {
+                              value: "0.25",
+                              label: "0.25",
+                            },
+                            {
+                              value: "0.50",
+                              label: "0.50",
+                            },
+                            {
+                              value: "0.75",
+                              label: "0.75",
+                            },
+                            {
+                              value: "1.00",
+                              label: "1.00",
+                            },
+                            {
+                              value: "1.25",
+                              label: "1.25",
+                            },
+                            {
+                              value: "1.50",
+                              label: "1.50",
+                            },
+                            {
+                              value: "1.75",
+                              label: "1.75",
+                            },
+                            {
+                              value: "2.00",
+                              label: "2.00",
+                            },
+                            {
+                              value: "2.25",
+                              label: "2.25",
+                            },
+                            {
+                              value: "2.50",
+                              label: "2.50",
+                            },
+                            {
+                              value: "2.75",
+                              label: "2.75",
+                            },
+                            {
+                              value: "3.00",
+                              label: "3.00",
+                            },
+                          ]}
+                        />
+                        {/* <InputNumber
                           type="number"
                           className="number_field"
                           min={0}
                           step="0.1"
-                        />
+                        /> */}
                       </Form.Item>
                     </Col>
                   </>
                 ) : (
                   ""
                 )}
-                {/* <Col lg={12} xs={24}>
-                  <Form.Item
-                    label="Transaction Password"
-                    name="lupassword"
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please Enter Transaction Password!",
-                      },
-                    ]}>
-                    <Input
-                      type="password"
-                      autoComplete="off"
-                      placeholder="Transaction Password"
-                    />
-                  </Form.Item>
-                </Col>
-                <Col lg={12} xs={24}>
-                  <Form.Item
-                    wrapperCol={{
-                      offset: 19,
-                      span: 24,
-                    }}>
-                    <Button type="primary" htmlType="submit">
-                      Submit
-                    </Button>
-                  </Form.Item>
-                </Col> */}
+                
               </Row>
               {
                 commType == "bbb" &&  <div>
@@ -494,18 +526,49 @@ const UpdateSuper = ({ updateName }) => {
                       {
                         required: true,
                         message: "Please enter valid Casino commission",
-                      },
-                      {
-                        validator: async (_, values) => {
-                          if (values > 3 ) {
-                            return Promise.reject(
-                              new Error("Please enter session commission")
-                            );
-                          }
-                        },
-                      },
+                      }
                     ]}>
-                    <InputNumber className="number_field" min={0} step="0.1" />
+                    <Select
+                          defaultValue="Select Casino Comm(%)"
+                          options={[
+                            {
+                              value: "0.00",
+                              label: "0.00",
+                            },
+                            {
+                              value: "0.25",
+                              label: "0.25",
+                            },
+                            {
+                              value: "0.50",
+                              label: "0.50",
+                            },
+                            {
+                              value: "0.75",
+                              label: "0.75",
+                            },
+                            {
+                              value: "1.00",
+                              label: "1.00",
+                            },
+                            {
+                              value: "1.25",
+                              label: "1.25",
+                            },
+                            {
+                              value: "1.50",
+                              label: "1.50",
+                            },
+                            {
+                              value: "1.75",
+                              label: "1.75",
+                            },
+                            {
+                              value: "2.00",
+                              label: "2.00",
+                            },
+                          ]}
+                        />
                   </Form.Item>
                 </Col>
                   </>
