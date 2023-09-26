@@ -18,21 +18,17 @@ const CasinoLockModals = ({ userIdData, handleClose }) => {
     isSportBookAllowed: "",
   });
 
-  const { data } = useCasinoListQuery(
-    {
-      userId: userIdData,
-    },
-    { refetchOnMountOrArgChange: true }
-  );
+  const { data } = useCasinoListQuery({userId: userIdData,},{ refetchOnMountOrArgChange: true });
 
   const [trigger, { data: updateCasinoList, error, isLoading }] = useUpdateCasinoLockMutation();
 
   useEffect(() => {
     data?.data?.map((key) => {
+      console.log(key, "dsdds")
       setState((prev) => {
         return {
           ...prev,
-          [`is${key.casinoName}Allowed`]: key.casinoLock,
+          [`is${key.casinoName}Allowed`]: key.casinoAllowed,
         };
       });
     });
@@ -58,7 +54,6 @@ const CasinoLockModals = ({ userIdData, handleClose }) => {
     }
   }, [error, updateCasinoList?.data])
 
-  // console.log(state, "dsfsdfsdf");
   return (
     <>
       <Form onFinish={onFinish} form={form} autoComplete="off">
@@ -70,10 +65,9 @@ const CasinoLockModals = ({ userIdData, handleClose }) => {
               className="switch_btn"
               label={item?.casinoName}
               style={{ marginTop: "12px" }}
-              // name="casinoId"
               >
               <Switch
-                defaultChecked={item?.casinoLock}
+                defaultChecked={item?.casinoAllowed}
                 onChange={(e) =>
                   setState((prev) => {
                     return {
