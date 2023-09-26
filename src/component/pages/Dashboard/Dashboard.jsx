@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BiUserCircle } from "react-icons/bi";
 import { LuBarChart4 } from "react-icons/lu";
 import { AiOutlineSetting } from "react-icons/ai";
@@ -6,22 +6,19 @@ import { CiLogin } from "react-icons/ci";
 import { HiUser } from "react-icons/hi";
 import { SlDiamond } from "react-icons/sl";
 import { IoMdInformationCircle } from "react-icons/io";
-
-import { Card } from "antd";
+import { FaLock } from "react-icons/fa";
+import { Card, Modal } from "antd";
 import "./Dashboard.scss";
 import ActiveMatch from "../../common/ActiveMatch/ActiveMatch";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../../../store/service/authService";
-import { useDashboardQuery } from "../../../store/service/supermasteAccountStatementServices";
-
-const gridStyle = {
-  width: "23%",
-  background: "#74766f",
-  color: "#fff",
-  margin: "10px",
-};
+import { useCreateCasinoListQuery, useDashboardQuery } from "../../../store/service/supermasteAccountStatementServices";
+import CasinoModalsDash from "./CasinoModalsDash";
 
 const Dashboard = () => {
+
+  const [casinoLockModals, setCasinoLockModals] = useState();
+
   const nav = useNavigate();
 
   const handleRules = () => {
@@ -48,7 +45,8 @@ const Dashboard = () => {
   };
 
   const uType = localStorage.getItem("userType");
-
+  
+  const {data: casinoDetails} = useCreateCasinoListQuery({}, {refetchOnMountOrArgChange: true});
   return (
     <>
       <Card>
@@ -249,7 +247,40 @@ const Dashboard = () => {
             </div>
           </div>
         </Card.Grid>
+
+        <Card.Grid hoverable={false} style={gridStyle}>
+          <div
+            onClick={()=>setCasinoLockModals(true)}
+            style={{ cursor: "pointer" }}
+            className="main_card_section">
+            <div className="icon_card_section">
+              <FaLock style={{fontSize: "40px"}}/>
+            </div>
+            <div className="tital_card_section f-w">
+              <h2 style={{fontSize:"19px"}}>My Casino Lock</h2>
+            </div>
+          </div>
+        </Card.Grid>
+
       </Card>
+
+      <Modal
+        className="modal_dash"
+        destroyOnClose
+        title={
+          <h1>
+            <span>My Casino Lock Details</span>
+          </h1>
+        }
+        open={casinoLockModals}
+        // onOk={handleBetLockOk}
+        onCancel={() => setCasinoLockModals(false)}
+        okButtonProps={{ style: { display: "none" } }}
+        cancelButtonProps={{ style: { display: "none" } }}
+        footer={null}>
+        <CasinoModalsDash data={casinoDetails?.data}/>
+      </Modal>
+
       <ActiveMatch />
     </>
   );

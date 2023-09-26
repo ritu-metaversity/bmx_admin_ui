@@ -9,9 +9,7 @@ import { openNotification, openNotificationError } from "../../App";
 
 const CasinoLockModals = ({ userIdData, handleClose }) => {
   const [form] = Form.useForm();
-  const [isLock, setIsLock] = useState(false);
-  const [cId, setCid] = useState();
-  const [casinoIds, setCasinoIds] = useState([]);
+
   const [state, setState] = useState({
     isAuraAllowed: "",
     isSuperNovaAllowed: "",
@@ -27,20 +25,19 @@ const CasinoLockModals = ({ userIdData, handleClose }) => {
     { refetchOnMountOrArgChange: true }
   );
 
-  const [trigger, { data: updateCasinoList, error, isLoading, isError }] = useUpdateCasinoLockMutation();
+  const [trigger, { data: updateCasinoList, error, isLoading }] = useUpdateCasinoLockMutation();
 
   useEffect(() => {
     data?.data?.map((key) => {
       setState((prev) => {
         return {
           ...prev,
-          [`is${key.casinoName}Allowed`]: !key.casinoLock,
+          [`is${key.casinoName}Allowed`]: key.casinoLock,
         };
       });
     });
   }, [data?.data]);
 
-  console.log(casinoIds, "dfasdfasd");
 
   const onFinish = (values) => {
     trigger({
@@ -49,8 +46,6 @@ const CasinoLockModals = ({ userIdData, handleClose }) => {
       userId:userIdData
     })
   };
-
-  console.log(state, "asdasdasds");
 
   useEffect(()=>{
     if (updateCasinoList?.status === true) {
@@ -63,10 +58,12 @@ const CasinoLockModals = ({ userIdData, handleClose }) => {
     }
   }, [error, updateCasinoList?.data])
 
+  // console.log(state, "dsfsdfsdf");
   return (
     <>
       <Form onFinish={onFinish} form={form} autoComplete="off">
         {data?.data?.map((item, id) => {
+          // console.log(item, "dsfsdfs");
           return (
             <Form.Item
               key={id}
@@ -76,7 +73,7 @@ const CasinoLockModals = ({ userIdData, handleClose }) => {
               // name="casinoId"
               >
               <Switch
-                defaultChecked={!item?.casinoLock}
+                defaultChecked={item?.casinoLock}
                 onChange={(e) =>
                   setState((prev) => {
                     return {

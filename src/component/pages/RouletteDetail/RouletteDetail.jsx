@@ -253,7 +253,7 @@ const RouletteDetail = () => {
                     className={`text-right ${
                       res?.netPnl < 0 ? "text_danger" : "text_success"
                     }`}>
-                    {res?.netPnl}
+                    {(res?.netPnl)?.toFixed(2)}
                   </td>
                   <td
                     className={`text-right ${
@@ -268,7 +268,7 @@ const RouletteDetail = () => {
                         : "text_success"
                     }`}>
                     {" "}
-                    {res?.netPnl - res?.comm}
+                    {(res?.netPnl - res?.comm)?.toFixed(2)}
                   </td>
                 </tr>
               );
