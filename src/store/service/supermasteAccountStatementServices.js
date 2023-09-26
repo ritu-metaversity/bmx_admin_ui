@@ -10,7 +10,7 @@ export const supermasteAccountStatementApi = createApi({
       return headers;
     },
   }),
-  tagTypes:["deleteByUser", 'superUserList'],
+  tagTypes:["deleteByUser", 'superUserList', "casinoList"],
   endpoints: (build) => ({
     accountstatement: build.query({
       query: (body) => ({
@@ -167,6 +167,7 @@ export const supermasteAccountStatementApi = createApi({
         method: "POST",
         body
       }),
+      providesTags: ['casinoList']
     }),
     updateCasinoLock: build.mutation({
       query: (body) => ({
@@ -174,7 +175,9 @@ export const supermasteAccountStatementApi = createApi({
         method: "POST",
         body
       }),
+      invalidatesTags: ['casinoList']
     }),
+
     createCasinoList: build.query({
       query: (body) => ({
         url: `/user/alloted-casino-list`,

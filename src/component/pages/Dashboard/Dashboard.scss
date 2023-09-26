@@ -16,42 +16,77 @@
 }
 
 @media screen and (max-width: 800px) {
-    .ant-card {
-        margin-bottom: 20px !important;
-        .ant-card-grid {
-            width: 43% ;
-            text-align: left !important;
-            padding: 15px 20px !important;
-            .icon_card_section{
-            svg{
-                font-size: 30px !important;
-            }
+  .ant-card {
+    margin-bottom: 20px !important;
+    .ant-card-grid {
+      width: 43%;
+      text-align: left !important;
+      padding: 15px 20px !important;
+      .icon_card_section {
+        svg {
+          font-size: 30px !important;
         }
-        }
-
-    }
-    .f-w{
-      h2{
-        font-size: 16px !important;
       }
     }
-   
+  }
+  .f-w {
+    h2 {
+      font-size: 16px !important;
+    }
+  }
 }
-
 
 @media screen and (min-width: 300px) and (max-width: 350px) {
   .ant-card-grid {
     width: 100% !important;
     text-align: left !important;
-}
+  }
 }
 @media screen and (min-width: 351px) and (max-width: 800px) {
   .ant-card-grid {
     width: 43% !important;
     text-align: left !important;
-    
+  }
 }
+
+.switch_btn1 {
+  margin-bottom: 12px;
+
+  .ant-row.ant-form-item-row {
+    width: 90%;
+    min-width: 90%;
+    max-width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between !important;
+  }
+  .ant-col.ant-form-item-control {
+    flex-grow: unset;
+  }
+  .ant-switch {
+    height: 20px;
+    min-width: 39px;
+  }
+  .ant-switch.ant-switch-checked {
+  }
+
+  .ant-switch .ant-switch-handle {
+    width: 16px;
+    height: 16px;
+  }
 }
 
+.modal_dash {
+  .ant-modal-content {
+    padding: 20px 30px !important;
+    .ant-modal-title{
+      h1{
 
-
+        font-size: 18px;
+      }
+    }
+    .ant-modal-body {
+      margin-top: 25px;
+  }
+  }
+}

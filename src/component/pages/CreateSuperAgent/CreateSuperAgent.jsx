@@ -19,7 +19,7 @@ import {
   useLazyCreateUserDataQuery,
   useLazyIsUserIdQuery,
 } from "../../../store/service/userlistService";
-import {useCreateCasinoListQuery } from "../../../store/service/supermasteAccountStatementServices";
+import { useCreateCasinoListQuery } from "../../../store/service/supermasteAccountStatementServices";
 
 const CreateSuperAgent = ({ createName }) => {
   const [userData, setUserData] = useState({});
@@ -67,14 +67,12 @@ const CreateSuperAgent = ({ createName }) => {
     { refetchOnMountOrArgChange: true }
   );
 
-
   useEffect(() => {
     casinoDetalisData?.data?.map((key) => {
       setState((prev) => {
         return {
           ...prev,
-          [`is${key.name.replace(" ", "")}Allowed`]:
-          !key.active,
+          [`is${key.name.replace(" ", "")}Allowed`]: !key.active,
         };
       });
     });
@@ -761,12 +759,14 @@ const CreateSuperAgent = ({ createName }) => {
                 )}
               </Row>
 
-              <div>
-                <h2 className="match_share">Casino Details</h2>
-              </div>
+              {casinoDetalisData?.data?.length != 0 && (
+                <div>
+                  <h2 className="match_share">Casino Details</h2>
+                </div>
+              )}
+
               <div className="casino_details">
                 {casinoDetalisData?.data?.map((item, id) => {
-                  console.log(item?.casinoLock, "sdsdasdas");
                   return (
                     <div key={id}>
                       <div className="casino_name">{item?.name}</div>

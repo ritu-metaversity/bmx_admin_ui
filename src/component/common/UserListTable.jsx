@@ -326,9 +326,9 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
       layoutOpen && <div className="overlay_layout"></div>
     }
     <div>
-      {/* {droupSearch && (
+      {droupSearch && (
         <div className="over_view" onClick={() => setDroupSearch(false)}></div>
-      )} */}
+      )}
       <div  className="sport_detail m-0 ant-spin-nested-loading" >
         {
           <div ref={myElementRef} className="table_section statement_tabs_data ant-spin-nested-loading" style={{overflow:`${(isLoading || isFetching) ?"hidden":"scroll"}`}}>

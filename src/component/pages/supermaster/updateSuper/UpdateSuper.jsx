@@ -62,7 +62,7 @@ const UpdateSuper = ({ updateName }) => {
       commType: values?.comm_type == "bbb" ? "bbb" : "no-comm",
       matchComm: values?.Supermatchcomm || 0,
       sessionComm: values?.sess_comm || 0,
-      casinoComm: resuilt?.data?.data?.casinoComm || 0,
+      casinoComm: values?.Supercasinocomm || 0,
       reference: values?.reference,
     };
 
