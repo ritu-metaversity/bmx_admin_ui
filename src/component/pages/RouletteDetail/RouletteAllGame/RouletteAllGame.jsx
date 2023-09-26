@@ -60,9 +60,9 @@ const {state} = useLocation()
               <td>{id + 1}</td>
               <td >{res?.roundId}</td>
               {/* <td className="text-right">{res?.result}</td> */}
-              <td className={`text-right ${(res?.netPnl - res?.comm) < 0? "text_danger":(res?.netPnl - res?.comm)>0?"text_success":""}`}>{res?.netPnl - res?.comm}</td>
+              <td className={`text-right ${(res?.netPnl - res?.comm) < 0? "text_danger":(res?.netPnl - res?.comm)>0?"text_success":""}`}>{(res?.netPnl - res?.comm)?.toFixed(2)}</td>
               <td className="text-right">{res?.comm}</td>
-              <td className={`text-right ${res?.netPnl  < 0? "text_danger":res?.netPnl>0?"text_success":""}`}>{res?.netPnl}</td>
+              <td className={`text-right ${res?.netPnl  < 0? "text_danger":res?.netPnl>0?"text_success":""}`}>{(res?.netPnl)?.toFixed(2)}</td>
               <td>
                 <button className="action_btn" onClick={()=>handleShowBets(res?.roundId)}>Show Bets</button>
               </td> 
