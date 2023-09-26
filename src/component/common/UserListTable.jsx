@@ -603,7 +603,7 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
         destroyOnClose
         title={
           <h1>
-            <span>Casino Lock</span>
+            <span style={{fontSize: "18px"}}>Casino Allowed</span>
           </h1>
         }
         open={casinoLockModals}
