@@ -19,13 +19,6 @@ const Sidebar = (props) => {
 
   props.collll(collapsed);
 
-  // const [open, setOpen] = useState(false);
-  
-
-  // const toggleDarawer = () => setOpen(prev => !prev);
-
-  // console.log(props.open, "dfsdfgdg")
-
   const nav = useNavigate();
 
   const userType = localStorage.getItem("userType");
@@ -39,7 +32,7 @@ const Sidebar = (props) => {
     }
   };
 
-  const uType = localStorage.getItem("userType")
+  const uType = localStorage.getItem("userType");
 
   return (
     <>
@@ -208,26 +201,70 @@ const Sidebar = (props) => {
               label: "Reports",
               children: [
                 {
-                  label: <Link to="/client/login-report">Login Report</Link>,
+                  key:"11",
+                  label: "Data Report",
+                  children:[{
+                    className: `${userType != "5" ? "d-none" : ""}`,
+                    label: <Link to="/report/super">Super Master </Link>,
+                  },
+                  {
+                    className: `${userType === "0" ? "" : "d-none"}`,
+                    label: <Link to="/report/master">Master </Link>,
+                  },
+                  
+                  {
+                    className: `${userType === "1" ? "" : "d-none"}`,
+                    label: <Link to="/report/agent">Agent </Link>,
+                  },
+                  {
+                    label: <Link to="/report/client">Client </Link>,
+                  },]
                 },
-                // {
-                //   label: (
-                //     <Link to="/client/mobile-app-report">
-                //       Mobile App Report
-                //     </Link>
-                //   ),
-                // },
-                // {
-                //   label: (
-                //     <Link to="/client/secure-code-report">
-                //       Secure Code Report
-                //     </Link>
-                //   ),
-                // },
+                {
+                  key:"12",
+                  label: "commission Report",
+                  children:[
+                    {
+                      className: `${userType != "5" ? "d-none" : ""}`,
+                      label: <Link to="/client/comm-report-super">Super Master</Link>,
+                    },
+                    {
+                      className: `${userType === "0" ? "" : "d-none"}`,
+                      label: <Link to="/client/comm-report-master">Master</Link>,
+                    },
+                    {
+                      className: `${userType === "1" ? "" : "d-none"}`,
+                      label: <Link to="/client/comm-report-agent">Agent</Link>,
+                    },
+                    {
+                      label: <Link to="/client/comm-report-client">Client</Link>,
+                    },
+                  ]
+                },
+                {
+                  key:"13",
+                  label: "Login Reports",
+                  children:[
+                    {
+                      label: <Link to="/client/login-report">Login Report</Link>,
+                    }
+                  ]
+                }
+                
               ],
             },
+            // {
+            //   key: "7",
+            //   icon: <BiUserCircle />,
+            //   label: "Login Reports",
+            //   children: [
+            //     {
+            //       label: <Link to="/client/login-report">Login Report</Link>,
+            //     },
+            //   ],
+            // },
             {
-              key: "7",
+              key: "8",
               icon: <SlDiamond />,
               label: <Link to="/markets" onClick={()=>setOpenKeys([])}>WBT Setting</Link>,
             },
@@ -331,29 +368,6 @@ const Sidebar = (props) => {
                       </Link>
                     ),
                   },
-                  // {
-                  //   label: (
-                  //     <Link
-                  //       to="/Casino/dus-ka-dum-details"
-                  //       onClick={() => props?.action()}>
-                  //       DusKaDum Detail
-                  //     </Link>
-                  //   ),
-                  // },
-                  // {
-                  //   label: (
-                  //     <Link
-                  //       to="/Casino/andar-bahar-details"
-                  //       onClick={() => props?.action()}>
-                  //       AndarBahar Detail
-                  //     </Link>
-                  //   ),
-                  // },
-                  // {
-                  //   label: (
-                  //     <Link to="/Casino/casino-details">Casino Detail</Link>
-                  //   ),
-                  // },
                 ],
               },
               {
@@ -464,6 +478,120 @@ const Sidebar = (props) => {
                       </Link>
                     ),
                   },
+                ],
+              },
+              {
+                key: "6",
+                icon: <BiUserCircle />,
+                label: "Reports",
+                children: [
+                  {
+                    key:"12",
+                    label: "Data Reports",
+                    children:[
+                      {
+                        
+                        className: `${userType != "5" ? "d-none" : ""}`,
+                        label: (
+                          <Link
+                          to="/report/super"
+                            onClick={() => props?.action()}>
+                            Super Master
+                          </Link>
+                        ),
+                      },
+                      {
+                        className: `${userType === "0" ? "" : "d-none"}`,
+                        label: (
+                          <Link
+                          to="/report/master"
+                            onClick={() => props?.action()}>
+                            Master 
+                          </Link>
+                        ),
+                      },
+                      
+                      {
+                        className: `${userType === "1" ? "" : "d-none"}`,
+                        label: (
+                          <Link
+                          to="/report/agent"
+                            onClick={() => props?.action()}>
+                            Agent 
+                          </Link>
+                        ),
+                      },
+                      {
+                        label: (
+                          <Link
+                            to="/report/client"
+                            onClick={() => props?.action()}>
+                            Client 
+                          </Link>
+                        ),
+                      },
+                    ]
+                    
+                  },
+                  {
+                    key:"13",
+                    label: "commission Report",
+                    children:[
+                      {
+                        label: (
+                          <Link
+                            to="/client/comm-report-super"
+                            onClick={() => props?.action()}>
+                            Super Master
+                          </Link>
+                        ),
+                      },
+                      {
+                        label: (
+                          <Link
+                            to="/client/comm-report-master"
+                            onClick={() => props?.action()}>
+                            Master
+                          </Link>
+                        ),
+                      },
+                      {
+                        label: (
+                          <Link
+                            to="/client/comm-report-agent"
+                            onClick={() => props?.action()}>
+                            Agent
+                          </Link>
+                        ),
+                      },
+                      {
+                        label: (
+                          <Link
+                            to="/client/comm-report-client"
+                            onClick={() => props?.action()}>
+                            Client
+                          </Link>
+                        ),
+                      },
+                    ]
+                  }, 
+                  {
+                    key:"14",
+                    label: "Login Reports",
+                    children:[
+                      {
+                        label: (
+                          <Link
+                            to="/client/login-report"
+                            onClick={() => props?.action()}>
+                            Login Report
+                          </Link>
+                        ),
+                      },
+                    ]
+                  }
+                  
+                 
                 ],
               },
               {

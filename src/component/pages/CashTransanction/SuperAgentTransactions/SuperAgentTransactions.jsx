@@ -2,50 +2,6 @@ import { Button, Card, Col, DatePicker, Divider, Form, Input, Pagination, Row, S
 import "./SuperAgentTransactions.scss";
 import dayjs from 'dayjs';
 import { useNavigate } from "react-router-dom";
-
-// const data = [
-//   {
-//     key: 1,
-//     date: "26-06-2023",
-//     Collection_Name: "",
-//     Debit: "5.82",
-//     Credit: "0.00",
-//     Balance: "27.09",
-//     Payment_Type: "Zimbabwe v USA",
-//     Remark: "Master minus",
-//   },
-//   {
-//     key: 2,
-//     date: "26-06-2023",
-//     Collection_Name: "",
-//     Debit: "5.82",
-//     Credit: "0.00",
-//     Balance: "27.09",
-//     Payment_Type: "Zimbabwe v USA",
-//     Remark: "Master minus",
-//   },
-//   {
-//     key: 3,
-//     date: "26-06-2023",
-//     Collection_Name: "",
-//     Debit: "5.82",
-//     Credit: "0.00",
-//     Balance: "27.09",
-//     Payment_Type: "Zimbabwe v USA",
-//     Remark: "Master minus",
-//   },
-//   {
-//     key: 4,
-//     date: "26-06-2023",
-//     Collection_Name: "",
-//     Debit: "5.82",
-//     Credit: "0.00",
-//     Balance: "27.09",
-//     Payment_Type: "Zimbabwe v USA",
-//     Remark: "Master minus",
-//   },
-// ];
-
 const dateFormat = 'YYYY/MM/DD';
 
 

@@ -120,7 +120,11 @@ const AgentTransactions = ({ userType, Listname }) => {
   
   useEffect(()=>{
     form?.resetFields();
-    setClientId("")
+    setClientId("");
+    userList({
+      userType: userType,
+      userName: "",
+    });
   }, [pathname])
   
 
