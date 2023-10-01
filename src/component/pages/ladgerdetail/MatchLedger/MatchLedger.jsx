@@ -51,8 +51,8 @@ const MatchLedger = () => {
   const time = moment().format("YYYY-MM-DD");
   const [dateData, setDateData] = useState([timeBefore, time]);
   const [totalPage, setTotalPage] = useState();
-  const [paginationTotal, setPaginationTotal] = useState(50);
   const [indexData, setIndexData] = useState(0);
+  const [paginationTotal, setPaginationTotal] = useState(50);
 
   const onChange = (date, dateString) => {
     setDateData(dateString);

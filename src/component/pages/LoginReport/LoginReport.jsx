@@ -67,6 +67,13 @@ const LoginReport = () => {
     setClientId(value);
   };
 
+  useEffect(()=>{
+    userList({
+      userType: null,
+      userName: "",
+    });
+  }, [])
+
 
   useEffect(() => {
     loginReport({
@@ -145,7 +152,7 @@ const LoginReport = () => {
                 <th>
                   <div className="ip_section">
                     <p>IP-Address</p>
-                    <p onClick={() => setipOrder(!ipOrder)}>
+                    <p style={{cursor:"pointer"}} onClick={() => setipOrder(!ipOrder)}>
                       {ipOrder ? <CaretUpOutlined /> : <CaretDownOutlined />}
                     </p>
                   </div>

@@ -57,12 +57,16 @@
     min-width: 90%;
     max-width: 90%;
     display: flex;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
     justify-content: space-between !important;
   }
+
+
   .ant-col.ant-form-item-control {
     flex-grow: unset;
+    flex: 0 0;
   }
+
   .ant-switch {
     height: 20px;
     min-width: 39px;

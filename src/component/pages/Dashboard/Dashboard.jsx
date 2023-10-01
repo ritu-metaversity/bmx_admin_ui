@@ -257,7 +257,7 @@ const Dashboard = () => {
               <FaLock style={{fontSize: "40px"}}/>
             </div>
             <div className="tital_card_section f-w">
-              <h2 style={{fontSize:"19px"}}>My Casino Lock</h2>
+              <h2 style={{fontSize:"18px"}}>My Casino Allowed</h2>
             </div>
           </div>
         </Card.Grid>
@@ -269,7 +269,7 @@ const Dashboard = () => {
         destroyOnClose
         title={
           <h1>
-            <span>My Casino Lock Details</span>
+            <span>My Casino Allowed</span>
           </h1>
         }
         open={casinoLockModals}

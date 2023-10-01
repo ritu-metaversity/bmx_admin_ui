@@ -185,6 +185,20 @@ export const supermasteAccountStatementApi = createApi({
         body
       }),
     }),
+    dataReport: build.mutation({
+      query: (body) => ({
+        url: `/bmx/report/bmx-data-reports`,
+        method: "POST",
+        body
+      }),
+    }),
+    commReport: build.mutation({
+      query: (body) => ({
+        url: `/bmx/report/bmx-casino-reports`,
+        method: "POST",
+        body
+      }),
+    }),
 
   }),
 });
@@ -213,5 +227,7 @@ export const {
   useUpDateStatusMutation,
   useCasinoListQuery,
   useUpdateCasinoLockMutation,
-  useCreateCasinoListQuery
+  useCreateCasinoListQuery,
+  useDataReportMutation,
+  useCommReportMutation
 } = supermasteAccountStatementApi;

@@ -1,16 +1,7 @@
 import "./RouletteDetail.scss";
-import {
-  Card,
-  DatePicker,
-  Divider,
-  Empty,
-  Pagination,
-  Spin,
-  Table,
-} from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { Card, DatePicker, Empty, Spin, Dropdown, Space } from "antd";
+import { useNavigate } from "react-router-dom";
 import { CaretDownOutlined } from "@ant-design/icons";
-import { Dropdown, Space } from "antd";
 import { useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 import moment from "moment";
@@ -24,6 +15,7 @@ const RouletteDetail = () => {
   const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
   const time = moment().format("YYYY-MM-DD");
   const [dateData, setDateData] = useState([timeBefore, time]);
+  const [rouletteDate, setRouletteDate] = useState();
 
   const navigate = useNavigate();
 
@@ -31,7 +23,6 @@ const RouletteDetail = () => {
     navigate(-1);
   };
 
-  const [rouletteDate, setRouletteDate] = useState();
 
   const handleDroupDown = (val) => {
     setRouletteDate(val);
@@ -94,71 +85,6 @@ const RouletteDetail = () => {
     };
   }, [isDropdownOpen]);
 
-  const columns = [
-    {
-      title: <span></span>,
-      dataIndex: "",
-      key: "dateStr",
-      render: (text, record, id) => (
-        // console.log(id, "dsdss")
-        <Dropdown
-          className="table_dropdown sport_droupdown"
-          open={dropdownStates[id]}
-          onOpenChange={() => toggleDropdown(id)}
-          menu={{
-            items,
-          }}
-          trigger={["hover"]}>
-          <a onClick={() => handleDroupDown(record?.date)}>
-            <Space>
-              <CaretDownOutlined />
-            </Space>
-          </a>
-        </Dropdown>
-      ),
-    },
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      render: (text, record) => (
-        <span>
-          {record?.name} {record?.date}
-        </span>
-      ),
-    },
-    {
-      title: "Plus Minu",
-      dataIndex: "netPnl",
-      key: "netPnl",
-      align: "right",
-      render: (text, record) => (
-        <span className={record?.netPnl < 0 ? "text_danger" : "text_success"}>
-          {record?.netPnl}
-        </span>
-      ),
-    },
-    {
-      title: "Comm",
-      dataIndex: "comm",
-      key: "comm",
-      align: "right",
-    },
-    {
-      title: "Pnl",
-      dataIndex: "pnl",
-      key: "pnl",
-      align: "right",
-      render: (text, record) => (
-        <span
-          className={
-            record?.netPnl - record?.comm < 0 ? "text_danger" : "text_success"
-          }>
-          {record?.netPnl - record?.comm}
-        </span>
-      ),
-    },
-  ];
 
   const {
     data: rouletteData,
@@ -192,29 +118,13 @@ const RouletteDetail = () => {
             bordered={false}
           />
         </div>
-        {/* <div>
-          <Table
-            ref={myElementRef}
-            className="limit_update"
-            bordered
-            columns={columns}
-            loading={isFetching || isLoading}
-            pagination={{
-              defaultPageSize: 50,
-              pageSizeOptions: [50, 100, 150, 200, 250],
-            }}
-            dataSource={rouletteData?.data}
-          />
-        </div> */}
-
         <div ref={myElementRef} className="table_section">
-          {/* <Table columns={columns} dataSource={data} /> */}
           <table className="ant-spin-nested-loading">
             <tr>
               <th style={{width:"4%"}}></th>
               <th>Name</th>
-              <th className="text-right">Plus Minus</th>
-              <th className="text-right">Comm</th>
+              {/* <th className="text-right">Plus Minus</th> */}
+              {/* <th className="text-right">Comm</th> */}
               <th className="text-right">Pnl</th>
             </tr>
             {isLoading || isFetching ? (
@@ -249,18 +159,18 @@ const RouletteDetail = () => {
                   <td>
                     {res?.name} {res?.date}
                   </td>
-                  <td
+                  {/* <td
                     className={`text-right ${
                       res?.netPnl < 0 ? "text_danger" : "text_success"
                     }`}>
                     {(res?.netPnl)?.toFixed(2)}
-                  </td>
-                  <td
+                  </td> */}
+                  {/* <td
                     className={`text-right ${
                       res?.comm < 0 ? "text_danger" : "text_success"
                     }`}>
                     {res?.comm}
-                  </td>
+                  </td> */}
                   <td
                     className={`text-right ${
                       res?.netPnl - res?.comm < 0
