@@ -1,6 +1,7 @@
 import React from "react";
 import "./FancyBookModals.scss";
 import { useFancyBookQuery } from "../../../../../store/service/FancyBookServices";
+import { Empty } from "antd";
 
 const FancyBookModals = ({ FancyId, id }) => {
   const { data } = useFancyBookQuery(
@@ -10,6 +11,10 @@ const FancyBookModals = ({ FancyId, id }) => {
     },
     { refetchOnMountOrArgChange: true }
   );
+
+
+  // console.log(data?.data, "dasdsdas")
+
 
   return (
     <>
@@ -26,6 +31,9 @@ const FancyBookModals = ({ FancyId, id }) => {
             </div>
           );
         })}
+        {
+          data?.data == null && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>
+        }
       </div>
     </>
   );

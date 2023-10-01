@@ -48,10 +48,10 @@ const {state} = useLocation()
             <th>S no.</th>
             <th >Game ID</th>
             {/* <th className="text-right" >Winner</th> */}
-            <th className="text-right">Pnl</th>
-            <th className="text-right">Comm</th>
+            {/* <th className="text-right">Pnl</th> */}
+            {/* <th className="text-right">Comm</th> */}
             <th className="text-right">Net Pnl</th>
-            <th>Action</th>
+            <th className="text-center">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -60,10 +60,10 @@ const {state} = useLocation()
               <td>{id + 1}</td>
               <td >{res?.roundId}</td>
               {/* <td className="text-right">{res?.result}</td> */}
-              <td className={`text-right ${(res?.netPnl - res?.comm) < 0? "text_danger":(res?.netPnl - res?.comm)>0?"text_success":""}`}>{(res?.netPnl - res?.comm)?.toFixed(2)}</td>
-              <td className="text-right">{res?.comm}</td>
+              {/* <td className={`text-right ${(res?.netPnl - res?.comm) < 0? "text_danger":(res?.netPnl - res?.comm)>0?"text_success":""}`}>{(res?.netPnl - res?.comm)?.toFixed(2)}</td> */}
+              {/* <td className="text-right">{res?.comm}</td> */}
               <td className={`text-right ${res?.netPnl  < 0? "text_danger":res?.netPnl>0?"text_success":""}`}>{(res?.netPnl)?.toFixed(2)}</td>
-              <td>
+              <td className="text-center">
                 <button className="action_btn" onClick={()=>handleShowBets(res?.roundId)}>Show Bets</button>
               </td> 
             </tr>

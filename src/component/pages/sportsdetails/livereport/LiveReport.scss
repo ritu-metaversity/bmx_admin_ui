@@ -362,7 +362,7 @@
 .after_Effect::before {
   content: attr(data-before-content);
   position: absolute;
-  z-index: 2;
+  z-index: 1;
   background: #ddd;
   width: 100%;
   height: 100%;

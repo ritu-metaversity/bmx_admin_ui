@@ -1,14 +1,11 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./RoulettePlusMinus.scss";
-import { React, useEffect, useRef, useState } from "react";
-import {
-  SearchOutlined,
-} from "@ant-design/icons";
-import { Button, Form, Input, Menu, Space, Table } from "antd";
+import {  useEffect,  useState } from "react";
+import { Table } from "antd";
 import { useRoulettePlusMinusQuery } from "../../../../store/service/CasinoServices";
 
 const RoulettePlusMinus = () => {
-  const [droupSearch, setDroupSearch] = useState(false);
+  // const [droupSearch, setDroupSearch] = useState(false);
   const nav = useNavigate();
   const handleBackClick = () => {
     nav(-1);
@@ -87,12 +84,12 @@ const RoulettePlusMinus = () => {
         </span>
       ),
     },
-    {
-      title: "Casino Comm",
-      dataIndex: "comm",
-      key: "comm",
-      align: "right",
-    },
+    // {
+    //   title: "Casino Comm",
+    //   dataIndex: "comm",
+    //   key: "comm",
+    //   align: "right",
+    // },
     {
       title: "Total Amount",
       dataIndex: "totalAmount",
