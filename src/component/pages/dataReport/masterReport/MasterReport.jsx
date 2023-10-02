@@ -111,7 +111,7 @@ const MasterReport = ({ reportName, userType }) => {
                   <Option value="All">All</Option>
                   {/* <Option value="Casino Share">Casino Share</Option>
                   <Option value="Sport Share">Sport Share</Option> */}
-                  <Option value="Share">All Share</Option>
+                  <Option value="Share">Share</Option>
                   <Option value="Status">Status</Option>
                   <Option value="Password">Password</Option>
                   <Option value="Mobile">Mobile</Option>

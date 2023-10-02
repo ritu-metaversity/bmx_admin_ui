@@ -199,6 +199,13 @@ export const supermasteAccountStatementApi = createApi({
         body
       }),
     }),
+    It_Self_By_APP_URL: build.query({
+      query: (body) => ({
+        url: `/login/is-self-by-app-url`,
+        method: "POST",
+        body
+      }),
+    }),
 
   }),
 });
@@ -229,5 +236,6 @@ export const {
   useUpdateCasinoLockMutation,
   useCreateCasinoListQuery,
   useDataReportMutation,
-  useCommReportMutation
+  useCommReportMutation,
+  useIt_Self_By_APP_URLQuery
 } = supermasteAccountStatementApi;

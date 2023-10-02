@@ -60,14 +60,19 @@ const CommReportTable = ({ data, isLoading, setPaginationTotal, paginationTotal,
                 </tr>
               );
             })}
-            <tr>
-                <td className="text-center" style={{fontWeight: "900"}} colSpan={2}>Total</td>
-                <td className={`text-right ${commDiya>0?"text_success":commDiya<0?"text_danger":""}`}>{commDiya}</td>
-                <td className={`text-right ${commLiya>0?"text_success":commLiya<0?"text_danger":""}`}>{commLiya}</td>
-                <td></td>
-            </tr>
+            {
+              data?.length !== 0 &&  <tr>
+              <td className="text-center" style={{fontWeight: "900"}} colSpan={2}>Total</td>
+              <td className={`text-right ${commDiya>0?"text_success":commDiya<0?"text_danger":""}`}>{commDiya?.toFixed(2)}</td>
+              <td className={`text-right ${commLiya>0?"text_success":commLiya<0?"text_danger":""}`}>{commLiya?.toFixed(2)}</td>
+              <td></td>
+          </tr>
+            }
+           
           </table>
-          {data?.length === 0 || data?.length == undefined ? (
+          
+        </div>
+        {data?.length === 0 || data?.length == undefined ? (
             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
           ) : (
             <>
@@ -82,7 +87,6 @@ const CommReportTable = ({ data, isLoading, setPaginationTotal, paginationTotal,
               />
             </>
           )}
-        </div>
       </div>
     </>
   );

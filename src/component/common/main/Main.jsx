@@ -50,15 +50,45 @@ import DeletedLenden from "../../pages/CashTransanction/DeletedLenden/DeletedLen
 import Rulespage from "../../pages/RulesPage/Rulespage";
 import MasterReport from "../../pages/dataReport/masterReport/MasterReport";
 import CommReport from "../../pages/dataReport/commReport/CommReport";
+import { useIt_Self_By_APP_URLQuery } from "../../../store/service/supermasteAccountStatementServices";
+import { useEffect } from "react";
 
 
 const Main = ({setOpenRules}) => {
+
+  const {data: logoData} = useIt_Self_By_APP_URLQuery({
+    appUrl: window.location.hostname, 
+  // appUrl: "subadmin.11bet24.com",
+}, {refetchOnMountOrArgChange: true});
+
+useEffect(() => {
+  document.title = (window.location.hostname).split(".")[1];
+  document.title = window.location.hostname;
+    if (logoData?.data?.favicon) {
+      let favicon = document.createElement("link")
+      favicon.rel = "icon"
+      document.getElementsByTagName("head")[0].appendChild(favicon)
+      favicon.href = logoData?.data?.favicon
+    }
+}, [logoData?.data]);
+
+useEffect(() => {
+  document.title = (window.location.hostname).split(".")[1];
+  document.title = window.location.hostname;
+    if (logoData?.data?.favicon) {
+      let favicon = document.createElement("link")
+      favicon.rel = "icon"
+      document.getElementsByTagName("head")[0].appendChild(favicon)
+      favicon.href = logoData?.data?.favicon
+    }
+}, []);
+
   return (
     <>
        <Routes>
-          <Route path="/" element={<Signin/>}/>
-          <Route path="/signin" element={<Signin/>}/>
-          <Route path="" element={<LayOut />}> 
+          <Route path="/" element={<Signin logo={logoData?.data?.logo}/>}/>
+          <Route path="/signin" element={<Signin logo={logoData?.data?.logo}/>}/>
+          <Route path="" element={<LayOut logo={logoData?.data?.logo} />}> 
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/client/details-master" element={<MasterDetails />} />
             <Route path="/Events/ladger-details" element={<LadgerDetails />} />
@@ -130,6 +160,7 @@ const Main = ({setOpenRules}) => {
             <Route path="/Events/:id/pl/live-report" element={<EventProfitLoss/>}/>
             <Route path="/client/deletedlenden/:id" element={<DeletedLenden/>}/>
             <Route path="/rules" element={<Rulespage/>}/>
+
             <Route path="/report/master" element={<MasterReport userType={1} reportName={"Master"}/>}/>
             <Route path="/report/super" element={<MasterReport userType={0} reportName={"Super Master"}/>}/>
             <Route path="/report/agent" element={<MasterReport userType={2} reportName={"Agent"}/>}/>

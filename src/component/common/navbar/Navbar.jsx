@@ -9,7 +9,7 @@ import ChangePassword from "../ChangePassword/ChangePassword";
 import { useForm } from "antd/es/form/Form";
 import { MdMenu } from "react-icons/md";
 
-const Navbar = ({ action }) => {
+const Navbar = ({ action, logo }) => {
   const [trigger, { error, isLoading, isError }] = useLogoutMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInfo, setUserInfo] = useState();
@@ -83,7 +83,7 @@ const Navbar = ({ action }) => {
               </Button>
             </Space>
 
-            <img onClick={handleDashbordHome} src="/Images/logo.png" alt="" />
+            <img onClick={handleDashbordHome} src={logo} alt="" />
           </div>
           <div className="nav_drop">
             <Dropdown
