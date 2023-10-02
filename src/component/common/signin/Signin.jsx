@@ -3,10 +3,12 @@ import { Button, Form, Input, message } from "antd";
 import { useLoginMutation } from "../../../store/service/authService";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+// import { useIt_Self_By_APP_URLQuery } from "../../../store/service/supermasteAccountStatementServices";
 
-const Signin = () => {
-  const [trigger, { data: authData, error, isLoading }] =
-    useLoginMutation();
+const Signin = ({logo}) => {
+  const [trigger, { data: authData, error, isLoading }] =useLoginMutation();
+
+
 
   const nav = useNavigate();
 
@@ -49,6 +51,7 @@ const Signin = () => {
     }
   }, [])
 
+
   return (
     <>
       <div className="gx-app-login-wrap">
@@ -78,7 +81,7 @@ const Signin = () => {
                 </p>
               </div>
               <div className="gx-app-logo">
-                <img alt="example" src="/Images/logo.png" />
+                <img alt="example" src={logo} />
               </div>
             </div>
             <div className="gx-app-login-content">

@@ -34,6 +34,8 @@ const Sidebar = (props) => {
 
   const uType = localStorage.getItem("userType");
 
+// console.log(props?.logo, "fsdfsd")
+
   return (
     <>
       <div className={collapsed ? "logo_icon" : "logo_icon coll_btn"}>
@@ -55,7 +57,7 @@ const Sidebar = (props) => {
         <div
           onClick={() => nav("/dashboard")}
           className={`bm_side_logo ${collapsed ? "d-none" : ""}`}>
-          <img src="/Images/logo.png" alt="" />
+          <img src={props?.logo} alt="alt" />
         </div>
       </div>
       <Sider
@@ -195,74 +197,74 @@ const Sidebar = (props) => {
                 },
               ],
             },
-            // {
-            //   key: "6",
-            //   icon: <BiUserCircle />,
-            //   label: "Reports",
-            //   children: [
-            //     {
-            //       key:"11",
-            //       label: "Data Report",
-            //       children:[{
-            //         className: `${userType != "5" ? "d-none" : ""}`,
-            //         label: <Link to="/report/super">Super Master </Link>,
-            //       },
-            //       {
-            //         className: `${userType === "0" ? "" : "d-none"}`,
-            //         label: <Link to="/report/master">Master </Link>,
-            //       },
-                  
-            //       {
-            //         className: `${userType === "1" ? "" : "d-none"}`,
-            //         label: <Link to="/report/agent">Agent </Link>,
-            //       },
-            //       {
-            //         label: <Link to="/report/client">Client </Link>,
-            //       },]
-            //     },
-            //     {
-            //       key:"12",
-            //       label: "commission Report",
-            //       children:[
-            //         {
-            //           className: `${userType != "5" ? "d-none" : ""}`,
-            //           label: <Link to="/client/comm-report-super">Super Master</Link>,
-            //         },
-            //         {
-            //           className: `${userType === "0" ? "" : "d-none"}`,
-            //           label: <Link to="/client/comm-report-master">Master</Link>,
-            //         },
-            //         {
-            //           className: `${userType === "1" ? "" : "d-none"}`,
-            //           label: <Link to="/client/comm-report-agent">Agent</Link>,
-            //         },
-            //         {
-            //           label: <Link to="/client/comm-report-client">Client</Link>,
-            //         },
-            //       ]
-            //     },
-            //     {
-            //       key:"13",
-            //       label: "Login Reports",
-            //       children:[
-            //         {
-            //           label: <Link to="/client/login-report">Login Report</Link>,
-            //         }
-            //       ]
-            //     }
-                
-            //   ],
-            // },
             {
-              key: "7",
+              key: "6",
               icon: <BiUserCircle />,
-              label: "Login Reports",
+              label: "Reports",
               children: [
                 {
-                  label: <Link to="/client/login-report">Login Report</Link>,
+                  key:"11",
+                  label: "Data Report",
+                  children:[{
+                    className: `${userType != "5" ? "d-none" : ""}`,
+                    label: <Link to="/report/super">Super Master </Link>,
+                  },
+                  {
+                    className: `${userType === "0" ? "" : "d-none"}`,
+                    label: <Link to="/report/master">Master </Link>,
+                  },
+                  
+                  {
+                    className: `${userType === "1" ? "" : "d-none"}`,
+                    label: <Link to="/report/agent">Agent </Link>,
+                  },
+                  {
+                    label: <Link to="/report/client">Client </Link>,
+                  },]
                 },
+                {
+                  key:"12",
+                  label: "Commission Report",
+                  children:[
+                    {
+                      className: `${userType != "5" ? "d-none" : ""}`,
+                      label: <Link to="/client/comm-report-super">Super Master</Link>,
+                    },
+                    {
+                      className: `${userType === "0" ? "" : "d-none"}`,
+                      label: <Link to="/client/comm-report-master">Master</Link>,
+                    },
+                    {
+                      className: `${userType === "1" ? "" : "d-none"}`,
+                      label: <Link to="/client/comm-report-agent">Agent</Link>,
+                    },
+                    {
+                      label: <Link to="/client/comm-report-client">Client</Link>,
+                    },
+                  ]
+                },
+                {
+                  key:"13",
+                  label: "Login Reports",
+                  children:[
+                    {
+                      label: <Link to="/client/login-report">Login Report</Link>,
+                    }
+                  ]
+                }
+                
               ],
             },
+            // {
+            //   key: "7",
+            //   icon: <BiUserCircle />,
+            //   label: "Login Reports",
+            //   children: [
+            //     {
+            //       label: <Link to="/client/login-report">Login Report</Link>,
+            //     },
+            //   ],
+            // },
             {
               key: "8",
               icon: <SlDiamond />,
@@ -274,7 +276,7 @@ const Sidebar = (props) => {
 
       <div className="mob_side">
         <Drawer
-          title={<img onClick={props.action} src="/Images/logo.png" />}
+          title={<img onClick={props.action} src={props?.logo} />}
           className="drawer_main"
           placement="left"
           closable={false}
@@ -480,154 +482,157 @@ const Sidebar = (props) => {
                   },
                 ],
               },
-              // {
-              //   key: "6",
-              //   icon: <BiUserCircle />,
-              //   label: "Reports",
-              //   children: [
-              //     {
-              //       key:"12",
-              //       label: "Data Reports",
-              //       children:[
-              //         {
-                        
-              //           className: `${userType != "5" ? "d-none" : ""}`,
-              //           label: (
-              //             <Link
-              //             to="/report/super"
-              //               onClick={() => props?.action()}>
-              //               Super Master
-              //             </Link>
-              //           ),
-              //         },
-              //         {
-              //           className: `${userType === "0" ? "" : "d-none"}`,
-              //           label: (
-              //             <Link
-              //             to="/report/master"
-              //               onClick={() => props?.action()}>
-              //               Master 
-              //             </Link>
-              //           ),
-              //         },
-                      
-              //         {
-              //           className: `${userType === "1" ? "" : "d-none"}`,
-              //           label: (
-              //             <Link
-              //             to="/report/agent"
-              //               onClick={() => props?.action()}>
-              //               Agent 
-              //             </Link>
-              //           ),
-              //         },
-              //         {
-              //           label: (
-              //             <Link
-              //               to="/report/client"
-              //               onClick={() => props?.action()}>
-              //               Client 
-              //             </Link>
-              //           ),
-              //         },
-              //       ]
-                    
-              //     },
-              //     {
-              //       key:"13",
-              //       label: "commission Report",
-              //       children:[
-              //         {
-              //           label: (
-              //             <Link
-              //               to="/client/comm-report-super"
-              //               onClick={() => props?.action()}>
-              //               Super Master
-              //             </Link>
-              //           ),
-              //         },
-              //         {
-              //           label: (
-              //             <Link
-              //               to="/client/comm-report-master"
-              //               onClick={() => props?.action()}>
-              //               Master
-              //             </Link>
-              //           ),
-              //         },
-              //         {
-              //           label: (
-              //             <Link
-              //               to="/client/comm-report-agent"
-              //               onClick={() => props?.action()}>
-              //               Agent
-              //             </Link>
-              //           ),
-              //         },
-              //         {
-              //           label: (
-              //             <Link
-              //               to="/client/comm-report-client"
-              //               onClick={() => props?.action()}>
-              //               Client
-              //             </Link>
-              //           ),
-              //         },
-              //       ]
-              //     }, 
-              //     {
-              //       key:"14",
-              //       label: "Login Reports",
-              //       children:[
-              //         {
-              //           label: (
-              //             <Link
-              //               to="/client/login-report"
-              //               onClick={() => props?.action()}>
-              //               Login Report
-              //             </Link>
-              //           ),
-              //         },
-              //       ]
-              //     }
-                  
-                 
-              //   ],
-              // },
               {
                 key: "6",
                 icon: <BiUserCircle />,
                 label: "Reports",
                 children: [
                   {
-                    label: (
-                      <Link
-                        to="/client/login-report"
-                        onClick={() => props?.action()}>
-                        Login Report
-                      </Link>
-                    ),
+                    key:"12",
+                    label: "Data Reports",
+                    children:[
+                      {
+                        
+                        className: `${userType != "5" ? "d-none" : ""}`,
+                        label: (
+                          <Link
+                          to="/report/super"
+                            onClick={() => props?.action()}>
+                            Super Master
+                          </Link>
+                        ),
+                      },
+                      {
+                        className: `${userType === "0" ? "" : "d-none"}`,
+                        label: (
+                          <Link
+                          to="/report/master"
+                            onClick={() => props?.action()}>
+                            Master 
+                          </Link>
+                        ),
+                      },
+                      
+                      {
+                        className: `${userType === "1" ? "" : "d-none"}`,
+                        label: (
+                          <Link
+                          to="/report/agent"
+                            onClick={() => props?.action()}>
+                            Agent 
+                          </Link>
+                        ),
+                      },
+                      {
+                        label: (
+                          <Link
+                            to="/report/client"
+                            onClick={() => props?.action()}>
+                            Client 
+                          </Link>
+                        ),
+                      },
+                    ]
+                    
                   },
-                  // {
-                  //   label: (
-                  //     <Link
-                  //       to="/client/mobile-app-report"
-                  //       onClick={() => props?.action()}>
-                  //       Mobile App Report
-                  //     </Link>
-                  //   ),
-                  // },
-                  // {
-                  //   label: (
-                  //     <Link
-                  //       to="/client/secure-code-report"
-                  //       onClick={() => props?.action()}>
-                  //       Secure Code Report
-                  //     </Link>
-                  //   ),
-                  // },
+                  {
+                    key:"13",
+                    label: "Commission Report",
+                    children:[
+                      {
+                        className: `${userType != "5" ? "d-none" : ""}`,
+                        label: (
+                          <Link
+                            to="/client/comm-report-super"
+                            onClick={() => props?.action()}>
+                            Super Master
+                          </Link>
+                        ),
+                      },
+                      {
+                        className: `${userType === "0" ? "" : "d-none"}`,
+                        label: (
+                          <Link
+                            to="/client/comm-report-master"
+                            onClick={() => props?.action()}>
+                            Master
+                          </Link>
+                        ),
+                      },
+                      {
+                        className: `${userType === "1" ? "" : "d-none"}`,
+                        label: (
+                          <Link
+                            to="/client/comm-report-agent"
+                            onClick={() => props?.action()}>
+                            Agent
+                          </Link>
+                        ),
+                      },
+                      {
+                        label: (
+                          <Link
+                            to="/client/comm-report-client"
+                            onClick={() => props?.action()}>
+                            Client
+                          </Link>
+                        ),
+                      },
+                    ]
+                  }, 
+                  {
+                    key:"14",
+                    label: "Login Reports",
+                    children:[
+                      {
+                        label: (
+                          <Link
+                            to="/client/login-report"
+                            onClick={() => props?.action()}>
+                            Login Report
+                          </Link>
+                        ),
+                      },
+                    ]
+                  }
+                  
+                 
                 ],
               },
+              // {
+              //   key: "6",
+              //   icon: <BiUserCircle />,
+              //   label: "Reports",
+              //   children: [
+              //     {
+              //       label: (
+              //         <Link
+              //           to="/client/login-report"
+              //           onClick={() => props?.action()}>
+              //           Login Report
+              //         </Link>
+              //       ),
+              //     },
+              //     // {
+              //     //   label: (
+              //     //     <Link
+              //     //       to="/client/mobile-app-report"
+              //     //       onClick={() => props?.action()}>
+              //     //       Mobile App Report
+              //     //     </Link>
+              //     //   ),
+              //     // },
+              //     // {
+              //     //   label: (
+              //     //     <Link
+              //     //       to="/client/secure-code-report"
+              //     //       onClick={() => props?.action()}>
+              //     //       Secure Code Report
+              //     //     </Link>
+              //     //   ),
+              //     // },
+              //   ],
+              // },
               {
                 key: "7",
                 icon: <SlDiamond />,

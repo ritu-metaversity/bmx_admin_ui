@@ -26,9 +26,7 @@ function App() {
   
   const [api,contextHolder ] = notification.useNotification();
   apiRef=api;
-  useEffect(() => {
-    document.title = (window.location.hostname).split(".")[1];
-  }, []);
+ 
   
   return (
     <Provider store={store}>
