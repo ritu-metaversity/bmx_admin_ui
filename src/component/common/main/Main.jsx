@@ -63,7 +63,6 @@ const Main = ({setOpenRules}) => {
 
 useEffect(() => {
   document.title = (window.location.hostname).split(".")[1];
-  document.title = window.location.hostname;
     if (logoData?.data?.favicon) {
       let favicon = document.createElement("link")
       favicon.rel = "icon"
@@ -74,7 +73,6 @@ useEffect(() => {
 
 useEffect(() => {
   document.title = (window.location.hostname).split(".")[1];
-  document.title = window.location.hostname;
     if (logoData?.data?.favicon) {
       let favicon = document.createElement("link")
       favicon.rel = "icon"
