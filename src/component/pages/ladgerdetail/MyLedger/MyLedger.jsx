@@ -57,6 +57,17 @@ const columns = [
     dataIndex: "remarks",
     key: "remarks",
   },
+  {
+    title: "Rollback",
+    dataIndex: "isRollback",
+    key: "isRollback",
+    render: (text, record) => (
+      // console.log(record?.isRollback, "dsasasds")
+    <span>
+     {record?.isRollback ? "Yes" : "No"}
+    </span>
+  ),
+  },
 ];
 
 const MyLedger = () => {
@@ -89,7 +100,7 @@ const MyLedger = () => {
 
         <div className="my_ledger">
         <Col lg={8} xs={24} className="match_ladger">
-          <DatePicker.RangePicker style={{margin: "10px 0px 0px 0px"}} defaultValue={[dayjs(timeBefore), dayjs(time)]}  onChange={onChange}/>
+          <DatePicker.RangePicker style={{margin: "10px 0px 10px 0px"}} defaultValue={[dayjs(timeBefore), dayjs(time)]}  onChange={onChange}/>
         </Col>
           <div>
             <h3 style={{ padding: "5px", color: "rgb(51, 181, 28)" }}>

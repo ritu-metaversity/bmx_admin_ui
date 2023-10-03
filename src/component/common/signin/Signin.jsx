@@ -7,11 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 const Signin = ({logo}) => {
   const [trigger, { data: authData, error, isLoading }] =useLoginMutation();
-
-
-
   const nav = useNavigate();
-
+  
   useEffect(() => {
     if (authData?.status === false || error?.data?.message) {
       message.error(authData?.message || error.data?.message);
