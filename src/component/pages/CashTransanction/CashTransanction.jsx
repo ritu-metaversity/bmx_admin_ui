@@ -13,14 +13,14 @@ const data = [
       {
         image: <BiUserCircle />,
         name: "Dr/Cr Entry Master",
-        path:"/client/txn-agent",
+        path:"/client/txn-master",
         size:"14",
         userType:1
       },
       {
         image: <BiUserCircle />,
         name: "Dr/Cr Entry Agent",
-        path:"/client/txn-client",
+        path:"/client/txn-agent",
         size:"14",
         userType:2
       },
