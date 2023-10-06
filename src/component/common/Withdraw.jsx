@@ -19,7 +19,7 @@ const Withdraw = ({ data:datadeposit, userIdData, handleClose }) => {
   const onFinish = (values) => {
     const withdrawData = {
       amount: Number(values?.number),
-      remark: "credit deposit",
+      remark: "credit withdraw",
       lupassword: values?.password,
       userId: userIdData,
     };
