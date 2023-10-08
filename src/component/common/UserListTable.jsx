@@ -32,7 +32,7 @@ import {  useSuperuserListMutation, useUpDateStatusMutation } from "../../store/
 import {
   usePartnershipMutation,
 } from "../../store/service/userlistService";
-import { openNotification } from "../../App";
+import { openNotification, openNotificationError } from "../../App";
 import CasinoLockModals from "./CasinoLockModals";
 
 const routeFromUSerType = {
@@ -114,7 +114,7 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
   const [getData, { data: results, isLoading, isFetching, isError }] =
   useSuperuserListMutation();
 
-  const [activeData, { data: Activestatus }] = useUpDateStatusMutation();
+  const [activeData, { data: Activestatus, error }] = useUpDateStatusMutation();
 
   useEffect(()=>{
     setParentUserIds(results?.data?.users[0]?.parent)
@@ -262,13 +262,19 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
     },
   ];
 
-  console.log(Listname, "adasdsd")
 
   useEffect(() => {
     if (Activestatus?.status === true) {
       openNotification(Activestatus?.message);
     }
   }, [Activestatus?.status]);
+
+  useEffect(()=>{
+    if(error?.status === 400){
+      openNotificationError(error?.data?.message)
+    }
+    
+  },[error])
 
   const onFinish = (values) => {
     getData({
