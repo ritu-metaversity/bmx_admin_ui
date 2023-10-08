@@ -122,11 +122,11 @@ const Sidebar = (props) => {
                   ),
                 },
 
-                // {
-                //   label: (
-                //     <Link to="/Casino/dus-ka-dum-details">DusKaDum Detail</Link>
-                //   ),
-                // },
+                {
+                  label: (
+                    <Link to="/casino/supernowa">Super Nowa Detail</Link>
+                  ),
+                },
                 // {
                 //   label: (
                 //     <Link to="/Casino/andar-bahar-details">
@@ -367,6 +367,15 @@ const Sidebar = (props) => {
                         to="/casino/aura-details"
                         onClick={() => props?.action()}>
                         Aura Detail
+                      </Link>
+                    ),
+                  },
+                  {
+                    label: (
+                      <Link
+                      to="/casino/supernowa"
+                        onClick={() => props?.action()}>
+                        Super Nowa Detail
                       </Link>
                     ),
                   },
