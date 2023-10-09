@@ -71,7 +71,7 @@ export const userlistApi = createApi({
       query: (body) => ({
         url: "/bmx/user/get-user-data-for-create-user",
         method: "POST",
-        body,
+        body:{},
       }),
     }),
     createUser: build.mutation({
