@@ -56,9 +56,11 @@ import { useEffect } from "react";
 
 const Main = ({setOpenRules}) => {
 
-  const {data: logoData} = useIt_Self_By_APP_URLQuery({
-    appUrl: window.location.hostname, 
-  // appUrl: "subadmin.11bet24.com",
+  let appUrl = (window.location.hostname).split(".");
+  appUrl.shift();
+  appUrl=appUrl.join(".");
+  const {data: logoData} = useIt_Self_By_APP_URLQuery({ 
+    appUrl
 }, {refetchOnMountOrArgChange: true});
 
 useEffect(() => {
