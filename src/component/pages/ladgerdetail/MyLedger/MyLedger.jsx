@@ -1,10 +1,11 @@
 import { Card, Col, DatePicker, Table } from "antd";
 import "./MyLedger.scss";
-import { useMyLedgerQuery } from "../../../../store/service/ledgerServices";
+import { useMyLedgerMutation } from "../../../../store/service/ledgerServices";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from 'dayjs'
+// import { AiOutlineArrowDown } from "react-icons/ai";
 
 const columns = [
   {
@@ -84,12 +85,16 @@ const MyLedger = () => {
     setDateData(dateString);
   };
 
-  const { data, isLoading, isFetching } = useMyLedgerQuery({
-    startDate: dateData[0],
-    endDate: dateData[1],
-    index: 0,
-    noOfRecords:100
-  }, {refetchOnMountOrArgChange: true});
+  const[trigger, { data, isLoading, isFetching }] = useMyLedgerMutation();
+
+  useEffect(()=>{
+    trigger({
+      startDate: dateData[0],
+      endDate: dateData[1],
+      index: 0,
+      noOfRecords:100
+    })
+  }, [dateData])
 
   return (
     <>
@@ -128,6 +133,7 @@ const MyLedger = () => {
             dataSource={data?.data?.list}/>
         </div> 
       </Card>
+      {/* <button className="download"><AiOutlineArrowDown/></button> */}
     </>
   );
 };
