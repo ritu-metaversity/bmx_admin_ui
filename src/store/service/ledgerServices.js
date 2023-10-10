@@ -11,7 +11,7 @@ export const ledgerApi = createApi({
     },
   }),
   endpoints: (build) => ({
-    myLedger: build.query({
+    myLedger: build.mutation({
       query: (body) => ({
         url: "/bmx/report/get-my-ledger",
         method: "POST",
@@ -35,4 +35,4 @@ export const ledgerApi = createApi({
   }),
 });
 
-export const {useMyLedgerQuery,useDownlineLedgerQuery, useLazyProfitAndLossLedgerQuery} = ledgerApi;
+export const {useMyLedgerMutation,useDownlineLedgerQuery, useLazyProfitAndLossLedgerQuery} = ledgerApi;
