@@ -10,6 +10,7 @@ export const userlistApi = createApi({
       return headers;
     },
   }),
+  tagTypes:["dashboard"],
   endpoints: (build) => ({
     userList: build.mutation({
       query: (body) => ({
@@ -17,6 +18,7 @@ export const userlistApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["dashboard"]
     }),
     odsPnl: build.query({
       query: (body) => ({
@@ -24,6 +26,7 @@ export const userlistApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["dashboard"]
     }),
     deposit: build.mutation({
       query: (body) => ({
@@ -31,6 +34,7 @@ export const userlistApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["dashboard"]
     }),
     withdraw: build.mutation({
       query: (body) => ({
@@ -38,6 +42,7 @@ export const userlistApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["dashboard"]
     }),
     depositAndWithdraw: build.query({
       query: (body) => ({
@@ -45,6 +50,7 @@ export const userlistApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["dashboard"]
     }),
     addLimit: build.mutation({
       query: (body) => ({
@@ -52,6 +58,7 @@ export const userlistApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["dashboard"]
     }),
     minusLimit: build.mutation({
       query: (body) => ({
@@ -59,6 +66,7 @@ export const userlistApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["dashboard"]
     }),
     partnership: build.mutation({
       query: (body) => ({
@@ -73,6 +81,7 @@ export const userlistApi = createApi({
         method: "POST",
         body:{},
       }),
+      invalidatesTags: ["dashboard"]
     }),
     createUser: build.mutation({
       query: (body) => ({
@@ -80,6 +89,7 @@ export const userlistApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["dashboard"]
     }),
     updateUser: build.mutation({
       query: (body) => ({
@@ -87,6 +97,7 @@ export const userlistApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["dashboard"]
     }),
     getUser: build.query({
       query: (body) => ({
@@ -94,6 +105,7 @@ export const userlistApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["dashboard"]
     }),
     accountOpration: build.query({
       query: (body) => ({
@@ -122,12 +134,19 @@ export const userlistApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["dashboard"]
+    }),
+    dashboard: build.query({
+      query: () => ({
+        url: "/bmx/user/bmx-dashboard",
+        method: "POST",
+      }),
+      providesTags: ["dashboard"],
     }),
   }),
 });
 
 export const {
-  useUserListQuery,
   useOdsPnlQuery,
   useDepositMutation,
   useWithdrawMutation,
@@ -140,7 +159,7 @@ export const {
   useUpdateUserMutation,
   useLazyGetUserQuery,
   useAccountOprationQuery,
-  // useUpDateStatusMutation,
+  useDashboardQuery,
   useLazyIsUserIdQuery,
   useLazyUpDateLimitesQuery
 
