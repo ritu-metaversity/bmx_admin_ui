@@ -9,6 +9,7 @@ import {
   useLazyUserListQuery,
 } from "../../../../store/service/supermasteAccountStatementServices";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const MasterReport = ({ reportName, userType }) => {
   const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
@@ -69,6 +70,76 @@ const MasterReport = ({ reportName, userType }) => {
       });
   }
 
+
+  // const date = new Date();
+  // const newDate = moment(date).format('DD-MM-YYYY');
+
+  // const dataSource = loginReport?.data?.map((curElm) => {
+  //   console.log(curElm, "dsfsdfasf")
+  //   return {
+  //     userid: curElm?.userid,
+  //     action: curElm?.action?.slice(7),
+  //     old: curElm?.old,
+  //     newvalue: curElm?.newvalue,
+  //     actionby: curElm?.actionby,
+  //     createdon: curElm?.createdon,
+  //     IP: curElm?.ipaddress,
+  //   };
+  // });
+
+  // const headerField = [
+  //   "User",
+  //   "Type",
+  //   "Old",
+  //   "New",
+  //   "Done By",
+  //   "Date",
+  //   "IP",
+  // ];
+
+  // const downloadReport = () => {
+  //   let data = JSON.stringify({
+  //     data: dataSource,
+  //     reportColumnName: headerField,
+  //     reportType: "dataReport",
+  //   });
+  //   let config = {
+  //     responseType: "blob",
+  //     method: "post",
+  //     maxBodyLength: Infinity,
+  //     url: "http://192.168.0.65/admin-new-apis/bmx/excel-file-download",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //     },
+  //     data: data,
+  //   };
+  //   axios
+  //     .request(config)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       function download(blob) {
+  //         const url = window.URL.createObjectURL(new Blob([blob]));
+  //         const a = document.createElement("a");
+  //         a.style.display = "none";
+  //         a.href = url;
+  //         a.setAttribute("download", `dataReport_${newDate}.xlsx`);
+  //         document.body.appendChild(a);
+  //         a.click();
+  //         document.body.removeChild(a);
+  //         window.URL.revokeObjectURL(url);
+  //       }
+  //       function showInOtherTab(blob) {
+  //         download(blob, "myledger-report.xlsx");
+  //       }
+  //       showInOtherTab(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
+  
   return (
     <Card
       className="sport_detail ledger_data"
@@ -135,7 +206,7 @@ const MasterReport = ({ reportName, userType }) => {
               </Form.Item>
             </Col>
           </Row>
-          <Form.Item wrapperCol={{ span: 24 }}>
+          <Form.Item wrapperCol={{ span: 24}}>
             <Button
               loading={isLoading}
               type="primary"
@@ -143,6 +214,16 @@ const MasterReport = ({ reportName, userType }) => {
               Submit
             </Button>
           </Form.Item>
+          {/* <Form.Item wrapperCol={{ span: 12 }}>
+          
+            <button onClick={downloadReport} className="download">
+              <span>Download</span>
+            </button>
+          
+          </Form.Item> */}
+          <div>
+          
+          </div>
         </Form>
       </div>
       <ReportTable data={loginReport?.data} isLoading={isLoading}/>
