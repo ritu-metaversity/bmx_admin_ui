@@ -26,11 +26,11 @@ const Signin = ({logo}) => {
     const authData = {
       userId: (values?.username?.trim()),
       password: (values?.password?.trim()),
-      appUrl: window.location.hostname, 
+      // appUrl: window.location.hostname, 
       // appUrl: "master.11bet24.com",
       // appUrl: "supermaster.11bet24.com",
       // appUrl: "agent.11bet24.com",
-      // appUrl: "subadmin.11bet24.com",
+      appUrl: "subadmin.11bet24.com",
       // appUrl: "subadmin.247idhub.com",
       // appUrl: "subadmin.localhost",
     };

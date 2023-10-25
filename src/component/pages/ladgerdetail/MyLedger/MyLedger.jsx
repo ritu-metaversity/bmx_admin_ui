@@ -4,7 +4,7 @@ import { useMyLedgerMutation } from "../../../../store/service/ledgerServices";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 import axios from "axios";
 // import { AiOutlineArrowDown } from "react-icons/ai";
 
@@ -37,20 +37,18 @@ const columns = [
     dataIndex: "balance",
     key: "balance",
     align: "right",
-    render: (text, record) => (
-      <span>
-       {Math.abs(record?.balance)}
-      </span>
-    ),
+    render: (text, record) => <span>{Math.abs(record?.balance)}</span>,
   },
   {
     title: "Payment Type",
     dataIndex: "paymentType",
     key: "paymentType",
     render: (text, record) => (
-        // console.log(record, "dsdscsd")
+      // console.log(record, "dsdscsd")
       <span>
-       {`${record?.paymentType} ${record?.showDate ? `- ${record?.dateOnlyStr}`  : ""} ${record?.isRollBack ? "- RollBack" : ""}`}
+        {`${record?.paymentType} ${
+          record?.showDate ? `- ${record?.dateOnlyStr}` : ""
+        } ${record?.isRollBack ? "- RollBack" : ""}`}
       </span>
     ),
   },
@@ -65,42 +63,39 @@ const columns = [
     key: "isRollback",
     render: (text, record) => (
       // console.log(record?.isRollback, "dsasasds")
-    <span>
-     {record?.isRollback ? "Yes" : "No"}
-    </span>
-  ),
+      <span>{record?.isRollback ? "Yes" : "No"}</span>
+    ),
   },
 ];
 
 const MyLedger = () => {
-  const nav = useNavigate()
+  const nav = useNavigate();
   const handleBackbtn = () => {
     nav(-1);
   };
 
   const timeBefore = moment().subtract(30, "days").format("YYYY-MM-DD");
   const time = moment().format("YYYY-MM-DD");
-  const [dateData, setDateData] = useState([timeBefore,time]);
+  const [dateData, setDateData] = useState([timeBefore, time]);
 
-  const onChange = (date,dateString) => {
+  const onChange = (date, dateString) => {
     setDateData(dateString);
   };
 
-  const[trigger, { data, isLoading, isFetching }] = useMyLedgerMutation();
+  const [trigger, { data, isLoading, isFetching }] = useMyLedgerMutation();
 
-  useEffect(()=>{
+  useEffect(() => {
     trigger({
       startDate: dateData[0],
       endDate: dateData[1],
       index: 0,
-      noOfRecords:100,
-      // isDownloaded: false,
-  
-
-    })
+      noOfRecords: 100,
+      isDownloaded: false,
+    });
   }, [dateData]);
 
-  // console.log(data?.data?.list, "dasda")
+  // const date = new Date();
+  // const newDate = moment(date).format('DD-MM-YYYY');
 
   // const dataSource = data?.data?.list?.map((curElm) => {
   //   return {
@@ -108,27 +103,34 @@ const MyLedger = () => {
   //     collectionName: curElm?.collectionName,
   //     debit: curElm?.debit,
   //     credit: curElm?.credit,
-  //     balance: curElm?.balance,
+  //     balance: Math.abs(curElm?.balance),
   //     paymentType: curElm?.paymentType,
-  //     isRollback: curElm?.isRollback ?"Yes":"NO",
+  //     isRollback: curElm?.isRollback ? "Yes" : "NO",
   //   };
   // });
-  
-  // const headerField = ["Balance","Collection Name", "Credit", "Date", "Debit", "Rollback", "Payment Type"];
-  
-  // console.log(dataSource, headerField , "dassfsfsda");
-  
+
+  // const headerField = [
+  //   "Date",
+  //   "Collection Name",
+  //   "Debit",
+  //   "Credit",
+  //   "Balance",
+  //   "Payment Type",
+  //   "Remarks",
+  //   "Rollback",
+  // ];
+
   // const downloadReport = () => {
   //   let data = JSON.stringify({
   //     data: dataSource,
-  //     columnName:headerField
-  //     // isDownloaded: true,
+  //     reportColumnName: headerField,
+  //     reportType: "MyLedger",
   //   });
   //   let config = {
   //     responseType: "blob",
   //     method: "post",
   //     maxBodyLength: Infinity,
-  //     url: "http://192.168.0.65/admin-new-apis/bmx/report/get-my-ledger",
+  //     url: "http://192.168.0.65/admin-new-apis/bmx/excel-file-download",
   //     headers: {
   //       "Content-Type": "application/json",
   //       Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -144,7 +146,7 @@ const MyLedger = () => {
   //         const a = document.createElement("a");
   //         a.style.display = "none";
   //         a.href = url;
-  //         a.setAttribute("download", `myledger-report.xlsx`);
+  //         a.setAttribute("download", `myledger-report_${newDate}.xlsx`);
   //         document.body.appendChild(a);
   //         a.click();
   //         document.body.removeChild(a);
@@ -160,16 +162,13 @@ const MyLedger = () => {
   //     });
   // };
 
-
-
   return (
     <>
       <Card
         className="sport_detail ledger_data"
         title="My Ledger"
         extra={<button onClick={handleBackbtn}>Back</button>}>
-
-<div className="my_ledger">
+        <div className="my_ledger">
           <Col lg={8} xs={24} className="match_ladger">
             <DatePicker.RangePicker
               style={{ margin: "10px 0px 10px 0px" }}
@@ -187,8 +186,7 @@ const MyLedger = () => {
               Dena : {data?.data?.data?.debit?.toFixed(2)}
             </h3>
           </div>
-          
-         
+
           <div>
             <h3
               className={
@@ -198,21 +196,25 @@ const MyLedger = () => {
               {data?.data?.data?.balance > 0 ? "( Dena )" : "( Lena )"}
             </h3>
           </div>
-          <div>
-          {/* <button onClick={downloadReport} className="download">
-            <span>Download</span>  
-            </button> */}
-          </div>
+          {/* <div>
+            <button onClick={downloadReport} className="download">
+              <span>Download</span>
+            </button>
+          </div> */}
         </div>
         <div className="table_section">
           <Table
             className="live_table limit_update"
             bordered
             columns={columns}
-            loading={isFetching||isLoading}
-            pagination={{ defaultPageSize: 50, pageSizeOptions:[50, 100, 150, 200, 250]}}
-            dataSource={data?.data?.list}/>
-        </div> 
+            loading={isFetching || isLoading}
+            pagination={{
+              defaultPageSize: 50,
+              pageSizeOptions: [50, 100, 150, 200, 250],
+            }}
+            dataSource={data?.data?.list}
+          />
+        </div>
       </Card>
       {/* <button className="download"><AiOutlineArrowDown/></button> */}
     </>
