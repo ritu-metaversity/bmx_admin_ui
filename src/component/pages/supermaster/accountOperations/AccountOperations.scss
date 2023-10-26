@@ -18,3 +18,17 @@
 span.ant-spin-dot.ant-spin-dot-spin {
     font-size: 28px !important;
 }
+
+.actionlog_download{
+    display: flex;
+    @media screen and (max-width: 800px) {
+        display: block;
+    }
+    .download{
+        margin-left: 24px;
+        @media screen and (max-width: 800px) {
+            margin-left: 0px;
+            margin-top: 12px;
+        }
+    }
+}

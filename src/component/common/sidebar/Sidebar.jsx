@@ -127,6 +127,11 @@ const Sidebar = (props) => {
                     <Link to="/casino/supernowa">Super Nowa Detail</Link>
                   ),
                 },
+                {
+                  label: (
+                    <Link to="/casino/qtech">Qtech Detail</Link>
+                  ),
+                },
                 // {
                 //   label: (
                 //     <Link to="/Casino/andar-bahar-details">

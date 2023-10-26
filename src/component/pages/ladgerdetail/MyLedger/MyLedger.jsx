@@ -94,73 +94,73 @@ const MyLedger = () => {
     });
   }, [dateData]);
 
-  // const date = new Date();
-  // const newDate = moment(date).format('DD-MM-YYYY');
+  const date = new Date();
+  const newDate = moment(date).format('DD-MM-YYYY');
 
-  // const dataSource = data?.data?.list?.map((curElm) => {
-  //   return {
-  //     date: curElm?.date,
-  //     collectionName: curElm?.collectionName,
-  //     debit: curElm?.debit,
-  //     credit: curElm?.credit,
-  //     balance: Math.abs(curElm?.balance),
-  //     paymentType: curElm?.paymentType,
-  //     isRollback: curElm?.isRollback ? "Yes" : "NO",
-  //   };
-  // });
+  const dataSource = data?.data?.list?.map((curElm) => {
+    return {
+      date: curElm?.date,
+      collectionName: curElm?.collectionName,
+      debit: curElm?.debit,
+      credit: curElm?.credit,
+      balance: Math.abs(curElm?.balance),
+      paymentType: curElm?.paymentType,
+      isRollback: curElm?.isRollback ? "Yes" : "NO",
+    };
+  });
 
-  // const headerField = [
-  //   "Date",
-  //   "Collection Name",
-  //   "Debit",
-  //   "Credit",
-  //   "Balance",
-  //   "Payment Type",
-  //   "Remarks",
-  //   "Rollback",
-  // ];
+  const headerField = [
+    "Date",
+    "Collection Name",
+    "Debit",
+    "Credit",
+    "Balance",
+    "Payment Type",
+    "Remarks",
+    "Rollback",
+  ];
 
-  // const downloadReport = () => {
-  //   let data = JSON.stringify({
-  //     data: dataSource,
-  //     reportColumnName: headerField,
-  //     reportType: "MyLedger",
-  //   });
-  //   let config = {
-  //     responseType: "blob",
-  //     method: "post",
-  //     maxBodyLength: Infinity,
-  //     url: "http://192.168.0.65/admin-new-apis/bmx/excel-file-download",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //     },
-  //     data: data,
-  //   };
-  //   axios
-  //     .request(config)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       function download(blob) {
-  //         const url = window.URL.createObjectURL(new Blob([blob]));
-  //         const a = document.createElement("a");
-  //         a.style.display = "none";
-  //         a.href = url;
-  //         a.setAttribute("download", `myledger-report_${newDate}.xlsx`);
-  //         document.body.appendChild(a);
-  //         a.click();
-  //         document.body.removeChild(a);
-  //         window.URL.revokeObjectURL(url);
-  //       }
-  //       function showInOtherTab(blob) {
-  //         download(blob, "myledger-report.xlsx");
-  //       }
-  //       showInOtherTab(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
+  const downloadReport = () => {
+    let data = JSON.stringify({
+      data: dataSource,
+      reportColumnName: headerField,
+      reportType: "MyLedger",
+    });
+    let config = {
+      responseType: "blob",
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "https://api.247365.exchange/admin-new-apis/bmx/excel-file-download",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      data: data,
+    };
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(response.data);
+        function download(blob) {
+          const url = window.URL.createObjectURL(new Blob([blob]));
+          const a = document.createElement("a");
+          a.style.display = "none";
+          a.href = url;
+          a.setAttribute("download", `myledger-report_${newDate}.xlsx`);
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        }
+        function showInOtherTab(blob) {
+          download(blob, "myledger-report.xlsx");
+        }
+        showInOtherTab(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -196,11 +196,11 @@ const MyLedger = () => {
               {data?.data?.data?.balance > 0 ? "( Dena )" : "( Lena )"}
             </h3>
           </div>
-          {/* <div>
+          <div>
             <button onClick={downloadReport} className="download">
               <span>Download</span>
             </button>
-          </div> */}
+          </div>
         </div>
         <div className="table_section">
           <Table
