@@ -10,17 +10,15 @@ import {
   Spin,
   Tooltip,
 } from "antd";
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./LoginReport.scss";
 import { useLazyLoginReportQuery } from "../../../store/service/loginReportServices";
 import React, { useEffect, useState } from "react";
 import { useLazyUserListQuery } from "../../../store/service/supermasteAccountStatementServices";
 import { CaretDownOutlined, CaretUpOutlined } from "@ant-design/icons";
 import { AiFillEye } from "react-icons/ai";
+import moment from "moment";
+import axios from "axios";
 
 const LoginReport = () => {
   // const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
@@ -29,9 +27,7 @@ const LoginReport = () => {
   const userId = localStorage.getItem("userId");
   const { id } = useParams();
 
-  console.log(id?id:userId, "dsadfsdsdsa")
-
-
+  console.log(id ? id : userId, "dsadfsdsdsa");
 
   const [clientId, setClientId] = useState(userId);
   const [paginationTotal, setPaginationTotal] = useState(50);
@@ -43,12 +39,10 @@ const LoginReport = () => {
     nav(-1);
   };
 
-
   const [userList, resultData] = useLazyUserListQuery();
 
   const [loginReport, { data, isLoading, isFetching, isError }] =
     useLazyLoginReportQuery();
-
 
   const handleChange = (value) => {
     userList({
@@ -67,13 +61,12 @@ const LoginReport = () => {
     setClientId(value);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     userList({
       userType: null,
       userName: "",
     });
-  }, [])
-
+  }, []);
 
   useEffect(() => {
     loginReport({
@@ -83,6 +76,62 @@ const LoginReport = () => {
       orderByIp: ipOrder,
     });
   }, [clientId, paginationTotal, indexData, ipOrder, id]);
+
+  const date = new Date();
+  const newDate = moment(date).format("DD-MM-YYYY");
+
+  const dataSource = data?.data?.list?.map((curElm) => {
+    return {
+      userid: curElm?.userid,
+      ip: curElm?.ip,
+      lastLogin: curElm?.lastLogin,
+      deviceInfo: curElm?.deviceInfo,
+    };
+  });
+
+  const headerField = ["User Name", "IP-Address", "Login Date", "Detail"];
+
+  const downloadReport = () => {
+    let data = JSON.stringify({
+      data: dataSource,
+      reportColumnName: headerField,
+      reportType: "LoginReport",
+    });
+    let config = {
+      responseType: "blob",
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "https://api.247365.exchange/admin-new-apis/bmx/excel-file-download",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      data: data,
+    };
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(response.data);
+        function download(blob) {
+          const url = window.URL.createObjectURL(new Blob([blob]));
+          const a = document.createElement("a");
+          a.style.display = "none";
+          a.href = url;
+          a.setAttribute("download", `LoginReport_${newDate}.xlsx`);
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        }
+        function showInOtherTab(blob) {
+          download(blob, "myledger-report.xlsx");
+        }
+        showInOtherTab(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -117,7 +166,7 @@ const LoginReport = () => {
                     },
                   ]}>
                   <Select
-                    placeholder={id? id: clientId }
+                    placeholder={id ? id : clientId}
                     options={
                       resultData.data?.data.map((i) => ({
                         label: i,
@@ -131,8 +180,16 @@ const LoginReport = () => {
                     onSearch={handleChange}></Select>
                 </Form.Item>
               </Col>
+              <Col xl={8} lg={8} md={24} xs={24}>
+                <div style={{marginBottom:"12px"}}>
+                  <button onClick={downloadReport} className="download">
+                    <span>Download</span>
+                  </button>
+                </div>
+              </Col>
             </Row>
           </Form>
+
           {/* <div className="table_section statement_tabs_data">
               <div className="table_section">
                 <Table
@@ -152,7 +209,9 @@ const LoginReport = () => {
                 <th>
                   <div className="ip_section">
                     <p>IP-Address</p>
-                    <p style={{cursor:"pointer"}} onClick={() => setipOrder(!ipOrder)}>
+                    <p
+                      style={{ cursor: "pointer" }}
+                      onClick={() => setipOrder(!ipOrder)}>
                       {ipOrder ? <CaretUpOutlined /> : <CaretDownOutlined />}
                     </p>
                   </div>
@@ -174,7 +233,7 @@ const LoginReport = () => {
                       <td>{res?.userid}</td>
                       <td>{res?.ip}</td>
                       <td>{res?.lastLogin}</td>
-                      <td style={{cursor:"pointer"}} className="divice-info">
+                      <td style={{ cursor: "pointer" }} className="divice-info">
                         <Tooltip title={res?.deviceInfo}>
                           <span>
                             <AiFillEye />

@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import ReportTable from "../ReportTable";
 import {
-    useCommReportMutation,
+  useCommReportMutation,
   useLazyUserListQuery,
 } from "../../../../store/service/supermasteAccountStatementServices";
 import { useLocation, useNavigate } from "react-router-dom";
 import CommReportTable from "./CommReportTable";
+import axios from "axios";
 
 const CommReport = ({ reportName, userType }) => {
   const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
@@ -36,16 +37,14 @@ const CommReport = ({ reportName, userType }) => {
       userType: userType,
       startDate: dateData[0],
       endDate: dateData[1],
-      userId:"",
-      noOfRecords:paginationTotal,
-      index:indexData
+      userId: "",
+      noOfRecords: paginationTotal,
+      index: indexData,
     });
-    setTotalPage(commReport?.data?.totalPages)
+    setTotalPage(commReport?.data?.totalPages);
   }, [userType, totalPage, indexData, paginationTotal]);
 
-  
-// console.log(commReport?.data?.list, "adsfasfas");
-
+  // console.log(commReport?.data?.list, "adsfasfas");
 
   const handleChange = (value) => {
     userList({
@@ -54,37 +53,93 @@ const CommReport = ({ reportName, userType }) => {
     });
   };
 
-
   useEffect(() => {
     form?.resetFields();
     setClientId("");
     userList({
-        userType,
-        userName:""
-    })
+      userType,
+      userName: "",
+    });
   }, [pathname]);
 
   const handleSelect = (value) => {
     setClientId(value);
   };
 
-  const onFinish = (value)=>{
+  const onFinish = (value) => {
     trigger({
-        userType: userType,
-        startDate: dateData[0],
-        endDate: dateData[1],
-        userId:clientId || "",
-        noOfRecords:"50",
-        index:"0"
+      userType: userType,
+      startDate: dateData[0],
+      endDate: dateData[1],
+      userId: clientId || "",
+      noOfRecords: "50",
+      index: "0",
+    });
+  };
+
+  const date = new Date();
+  const newDate = moment(date).format("DD-MM-YYYY");
+
+  const dataSource = commReport?.data?.list?.map((curElm) => {
+    console.log(curElm, "dsfsdfasf");
+    return {
+      userid: curElm?.userId,
+      matchName: curElm?.matchName,
+      commDiya: curElm?.commDiya,
+      comm: curElm?.comm,
+      date: curElm?.date,
+    };
+  });
+
+  const headerField = ["User", "Match Name", "Comm Diya", "Comm Liye", "Date"];
+
+  const downloadReport = () => {
+    let data = JSON.stringify({
+      data: dataSource,
+      reportColumnName: headerField,
+      reportType: "CasinoCommReport",
+    });
+    let config = {
+      responseType: "blob",
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "https://api.247365.exchange/admin-new-apis/bmx/excel-file-download",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      data: data,
+    };
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(response.data);
+        function download(blob) {
+          const url = window.URL.createObjectURL(new Blob([blob]));
+          const a = document.createElement("a");
+          a.style.display = "none";
+          a.href = url;
+          a.setAttribute("download", `CasinoCommReport_${newDate}.xlsx`);
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        }
+        function showInOtherTab(blob) {
+          download(blob, "myledger-report.xlsx");
+        }
+        showInOtherTab(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-  }
+  };
 
   return (
     <Card
       className="sport_detail ledger_data"
       title={`${reportName} Comm Reports`}
-      extra={<button onClick={()=>nav(-1)}>Back</button>}
-    >
+      extra={<button onClick={() => nav(-1)}>Back</button>}>
       <div className="">
         <Form
           className="form_data mt-16 cash_data"
@@ -96,9 +151,7 @@ const CommReport = ({ reportName, userType }) => {
           autoComplete="off">
           <Row>
             <Col xl={8} lg={8} md={24} xs={24}>
-              <Form.Item
-                label={reportName}
-                name="client">
+              <Form.Item label={reportName} name="client">
                 <Select
                   placeholder="Select Client"
                   options={
@@ -110,39 +163,49 @@ const CommReport = ({ reportName, userType }) => {
                   showSearch
                   allowClear
                   onSelect={handleSelect}
-                  onSearch={handleChange}
-                  >
-
-                  </Select>
+                  onSearch={handleChange}></Select>
               </Form.Item>
             </Col>
             <Col xl={8} lg={8} md={24} xs={24}>
-              <Form.Item
-                label="Date"
-                name="Date">
+              <Form.Item label="Date" name="Date">
                 <DatePicker.RangePicker
-                allowClear={false}
+                  allowClear={false}
                   className="report_date_picker"
                   defaultValue={[dayjs(timeBefore), dayjs(time)]}
                   onChange={onChange}
                 />
               </Form.Item>
             </Col>
-            <Col xl={8} lg={8} md={24} xs={24}>
-            <Form.Item wrapperCol={{ span: 24 }}>
-            <Button
-              loading={isLoading}
-              type="primary"
-              htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
+            <Col xl={4} lg={4} md={12} xs={12}>
+              <Form.Item wrapperCol={{ span: 24 }}>
+                <Button loading={isLoading} type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              </Form.Item>
             </Col>
+            <Col xl={4} lg={4} md={12} xs={12}>
+            <Form.Item >
+                <Form.Item>
+                  <button onClick={downloadReport} className="download">
+                    <span>Download</span>
+                  </button>
+                </Form.Item>
+              </Form.Item>
+            </Col>
+             
           </Row>
-          
         </Form>
       </div>
-      <CommReportTable data={commReport?.data?.list} setTotalPage paginationTotal={paginationTotal} totalPage={totalPage} indexData={indexData} setIndexData={setIndexData}  setPaginationTotal={setPaginationTotal}  isLoading={isLoading}/>
+      <CommReportTable
+        data={commReport?.data?.list}
+        setTotalPage
+        paginationTotal={paginationTotal}
+        totalPage={totalPage}
+        indexData={indexData}
+        setIndexData={setIndexData}
+        setPaginationTotal={setPaginationTotal}
+        isLoading={isLoading}
+      />
     </Card>
   );
 };
