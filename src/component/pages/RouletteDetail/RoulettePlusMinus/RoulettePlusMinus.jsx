@@ -192,7 +192,7 @@ const RoulettePlusMinus = () => {
                 `${uType == 5? "Sub Admin ": uType == 0?"Super Master ":uType == 1?"Master ": uType == 2?"Agent ":""} Company Report`
               }</p>
               <p style={{ fontSize: "16px" }}>
-                {`${state?.isAuraDetails?"AURA":"Super Nowa"} ${state?.rouletteDate}`}{" "}
+                {`${state?.isAuraDetails} ${state?.rouletteDate}`}{" "}
               </p>
             </div>
             <div className="show_btn">

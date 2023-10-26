@@ -384,6 +384,15 @@ const Sidebar = (props) => {
                       </Link>
                     ),
                   },
+                  {
+                    label: (
+                      <Link
+                      to="/casino/qtech"
+                        onClick={() => props?.action()}>
+                        QTech Detail
+                      </Link>
+                    ),
+                  },
                 ],
               },
               {
