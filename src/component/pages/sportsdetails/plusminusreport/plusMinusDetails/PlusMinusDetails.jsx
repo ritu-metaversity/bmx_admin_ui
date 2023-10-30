@@ -7,7 +7,6 @@ import PlusMinusTable from "./PlusMinusTable";
 
 const PlusMinusDetails = () => {
   const { state } = useLocation()
-  const sportName = useSelector(globalSelector);
   const nav = useNavigate()
 
   return (

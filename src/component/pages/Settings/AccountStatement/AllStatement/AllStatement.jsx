@@ -7,6 +7,7 @@ import AccountModals from "../AccountModals";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
+import DownloadReport from "../../../../common/DownloadReport/DownloadReport";
 
 const AllStatement = ({ clientId, dateData, gameType }) => {
   const [trigger, { data, isFetching, isLoading }] =
@@ -114,13 +115,8 @@ const AllStatement = ({ clientId, dateData, gameType }) => {
     setMarketId(id);
     setRemark(rem);
   };
-  // console.log(marketId, "Sdfsdafsdf")
-
-  const date = new Date();
-  const newDate = moment(date).format("DD-MM-YYYY");
 
   const dataSource = data?.data?.dataList?.map((curElm) => {
-    console.log(curElm, "dscdsfc");
     return {
       date: curElm?.date,
       fromto: curElm?.fromto,
@@ -146,53 +142,12 @@ const AllStatement = ({ clientId, dateData, gameType }) => {
     "Remark",
   ];
 
-  const downloadReport = () => {
-    let data = JSON.stringify({
-      data: dataSource,
-      reportColumnName: headerField,
-      reportType: "AccountStatementReport",
-    });
-    let config = {
-      responseType: "blob",
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "https://api.247365.exchange/admin-new-apis/bmx/excel-file-download",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      data: data,
-    };
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(response.data);
-        function download(blob) {
-          const url = window.URL.createObjectURL(new Blob([blob]));
-          const a = document.createElement("a");
-          a.style.display = "none";
-          a.href = url;
-          a.setAttribute("download", `AccountStatementReport_${newDate}.xlsx`);
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-        }
-        function showInOtherTab(blob) {
-          download(blob, "myledger-report.xlsx");
-        }
-        showInOtherTab(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   return (
     <>
-      <button onClick={downloadReport} className="download account_download">
-        <span>Download</span>
-      </button>
+      <div className="account_download">
+      <DownloadReport reportType="AccountStatementReport" reportName="account-statement" dataSource={dataSource} headerField={headerField}/>
+      </div>
       <div className="table_section statement_tabs_data">
         <div className="table_section">
           <Table

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import axios from "axios";
+import DownloadReport from "../../../common/DownloadReport/DownloadReport";
 // import { AiOutlineArrowDown } from "react-icons/ai";
 
 const columns = [
@@ -94,9 +95,6 @@ const MyLedger = () => {
     });
   }, [dateData]);
 
-  const date = new Date();
-  const newDate = moment(date).format('DD-MM-YYYY');
-
   const dataSource = data?.data?.list?.map((curElm) => {
     return {
       date: curElm?.date,
@@ -105,6 +103,7 @@ const MyLedger = () => {
       credit: curElm?.credit,
       balance: Math.abs(curElm?.balance),
       paymentType: curElm?.paymentType,
+      remarks: curElm?.remarks,
       isRollback: curElm?.isRollback ? "Yes" : "NO",
     };
   });
@@ -116,51 +115,23 @@ const MyLedger = () => {
     "Credit",
     "Balance",
     "Payment Type",
-    "Remarks",
+    "Remark",
     "Rollback",
   ];
 
-  const downloadReport = () => {
-    let data = JSON.stringify({
-      data: dataSource,
-      reportColumnName: headerField,
-      reportType: "MyLedger",
-    });
-    let config = {
-      responseType: "blob",
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "https://api.247365.exchange/admin-new-apis/bmx/excel-file-download",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      data: data,
-    };
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(response.data);
-        function download(blob) {
-          const url = window.URL.createObjectURL(new Blob([blob]));
-          const a = document.createElement("a");
-          a.style.display = "none";
-          a.href = url;
-          a.setAttribute("download", `myledger-report_${newDate}.xlsx`);
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-        }
-        function showInOtherTab(blob) {
-          download(blob, "myledger-report.xlsx");
-        }
-        showInOtherTab(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+
+  const lenadenaHeading = [
+    "Lena",
+    "Dena",
+    "Balance",
+  ];
+
+
+  const arrBalance= [{
+    lena:data?.data?.data?.credit?.toFixed(2),
+    dena:data?.data?.data?.debit?.toFixed(2),
+    balance:data?.data?.data?.balance?.toFixed(2)
+  }]
 
   return (
     <>
@@ -197,9 +168,14 @@ const MyLedger = () => {
             </h3>
           </div>
           <div>
-            <button onClick={downloadReport} className="download">
-              <span>Download</span>
-            </button>
+            <DownloadReport
+              balanceData={arrBalance}
+              lenadenaHeading={lenadenaHeading}
+              reportType="MyLedger"
+              reportName="MyLedger"
+              dataSource={dataSource}
+              headerField={headerField}
+            />
           </div>
         </div>
         <div className="table_section">

@@ -17,6 +17,7 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import axios from "axios";
+import DownloadReport from "../../../common/DownloadReport/DownloadReport";
 
 // const columns = [
 //   {
@@ -59,8 +60,7 @@ const MatchLedger = () => {
     setDateData(dateString);
   };
 
-  const date = new Date();
-  const newDate = moment(date).format('DD-MM-YYYY');
+ 
 
   const [trigger, { data, isLoading, isFetching }] = useLazyProfitAndLossLedgerQuery();
 
@@ -92,50 +92,14 @@ const MatchLedger = () => {
     "CR",
     "DR",
   ];
+  const lenadenaHeading = [
+    "Total",
+  ];
 
-  const downloadReport = () => {
-    let data = JSON.stringify({
-      data: dataSource,
-      reportColumnName: headerField,
-      reportType: "MyLedgerProfitLoss",
-    });
-    let config = {
-      responseType: "blob",
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "https://api.247365.exchange/admin-new-apis/bmx/excel-file-download",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      data: data,
-    };
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(response.data);
-        function download(blob) {
-          const url = window.URL.createObjectURL(new Blob([blob]));
-          const a = document.createElement("a");
-          a.style.display = "none";
-          a.href = url;
-          a.setAttribute("download", `MyLedgerProfitLoss_${newDate}.xlsx`);
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-        }
-        function showInOtherTab(blob) {
-          download(blob, "myledger-report.xlsx");
-        }
-        showInOtherTab(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
-  // console.log(data?.data?.list?.length , "sdasdas")
+  const arrBalance= [{
+    total:data?.data?.total?.toFixed(2),
+  }]
 
   return (
     <Card
@@ -149,14 +113,6 @@ const MatchLedger = () => {
             onChange={onChange}
           />
         </Col>
-        {/* <Col lg={12} xs={24} className="selected_ledger">
-        <Select defaultValue="lucy" style={{ width: 120 }} onChange={(value) => console.log(`selected ${value}`)}>
-          <Select.Option value="jack" label="Jack" />
-          <Select.Option value="lucy" label="Lucy" />
-          <Select.Option value="Yiminghe" label="yiminghe" />
-          <Select.Option value="disabled" label="Disabled" disabled />
-        </Select>
-      </Col> */}
         <Col lg={6} xs={24}>
           <div className="matchladger_total">
             <p style={{ fontSize: "20px", marginLeft: "10px" }}>
@@ -172,10 +128,8 @@ const MatchLedger = () => {
         </Col>
         <Col lg={6} xs={24}>
           <div className="matchladger_total">
-          <div>
-            <button onClick={downloadReport} className="download">
-              <span>Download</span>
-            </button>
+          <div> 
+           <DownloadReport lenadenaHeading={lenadenaHeading} balanceData={arrBalance} dataSource={dataSource} headerField={headerField}  reportType="MyLedgerProfitLoss" reportName="profit/loss"/>
           </div>
           </div>
         </Col>

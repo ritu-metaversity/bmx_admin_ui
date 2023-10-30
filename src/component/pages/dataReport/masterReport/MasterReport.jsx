@@ -10,6 +10,7 @@ import {
 } from "../../../../store/service/supermasteAccountStatementServices";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import DownloadReport from "../../../common/DownloadReport/DownloadReport";
 
 const MasterReport = ({ reportName, userType }) => {
   const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
@@ -73,7 +74,6 @@ const MasterReport = ({ reportName, userType }) => {
   const newDate = moment(date).format("DD-MM-YYYY");
 
   const dataSource = loginReport?.data?.map((curElm) => {
-    console.log(curElm, "dsfsdfasf");
     return {
       userid: curElm?.userid,
       action: curElm?.action?.slice(7),
@@ -86,48 +86,6 @@ const MasterReport = ({ reportName, userType }) => {
   });
 
   const headerField = ["User", "Type", "Old", "New", "Done By", "Date", "IP"];
-
-  const downloadReport = () => {
-    let data = JSON.stringify({
-      data: dataSource,
-      reportColumnName: headerField,
-      reportType: "dataReport",
-    });
-    let config = {
-      responseType: "blob",
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "https://api.247365.exchange/admin-new-apis/bmx/excel-file-download",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      data: data,
-    };
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(response.data);
-        function download(blob) {
-          const url = window.URL.createObjectURL(new Blob([blob]));
-          const a = document.createElement("a");
-          a.style.display = "none";
-          a.href = url;
-          a.setAttribute("download", `dataReport_${newDate}.xlsx`);
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-        }
-        function showInOtherTab(blob) {
-          download(blob, "myledger-report.xlsx");
-        }
-        showInOtherTab(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   return (
     <Card
@@ -195,9 +153,7 @@ const MasterReport = ({ reportName, userType }) => {
               </Button>
             </Form.Item>
             <Form.Item>
-              <button onClick={downloadReport} className="download">
-                <span>Download</span>
-              </button>
+             <DownloadReport reportName={`${reportName.replace(/ /g,"_")}_reports`} dataSource={dataSource} headerField={headerField}  reportType="dataReport"/>
             </Form.Item>
           </div>
           <div></div>

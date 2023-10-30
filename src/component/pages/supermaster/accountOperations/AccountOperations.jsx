@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import dayjs from "dayjs";
 import { useAccountOprationQuery } from "../../../../store/service/userlistService";
 import axios from "axios";
+import DownloadReport from "../../../common/DownloadReport/DownloadReport";
 
 // const handleChange = (value) => {
 //   console.log(`selected ${value}`);
@@ -64,9 +65,6 @@ const AccountOperations = () => {
     },
   ];
 
-  const date = new Date();
-  const newDate = moment(date).format("DD-MM-YYYY");
-
   const dataSource = data?.data?.data?.map((curElm) => {
     console.log(curElm, "DSfsfsd");
     return {
@@ -78,48 +76,6 @@ const AccountOperations = () => {
   });
 
   const headerField = ["Date", "Operation", "Done By", "Description"];
-
-  const downloadReport = () => {
-    let data = JSON.stringify({
-      data: dataSource,
-      reportColumnName: headerField,
-      reportType: "ActionLog",
-    });
-    let config = {
-      responseType: "blob",
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "https://api.247365.exchange/admin-new-apis/bmx/excel-file-download",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      data: data,
-    };
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(response.data);
-        function download(blob) {
-          const url = window.URL.createObjectURL(new Blob([blob]));
-          const a = document.createElement("a");
-          a.style.display = "none";
-          a.href = url;
-          a.setAttribute("download", `ActionLog_${newDate}.xlsx`);
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-        }
-        function showInOtherTab(blob) {
-          download(blob, "myledger-report.xlsx");
-        }
-        showInOtherTab(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   return (
     <>
@@ -140,9 +96,9 @@ const AccountOperations = () => {
                 onChange={onChange}
               />
                <div>
-              <button onClick={downloadReport} className="download">
-                <span>Download</span>
-              </button>
+
+      <DownloadReport reportType="ActionLog" reportName="account-operations" dataSource={dataSource} headerField={headerField}/>
+
             </div>
             </div>
            
