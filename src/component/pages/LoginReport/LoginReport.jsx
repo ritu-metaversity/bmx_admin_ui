@@ -19,6 +19,7 @@ import { CaretDownOutlined, CaretUpOutlined } from "@ant-design/icons";
 import { AiFillEye } from "react-icons/ai";
 import moment from "moment";
 import axios from "axios";
+import DownloadReport from "../../common/DownloadReport/DownloadReport";
 
 const LoginReport = () => {
   // const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
@@ -77,8 +78,6 @@ const LoginReport = () => {
     });
   }, [clientId, paginationTotal, indexData, ipOrder, id]);
 
-  const date = new Date();
-  const newDate = moment(date).format("DD-MM-YYYY");
 
   const dataSource = data?.data?.list?.map((curElm) => {
     return {
@@ -90,48 +89,6 @@ const LoginReport = () => {
   });
 
   const headerField = ["User Name", "IP-Address", "Login Date", "Detail"];
-
-  const downloadReport = () => {
-    let data = JSON.stringify({
-      data: dataSource,
-      reportColumnName: headerField,
-      reportType: "LoginReport",
-    });
-    let config = {
-      responseType: "blob",
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "https://api.247365.exchange/admin-new-apis/bmx/excel-file-download",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      data: data,
-    };
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(response.data);
-        function download(blob) {
-          const url = window.URL.createObjectURL(new Blob([blob]));
-          const a = document.createElement("a");
-          a.style.display = "none";
-          a.href = url;
-          a.setAttribute("download", `LoginReport_${newDate}.xlsx`);
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-        }
-        function showInOtherTab(blob) {
-          download(blob, "myledger-report.xlsx");
-        }
-        showInOtherTab(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   return (
     <>
@@ -182,9 +139,8 @@ const LoginReport = () => {
               </Col>
               <Col xl={8} lg={8} md={24} xs={24}>
                 <div style={{marginBottom:"12px"}}>
-                  <button onClick={downloadReport} className="download">
-                    <span>Download</span>
-                  </button>
+                <DownloadReport reportName="LoginReport" dataSource={dataSource} headerField={headerField}  reportType="LoginReport"/>
+
                 </div>
               </Col>
             </Row>

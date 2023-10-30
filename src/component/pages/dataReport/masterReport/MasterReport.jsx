@@ -10,6 +10,7 @@ import {
 } from "../../../../store/service/supermasteAccountStatementServices";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import DownloadReport from "../../../common/DownloadReport/DownloadReport";
 
 const MasterReport = ({ reportName, userType }) => {
   const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
@@ -35,10 +36,9 @@ const MasterReport = ({ reportName, userType }) => {
       startDate: dateData[0],
       endDate: dateData[1],
       reportType: "all",
-      userId:""
+      userId: "",
     });
   }, [userType]);
-
 
   const handleChange = (value) => {
     userList({
@@ -60,22 +60,20 @@ const MasterReport = ({ reportName, userType }) => {
     setClientId(value);
   };
 
-  const onFinish = (value)=>{
+  const onFinish = (value) => {
     trigger({
-        userType: userType,
-        startDate: dateData[0],
-        endDate: dateData[1],
-        reportType: value?.reportType || "All",
-        userId:clientId || ""
-      });
-  }
-
+      userType: userType,
+      startDate: dateData[0],
+      endDate: dateData[1],
+      reportType: value?.reportType || "All",
+      userId: clientId || "",
+    });
+  };
 
   const date = new Date();
-  const newDate = moment(date).format('DD-MM-YYYY');
+  const newDate = moment(date).format("DD-MM-YYYY");
 
   const dataSource = loginReport?.data?.map((curElm) => {
-    console.log(curElm, "dsfsdfasf")
     return {
       userid: curElm?.userid,
       action: curElm?.action?.slice(7),
@@ -83,69 +81,17 @@ const MasterReport = ({ reportName, userType }) => {
       newvalue: curElm?.newvalue,
       actionby: curElm?.actionby,
       createdon: curElm?.createdon,
-      IP: curElm?.ipaddress,
+      ipaddress: curElm?.ipaddress,
     };
   });
 
-  const headerField = [
-    "User",
-    "Type",
-    "Old",
-    "New",
-    "Done By",
-    "Date",
-    "IP",
-  ];
+  const headerField = ["User", "Type", "Old", "New", "Done By", "Date", "IP"];
 
-  const downloadReport = () => {
-    let data = JSON.stringify({
-      data: dataSource,
-      reportColumnName: headerField,
-      reportType: "dataReport",
-    });
-    let config = {
-      responseType: "blob",
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "https://api.247365.exchange/admin-new-apis/bmx/excel-file-download",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      data: data,
-    };
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(response.data);
-        function download(blob) {
-          const url = window.URL.createObjectURL(new Blob([blob]));
-          const a = document.createElement("a");
-          a.style.display = "none";
-          a.href = url;
-          a.setAttribute("download", `dataReport_${newDate}.xlsx`);
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-        }
-        function showInOtherTab(blob) {
-          download(blob, "myledger-report.xlsx");
-        }
-        showInOtherTab(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  
   return (
     <Card
       className="sport_detail ledger_data"
       title={`${reportName} Reports`}
-      extra={<button onClick={()=>nav(-1)}>Back</button>}
-    >
+      extra={<button onClick={() => nav(-1)}>Back</button>}>
       <div className="">
         <Form
           className="form_data mt-16 cash_data"
@@ -157,9 +103,7 @@ const MasterReport = ({ reportName, userType }) => {
           autoComplete="off">
           <Row>
             <Col xl={8} lg={8} md={24} xs={24}>
-              <Form.Item
-                label={reportName}
-                name="client">
+              <Form.Item label={reportName} name="client">
                 <Select
                   placeholder="Select Client"
                   options={
@@ -175,9 +119,7 @@ const MasterReport = ({ reportName, userType }) => {
               </Form.Item>
             </Col>
             <Col xl={8} lg={8} md={24} xs={24}>
-              <Form.Item
-                label="Report Type"
-                name="reportType">
+              <Form.Item label="Report Type" name="reportType">
                 <Select defaultValue="All">
                   <Option value="All">All</Option>
                   {/* <Option value="Casino Share">Casino Share</Option>
@@ -194,11 +136,9 @@ const MasterReport = ({ reportName, userType }) => {
               </Form.Item>
             </Col>
             <Col xl={8} lg={8} md={24} xs={24}>
-              <Form.Item
-                label="Date"
-                name="Date">
+              <Form.Item label="Date" name="Date">
                 <DatePicker.RangePicker
-                allowClear={false}
+                  allowClear={false}
                   className="report_date_picker"
                   defaultValue={[dayjs(timeBefore), dayjs(time)]}
                   onChange={onChange}
@@ -207,29 +147,19 @@ const MasterReport = ({ reportName, userType }) => {
             </Col>
           </Row>
           <div className="report_download">
-
-          <Form.Item >
-            <Button
-              loading={isLoading}
-              type="primary"
-              htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-          <Form.Item >
-          
-            <button onClick={downloadReport} className="download">
-              <span>Download</span>
-            </button>
-          
-          </Form.Item>
+            <Form.Item>
+              <Button loading={isLoading} type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+            <Form.Item>
+             <DownloadReport reportName={`${reportName.replace(/ /g,"_")}_reports`} dataSource={dataSource} headerField={headerField}  reportType="dataReport"/>
+            </Form.Item>
           </div>
-          <div>
-          
-          </div>
+          <div></div>
         </Form>
       </div>
-      <ReportTable data={loginReport?.data} isLoading={isLoading}/>
+      <ReportTable data={loginReport?.data} isLoading={isLoading} />
     </Card>
   );
 };
