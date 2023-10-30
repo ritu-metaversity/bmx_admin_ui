@@ -35,10 +35,9 @@ const MasterReport = ({ reportName, userType }) => {
       startDate: dateData[0],
       endDate: dateData[1],
       reportType: "all",
-      userId:""
+      userId: "",
     });
   }, [userType]);
-
 
   const handleChange = (value) => {
     userList({
@@ -60,22 +59,21 @@ const MasterReport = ({ reportName, userType }) => {
     setClientId(value);
   };
 
-  const onFinish = (value)=>{
+  const onFinish = (value) => {
     trigger({
-        userType: userType,
-        startDate: dateData[0],
-        endDate: dateData[1],
-        reportType: value?.reportType || "All",
-        userId:clientId || ""
-      });
-  }
-
+      userType: userType,
+      startDate: dateData[0],
+      endDate: dateData[1],
+      reportType: value?.reportType || "All",
+      userId: clientId || "",
+    });
+  };
 
   const date = new Date();
-  const newDate = moment(date).format('DD-MM-YYYY');
+  const newDate = moment(date).format("DD-MM-YYYY");
 
   const dataSource = loginReport?.data?.map((curElm) => {
-    console.log(curElm, "dsfsdfasf")
+    console.log(curElm, "dsfsdfasf");
     return {
       userid: curElm?.userid,
       action: curElm?.action?.slice(7),
@@ -83,19 +81,11 @@ const MasterReport = ({ reportName, userType }) => {
       newvalue: curElm?.newvalue,
       actionby: curElm?.actionby,
       createdon: curElm?.createdon,
-      IP: curElm?.ipaddress,
+      ipaddress: curElm?.ipaddress,
     };
   });
 
-  const headerField = [
-    "User",
-    "Type",
-    "Old",
-    "New",
-    "Done By",
-    "Date",
-    "IP",
-  ];
+  const headerField = ["User", "Type", "Old", "New", "Done By", "Date", "IP"];
 
   const downloadReport = () => {
     let data = JSON.stringify({
@@ -139,13 +129,11 @@ const MasterReport = ({ reportName, userType }) => {
       });
   };
 
-  
   return (
     <Card
       className="sport_detail ledger_data"
       title={`${reportName} Reports`}
-      extra={<button onClick={()=>nav(-1)}>Back</button>}
-    >
+      extra={<button onClick={() => nav(-1)}>Back</button>}>
       <div className="">
         <Form
           className="form_data mt-16 cash_data"
@@ -157,9 +145,7 @@ const MasterReport = ({ reportName, userType }) => {
           autoComplete="off">
           <Row>
             <Col xl={8} lg={8} md={24} xs={24}>
-              <Form.Item
-                label={reportName}
-                name="client">
+              <Form.Item label={reportName} name="client">
                 <Select
                   placeholder="Select Client"
                   options={
@@ -175,9 +161,7 @@ const MasterReport = ({ reportName, userType }) => {
               </Form.Item>
             </Col>
             <Col xl={8} lg={8} md={24} xs={24}>
-              <Form.Item
-                label="Report Type"
-                name="reportType">
+              <Form.Item label="Report Type" name="reportType">
                 <Select defaultValue="All">
                   <Option value="All">All</Option>
                   {/* <Option value="Casino Share">Casino Share</Option>
@@ -194,11 +178,9 @@ const MasterReport = ({ reportName, userType }) => {
               </Form.Item>
             </Col>
             <Col xl={8} lg={8} md={24} xs={24}>
-              <Form.Item
-                label="Date"
-                name="Date">
+              <Form.Item label="Date" name="Date">
                 <DatePicker.RangePicker
-                allowClear={false}
+                  allowClear={false}
                   className="report_date_picker"
                   defaultValue={[dayjs(timeBefore), dayjs(time)]}
                   onChange={onChange}
@@ -207,29 +189,21 @@ const MasterReport = ({ reportName, userType }) => {
             </Col>
           </Row>
           <div className="report_download">
-
-          <Form.Item >
-            <Button
-              loading={isLoading}
-              type="primary"
-              htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-          <Form.Item >
-          
-            <button onClick={downloadReport} className="download">
-              <span>Download</span>
-            </button>
-          
-          </Form.Item>
+            <Form.Item>
+              <Button loading={isLoading} type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+            <Form.Item>
+              <button onClick={downloadReport} className="download">
+                <span>Download</span>
+              </button>
+            </Form.Item>
           </div>
-          <div>
-          
-          </div>
+          <div></div>
         </Form>
       </div>
-      <ReportTable data={loginReport?.data} isLoading={isLoading}/>
+      <ReportTable data={loginReport?.data} isLoading={isLoading} />
     </Card>
   );
 };

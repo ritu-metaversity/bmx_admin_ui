@@ -81,7 +81,6 @@ const CommReport = ({ reportName, userType }) => {
   const newDate = moment(date).format("DD-MM-YYYY");
 
   const dataSource = commReport?.data?.list?.map((curElm) => {
-    console.log(curElm, "dsfsdfasf");
     return {
       userid: curElm?.userId,
       matchName: curElm?.matchName,
@@ -184,7 +183,7 @@ const CommReport = ({ reportName, userType }) => {
               </Form.Item>
             </Col>
             <Col xl={4} lg={4} md={12} xs={12}>
-            <Form.Item >
+              <Form.Item>
                 <Form.Item>
                   <button onClick={downloadReport} className="download">
                     <span>Download</span>
@@ -192,7 +191,6 @@ const CommReport = ({ reportName, userType }) => {
                 </Form.Item>
               </Form.Item>
             </Col>
-             
           </Row>
         </Form>
       </div>

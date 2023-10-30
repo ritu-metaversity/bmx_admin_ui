@@ -66,7 +66,7 @@ const AgentTransactions = ({ userType, Listname }) => {
 
   
 
-  const [userList, resultData] = useLazyUserListQuery();
+  const [userList, {data:resultData, isError}] = useLazyUserListQuery();
 
   const onSelectDate = (date, dateString) => {
     setStartDate(dateString);
@@ -126,8 +126,6 @@ const AgentTransactions = ({ userType, Listname }) => {
       userName: "",
     });
   }, [pathname])
-  
-
   return (
     <>
     {contextHolder}
@@ -160,7 +158,7 @@ const AgentTransactions = ({ userType, Listname }) => {
                   <Select
                     placeholder="Select Client"
                     options={
-                      resultData.data?.data.map((i) => ({
+                      !isError && resultData?.data?.map((i) => ({
                         label: i,
                         value: i,
                       })) || []
@@ -169,7 +167,6 @@ const AgentTransactions = ({ userType, Listname }) => {
                     allowClear
                     onSelect={handleSelect}
                     onSearch={handleChange}>
-                    {/* <Option value="sumana6748">sumana6748</Option> */}
                   </Select>
                 </Form.Item>
               </Col>

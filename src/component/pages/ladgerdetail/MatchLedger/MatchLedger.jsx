@@ -77,7 +77,6 @@ const MatchLedger = () => {
   const nav = useNavigate();
 
   const dataSource = data?.data?.list?.map((curElm) => {
-    console.log(curElm, "dsasdasda")
     return {
       date: curElm?.date,
       title: curElm?.matchName,
