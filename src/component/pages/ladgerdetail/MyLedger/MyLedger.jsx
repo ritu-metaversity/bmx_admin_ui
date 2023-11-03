@@ -5,15 +5,16 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import axios from "axios";
 import DownloadReport from "../../../common/DownloadReport/DownloadReport";
-// import { AiOutlineArrowDown } from "react-icons/ai";
+// import xlsx from "json-as-xlsx"
+// import {XLSX} from "sheetjs"
+// import { utils, writeFile } from "xlsx-js-style";
 
 const columns = [
   {
     title: "Date",
     dataIndex: "dateStr",
-    key: "dateStr",
+    key: "  ",
   },
   {
     title: "Collection Name",
@@ -95,18 +96,18 @@ const MyLedger = () => {
     });
   }, [dateData]);
 
-  const dataSource = data?.data?.list?.map((curElm) => {
-    return {
-      date: curElm?.date,
-      collectionName: curElm?.collectionName,
-      debit: curElm?.debit,
-      credit: curElm?.credit,
-      balance: Math.abs(curElm?.balance),
-      paymentType: curElm?.paymentType,
-      remarks: curElm?.remarks,
-      isRollback: curElm?.isRollback ? "Yes" : "NO",
-    };
-  });
+  // const dataSource = data?.data?.list?.map((curElm) => {
+  //   return {
+  //     date: curElm?.date,
+  //     collectionName: curElm?.collectionName,
+  //     debit: curElm?.debit,
+  //     credit: curElm?.credit,
+  //     balance: Math.abs(curElm?.balance),
+  //     paymentType: curElm?.paymentType,
+  //     remarks: curElm?.remarks,
+  //     isRollback: curElm?.isRollback ? "Yes" : "NO",
+  //   };
+  // });
 
   const headerField = [
     "Date",
@@ -119,19 +120,92 @@ const MyLedger = () => {
     "Rollback",
   ];
 
-
-  const lenadenaHeading = [
-    "Lena",
-    "Dena",
-    "Balance",
-  ];
+  const lenadenaHeading = ["Lena", "Dena", "Balance"];
 
 
-  const arrBalance= [{
-    lena:data?.data?.data?.credit?.toFixed(2),
-    dena:data?.data?.data?.debit?.toFixed(2),
-    balance:data?.data?.data?.balance?.toFixed(2)
-  }]
+
+  // const arrBalance = [
+  //   ["Lena", "Dena", "Balance"],
+  //   [
+  //     data?.data?.data?.credit?.toFixed(2),
+  //     data?.data?.data?.debit?.toFixed(2),
+  //     Math.abs(data?.data?.data?.balance?.toFixed(2)),
+  //   ],
+  // ];
+  
+  // const arrBalance1= [{
+  //   lena:data?.data?.data?.credit?.toFixed(2),
+  //   dena:data?.data?.data?.debit?.toFixed(2),
+  //   balance:data?.data?.data?.balance?.toFixed(2)
+  // }]
+
+  // const downloadFile = () => {
+  //   const origin = 3;
+  //   let worksheet = utils.json_to_sheet(dataSource, {
+  //     origin,
+  //       header:[
+  //       "Date",	"Collection Name",	"Debit",	"Credit",	"Balance",	"Payment Type",	"Remark",	"Rollback"
+  //     ]
+  //   });
+
+  //   console.log(worksheet, "hui");
+  //   utils.sheet_add_aoa(worksheet, arrBalance, { origin: 0 });
+  //   utils.sheet_add_aoa(
+  //     worksheet,
+  //     [
+  //       [
+  //         "Date",
+  //         "Collection Name",
+  //         "Debit",
+  //         "Credit",
+  //         "Balance",
+  //         "Payment Type",
+  //         "Remark",
+  //         "Rollback",
+  //       ],
+  //     ],
+
+  //     { origin: 3 }
+  //   );
+
+  //   for (let i = origin; i < dataSource.length + origin; ++i) {
+  //     console.log(i, "i", `D${i + 2}`);
+  //     worksheet[`C${i + 2}`].s = {
+  //       font: {
+  //         color: { rgb: "FF0000" },
+  //       },
+  //     };
+  //     worksheet[`D${i + 2}`].s = {
+  //       font: {
+  //         color: { rgb: "008000" },
+  //       },
+  //     };
+  //   }
+
+  //   worksheet["A2"].s = {
+  //     font: {
+  //       color: { rgb: "FF0000" },
+  //     },
+  //   };
+  //   worksheet["B2"].s = {
+  //     font: {
+  //       color: { rgb: "008000" },
+  //     },
+  //   };
+  //   worksheet["C2"].s = {
+  //     font: {
+  //       color: { rgb: arrBalance[1][2]<0 ?"FF0000": "00FF00" },
+  //     },
+  //   };
+
+  
+  
+  //   const wb = utils.book_new();
+  //   utils.book_append_sheet(wb, worksheet, "Data");
+
+  //   writeFile(wb, "SheetJSReactAoO.xlsx");
+  // };
+
 
   return (
     <>
@@ -167,13 +241,12 @@ const MyLedger = () => {
               {data?.data?.data?.balance > 0 ? "( Dena )" : "( Lena )"}
             </h3>
           </div>
+          {/* <button onClick={downloadFile}>Download</button> */}
           <div>
             <DownloadReport
-              balanceData={arrBalance}
               lenadenaHeading={lenadenaHeading}
               reportType="MyLedger"
               reportName="MyLedger"
-              dataSource={dataSource}
               headerField={headerField}
             />
           </div>

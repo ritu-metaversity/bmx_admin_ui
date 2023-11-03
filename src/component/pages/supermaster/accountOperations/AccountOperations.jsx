@@ -2,15 +2,12 @@ import { Card, DatePicker, Empty, Pagination, Table } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import "./AccountOperations.scss";
 import moment from "moment";
-import React, { useState } from "react";
+import { useState } from "react";
 import dayjs from "dayjs";
 import { useAccountOprationQuery } from "../../../../store/service/userlistService";
-import axios from "axios";
+// import axios from "axios";
 import DownloadReport from "../../../common/DownloadReport/DownloadReport";
 
-// const handleChange = (value) => {
-//   console.log(`selected ${value}`);
-// };
 
 const { RangePicker } = DatePicker;
 
@@ -34,7 +31,7 @@ const AccountOperations = () => {
     {
       index: 0,
       noOfRecords: 500,
-      userId: id || "anku121",
+      userId: id || "",
       startDate: dateData[0],
       endDate: dateData[1],
     },
@@ -65,15 +62,6 @@ const AccountOperations = () => {
     },
   ];
 
-  const dataSource = data?.data?.data?.map((curElm) => {
-    console.log(curElm, "DSfsfsd");
-    return {
-      createdon: curElm?.createdon,
-      action: curElm?.action,
-      actionby: curElm?.actionby,
-      description: curElm?.description,
-    };
-  });
 
   const headerField = ["Date", "Operation", "Done By", "Description"];
 
@@ -97,7 +85,7 @@ const AccountOperations = () => {
               />
                <div>
 
-      <DownloadReport reportType="ActionLog" reportName="account-operations" dataSource={dataSource} headerField={headerField}/>
+      <DownloadReport userId={id} reportType="ActionLog" reportName="account-operations" headerField={headerField}/>
 
             </div>
             </div>
@@ -114,32 +102,7 @@ const AccountOperations = () => {
               </div>
             </div>
 
-            {/* <div className="table_section statement_tabs_data">
-            <table className="">
-              <tr>
-                <th>Date</th>
-                <th>Operation</th>
-                <th>Done By</th>
-                <th>Description</th>
-              </tr>
-              {data?.map((res) => {
-                return (
-                  <tr key={res?.key}>
-                    <td>{res?.Date}</td>
-                    <td>{res?.Description}</td>
-                    <td>{res?.PrevBal}</td>
-                    <td className="text_success">{res?.CR}</td>
-                   
-                  </tr>
-                );
-              })}
-            </table>
-              {
-                data?.length == 0?<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />:<div className="pagination_cus">
-                <Pagination  className="pagination_main ledger_pagination"  defaultCurrent={1} total={5} />
-              </div>
-              }
-          </div> */}
+            
           </Card>
         </div>
       </div>

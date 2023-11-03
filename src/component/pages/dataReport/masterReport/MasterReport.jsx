@@ -153,7 +153,7 @@ const MasterReport = ({ reportName, userType }) => {
               </Button>
             </Form.Item>
             <Form.Item>
-             <DownloadReport reportName={`${reportName.replace(/ /g,"_")}_reports`} dataSource={dataSource} headerField={headerField}  reportType="dataReport"/>
+             <DownloadReport userType={userType}  reportName={`${reportName.replace(/ /g,"_")}_reports`} dataSource={dataSource} headerField={headerField}  reportType="dataReport"/>
             </Form.Item>
           </div>
           <div></div>

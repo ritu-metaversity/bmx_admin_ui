@@ -1,16 +1,20 @@
 import axios from 'axios';
 import moment from 'moment';
 
-const DownloadReport = ({dataSource, headerField, reportType, reportName, balanceData, lenadenaHeading}) => {
-    const date = new Date();
-    const newDate = moment(date).format('DD-MM-YYYY hh:mm:ss A');
+// const DownloadReport = ({dataSource, headerField, reportType, reportName, balanceData, lenadenaHeading}) => {
+const DownloadReport = ({ headerField, reportType, reportName,lenadenaHeading, userType, type, parentId, userId}) => {
+    
     const downloadReport = () => {
+      const date = new Date();
+    const newDate = moment(date).format('DD-MM-YYYY hh:mm:ss A');
         let data = JSON.stringify({
-          data: dataSource,
           reportColumnName: headerField,
           reportType: reportType,
           balanceDataName:lenadenaHeading,
-          lenaDenaResponse:balanceData
+          userType:userType,
+          type: type,
+          parentId,
+          userId
         });
         let config = {
           responseType: "blob",
