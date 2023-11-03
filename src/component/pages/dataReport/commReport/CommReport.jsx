@@ -9,7 +9,7 @@ import {
 } from "../../../../store/service/supermasteAccountStatementServices";
 import { useLocation, useNavigate } from "react-router-dom";
 import CommReportTable from "./CommReportTable";
-import axios from "axios";
+// import axios from "axios";
 import DownloadReport from "../../../common/DownloadReport/DownloadReport";
 
 const CommReport = ({ reportName, userType }) => {
@@ -45,7 +45,6 @@ const CommReport = ({ reportName, userType }) => {
     setTotalPage(commReport?.data?.totalPages);
   }, [userType, totalPage, indexData, paginationTotal]);
 
-  // console.log(commReport?.data?.list, "adsfasfas");
 
   const handleChange = (value) => {
     userList({
@@ -77,16 +76,6 @@ const CommReport = ({ reportName, userType }) => {
       index: "0",
     });
   };
-
-  const dataSource = commReport?.data?.list?.map((curElm) => {
-    return {
-      userid: curElm?.userId,
-      matchName: curElm?.matchName,
-      commDiya: curElm?.commDiya,
-      comm: curElm?.comm,
-      date: curElm?.date,
-    };
-  });
 
   const headerField = ["User", "Match Name", "Comm Diya", "Comm Liye", "Date"];
 
@@ -141,7 +130,15 @@ const CommReport = ({ reportName, userType }) => {
             <Col xl={4} lg={4} md={12} xs={12}>
               <Form.Item>
                 <Form.Item>
-                <DownloadReport reportName={`${reportName.replace(/ /g,"_")}_Comm_Reports`} dataSource={dataSource} headerField={headerField}  reportType="CasinoCommReport"/>
+                  <DownloadReport
+                    userType={userType}
+                    reportName={`${reportName?.replace(
+                      / /g,
+                      "_"
+                    )}_Comm_Reports`}
+                    headerField={headerField}
+                    reportType="CasinoCommReport"
+                  />
                 </Form.Item>
               </Form.Item>
             </Col>

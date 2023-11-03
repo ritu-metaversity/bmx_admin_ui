@@ -10,20 +10,17 @@ import {
   Spin,
   Tooltip,
 } from "antd";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./LoginReport.scss";
 import { useLazyLoginReportQuery } from "../../../store/service/loginReportServices";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLazyUserListQuery } from "../../../store/service/supermasteAccountStatementServices";
 import { CaretDownOutlined, CaretUpOutlined } from "@ant-design/icons";
 import { AiFillEye } from "react-icons/ai";
-import moment from "moment";
-import axios from "axios";
 import DownloadReport from "../../common/DownloadReport/DownloadReport";
 
 const LoginReport = () => {
-  // const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
-  // const time = moment().format("YYYY-MM-DD");
+ 
 
   const userId = localStorage.getItem("userId");
   const { id } = useParams();
@@ -79,15 +76,6 @@ const LoginReport = () => {
   }, [clientId, paginationTotal, indexData, ipOrder, id]);
 
 
-  const dataSource = data?.data?.list?.map((curElm) => {
-    return {
-      userid: curElm?.userid,
-      ip: curElm?.ip,
-      lastLogin: curElm?.lastLogin,
-      deviceInfo: curElm?.deviceInfo,
-    };
-  });
-
   const headerField = ["User Name", "IP-Address", "Login Date", "Detail"];
 
   return (
@@ -101,17 +89,11 @@ const LoginReport = () => {
           className="sport_detail  team_name"
           title="Login Report"
           extra={<button onClick={handleBackClick}>Back</button>}>
-          <Form
-            className="form_data mt-16 cash_data"
-            name="basic"
-            // form={form}
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
-            // onFinish={onFinish}
-            autoComplete="off">
-            <Row>
+          
+            <Row style={{marginTop:"12px"}}>
+           
               <Col xl={8} lg={8} md={24} xs={24}>
+              
                 <Form.Item
                   // label="Client"
                   name="client"
@@ -139,25 +121,12 @@ const LoginReport = () => {
               </Col>
               <Col xl={8} lg={8} md={24} xs={24}>
                 <div style={{marginBottom:"12px"}}>
-                <DownloadReport reportName="LoginReport" dataSource={dataSource} headerField={headerField}  reportType="LoginReport"/>
+                <DownloadReport parentId={id || clientId} reportName="LoginReport" headerField={headerField}  reportType="LoginReport"/>
 
                 </div>
               </Col>
             </Row>
-          </Form>
-
-          {/* <div className="table_section statement_tabs_data">
-              <div className="table_section">
-                <Table
-                  className="live_table agent_master" 
-                  bordered
-                  columns={columns}
-                  dataSource={data?.data || []}
-                  pagination={{defaultPageSize: 50, pageSizeOptions:[50, 100, 150, 200, 250] }}
-                  loading={isLoading||isFetching}></Table>
-              </div>
-          </div> */}
-
+          
           <div className="table_section statement_tabs_data ant-spin-nested-loading">
             <table className="live_table">
               <tr>

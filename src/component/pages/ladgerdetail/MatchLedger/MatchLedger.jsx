@@ -152,7 +152,7 @@ const MatchLedger = () => {
           {data?.data?.list?.map((res, id) => {
             return (
               <tr key={id} style={{ cursor: "pointer" }}>
-                <td>{moment(res?.date).format("YYYY-MM-DD")}</td>
+                <td>{res?.date}</td>
                 <td>{res?.matchName}</td>
                 <td className="text_success">
                   {res?.netPnl > 0 ? res?.netPnl : 0}

@@ -116,19 +116,6 @@ const AllStatement = ({ clientId, dateData, gameType }) => {
     setRemark(rem);
   };
 
-  const dataSource = data?.data?.dataList?.map((curElm) => {
-    return {
-      date: curElm?.date,
-      fromto: curElm?.fromto,
-      prevBal: 0,
-      credit: curElm?.credit,
-      debit: curElm?.debit,
-      commPlus: 0,
-      commMinus: 0,
-      pts: curElm?.pts,
-      remark: curElm?.remark,
-    };
-  });
 
   const headerField = [
     "Date",
@@ -146,7 +133,7 @@ const AllStatement = ({ clientId, dateData, gameType }) => {
   return (
     <>
       <div className="account_download">
-      <DownloadReport reportType="AccountStatementReport" reportName="account-statement" dataSource={dataSource} headerField={headerField}/>
+      <DownloadReport type={gameType} reportType="AccountStatementReport" reportName="account-statement" headerField={headerField}/>
       </div>
       <div className="table_section statement_tabs_data">
         <div className="table_section">
