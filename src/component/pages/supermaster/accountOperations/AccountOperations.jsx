@@ -8,12 +8,12 @@ import { useAccountOprationQuery } from "../../../../store/service/userlistServi
 // import axios from "axios";
 import DownloadReport from "../../../common/DownloadReport/DownloadReport";
 
-
 const { RangePicker } = DatePicker;
 
 const AccountOperations = () => {
   const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
   const time = moment().format("YYYY-MM-DD");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [dateData, setDateData] = useState([timeBefore, time]);
   const onChange = (date, dateString) => {
@@ -62,11 +62,15 @@ const AccountOperations = () => {
     },
   ];
 
-
   const headerField = ["Date", "Operation", "Done By", "Description"];
 
   return (
     <>
+      {isModalOpen && (
+        <div
+          onClick={() => setIsModalOpen(false)}
+          className="report_overlay"></div>
+      )}
       <div className="match_slip account_match_slip">
         <div>
           <Card
@@ -83,13 +87,17 @@ const AccountOperations = () => {
                 defaultValue={[dayjs(timeBefore), dayjs(time)]}
                 onChange={onChange}
               />
-               <div>
-
-      <DownloadReport userId={id} reportType="ActionLog" reportName="account-operations" headerField={headerField}/>
-
+              <div style={{width:"200px"}}>
+                <DownloadReport
+                  isModalOpen={isModalOpen}
+                  setIsModalOpen={setIsModalOpen}
+                  userId={id}
+                  reportType="ActionLog"
+                  reportName="account-operations"
+                  headerField={headerField}
+                />
+              </div>
             </div>
-            </div>
-           
 
             <div className="table_section statement_tabs_data">
               <div className="table_section">
@@ -101,8 +109,6 @@ const AccountOperations = () => {
                   loading={isLoading || isFetching}></Table>
               </div>
             </div>
-
-            
           </Card>
         </div>
       </div>

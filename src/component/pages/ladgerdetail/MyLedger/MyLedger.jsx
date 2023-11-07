@@ -75,6 +75,7 @@ const MyLedger = () => {
   const handleBackbtn = () => {
     nav(-1);
   };
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const timeBefore = moment().subtract(30, "days").format("YYYY-MM-DD");
   const time = moment().format("YYYY-MM-DD");
@@ -122,8 +123,6 @@ const MyLedger = () => {
 
   const lenadenaHeading = ["Lena", "Dena", "Balance"];
 
-
-
   // const arrBalance = [
   //   ["Lena", "Dena", "Balance"],
   //   [
@@ -132,7 +131,7 @@ const MyLedger = () => {
   //     Math.abs(data?.data?.data?.balance?.toFixed(2)),
   //   ],
   // ];
-  
+
   // const arrBalance1= [{
   //   lena:data?.data?.data?.credit?.toFixed(2),
   //   dena:data?.data?.data?.debit?.toFixed(2),
@@ -198,17 +197,18 @@ const MyLedger = () => {
   //     },
   //   };
 
-  
-  
   //   const wb = utils.book_new();
   //   utils.book_append_sheet(wb, worksheet, "Data");
 
   //   writeFile(wb, "SheetJSReactAoO.xlsx");
   // };
 
-
   return (
     <>
+    {
+    
+    isModalOpen && <div onClick={()=>setIsModalOpen(false)} className="report_overlay"></div>
+    }
       <Card
         className="sport_detail ledger_data"
         title="My Ledger"
@@ -248,6 +248,10 @@ const MyLedger = () => {
               reportType="MyLedger"
               reportName="MyLedger"
               headerField={headerField}
+              startDate={dateData[0]}
+              endDate={dateData[1]}
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
             />
           </div>
         </div>

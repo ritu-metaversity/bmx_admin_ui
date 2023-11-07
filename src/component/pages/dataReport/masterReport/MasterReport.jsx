@@ -17,6 +17,8 @@ const MasterReport = ({ reportName, userType }) => {
   const time = moment().format("YYYY-MM-DD");
   const [dateData, setDateData] = useState([timeBefore, time]);
   const [clientId, setClientId] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const nav = useNavigate();
 
@@ -88,6 +90,12 @@ const MasterReport = ({ reportName, userType }) => {
   const headerField = ["User", "Type", "Old", "New", "Done By", "Date", "IP"];
 
   return (
+    <>
+    {
+    
+    isModalOpen && <div onClick={()=>setIsModalOpen(false)} className="report_overlay"></div>
+    }
+    
     <Card
       className="sport_detail ledger_data"
       title={`${reportName} Reports`}
@@ -153,7 +161,17 @@ const MasterReport = ({ reportName, userType }) => {
               </Button>
             </Form.Item>
             <Form.Item>
-             <DownloadReport userType={userType}  reportName={`${reportName.replace(/ /g,"_")}_reports`} dataSource={dataSource} headerField={headerField}  reportType="dataReport"/>
+              <DownloadReport
+                startDate={dateData[0]}
+                endDate={dateData[1]}
+                userType={userType}
+                reportName={`${reportName.replace(/ /g, "_")}_reports`}
+                dataSource={dataSource}
+                headerField={headerField}
+                reportType="dataReport"
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+              />
             </Form.Item>
           </div>
           <div></div>
@@ -161,6 +179,7 @@ const MasterReport = ({ reportName, userType }) => {
       </div>
       <ReportTable data={loginReport?.data} isLoading={isLoading} />
     </Card>
+    </>
   );
 };
 

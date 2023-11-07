@@ -20,7 +20,7 @@ import { AiFillEye } from "react-icons/ai";
 import DownloadReport from "../../common/DownloadReport/DownloadReport";
 
 const LoginReport = () => {
- 
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const userId = localStorage.getItem("userId");
   const { id } = useParams();
@@ -75,11 +75,15 @@ const LoginReport = () => {
     });
   }, [clientId, paginationTotal, indexData, ipOrder, id]);
 
-
   const headerField = ["User Name", "IP-Address", "Login Date", "Detail"];
 
   return (
     <>
+      {isModalOpen && (
+        <div
+          onClick={() => setIsModalOpen(false)}
+          className="report_overlay"></div>
+      )}
       <div className="match_slip login_report">
         <Card
           style={{
@@ -89,44 +93,47 @@ const LoginReport = () => {
           className="sport_detail  team_name"
           title="Login Report"
           extra={<button onClick={handleBackClick}>Back</button>}>
-          
-            <Row style={{marginTop:"12px"}}>
-           
-              <Col xl={8} lg={8} md={24} xs={24}>
-              
-                <Form.Item
-                  // label="Client"
-                  name="client"
-                  required
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select Client",
-                    },
-                  ]}>
-                  <Select
-                    placeholder={id ? id : clientId}
-                    options={
-                      resultData.data?.data.map((i) => ({
-                        label: i,
-                        value: i,
-                      })) || []
-                    }
-                    showSearch
-                    allowClear
-                    // value={clientId}
-                    onSelect={handleSelect}
-                    onSearch={handleChange}></Select>
-                </Form.Item>
-              </Col>
-              <Col xl={8} lg={8} md={24} xs={24}>
-                <div style={{marginBottom:"12px"}}>
-                <DownloadReport parentId={id || clientId} reportName="LoginReport" headerField={headerField}  reportType="LoginReport"/>
+          <Row style={{ marginTop: "12px" }}>
+            <Col xl={8} lg={8} md={24} xs={24}>
+              <Form.Item
+                // label="Client"
+                name="client"
+                required
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select Client",
+                  },
+                ]}>
+                <Select
+                  placeholder={id ? id : clientId}
+                  options={
+                    resultData.data?.data.map((i) => ({
+                      label: i,
+                      value: i,
+                    })) || []
+                  }
+                  showSearch
+                  allowClear
+                  // value={clientId}
+                  onSelect={handleSelect}
+                  onSearch={handleChange}></Select>
+              </Form.Item>
+            </Col>
+            <Col xl={3} lg={3} md={24} xs={24}>
+              <div style={{ marginBottom: "12px" }}>
+                <DownloadReport
+                  isModalOpen={isModalOpen}
+                  setIsModalOpen={setIsModalOpen}
+                  parentId={id || clientId}
+                  reportName="LoginReport"
+                  headerField={headerField}
+                  reportType="LoginReport"
+                />
+              </div>
+            </Col>
+          </Row>
 
-                </div>
-              </Col>
-            </Row>
-          
           <div className="table_section statement_tabs_data ant-spin-nested-loading">
             <table className="live_table">
               <tr>

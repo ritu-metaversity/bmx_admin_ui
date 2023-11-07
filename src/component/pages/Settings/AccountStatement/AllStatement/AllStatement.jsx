@@ -9,10 +9,10 @@ import axios from "axios";
 import moment from "moment";
 import DownloadReport from "../../../../common/DownloadReport/DownloadReport";
 
-const AllStatement = ({ clientId, dateData, gameType }) => {
+const AllStatement = ({isModalOpen, setIsModalOpen,clientId, dateData, gameType }) => {
   const [trigger, { data, isFetching, isLoading }] =
     useLazyAccountstatementQuery();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen1, setIsModalOpen1] = useState(false);
   const [marketId, setMarketId] = useState("");
   const [remark, setRemark] = useState("");
 
@@ -106,7 +106,7 @@ const AllStatement = ({ clientId, dateData, gameType }) => {
   ];
 
   const handleCancel = () => {
-    setIsModalOpen(false);
+    setIsModalOpen1(false);
   };
 
   const handelAccountModals = (e, id, rem) => {
@@ -132,8 +132,16 @@ const AllStatement = ({ clientId, dateData, gameType }) => {
 
   return (
     <>
+   
       <div className="account_download">
-      <DownloadReport type={gameType} reportType="AccountStatementReport" reportName="account-statement" headerField={headerField}/>
+      <DownloadReport startDate={dateData[0]}
+      endDate= {dateData[1]} 
+      userId= {clientId || id}
+      type={gameType} reportType="AccountStatementReport" reportName="account-statement" 
+      headerField={headerField}
+      isModalOpen={isModalOpen}
+                  setIsModalOpen={setIsModalOpen}
+      />
       </div>
       <div className="table_section statement_tabs_data">
         <div className="table_section">
@@ -168,7 +176,7 @@ const AllStatement = ({ clientId, dateData, gameType }) => {
         <Modal
           title="Bet List"
           className="bet_list"
-          open={isModalOpen}
+          open={isModalOpen1}
           onCancel={handleCancel}
           footer={null}>
           <AccountModals marketId={marketId} remark={remark} id={id} />
