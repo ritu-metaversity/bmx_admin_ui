@@ -95,6 +95,8 @@ const AccountOperations = () => {
                   reportType="ActionLog"
                   reportName="account-operations"
                   headerField={headerField}
+                  startDate= {dateData[0]}
+                  endDate= {dateData[1]}
                 />
               </div>
             </div>
