@@ -20,6 +20,8 @@ const CommReport = ({ reportName, userType }) => {
   const [paginationTotal, setPaginationTotal] = useState(50);
   const [totalPage, setTotalPage] = useState();
   const [indexData, setIndexData] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const nav = useNavigate();
 
@@ -78,8 +80,12 @@ const CommReport = ({ reportName, userType }) => {
   };
 
   const headerField = ["User", "Match Name", "Comm Diya", "Comm Liye", "Date"];
-
   return (
+    <>
+    {
+    
+    isModalOpen && <div onClick={()=>setIsModalOpen(false)} className="report_overlay"></div>
+    }
     <Card
       className="sport_detail ledger_data"
       title={`${reportName} Comm Reports`}
@@ -131,6 +137,8 @@ const CommReport = ({ reportName, userType }) => {
               <Form.Item>
                 <Form.Item>
                   <DownloadReport
+                  startDate= {dateData[0]}
+                  endDate= {dateData[1]}
                     userType={userType}
                     reportName={`${reportName?.replace(
                       / /g,
@@ -138,6 +146,8 @@ const CommReport = ({ reportName, userType }) => {
                     )}_Comm_Reports`}
                     headerField={headerField}
                     reportType="CasinoCommReport"
+                    isModalOpen={isModalOpen}
+                    setIsModalOpen={setIsModalOpen}
                   />
                 </Form.Item>
               </Form.Item>
@@ -156,6 +166,8 @@ const CommReport = ({ reportName, userType }) => {
         isLoading={isLoading}
       />
     </Card>
+    </>
+    
   );
 };
 

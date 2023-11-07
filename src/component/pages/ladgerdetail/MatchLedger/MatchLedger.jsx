@@ -34,12 +34,12 @@ import DownloadReport from "../../../common/DownloadReport/DownloadReport";
 //     title: "CR",
 //     dataIndex: "netPnl",
 //     key: "netPnl",
-    // render: (text, record) => (
-    //   console.log(record, "asdasda")
-    //   <span>
-    //    0
-    //   </span>
-    // ),
+// render: (text, record) => (
+//   console.log(record, "asdasda")
+//   <span>
+//    0
+//   </span>
+// ),
 //   },
 //   {
 //     title: "DR",
@@ -55,14 +55,15 @@ const MatchLedger = () => {
   const [totalPage, setTotalPage] = useState();
   const [indexData, setIndexData] = useState(0);
   const [paginationTotal, setPaginationTotal] = useState(50);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const onChange = (date, dateString) => {
     setDateData(dateString);
   };
 
- 
-
-  const [trigger, { data, isLoading, isFetching }] = useLazyProfitAndLossLedgerQuery();
+  const [trigger, { data, isLoading, isFetching }] =
+    useLazyProfitAndLossLedgerQuery();
 
   useEffect(() => {
     trigger({
@@ -80,28 +81,27 @@ const MatchLedger = () => {
     return {
       date: curElm?.date,
       title: curElm?.matchName,
-      debit: curElm?.netPnl < 0 ? curElm?.netPnl:"0",
-      credit: curElm?.netPnl > 0 ? curElm?.netPnl :"0",
-      
+      debit: curElm?.netPnl < 0 ? curElm?.netPnl : "0",
+      credit: curElm?.netPnl > 0 ? curElm?.netPnl : "0",
     };
   });
 
-  const headerField = [
-    "Date",
-    "Title",
-    "CR",
-    "DR",
-  ];
-  const lenadenaHeading = [
-    "Total",
-  ];
+  const headerField = ["Date", "Title", "CR", "DR"];
+  const lenadenaHeading = ["Total"];
 
-
-  const arrBalance= [{
-    total:data?.data?.total?.toFixed(2),
-  }]
+  const arrBalance = [
+    {
+      total: data?.data?.total?.toFixed(2),
+    },
+  ];
 
   return (
+    <>
+    {
+    
+    isModalOpen && <div onClick={()=>setIsModalOpen(false)} className="report_overlay"></div>
+    }
+    
     <Card
       className="sport_detail my_ledger main_match_ledger"
       title="Profit/Loss"
@@ -126,11 +126,22 @@ const MatchLedger = () => {
             </p>
           </div>
         </Col>
-        <Col lg={6} xs={24}>
+        <Col lg={3} xs={24}>
           <div className="matchladger_total">
-          <div> 
-           <DownloadReport lenadenaHeading={lenadenaHeading} balanceData={arrBalance} dataSource={dataSource} headerField={headerField}  reportType="MyLedgerProfitLoss" reportName="profit/loss"/>
-          </div>
+            <div>
+              <DownloadReport
+                lenadenaHeading={lenadenaHeading}
+                balanceData={arrBalance}
+                dataSource={dataSource}
+                headerField={headerField}
+                reportType="MyLedgerProfitLoss"
+                reportName="profit/loss"
+                startDate={dateData[0]}
+                endDate={dateData[1]}
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+              />
+            </div>
           </div>
         </Col>
       </Row>
@@ -144,8 +155,7 @@ const MatchLedger = () => {
             <th>DR</th>
           </tr>
           {isLoading || isFetching ? (
-            <Spin className="spin_icon" size="large">
-            </Spin>
+            <Spin className="spin_icon" size="large"></Spin>
           ) : (
             ""
           )}
@@ -164,7 +174,8 @@ const MatchLedger = () => {
             );
           })}
         </table>
-        {data?.data?.list?.length === 0 || data?.data?.list?.length == undefined ? (
+        {data?.data?.list?.length === 0 ||
+        data?.data?.list?.length == undefined ? (
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
         ) : (
           <>
@@ -181,6 +192,7 @@ const MatchLedger = () => {
         )}
       </div>
     </Card>
+    </>
   );
 };
 

@@ -17,6 +17,8 @@ const AccountStatement = () => {
   const time = moment().format("YYYY-MM-DD");
   const [dateData, setDateData] = useState([timeBefore, time]);
   const [clientId, setClientId] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const { id } = useParams();
 
@@ -47,14 +49,14 @@ const AccountStatement = () => {
       key: "13",
       label: `All`,
       children: (
-        <AllStatement gameType={1} clientId={clientId} dateData={dateData} />
+        <AllStatement isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} gameType={1} clientId={clientId} dateData={dateData} />
       ),
     },
     {
       key: "14",
       label: `P&L`,
       children: (
-        <AllStatement gameType={2} clientId={clientId} dateData={dateData} />
+        <AllStatement isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} gameType={2} clientId={clientId} dateData={dateData} />
       ),
     },
   ];
@@ -65,6 +67,10 @@ const AccountStatement = () => {
 
   return (
     <>
+     {
+    
+    isModalOpen && <div onClick={()=>setIsModalOpen(false)} className="report_overlay1"></div>
+    }
       <div className={pName == "/markets" ? "" : "match_slip"}>
         <div>
           <Card
