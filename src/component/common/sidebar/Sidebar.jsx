@@ -116,11 +116,11 @@ const Sidebar = (props) => {
                 {
                   label: <Link to="/Events/sports-details">Sports Detail</Link>,
                 },
-                {
-                  label: (
-                    <Link to="/casino/aura-details">Aura Detail</Link>
-                  ),
-                },
+                // {
+                //   label: (
+                //     <Link to="/casino/aura-details">Aura Detail</Link>
+                //   ),
+                // },
 
                 {
                   label: (
@@ -366,15 +366,15 @@ const Sidebar = (props) => {
                       </Link>
                     ),
                   },
-                  {
-                    label: (
-                      <Link
-                        to="/casino/aura-details"
-                        onClick={() => props?.action()}>
-                        Aura Detail
-                      </Link>
-                    ),
-                  },
+                  // {
+                  //   label: (
+                  //     <Link
+                  //       to="/casino/aura-details"
+                  //       onClick={() => props?.action()}>
+                  //       Aura Detail
+                  //     </Link>
+                  //   ),
+                  // },
                   {
                     label: (
                       <Link
