@@ -193,7 +193,7 @@ const SportsDetails = () => {
     setActtiveTabData(id);
   };
   
-  console.log(layoutOpen, "dsdfsdds")
+  console.log(totalPage * paginationTotal, "dsdfsdds")
 
   return (
     <>
