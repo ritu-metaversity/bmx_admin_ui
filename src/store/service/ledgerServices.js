@@ -32,7 +32,14 @@ export const ledgerApi = createApi({
         body
       }),
     }),
+    clientLedger: build.mutation({
+      query: (body) => ({
+        url: `/bmx/report/client-up-line-amount`,
+        method: "POST",
+        body
+      }),
+    }),
   }),
 });
 
-export const {useMyLedgerMutation,useDownlineLedgerQuery, useLazyProfitAndLossLedgerQuery} = ledgerApi;
+export const {useMyLedgerMutation,useDownlineLedgerQuery, useLazyProfitAndLossLedgerQuery, useClientLedgerMutation} = ledgerApi;
