@@ -177,11 +177,11 @@ const Sidebar = (props) => {
               icon: <BiUserCircle />,
               label: "Cash Transaction",
               children: [
-                {
-                  label: (
-                    <Link to="/client/txn-client">Debit/Credit Entry(C)</Link>
-                  ),
-                },
+                // {
+                //   label: (
+                //     <Link to="/client/txn-client">Debit/Credit Entry(C)</Link>
+                //   ),
+                // },
                 {
                   className: `${userType === "1" ? "" : "d-none"}`,
                   label: (
@@ -273,7 +273,7 @@ const Sidebar = (props) => {
             {
               key: "8",
               icon: <SlDiamond />,
-              label: <Link to="/markets" onClick={()=>setOpenKeys([])}>WBT Setting</Link>,
+              label: <Link to="/markets" onClick={()=>setOpenKeys([])}>Setting</Link>,
             },
           ]}
         />
@@ -464,25 +464,16 @@ const Sidebar = (props) => {
                 icon: <BiUserCircle />,
                 label: "Cash Transaction",
                 children: [
-                  {
-                    label: (
-                      <Link
-                        to="/client/txn-client"
-                        onClick={() => props?.action()}>
-                        Debit/Credit Entry(C)
-                      </Link>
-                    ),
-                  },
-                  {
-                    className: `${userType === "1" ? "" : "d-none"}`,
-                    label: (
-                      <Link
-                        to="/client/txn-agent"
-                        onClick={() => props?.action()}>
-                        Debit/Credit Entry(A)
-                      </Link>
-                    ),
-                  },
+                  // {
+                  //   label: (
+                  //     <Link
+                  //       to="/client/txn-client"
+                  //       onClick={() => props?.action()}>
+                  //       Debit/Credit Entry(C)
+                  //     </Link>
+                  //   ),
+                  // },
+                 
                   {
                     className: `${userType == "5" ? "" : "d-none"}`,
                     label: (
@@ -500,6 +491,16 @@ const Sidebar = (props) => {
                         to="/client/txn-master"
                         onClick={() => props?.action()}>
                         Debit/Credit Entry(M)
+                      </Link>
+                    ),
+                  },
+                  {
+                    className: `${userType === "1" ? "" : "d-none"}`,
+                    label: (
+                      <Link
+                        to="/client/txn-agent"
+                        onClick={() => props?.action()}>
+                        Debit/Credit Entry(A)
                       </Link>
                     ),
                   },
@@ -661,7 +662,7 @@ const Sidebar = (props) => {
                 icon: <SlDiamond />,
                 label: (
                   <Link to="/markets" onClick={() => {props?.action(); setOpenKeys([])}}>
-                    WBT Setting
+                  Setting
                   </Link>
                 ),
               },
