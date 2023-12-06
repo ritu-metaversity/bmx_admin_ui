@@ -10,6 +10,7 @@ export const ledgerApi = createApi({
       return headers;
     },
   }),
+  tagTypes:["popup"],
   endpoints: (build) => ({
     myLedger: build.mutation({
       query: (body) => ({
@@ -24,6 +25,8 @@ export const ledgerApi = createApi({
         method: "POST",
         body
       }),
+      providesTags: ["popup"]
+      
     }),
     profitAndLossLedger: build.query({
       query: (body) => ({
@@ -39,7 +42,16 @@ export const ledgerApi = createApi({
         body
       }),
     }),
+    cashTransactionPopup: build.mutation({
+      query: (body) => ({
+        url: `/bmx/create-cash-transaction-popup-form`,
+        method: "POST",
+        body
+      }),
+      invalidatesTags: ["popup"]
+    }),
+
   }),
 });
 
-export const {useMyLedgerMutation,useDownlineLedgerQuery, useLazyProfitAndLossLedgerQuery, useClientLedgerMutation} = ledgerApi;
+export const {useMyLedgerMutation,useDownlineLedgerQuery, useLazyProfitAndLossLedgerQuery, useClientLedgerMutation, useCashTransactionPopupMutation} = ledgerApi;

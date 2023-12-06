@@ -1,134 +1,146 @@
-import { Card, Col, Divider, Pagination, Row, Table } from "antd";
-import "./SuperAgentLedger.scss";
-import { useClientLedgerMutation, useDownlineLedgerQuery } from "../../../../store/service/ledgerServices";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Card, Col, Modal, Row, Table } from "antd";
 import { useNavigate } from "react-router-dom";
+import {
+  useClientLedgerMutation,
+  useDownlineLedgerQuery,
+} from "../../../../store/service/ledgerServices";
+import LedgerPopUp from "../LedgerPopUp";
+import "./SuperAgentLedger.scss";
 
+const SuperAgentLedger = ({ userTyep, Listname }) => {
+  const [lenaBalance, setLenaBalance] = useState(0);
+  const [denaData, setDenaBalance] = useState(0);
+  const [clearData, setClearData] = useState(0);
+  const [isDepositeModalOpen, setIsDepositeModalOpen] = useState(false);
+  const [userData, setUserData] = useState({});
+  const [modalsName, setModalsName] = useState("");
+  const nav = useNavigate();
 
-const columns = [
-  {
-    title: "User Detail",
-    dataIndex: "userId",
-    key: "userId",
-  },
-  {
-    title: "Balance",
-    dataIndex: "balance",
-    key: "balance",
-    render: (text, record) => (
-      <span>
-       {Math.abs(record?.balance)}
-      </span>
-    ),
-  }
-];
-
-const SuperAgentLedger = ({userTyep, Listname}) => {
-
-  const [leneData, setLenaData] = useState({})
-  const [leneBalance, setLenaBalance] = useState(0)
-  const [denaData, setDenaBalance] = useState(0)
-  const [clearData, setClearData] = useState(0)
-const nav = useNavigate()
   const handleBackbtn = () => {
-   nav(-1)
+    nav(-1);
   };
 
-  const {data: ledger, isFetching, isLoading} = useDownlineLedgerQuery({
-    userType:userTyep
-  }, {refetchOnMountOrArgChange:true})
+  const handleClose = () => {
+    setIsDepositeModalOpen(false);
+  };
 
-  const [trigger, {data: clientData}] = useClientLedgerMutation();
+  const handleDenaModals = (val, name) => {
+    setUserData(val);
+    setModalsName(name);
+    setIsDepositeModalOpen(true);
+  };
 
-  useEffect(()=>{
-    if(Listname === "Client"){
-      trigger()
+  const columns = [
+    {
+      title: "User Detail",
+      dataIndex: "userId",
+      key: "userId",
+    },
+    {
+      title: "Balance",
+      dataIndex: "balance",
+      key: "balance",
+      render: (text, record) => <span>{Math.abs(record?.balance)}</span>,
+    },
+  ];
+
+  const renderActionButton = (record, name) => (
+    <span>
+      <button onClick={() => handleDenaModals(record, name)} className="dena_button">
+        {name}
+      </button>
+    </span>
+  );
+
+  const generateColumns = (actionName) => [
+    {
+      title: "User Detail",
+      dataIndex: "userId",
+      key: "userId",
+    },
+    {
+      title: "Balance",
+      dataIndex: "balance",
+      key: "balance",
+      render: (text, record) => <span>{Math.abs(record?.balance)}</span>,
+    },
+    {
+      title: actionName,
+      dataIndex: actionName.toLowerCase(),
+      key: actionName.toLowerCase(),
+      render: (text, record) => renderActionButton(record, actionName),
+      hidden: userTyep === 3 ? true : false,
+    },
+  ].filter((item) => !item.hidden);
+
+  const { data: ledger, isFetching, isLoading } = useDownlineLedgerQuery(
+    {
+      userType: userTyep,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
+
+  const [trigger, { data: clientData }] = useClientLedgerMutation();
+
+  useEffect(() => {
+    if (Listname === "Client") {
+      trigger();
     }
-  }, [Listname])
+  }, [Listname]);
 
-
-
-  useEffect(()=>{
+  useEffect(() => {
     const processData = (data) =>
-    data?.map((res) => res?.balance).reduce((prev, curr) => Number(prev) + Number(curr), 0);
-  if (Listname === "Client") {
-    setLenaBalance(processData(clientData?.data?.lena));
-    setDenaBalance(processData(clientData?.data?.dena));
-    setClearData(processData(clientData?.data?.clear));
-  } else {
-    setLenaBalance(processData(ledger?.data?.lena));
-    setDenaBalance(processData(ledger?.data?.dena));
-    setClearData(processData(ledger?.data?.clear));
-  }
-  }, [ledger?.data, clientData?.data])
-
+      data
+        ?.map((res) => res?.balance)
+        .reduce((prev, curr) => Number(prev) + Number(curr), 0);
+    const dataToProcess = Listname === "Client" ? clientData?.data : ledger?.data;
+    setLenaBalance(processData(dataToProcess?.lena));
+    setDenaBalance(processData(dataToProcess?.dena));
+    setClearData(processData(dataToProcess?.clear));
+  }, [ledger?.data, clientData?.data, Listname]);
 
   return (
     <>
       <Card
         className="sport_detail ledger_data"
         title={`${Listname} Ledger`}
-        extra={<button onClick={handleBackbtn}>Back</button>}>
+        extra={<button onClick={handleBackbtn}>Back</button>}
+      >
         <Row className="main_super_super_ledger">
-          <Col  xl={8} xs={24} lg={8} md={24} span={8}>
-            <div className="super_ledger item1">
-              <div>Lena</div>
-              <div>{Math.abs(leneBalance)?.toFixed(2)}</div>
-            </div>
-            <div >
-              <div className="table_section">
-              <Table
-              className="live_table limit_update"
-              bordered
-              pagination={false}
-              columns={columns}
-              loading={isLoading||isFetching}
-              dataSource={Listname === "Client"? clientData?.data?.lena: ledger?.data?.lena}>
-            </Table>
+          {[["Lena", columns], ["Dena", columns], ["Clear", columns]].map(([itemName, itemColumns], index) => (
+            <Col key={index} xl={8} xs={24} lg={8} md={24}>
+              <div className={`super_ledger item${index + 1}`}>
+                <div>{itemName}</div>
+                <div>{itemName === "Dena" ? Math.abs(denaData?.toFixed(2)) : itemName === "Clear" ? clearData?.toFixed(2) : Math.abs(lenaBalance)?.toFixed(2)}</div>
               </div>
-            </div>
-          </Col>
-          <Col  xl={8} xs={24} lg={8} md={24}>
-            <div className="super_ledger item2" >
-              <div>Dena</div>
-              <div>{Math.abs(denaData?.toFixed(2))}</div>
-            </div>
-            <div>
               <div className="table_section">
-              <Table
-              className="live_table limit_update"
-              bordered
-              pagination={false}
-              columns={columns}
-              loading={isLoading||isFetching}
-              dataSource={Listname === "Client"? clientData?.data?.dena:ledger?.data?.dena}>
-            </Table>
+                <Table
+                  className="live_table limit_update"
+                  bordered
+                  pagination={false}
+                  columns={generateColumns(itemName)}
+                  loading={isLoading || isFetching}
+                  dataSource={Listname === "Client" ? clientData?.data?.[itemName.toLowerCase()] : ledger?.data?.[itemName.toLowerCase()]}
+                />
               </div>
-            </div>
-          </Col>
-          <Col   xl={8} xs={24} lg={8} md={24}>
-            <div className="last_item">
-            <div className="super_ledger item3">
-              <div>Clear</div>
-              <div>{(clearData?.toFixed(2))}</div>
-            </div>
-            <div>
-              <div className="table_section">
-              <Table
-              className="live_table limit_update"
-              bordered
-              pagination={false}
-              columns={columns}
-              loading={isLoading||isFetching}
-              dataSource={Listname === "Client"? clientData?.data?.clear:ledger?.data?.clear}>
-            </Table>
-              </div>
-            </div>
-            </div>
-            
-          </Col>
+            </Col>
+          ))}
         </Row>
       </Card>
+
+      <Modal
+        className="lena_dena_modals"
+        destroyOnClose
+        title={<h1>{modalsName}</h1>}
+        open={isDepositeModalOpen}
+        onCancel={handleClose}
+        okButtonProps={{ style: { display: "none" } }}
+        cancelButtonProps={{ style: { display: "none" } }}
+        footer={false}
+      >
+        <LedgerPopUp handleClose={() => setIsDepositeModalOpen(false)} userData={userData} modalsName={modalsName} />
+      </Modal>
     </>
   );
 };
