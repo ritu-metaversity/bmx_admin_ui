@@ -17,15 +17,6 @@ const LedgerPopUp = ({ userData, modalsName, handleClose }) => {
 
   console.log(data, "dsfsdfsdf")
 
-  useEffect(()=>{
-    // if(data.status == true){
-    //   openNotification(data?.message)
-    // }
-
-  }, [])
- 
-
-  // const { Option } = Select;
 
 
     useEffect(()=>{
