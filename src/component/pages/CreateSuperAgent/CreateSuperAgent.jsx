@@ -405,21 +405,21 @@ const CreateSuperAgent = ({ createName }) => {
                         required: true,
                         message: "Please Enter Password",
                       },
-                      {
-                        validator: async (_, names) => {
-                          if (
-                            !passw.test(names) &&
-                            names != "" &&
-                            names != null
-                          ) {
-                            return Promise.reject(
-                              new Error(
-                                "Minimun 6 character, must contain letters and numbers"
-                              )
-                            );
-                          }
-                        },
-                      },
+                      // {
+                      //   validator: async (_, names) => {
+                      //     if (
+                      //       !passw.test(names) &&
+                      //       names != "" &&
+                      //       names != null
+                      //     ) {
+                      //       return Promise.reject(
+                      //         new Error(
+                      //           "Minimun 6 character, must contain letters and numbers"
+                      //         )
+                      //       );
+                      //     }
+                      //   },
+                      // },
                     ]}>
                     <Input type="password" placeholder="Password" />
                   </Form.Item>

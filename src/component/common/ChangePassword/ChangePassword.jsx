@@ -71,7 +71,6 @@ const ChangePassword = ({ setIsModalOpen }) => {
   const passw = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,15}$/;
 
 
-console.log(newchnagePassdata?.message, "dfdssdsds");
 
  
   return (
@@ -100,10 +99,6 @@ console.log(newchnagePassdata?.message, "dfdssdsds");
             {
               required: true,
               message: "Please input your new password!",
-            },
-            {
-              pattern: passw,
-              message: "Minimun 6 character, must contain letters and numbers",
             },
           ]}>
           <Input.Password placeholder="Enter New Password" />
