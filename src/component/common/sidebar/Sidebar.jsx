@@ -273,7 +273,26 @@ const Sidebar = (props) => {
             {
               key: "8",
               icon: <SlDiamond />,
-              label: <Link to="/markets" onClick={()=>setOpenKeys([])}>Setting</Link>,
+              label: "Setting",
+              children: [
+                {
+                  className:`${props?.logoData?.data?.selfAllowed ?"":"d-none"}`,
+                  label: (
+                    <Link
+                      to="/set-commission">
+                      Set Commission
+                    </Link>
+                  ),
+                },
+                {
+                  label: (
+                    <Link
+                      to="/markets">
+                      Setting
+                    </Link>
+                  ),
+                },
+              ],
             },
           ]}
         />
@@ -660,11 +679,34 @@ const Sidebar = (props) => {
               {
                 key: "7",
                 icon: <SlDiamond />,
-                label: (
-                  <Link to="/markets" onClick={() => {props?.action(); setOpenKeys([])}}>
-                  Setting
-                  </Link>
-                ),
+                label: "Setting",
+                children: [
+                  {
+                    className:`${props?.logoData?.data?.selfAllowed ?"":"d-none"}`,
+                    label: (
+                      <Link
+                        to="/set-commission"
+                        onClick={() => {
+                          props?.action();
+                          setOpenKeys([]);
+                        }}>
+                        Set Commission
+                      </Link>
+                    ),
+                  },
+                  {
+                    label: (
+                      <Link
+                        to="/markets"
+                        onClick={() => {
+                          props?.action();
+                          setOpenKeys([]);
+                        }}>
+                        Setting
+                      </Link>
+                    ),
+                  },
+                ],
               },
             ]}
           />
