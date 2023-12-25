@@ -682,15 +682,15 @@ const CreateSuperAgent = ({ createName }) => {
                 )}
               </Row>
 
-              {commiType === "bbb" && (
+              {/* {commiType === "bbb" && (
                 <div>
                   <h2 className="match_share">
                     {createName} Casino Commission
                   </h2>
                 </div>
-              )}
+              )} */}
 
-              <Row className="super_agent sub_super">
+              {/* <Row className="super_agent sub_super">
                 {commiType === "bbb" && (
                   <>
                     <Col span={12}>
@@ -757,7 +757,7 @@ const CreateSuperAgent = ({ createName }) => {
                     </Col>
                   </>
                 )}
-              </Row>
+              </Row> */}
 
               {casinoDetalisData?.data?.length != 0 && (
                 <div>

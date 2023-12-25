@@ -475,13 +475,13 @@ const UpdateSuper = ({ updateName }) => {
                 )}
                 
               </Row>
-              {
+              {/* {
                 commType == "bbb" &&  <div>
                 <h2 style={{marginLeft:"0px"}} className="update_agent_text">
                   Casino  Comm
                 </h2>
               </div>
-              }
+              } */}
               
               <Row className="super_agent  update_agent">
                 {/* <Col lg={12} xs={24}>
@@ -507,7 +507,7 @@ const UpdateSuper = ({ updateName }) => {
                   </Form.Item>
                 </Col> */}
 
-                {
+                {/* {
                   commType == "bbb" && <>
                   <Col lg={12} xs={24}>
                   <Form.Item
@@ -572,7 +572,7 @@ const UpdateSuper = ({ updateName }) => {
                   </Form.Item>
                 </Col>
                   </>
-                }
+                } */}
                 
                 <Col lg={12} xs={24}>
                   <Form.Item
