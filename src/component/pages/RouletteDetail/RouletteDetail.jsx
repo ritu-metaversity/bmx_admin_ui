@@ -161,7 +161,7 @@ const RouletteDetail = ({isAura, Id}) => {
                     </Dropdown>
                   </td>
                   <td>
-                    {res?.name} {res?.date}
+                    {res?.name} - {res?.date}
                   </td>
                   <td className="text-right"
                     >
