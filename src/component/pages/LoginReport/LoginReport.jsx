@@ -25,7 +25,7 @@ const LoginReport = () => {
   const userId = localStorage.getItem("userId");
   const { id } = useParams();
 
-  console.log(id ? id : userId, "dsadfsdsdsa");
+  // console.log(id ? id : userId, "dsadfsdsdsa");
 
   const [clientId, setClientId] = useState(userId);
   const [paginationTotal, setPaginationTotal] = useState(50);
@@ -108,9 +108,9 @@ const LoginReport = () => {
                 <Select
                   placeholder={id ? id : clientId}
                   options={
-                    resultData.data?.data.map((i) => ({
-                      label: i,
-                      value: i,
+                    resultData?.data?.data?.map((i) => ({
+                      label: `${i?.userId}  (${i?.userName})`,
+                      value: i?.userId,
                     })) || []
                   }
                   showSearch
