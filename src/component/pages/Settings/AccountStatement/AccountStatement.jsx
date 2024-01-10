@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import { globalSelector } from "../../../../store/global/slice";
 import dayjs from "dayjs";
 import { useLazySearchUserDownlineQuery } from "../../../../store/service/SportDetailServices";
-import axios from "axios";
 
 const { RangePicker } = DatePicker;
 
@@ -115,8 +114,8 @@ const AccountStatement = () => {
                           options={
                             resultData.isError
                               ? []
-                              : resultData.data?.data?.map((i) => ({
-                                  label: i.text,
+                              : resultData?.data?.data?.map((i) => ({
+                                  label: `${i.text} (${i?.userName})`,
                                   value: i.id,
                                 })) || []
                           }

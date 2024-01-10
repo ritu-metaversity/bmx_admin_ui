@@ -156,7 +156,7 @@ useLazySessionFancyBetDetailQuery();
                         resultData.isError
                           ? []
                           : resultData.data?.data?.map((i) => ({
-                              label: i.text,
+                            label: `${i.text} (${i?.userName})`,
                               value: i.id,
                             })) || []
                       }

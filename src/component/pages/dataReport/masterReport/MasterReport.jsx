@@ -115,9 +115,9 @@ const MasterReport = ({ reportName, userType }) => {
                 <Select
                   placeholder="Select Client"
                   options={
-                    resultData?.data.map((i) => ({
-                      label: i,
-                      value: i,
+                    resultData?.data?.map((i) => ({
+                      label: `${i?.userId}  (${i?.userName})`,
+                      value: i?.userId,
                     })) || []
                   }
                   showSearch

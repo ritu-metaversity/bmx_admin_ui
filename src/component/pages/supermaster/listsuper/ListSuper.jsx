@@ -16,10 +16,6 @@ const ListSuper = ({ userTyep, Listname }) => {
 
   const { id } = useParams();
 
-  // console.log(!id, "dfsdfsdf")
-
-  //   console.log(UserId, parentUserids, "dss")
-
   const nav = useNavigate();
   const handleBackClick = () => {
     nav(-1);
