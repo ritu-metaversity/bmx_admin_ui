@@ -44,7 +44,7 @@ const DownloadReport = ({
       responseType: "blob",
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://api.247365.exchange/admin-new-apis/bmx/excel-file-download",
+      url: "https://adminapi.247idhub.com/admin-new-apis/bmx/excel-file-download",
       // url: "http://192.168.0.65/admin-new-apis/bmx/excel-file-download",
       headers: {
         "Content-Type": "application/json",
@@ -96,7 +96,7 @@ const DownloadReport = ({
       responseType: "blob",
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://api.247365.exchange/admin-new-apis/bmx/pdf-file-download",
+      url: "https://adminapi.247idhub.com/admin-new-apis/bmx/pdf-file-download",
       // url: "http://192.168.0.65/admin-new-apis/bmx/excel-file-download",
       headers: {
         "Content-Type": "application/json",
