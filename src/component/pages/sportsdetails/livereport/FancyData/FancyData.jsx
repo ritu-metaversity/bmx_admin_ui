@@ -9,7 +9,7 @@ import {
 } from "../../../../../store/service/OddsPnlServices";
 import { useLazyTtlBookQuery } from "../../../../../store/service/supermasteAccountStatementServices";
 
-const FancyData = ({ data, keyData }) => {
+const FancyData = ({ data, keyData, handleBets }) => {
   const [FancyId, setFancyID] = useState("");
   const [open, setOpen] = useState(false);
   const [matchid, setMatchID] = useState("");
@@ -63,15 +63,7 @@ const FancyData = ({ data, keyData }) => {
     trigger(oddsPnl);
   }, [matchid]);
 
-  const handleTtlBook = (e) => {
-    setActiveBook(2);
-    e.preventDefault();
-    setShowMyBook(1);
-    getData({
-      matchid: Number(id),
-      marketid: matchid,
-    });
-  };
+  
   const ttl = results?.data?.[0]
     ? {
         [results?.data?.[0].selection1]: results?.data?.[0].pnl1,
@@ -98,7 +90,7 @@ const FancyData = ({ data, keyData }) => {
                     </div>
                   </Col>
                   <Col className="b-bottom" span={5}>
-                    <Row>
+                    <Row className="">
                       <Col span={12} className="lay lagai lagai1">
                         <div>{keyData === "Bookmaker" ? "KHAI" : "NO"}</div>
                       </Col>
@@ -112,7 +104,6 @@ const FancyData = ({ data, keyData }) => {
             </div>
             <div>
               {data?.map((res, index) => {
-                console.log(res, "Fdsfsdf");
                 if (res?.mid?.includes("BM")) return <></>;
                 return (
                   <Row key={index} className="scor fancy_all_data">
@@ -124,12 +115,20 @@ const FancyData = ({ data, keyData }) => {
                         
                         <p>{res?.nation}</p>
                         </div>
+                        <span
+                          className="fancy_book_data fancy_bet"
+                          onClick={() => handleBets(res?.sid)}>
+                          Bet
+                        </span>
                       {keyData !== "Bookmaker" && (
+                        <>
+                       
                         <span
                           className="fancy_book_data"
-                          onClick={() => hanldeBookSection(res?.sid)}>
+                          onClick={() => handleBets(res?.sid)}>
                           Book
                         </span>
+                        </>
                       )}
                       {keyData === "Bookmaker" && (
                         <>
