@@ -11,7 +11,7 @@ import DownloadReport from "../../../../common/DownloadReport/DownloadReport";
 
 const AllStatement = ({isModalOpen, setIsModalOpen,clientId, dateData, gameType }) => {
   const [trigger, { data, isFetching, isLoading }] =
-    useLazyAccountstatementQuery();
+useLazyAccountstatementQuery();
   const [isModalOpen1, setIsModalOpen1] = useState(false);
   const [marketId, setMarketId] = useState("");
   const [remark, setRemark] = useState("");
@@ -107,6 +107,8 @@ const AllStatement = ({isModalOpen, setIsModalOpen,clientId, dateData, gameType 
 
   const handleCancel = () => {
     setIsModalOpen1(false);
+    setIsModalOpen(false)
+
   };
 
   const handelAccountModals = (e, id, rem) => {
@@ -139,8 +141,8 @@ const AllStatement = ({isModalOpen, setIsModalOpen,clientId, dateData, gameType 
       userId= {clientId || id}
       type={gameType} reportType="AccountStatementReport" reportName="account-statement" 
       headerField={headerField}
-      isModalOpen={isModalOpen}
-                  setIsModalOpen={setIsModalOpen}
+      isModalOpen={isModalOpen1}
+      setIsModalOpen={setIsModalOpen1}
       />
       </div>
       <div className="table_section statement_tabs_data">
@@ -176,7 +178,7 @@ const AllStatement = ({isModalOpen, setIsModalOpen,clientId, dateData, gameType 
         <Modal
           title="Bet List"
           className="bet_list"
-          open={isModalOpen1}
+          open={isModalOpen}
           onCancel={handleCancel}
           footer={null}>
           <AccountModals marketId={marketId} remark={remark} id={id} />
