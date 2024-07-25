@@ -1,7 +1,17 @@
 import { Button, Form, Input, notification } from "antd";
-import React, { useEffect, useState } from "react";
-import { useLazyUpDateLimitesQuery, useWithdrawMutation } from "../../../../store/service/userlistService";
-import { useLocation, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+
+
+const data = {
+  "parentName": "demoSubAdmin",
+  "parentAmount": "65000.0",
+  "parentId": "demoSubAdmin",
+  "childName": "demoClient",
+  "childAmount": "5000.0",
+  "childId": "CdemoClient",
+  "childUplineAmount": null
+}
 
 const MinusLimit = () => {
   const [addTotal, setAddTotal] = useState(0);
@@ -13,38 +23,15 @@ const MinusLimit = () => {
 
   const handelAddLimit = (e) => {
     setChipsValue(e.target.value);
-    setAddTotal(Number(updateLimite?.data?.childAmount) - Number(e.target.value));
+    setAddTotal(Number(data?.childAmount) - Number(e.target.value));
   };
 
   const handelPassword = (e) => {
     setPassword(e.target.value);
   };
 
-  const [trigger, { data: addData, error,isLoading }] = useWithdrawMutation();
-  const [updateLimitsData, {data: updateLimite}] = useLazyUpDateLimitesQuery()
 
-  useEffect(()=>{
-    updateLimitsData({
-      userId:id
-    })
-  }, [id])
-
-  const openNotification = (mess) => {
-    api.success({
-      message: mess,
-      description: "Success",
-      closeIcon: false,
-      placement: "top",
-    });
-  };
-
-  const openNotificationError = (mess) => {
-    api.error({
-      message: mess,
-      closeIcon: false,
-      placement: "top",
-    });
-  };
+  
 
   const onFinish = (values) => {
     const addList = {
@@ -53,20 +40,9 @@ const MinusLimit = () => {
       lupassword: values?.pass,
       userId: id,
     };
-    trigger(addList);
+   
   };
-  useEffect(() => {
-    if (addData?.status === true) {
-      updateLimitsData({
-        userId:id,
-      });
-      setAddTotal(0);
-      openNotification(addData?.message);
-      form?.resetFields();
-    } else if (addData?.status === false || error?.data?.message) {
-      openNotificationError(addData?.message || error?.data?.message);
-    }
-  }, [addData?.data, error]);
+
   return (
     <>
       {contextHolder}
@@ -88,9 +64,9 @@ const MinusLimit = () => {
               </tr>
 
               <tr>
-              <td>{updateLimite?.data?.childId}</td>
-                <td>{updateLimite?.data?.childName}</td>
-                <td>{updateLimite?.data?.childAmount}</td>
+              <td>{data?.childId}</td>
+                <td>{data?.childName}</td>
+                <td>{data?.childAmount}</td>
                 <td>
                   <div>
                     <Form.Item
@@ -135,7 +111,6 @@ const MinusLimit = () => {
                     <Button
                       style={{ height: "unset" }}
                       className="add"
-                      loading={isLoading}
                       htmlType="submit">
                       Minus
                     </Button>

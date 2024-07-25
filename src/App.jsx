@@ -1,9 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import "./App.scss";
-import { Provider } from "react-redux";
-import { store } from "./store/store";
 import Main from "./component/common/main/Main";
-import { useEffect } from "react";
 import { notification } from "antd";
 
 let apiRef;
@@ -30,12 +27,10 @@ function App() {
  
   
   return (
-    <Provider store={store}>
       <div>
         {contextHolder}
         <Main />{" "}
       </div>
-    </Provider>
   );
 }
 

@@ -1,13 +1,37 @@
-import { Button, Form, Input, Select, Switch } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button, Form, Input,  Switch } from "antd";
+import  { useEffect, useState } from "react";
 import "./CasinoLockModals.scss";
-import {
-  useCasinoListQuery,
-  useUpdateCasinoLockMutation,
-} from "../../store/service/supermasteAccountStatementServices";
-import { openNotification, openNotificationError } from "../../App";
 
-const CasinoLockModals = ({ userIdData, handleClose }) => {
+
+const data = [
+  {
+      "casinoId": 1,
+      "casinoName": "Aura",
+      "casinoAllowed": true
+  },
+  {
+      "casinoId": 2,
+      "casinoName": "SuperNova",
+      "casinoAllowed": true
+  },
+  {
+      "casinoId": 3,
+      "casinoName": "QTech",
+      "casinoAllowed": true
+  },
+  {
+      "casinoId": 4,
+      "casinoName": "Virtual",
+      "casinoAllowed": true
+  },
+  {
+      "casinoId": 5,
+      "casinoName": "SportBook",
+      "casinoAllowed": true
+  }
+]
+
+const CasinoLockModals = ({  handleClose }) => {
   const [form] = Form.useForm();
 
   const [state, setState] = useState({
@@ -18,13 +42,9 @@ const CasinoLockModals = ({ userIdData, handleClose }) => {
     isSportBookAllowed: "",
   });
 
-  const { data } = useCasinoListQuery({userId: userIdData,},{ refetchOnMountOrArgChange: true });
-
-  const [trigger, { data: updateCasinoList, error, isLoading }] = useUpdateCasinoLockMutation();
 
   useEffect(() => {
-    data?.data?.map((key) => {
-      console.log(key, "dsdds")
+    data?.map((key) => {
       setState((prev) => {
         return {
           ...prev,
@@ -32,33 +52,18 @@ const CasinoLockModals = ({ userIdData, handleClose }) => {
         };
       });
     });
-  }, [data?.data]);
+  }, [data]);
 
 
   const onFinish = (values) => {
-    trigger({
-      ...state,
-      lupassword: values?.lupassword,
-      userId:userIdData
-    })
+   
   };
 
-  useEffect(()=>{
-    if (updateCasinoList?.status === true) {
-      openNotification(updateCasinoList?.message);
-      form?.resetFields();
-      handleClose();
-    } else if (updateCasinoList?.status === false || error?.data?.message) {
-      openNotificationError(updateCasinoList?.message || error?.data?.message);
-      handleClose();
-    }
-  }, [error, updateCasinoList?.data])
 
   return (
     <>
       <Form onFinish={onFinish} form={form} autoComplete="off">
-        {data?.data?.map((item, id) => {
-          // console.log(item, "dsfsdfs");
+        {data?.map((item, id) => {
           return (
             <Form.Item
               key={id}
@@ -101,7 +106,7 @@ const CasinoLockModals = ({ userIdData, handleClose }) => {
             </Button>
           </Form.Item>
           <Form.Item>
-            <Button loading={isLoading} type="primary" htmlType="submit">
+            <Button  type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>

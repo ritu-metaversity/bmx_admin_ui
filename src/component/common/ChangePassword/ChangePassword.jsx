@@ -1,74 +1,19 @@
-import { Button, Form, Input, message } from "antd";
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useChangePasswordMutation, useChangePasswordSelfMutation } from "../../../store/service/supermasteAccountStatementServices";
+/* eslint-disable react/prop-types */
+import { Button, Form, Input } from "antd";
+
 
 const ChangePassword = ({ setIsModalOpen }) => {
 
+  const pType = "new";
+  const uType = 5;
 
-  const [trigger, { data: chnagePassdata, error, isLoading }] = useChangePasswordMutation();
-  const [newTrigger , {data: newchnagePassdata, isLoading: newIsLoading, error:newError}] = useChangePasswordSelfMutation()
-
-  const nav = useNavigate();
-
-  const pType = localStorage.getItem("passType");
-  const uType = localStorage.getItem("userType");
-
-  console.log(pType, uType, "fsdfsfds")
-
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId")
   
  
 
-  const onFinish = (values) => {
-    const chnagePassdata = {
-      currentPassword: values?.password,
-      newPassword: values?.newpassword,
-      password: values?.newpassword,
-    };
-
-    const firstTimeLogin = {
-      oldPassword: values?.password,
-      newPassword: values?.newpassword,
-      password: values?.newpassword,
-      userid:userId,
-      token:token
-    }
-    if((pType == "old" || pType == "Old") && uType == "5"){
-      newTrigger(firstTimeLogin);
-    }else{
-      trigger(chnagePassdata);
-    }
-  };
-
-  useEffect(() => {
-    if (chnagePassdata?.status === true) {
-      message.success(chnagePassdata?.message || newchnagePassdata?.message);
-      localStorage.clear();
-      setIsModalOpen(false);
-      nav("/");
-    } else if (chnagePassdata?.status === false || error?.status === 400) {
-      message.error(chnagePassdata?.message || error?.data?.message );
-    }
-  }, [chnagePassdata, error]);
+  const onFinish = () => {};
 
 
-  useEffect(() => {
-    if (newchnagePassdata?.status === true) {
-      message.success(newchnagePassdata?.message);
-      localStorage.clear();
-      setIsModalOpen(false);
-      nav("/");
-    } else if (newchnagePassdata?.status == false || newError?.status === 400) {
-      message.error(newError?.data?.message || newchnagePassdata?.message);
-    }
-  }, [newchnagePassdata, newError]);
-
-
-
-
-  const passw = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,15}$/;
+  // const passw = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,15}$/;
 
 
 
@@ -114,7 +59,7 @@ const ChangePassword = ({ setIsModalOpen }) => {
             </Button>
           </Form.Item>
           <Form.Item>
-            <Button loading={isLoading || newIsLoading} type="primary" htmlType="submit">
+            <Button  type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>

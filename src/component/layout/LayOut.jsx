@@ -6,9 +6,7 @@ import Navbar from "../common/navbar/Navbar";
 import "./Layout.scss";
 import MarqueeTag from "../common/marquee/MarqueeTag";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useJwtTokenQuery } from "../../store/service/jwtTokenServices";
 import HomeRules from "../pages/HomeRules";
-import JwtToken from "./JwtToken";
 
 const LayOut = ({logo, logoData}) => {
   const [collapsed, setCollapsed] = useState();
@@ -27,11 +25,7 @@ const LayOut = ({logo, logoData}) => {
 
   const nav = useNavigate();
 
-  useEffect(() => {
-    if (localStorage.getItem("token") === null) {
-      nav("/");
-    }
-  }, [nav]);
+ 
 
   // const { data } = useJwtTokenQuery(undefined, { pollingInterval: 1000 });
 
@@ -59,7 +53,6 @@ const LayOut = ({logo, logoData}) => {
 
   return (
     <>
-      {(pType == "New" || pType == "new")  && <JwtToken />}
 
       <Layout className="main_layout">
         <Sidebar logoData={logoData} collll={collll} open={open} logo={logo} action={toggleDarawer} />

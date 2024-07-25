@@ -1,21 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import  { useEffect, useRef, useState } from "react";
 import {
   Button,
   Divider,
   Dropdown,
-  Empty,
   Form,
   Input,
   Menu,
   Modal,
   Pagination,
-  Select,
   Space,
-  Spin,
-  notification,
 } from "antd";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 
 import {
   SearchOutlined,
@@ -28,11 +25,7 @@ import moment from "moment";
 import Deposit from "./Deposit";
 import Withdraw from "./Withdraw";
 import BetlockModal from "./BetlockModal";
-import {  useSuperuserListMutation, useUpDateStatusMutation } from "../../store/service/supermasteAccountStatementServices";
-import {
-  usePartnershipMutation,
-} from "../../store/service/userlistService";
-import { openNotification, openNotificationError } from "../../App";
+
 import CasinoLockModals from "./CasinoLockModals";
 
 const routeFromUSerType = {
@@ -41,7 +34,73 @@ const routeFromUSerType = {
   2: "/client/list-clent/",
 };
 
-const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, UserId }) => {
+const partnerShipDetails = {
+  adminid: "1",
+  subadminid: "28417",
+  subadminoddsloss: 0.0,
+  subadminpartnershipc: 90.0,
+  subadminpartnership: 90.0,
+  subadmincasinocommssion: 0.0,
+  subadminfancyloss: 0.0,
+  supermasterid: "28417",
+  supermastepartnership: 0.0,
+  supermasteroddsloss: 0.0,
+  supermasterfancyloss: 0.0,
+  supermastepartnershipc: 0.0,
+  supermastercasinocommssion: 0.0,
+  masterid: "28417",
+  masterpartershipc: 0.0,
+  masteroddsloss: 0.0,
+  mastercasinocommssion: 0.0,
+  masterpartership: 0.0,
+  masterfancyloss: 0.0,
+  dealerid: "28417",
+  agentcasinocommssion: 0.0,
+  agentfancyloss: 0.0,
+  delearpartership: 0.0,
+  delearpartershipc: 0.0,
+  agentoddsloss: 0.0,
+  uplinepartership: 10.0,
+  uplinepartershipc: 10.0,
+  userid: "CdemoClient",
+  id: 32224.0,
+  fancyloss: 0.0,
+  casinocommssion: 0.0,
+  oddsloss: 0.0,
+  usertype: 3.0,
+  parentid: "28417",
+};
+
+const users = [
+  {
+    active: true,
+    accountlock: false,
+    mobile: null,
+    usertype: 3,
+    availablebalance: 5000.0,
+    casinoPartnerShip: 0.0,
+    partnerShip: 0.0,
+    sessionCommission: 0.0,
+    casinoCommission: 0.0,
+    availablebalancewithpnl: 320.0,
+    parent: "demoSubAdmin",
+    userid: "CdemoClient",
+    password: "Asdf1234",
+    betlock: false,
+    matchCommission: 0.0,
+    username: "demoClient",
+    dateOfJoining: "2024-03-05 13:45:10",
+    id: 32224,
+    creditref: 5000.0,
+    balancePlusPnl: 5320.0,
+  },
+];
+
+const ClientUserListTable = ({
+  userType,
+  Listname,
+ 
+}) => {
   // console.log(Listname, "sdcdsdas")
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeStatus, setActiveStatus] = useState();
@@ -54,55 +113,42 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
   const [dataVal, setDataVal] = useState();
   const [paginationTotal, setPaginationTotal] = useState(50);
   const [indexData, setIndexData] = useState(0);
-  const [partnershipDetails, setPartnershipDetails] = useState({});
   const [userIds, setUserIds] = useState("");
-  
+
   const [betStatus, setBetStatus] = useState(false);
-  const [clientDataState, setClientDataState] = useState(false);
   const [accStatus, setAccStatus] = useState(false);
   const [droupSearch, setDroupSearch] = useState(false);
   const [userName, setUserName] = useState("");
   const [userBalance, setUserBalance] = useState(0);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownStates, setDropdownStates] = useState([]);
   const [layoutOpen, setLayoutOpen] = useState(false);
 
-  
-  const [form] = Form.useForm();
+  const totalPages = 1;
 
-  const [partnerShipData, { data: partnerShipDetail, isLoading: loading }] =
-    usePartnershipMutation();
+  const [form] = Form.useForm();
 
   const showModal = (val) => {
     setUserIds(val);
-    const partnerShipDetail = {
-      userId: val,
-    };
-    partnerShipData(partnerShipDetail);
+
     setIsModalOpen(true);
   };
-
-  useEffect(() => {
-    setPartnershipDetails(partnerShipDetail?.data);
-  }, [partnerShipDetail?.data]);
 
   const showWithdrawnModal = () => {
     SetWithdrawnModal(true);
     setDropdownStates([]);
   };
 
-
   const handleCancel = () => {
     setIsModalOpen(false);
-     setDropdownStates([]);
+    setDropdownStates([]);
   };
   const handleDepositeOk = () => {
     SetisDepositeModalOpen(false);
-     setDropdownStates([]);
+    setDropdownStates([]);
   };
   const handleDepositeCancel = () => {
     SetisDepositeModalOpen(false);
-     setDropdownStates([]);
+    setDropdownStates([]);
   };
   const showDepositModal = () => {
     SetisDepositeModalOpen(true);
@@ -111,44 +157,26 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
 
   const { id } = useParams();
 
-  //API CALL
-  const [getData, { data: results, isLoading, isFetching, isError }] =
-  useSuperuserListMutation();
-
-  const [activeData, { data: Activestatus, error }] = useUpDateStatusMutation();
-
-  useEffect(()=>{
-    setParentUserIds(results?.data?.users[0]?.parent)
-  }, [parentUserids, results?.data?.users[0]?.parent])
 
   const handleActive = () => {
-     setDropdownStates([]);
-    activeData({
-      userId: dataVal,
-    });
+    setDropdownStates([]);
   };
-  useEffect(() => {
-    getData({
-      userType: userType,
-      parentUserId: id || null,
-      noOfRecords: paginationTotal,
-      index: indexData,
-      userId: "",
-    });
-  }, [id, userType, paginationTotal, indexData, Activestatus?.status]);
 
   const [userIdData, setUserIdData] = useState("");
 
-  const handleParentId = (val, bal, user, parentUserID, betStatus, accStatus) => {
+  const handleParentId = (
+    val,
+    bal,
+    user,
+    parentUserID,
+    betStatus,
+    accStatus
+  ) => {
     setParentUserId(val);
     setBalance(bal);
     setUserIdData(user);
-    setParentUserIds(parentUserID);
-    setBetStatus(betStatus),
-    setAccStatus(accStatus)
+    setBetStatus(betStatus), setAccStatus(accStatus);
   };
-
-
 
   const handleEditData = (val, active, userName, balanc) => {
     setDataVal(val);
@@ -157,21 +185,21 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
     setUserName(userName);
   };
 
-  const userId = localStorage.getItem("userId");
+  const userId = "demo";
 
   const handleBlockBettting = () => {
-     setDropdownStates([]);
+    setDropdownStates([]);
     setBetLockModals(true);
   };
   const handleBlockCasino = () => {
-     setDropdownStates([]);
+    setDropdownStates([]);
     setCasinoLockModals(true);
   };
 
   const nav = useNavigate();
 
   const handleUpdateLimites = (data) => {
-    setDropdownStates([])
+    setDropdownStates([]);
     const infoData = {
       name: userName,
       uBalance: userBalance,
@@ -181,17 +209,14 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
 
   const items = [
     {
-      className: `${parentUserids == userId ? "" : "d_none"}`,
       label: <div onClick={showDepositModal}>Deposit</div>,
       key: "0",
     },
     {
-      className: `${parentUserids == userId ? "" : "d_none"}`,
       label: <div onClick={showWithdrawnModal}>Withdrawn</div>,
       key: "1",
     },
     {
-      className: `${parentUserids == userId ? "" : "d_none"}`,
       label: (
         <div onClick={handleActive}>{`${
           activeStatus === true ? "inActive" : "Active"
@@ -200,20 +225,19 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
       key: "2",
     },
     {
-      className: `${parentUserids == userId ? "" : "d_none"}`,
       label: <div onClick={handleBlockBettting}>Block Betting</div>,
       key: "3",
     },
     {
-      className: `${parentUserids == userId ? "" : "d_none"}`,
       label: <div onClick={handleBlockCasino}>Block Casino</div>,
       key: "4",
     },
     {
-      className: `${parentUserids == userId ? "" : "d_none"}`,
       label: (
         <Link
-        onClick={()=>{ setDropdownStates([])}}
+          onClick={() => {
+            setDropdownStates([]);
+          }}
           to={`${
             Listname === "Super Master"
               ? `/client/update-super/${dataVal}`
@@ -229,31 +253,45 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
       key: "5",
     },
     {
-      className: `${parentUserids == userId ? "" : "d_none"}`,
       label: (
         <div onClick={() => handleUpdateLimites(dataVal)}>Update Limit</div>
       ),
       key: "6",
     },
     {
-      label: <Link onClick={()=> setDropdownStates([])} to={`/account-statement/${dataVal}`}>Statement</Link>,
+      label: (
+        <Link
+          onClick={() => setDropdownStates([])}
+          to={`/account-statement/${dataVal}`}>
+          Statement
+        </Link>
+      ),
       key: "7",
     },
     {
       label: (
-        <Link onClick={()=> setDropdownStates([])} to={`/client/account-operations/${dataVal}`}>
+        <Link
+          onClick={() => setDropdownStates([])}
+          to={`/client/account-operations/${dataVal}`}>
           Account Operations
         </Link>
       ),
       key: "8",
     },
     {
-      label: <Link onClick={()=> setDropdownStates([])} to={`/client/login-report/${dataVal}`}>Login Report</Link>,
+      label: (
+        <Link
+          onClick={() => setDropdownStates([])}
+          to={`/client/login-report/${dataVal}`}>
+          Login Report
+        </Link>
+      ),
       key: "9",
     },
     {
       label: (
-        <Link onClick={()=> setDropdownStates([])}
+        <Link
+          onClick={() => setDropdownStates([])}
           className={userType == 3 ? "d_none" : ""}
           to={routeFromUSerType[userType] + parentUserId}>
           Downline
@@ -264,173 +302,111 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
   ];
 
 
-  useEffect(() => {
-    if (Activestatus?.status === true) {
-      openNotification(Activestatus?.message);
-    }
-  }, [Activestatus?.status]);
 
-  useEffect(()=>{
-    if(error?.status === 400){
-      openNotificationError(error?.data?.message)
-    }
-    
-  },[error])
 
-  const onFinish = (values) => {
-    getData({
-      userType: userType,
-      parentUserId: id || null,
-      noOfRecords: paginationTotal,
-      index: indexData,
-      userId: values?.username,
-    });
-    if (results?.status === true) {
-      form.resetFields();
-      setDroupSearch(false);
-    }
-  };
 
-  const uType = localStorage.getItem("userType");
-
-  useEffect(() => {
-    const initialStates = new Array(results?.data?.user?.length).fill(false);
-    setDropdownStates(initialStates);
-  }, [results?.data?.user]);
-
-  const handleScroll = () => {
-    setLayoutOpen(false)
-    const updatedDropdownStates = dropdownStates.map(() => false);
-    setDropdownStates(updatedDropdownStates)
-    setIsDropdownOpen(false);
-  };
+  const onFinish = (values) => {};
 
   const toggleDropdown = (index) => {
     const updatedDropdownStates = [...dropdownStates];
     updatedDropdownStates[index] = !updatedDropdownStates[index];
     setDropdownStates(updatedDropdownStates);
-    setLayoutOpen(false)
+    setLayoutOpen(false);
   };
   const myElementRef = useRef(null);
 
-  useEffect(() => {
-    const element = myElementRef.current;
-    if(!isDropdownOpen){
-      window.addEventListener("scroll", handleScroll);
-    element.addEventListener("scroll", handleScroll);
-
-    }
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      element.removeEventListener("scroll", handleScroll);
-
-    };
-  }, [isDropdownOpen]);
-
   return (
-    <>{
-      layoutOpen && <div className="overlay_layout"></div>
-    }
-    <div>
-      {droupSearch && (
-        <div className="over_view" onClick={() => setDroupSearch(false)}></div>
-      )}
-      <div  className="sport_detail m-0 ant-spin-nested-loading" >
-        {
-          <div ref={myElementRef} className="table_section statement_tabs_data ant-spin-nested-loading" style={{overflow:`${(isLoading || isFetching) ?"hidden":"scroll"}`}}>
-             {isLoading || isFetching ? (
-                <div className="spin_icon user_spin">
-                  <Spin size="large" />
-                </div>
-              ) : (
-                ""
-              )}
-            <table className={`live_table ${id && "mt-0" }`}>
-              <tr>
-                <th rowSpan={2}>#</th>
-                <th rowSpan={2}></th>
-                <th rowSpan={2}>
-                  <div className="main_search_droup">
-                    <p>Code</p>
-                    {droupSearch && (
-                      <Menu className="menu_item">
-                        <Form
-                          name="code"
-                          form={form}
-                          initialValues={{
-                            remember: true,
-                          }}
-                          onFinish={onFinish}
-                          autoComplete="off">
-                          <Form.Item name="username">
-                            <Input />
-                          </Form.Item>
+    <>
+      {layoutOpen && <div className="overlay_layout"></div>}
+      <div>
+        {droupSearch && (
+          <div
+            className="over_view"
+            onClick={() => setDroupSearch(false)}></div>
+        )}
+        <div className="sport_detail m-0 ant-spin-nested-loading">
+          {
+            <div
+              ref={myElementRef}
+              className="table_section statement_tabs_data ant-spin-nested-loading">
+              <table className={`live_table ${id && "mt-0"}`}>
+                <tr>
+                  <th rowSpan={2}>#</th>
+                  <th rowSpan={2}></th>
+                  <th rowSpan={2}>
+                    <div className="main_search_droup">
+                      <p>Code</p>
+                      {droupSearch && (
+                        <Menu className="menu_item">
+                          <Form
+                            name="code"
+                            form={form}
+                            initialValues={{
+                              remember: true,
+                            }}
+                            onFinish={onFinish}
+                            autoComplete="off">
+                            <Form.Item name="username">
+                              <Input />
+                            </Form.Item>
 
-                          <div className="agent_search_deatil">
-                            <Form.Item>
-                              <Button
-                                type="primary"
-                                htmlType="submit"
-                                style={{
-                                  width: "86px",
-                                  marginRight: "8px",
-                                }}>
-                                <SearchOutlined /> Search
-                              </Button>
-                            </Form.Item>
-                            <Form.Item>
-                              <Button
-                                onClick={() => form.resetFields()}
-                                className="ant_reset_btn"
-                                style={{ width: "86px" }}>
-                                Reset
-                              </Button>
-                            </Form.Item>
-                          </div>
-                        </Form>
-                      </Menu>
-                    )}
-                    <p className="search_code">
-                      <Space>
-                        <SearchOutlined
-                          onClick={() => setDroupSearch(!droupSearch)}
-                        />
-                      </Space>
-                    </p>
-                  </div>
-                </th>
-                <th rowSpan={2}>Name</th>
-                <th rowSpan={2}>
-                  {uType == 5
-                    ? "Sub Admin"
-                    : uType == 0
-                    ? "Super Master"
-                    : uType == 1
-                    ? "Master"
-                    : uType == 2
-                    ? "Agent"
-                    : ""}
-                </th>
-                <th rowSpan={2}>Contact</th>
-                <th rowSpan={2}>D.O.J </th>
-                <th rowSpan={2}>Share%</th>
-                <th rowSpan={2}>PWD</th>
-                <th colSpan={3} className="text-center">
-                  {Listname} Comm %
-                </th>
-                <th rowSpan={2} className="text-right">C.Chips</th>
-                <th rowSpan={2} className="text-right">Credit Reference</th>
-                <th rowSpan={2}>Status</th>
-              </tr>
-              <tr>
-                <th>Type</th>
-                <th>Match</th>
-                <th>SSN</th>
-              </tr>
-         
-              {!isError &&
-                results?.data?.users?.map((res, id) => {
+                            <div className="agent_search_deatil">
+                              <Form.Item>
+                                <Button
+                                  type="primary"
+                                  htmlType="submit"
+                                  style={{
+                                    width: "86px",
+                                    marginRight: "8px",
+                                  }}>
+                                  <SearchOutlined /> Search
+                                </Button>
+                              </Form.Item>
+                              <Form.Item>
+                                <Button
+                                  onClick={() => form.resetFields()}
+                                  className="ant_reset_btn"
+                                  style={{ width: "86px" }}>
+                                  Reset
+                                </Button>
+                              </Form.Item>
+                            </div>
+                          </Form>
+                        </Menu>
+                      )}
+                      <p className="search_code">
+                        <Space>
+                          <SearchOutlined
+                            onClick={() => setDroupSearch(!droupSearch)}
+                          />
+                        </Space>
+                      </p>
+                    </div>
+                  </th>
+                  <th rowSpan={2}>Name</th>
+                  <th rowSpan={2}>Sub Admin</th>
+                  <th rowSpan={2}>Contact</th>
+                  <th rowSpan={2}>D.O.J </th>
+                  <th rowSpan={2}>Share%</th>
+                  <th rowSpan={2}>PWD</th>
+                  <th colSpan={3} className="text-center">
+                    {Listname} Comm %
+                  </th>
+                  <th rowSpan={2} className="text-right">
+                    C.Chips
+                  </th>
+                  <th rowSpan={2} className="text-right">
+                    Credit Reference
+                  </th>
+                  <th rowSpan={2}>Status</th>
+                </tr>
+                <tr>
+                  <th>Type</th>
+                  <th>Match</th>
+                  <th>SSN</th>
+                </tr>
+
+                {users?.map((res, id) => {
                   return (
                     <tr key={id}>
                       <td>
@@ -450,14 +426,13 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
                             res?.betlock,
                             res?.accountlock
                           )
-                        }> 
+                        }>
                         <Dropdown
                           className="droup_menu"
                           open={dropdownStates[id]}
                           onOpenChange={() => toggleDropdown(id)}
                           menu={{ items, className: "menu_data" }}
-                          trigger={["click", "contextMenu"]}
-                          >
+                          trigger={["click", "contextMenu"]}>
                           <div
                             className="droup_link"
                             style={{ cursor: "pointer" }}
@@ -494,142 +469,123 @@ const UserListTable = ({ userType, Listname, parentUserids, setParentUserIds, Us
                       </td>
                       <td>{Number(res?.matchCommission)?.toFixed(2)}</td>
                       <td>{Number(res?.sessionCommission)?.toFixed(2)}</td>
-                      <td className="text-right">{userType == 3? Number(res?.balancePlusPnl)?.toFixed(2) : Number(res?.availablebalance)?.toFixed(2)}</td>
-                      <td className="text-right">{Number(res?.creditref)?.toFixed(2)}</td>
+                      <td className="text-right">
+                        {userType == 3
+                          ? Number(res?.balancePlusPnl)?.toFixed(2)
+                          : Number(res?.availablebalance)?.toFixed(2)}
+                      </td>
+                      <td className="text-right">
+                        {Number(res?.creditref)?.toFixed(2)}
+                      </td>
                       <td>{res?.active === true ? "Active" : "InActive"}</td>
                     </tr>
                   );
                 })}
-            </table>
-          </div>
-        }
+              </table>
+            </div>
+          }
 
-        {results?.data?.users === undefined || isError ? (
+          {/* {users === undefined || isError ? (
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-        ) : (
+        ) : ( */}
           <>
             <Divider />
             <div className="pagination_cus">
               <Pagination
                 className="pagination_main ledger_pagination"
                 onShowSizeChange={(c, s) => setPaginationTotal(s)}
-                total={
-                  results?.data?.totalPages &&
-                  results?.data?.totalPages * paginationTotal
-                }
+                total={totalPages && totalPages * paginationTotal}
                 defaultPageSize={50}
                 pageSizeOptions={[50, 100, 150, 200, 250]}
                 onChange={(e) => setIndexData(e - 1)}
               />
             </div>
           </>
-        )}
+
+          <Modal
+            className="partnership"
+            title={`Partnership Info - ${userIds}`}
+            open={isModalOpen}
+            onCancel={handleCancel}
+            okButtonProps={{ style: { display: "none" } }}>
+            <ModalsData partnershipDetails={partnerShipDetails} />
+          </Modal>
+        </div>
+
         <Modal
-          className="partnership"
-          title={`Partnership Info - ${userIds}`}
-          open={isModalOpen}
-          onCancel={handleCancel}
-          okButtonProps={{ style: { display: "none" } }}>
-          <ModalsData
-            loading={loading}
-            partnershipDetails={partnershipDetails}
+          className="modal_deposit"
+          destroyOnClose
+          title={<h1>Deposit Chips</h1>}
+          open={isDepositeModalOpen}
+          onOk={handleDepositeOk}
+          onCancel={handleDepositeCancel}
+          okButtonProps={{ style: { display: "none" } }}
+          cancelButtonProps={{ style: { display: "none" } }}
+          footer={null}>
+          <Deposit handleClose={() => SetisDepositeModalOpen(false)} />
+        </Modal>
+
+        <Modal
+          className="modal_deposit"
+          destroyOnClose
+          title={
+            <h1>
+              <span>Withdraw Chips</span>
+            </h1>
+          }
+          open={WithdrawnModal}
+          onOk={handleDepositeOk}
+          onCancel={() => SetWithdrawnModal(false)}
+          okButtonProps={{ style: { display: "none" } }}
+          cancelButtonProps={{ style: { display: "none" } }}
+          footer={null}>
+          <Withdraw handleClose={() => SetWithdrawnModal(false)} />
+        </Modal>
+
+        <Modal
+          className="modal_deposit"
+          destroyOnClose
+          title={
+            <h1>
+              <span>Betting Lock</span>
+            </h1>
+          }
+          open={betLockModals}
+          // onOk={handleBetLockOk}
+          onCancel={() => setBetLockModals(false)}
+          okButtonProps={{ style: { display: "none" } }}
+          cancelButtonProps={{ style: { display: "none" } }}
+          footer={null}>
+          <BetlockModal
+            betStatus={betStatus}
+            accStatus={accStatus}
+            handleClose={() => setBetLockModals(false)}
+           
+          />
+        </Modal>
+
+        <Modal
+          className="modal_deposit"
+          destroyOnClose
+          title={
+            <h1>
+              <span style={{ fontSize: "18px" }}>Casino Allowed</span>
+            </h1>
+          }
+          open={casinoLockModals}
+          // onOk={handleBetLockOk}
+          onCancel={() => setCasinoLockModals(false)}
+          okButtonProps={{ style: { display: "none" } }}
+          cancelButtonProps={{ style: { display: "none" } }}
+          footer={null}>
+          <CasinoLockModals
+            userIdData={userIdData}
+            handleClose={() => setCasinoLockModals(false)}
           />
         </Modal>
       </div>
-
-      <Modal
-        className="modal_deposit"
-        destroyOnClose
-        title={<h1>Deposit Chips</h1>}
-        open={isDepositeModalOpen}
-        onOk={handleDepositeOk}
-        onCancel={handleDepositeCancel}
-        okButtonProps={{ style: { display: "none" } }}
-        cancelButtonProps={{ style: { display: "none" } }}
-        footer={null}>
-        <Deposit
-        setClientDataState={setClientDataState}
-          handleClose={() => SetisDepositeModalOpen(false)}
-          userIdData={userIdData}
-          data={dataVal}
-        />
-      </Modal>
-
-      <Modal
-        className="modal_deposit"
-        destroyOnClose
-        title={
-          <h1>
-            <span>Withdraw Chips</span>
-          </h1>
-        }
-        open={WithdrawnModal}
-        onOk={handleDepositeOk}
-        onCancel={() => SetWithdrawnModal(false)}
-        okButtonProps={{ style: { display: "none" } }}
-        cancelButtonProps={{ style: { display: "none" } }}
-        footer={null}>
-        <Withdraw
-        setClientDataState={setClientDataState}
-          userIdData={userIdData}
-          handleClose={() => SetWithdrawnModal(false)}
-          data={dataVal}
-        />
-      </Modal>
-
-      <Modal
-        className="modal_deposit"
-        destroyOnClose
-        title={
-          <h1>
-            <span>Betting Lock</span>
-          </h1>
-        }
-        open={betLockModals}
-        // onOk={handleBetLockOk}
-        onCancel={() => setBetLockModals(false)}
-        okButtonProps={{ style: { display: "none" } }}
-        cancelButtonProps={{ style: { display: "none" } }}
-        footer={null}>
-        <BetlockModal
-          userIdData={userIdData}
-          setBetStatus={setBetStatus}
-          betStatus={betStatus}
-          setAccStatus={setAccStatus}
-          accStatus= {accStatus}
-          handleClose={() => setBetLockModals(false)}
-          paginationTotal={paginationTotal}
-          index={indexData}
-          id={id}
-          userType={userType}
-          getData={getData}
-          
-        />
-      </Modal>
-
-      <Modal
-        className="modal_deposit"
-        destroyOnClose
-        title={
-          <h1>
-            <span style={{fontSize: "18px"}}>Casino Allowed</span>
-          </h1>
-        }
-        open={casinoLockModals}
-        // onOk={handleBetLockOk}
-        onCancel={() => setCasinoLockModals(false)}
-        okButtonProps={{ style: { display: "none" } }}
-        cancelButtonProps={{ style: { display: "none" } }}
-        footer={null}>
-        <CasinoLockModals
-        userIdData={userIdData}
-        handleClose={() => setCasinoLockModals(false)}
-        />
-      </Modal>
-
-    </div>
     </>
   );
 };
 
-export default UserListTable;
+export default ClientUserListTable;

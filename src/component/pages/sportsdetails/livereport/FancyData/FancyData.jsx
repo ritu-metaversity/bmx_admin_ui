@@ -1,13 +1,8 @@
 import { Button, Col, Modal, Row } from "antd";
-import React, { useEffect, useState } from "react";
-import FancyBets from "../fancyBets/FancyBets";
+import { useEffect, useState } from "react";
+
 import FancyBookModals from "../FancyBookModals/FancyBookModals";
 import { useParams } from "react-router-dom";
-import {
-  useFancyPnlQuery,
-  useLazyOddsQuPnlQuery,
-} from "../../../../../store/service/OddsPnlServices";
-import { useLazyTtlBookQuery } from "../../../../../store/service/supermasteAccountStatementServices";
 
 const FancyData = ({ data, keyData, handleBets }) => {
   const [FancyId, setFancyID] = useState("");
@@ -18,15 +13,9 @@ const FancyData = ({ data, keyData, handleBets }) => {
 
   const { id } = useParams();
 
-  const hanldeBookSection = (val) => {
-    setOpen(true);
-    setFancyID(val);
-  };
   const handleCancel = () => {
     setOpen(false);
   };
-
-  const [getData, { data: results }] = useLazyTtlBookQuery();
 
   useEffect(() => {
     data?.map((res) => {
@@ -35,42 +24,13 @@ const FancyData = ({ data, keyData, handleBets }) => {
     });
   }, [data]);
 
-  const [trigger, { data: PnlOdds }] = useLazyOddsQuPnlQuery();
 
-  const { data: fancyPnl } = useFancyPnlQuery({
-    matchId: id,
-  });
   const handleMyBook = (e) => {
     setActiveBook(1);
     e.preventDefault();
     setShowMyBook(2);
-    const oddsPnl = {
-      matchId: Number(id),
-    };
-    trigger(oddsPnl);
   };
 
-  useEffect(() => {
-    id &&
-      matchid &&
-      getData({
-        matchid: Number(id),
-        marketid: matchid,
-      });
-    const oddsPnl = {
-      matchId: Number(id),
-    };
-    trigger(oddsPnl);
-  }, [matchid]);
-
-  
-  const ttl = results?.data?.[0]
-    ? {
-        [results?.data?.[0].selection1]: results?.data?.[0].pnl1,
-        [results?.data?.[0].selection2]: results?.data?.[0].pnl2,
-        [results?.data?.[0].selection3]: results?.data?.[0].pnl3,
-      }
-    : {};
   return (
     <>
       <div className="fancy_section">
@@ -109,84 +69,27 @@ const FancyData = ({ data, keyData, handleBets }) => {
                   <Row key={index} className="scor fancy_all_data">
                     <Col span={19} className="match_title">
                       <div className="title ball">
-                        {
-                          keyData == "BallByBall" && <p className="ball_value">{res?.ball}</p> 
-                        }
-                        
+                        {keyData == "BallByBall" && (
+                          <p className="ball_value">{res?.ball}</p>
+                        )}
+
                         <p>{res?.nation}</p>
-                        </div>
-                        <span
-                          className="fancy_book_data fancy_bet"
-                          onClick={() => handleBets(res?.sid)}>
-                          Bet
-                        </span>
+                      </div>
+                      <span
+                        className="fancy_book_data fancy_bet"
+                        onClick={() => handleBets(res?.sid)}>
+                        Bet
+                      </span>
                       {keyData !== "Bookmaker" && (
                         <>
-                       
-                        <span
-                          className="fancy_book_data"
-                          onClick={() => handleBets(res?.sid)}>
-                          Book
-                        </span>
+                          <span
+                            className="fancy_book_data"
+                            onClick={() => handleBets(res?.sid)}>
+                            Book
+                          </span>
                         </>
                       )}
-                      {keyData === "Bookmaker" && (
-                        <>
-                          {showMyBook === 1 && (
-                            <span
-                              className={
-                                ttl[res.sid] < 0
-                                  ? "text_danger"
-                                  : "text_success"
-                              }>
-                              {ttl[res.sid] || "0.0"}
-                            </span>
-                          )}
-                          {PnlOdds?.data?.map((res, id) => {
-                            if (!res?.marketId?.includes("BM")) return <></>;
-                            return (
-                              <>
-                                {showMyBook === 2 && (
-                                  <div className="sub_title" key={id}>
-                                    {index === 0 ? (
-                                      <span
-                                        className={
-                                          res?.pnl1 < 0
-                                            ? "text_danger"
-                                            : "text_success"
-                                        }>
-                                        {res?.pnl1 || 0}
-                                      </span>
-                                    ) : index === 1 ? (
-                                      <span
-                                        className={
-                                          res?.pnl2 < 0
-                                            ? "text_danger"
-                                            : "text_success"
-                                        }>
-                                        {res?.pnl2 || 0}
-                                      </span>
-                                    ) : index === 3 ? (
-                                      <span
-                                        className={
-                                          res?.pnl3 < 0
-                                            ? "text_danger"
-                                            : "text_success"
-                                        }>
-                                        {res?.pnl3 || 0}
-                                      </span>
-                                    ) : (
-                                      ""
-                                    )}
-                                  </div>
-                                )}
-                              </>
-                            );
-                          })}
-                        </>
-                      )}
-
-                      <div></div>
+                      
                     </Col>
                     <Col
                       data-before-content={res?.gstatus}

@@ -5,7 +5,6 @@ import { CaretDownOutlined } from "@ant-design/icons";
 import { useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 import moment from "moment";
-import { useRouletteDetailsQuery } from "../../../store/service/CasinoServices";
 
 const { RangePicker } = DatePicker;
 
@@ -19,6 +18,8 @@ const RouletteDetail = ({isAura, Id}) => {
   const [isAuraDetails, setIsAuraDetails] = useState();
 
   const navigate = useNavigate();
+
+  const data =[]
   
   const handleBackbtn = () => {
     navigate(-1);
@@ -88,19 +89,6 @@ const RouletteDetail = ({isAura, Id}) => {
   }, [isDropdownOpen]);
 
 
-  const {
-    data: rouletteData,
-    isLoading,
-    isFetching,
-  } = useRouletteDetailsQuery(
-    {
-      casinoId: Id,
-      startDate: dateData[0],
-      endDate: dateData[1],
-    },
-    { refetchOnMountOrArgChange: true }
-  );
-
   return (
     <>
       <Card
@@ -131,14 +119,8 @@ const RouletteDetail = ({isAura, Id}) => {
               <th className="text-right">Comm Diya Share Wise</th>
               <th className="text-right">Pnl</th>
             </tr>
-            {isLoading || isFetching ? (
-              <div className="spin_icon comp_spin">
-                <Spin size="large" />
-              </div>
-            ) : (
-              ""
-            )}
-            {rouletteData?.data?.map((res, id) => {
+           
+            {data?.map((res, id) => {
               return (
                 <tr key={res?.key}>
                   <td style={{ cursor: "pointer" }}>
@@ -191,8 +173,7 @@ const RouletteDetail = ({isAura, Id}) => {
                 </tr>
               );
             })}
-            {(rouletteData?.data === undefined ||
-              rouletteData?.data?.length === 0) && (
+            {(data?.length === 0) && (
               <tr>
                 {" "}
                 <td colSpan={9}>

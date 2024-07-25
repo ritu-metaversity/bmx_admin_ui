@@ -1,55 +1,26 @@
-import React, { useEffect } from "react";
-import { Button, Form, Input, InputNumber, Spin} from "antd";
+/* eslint-disable react/prop-types */
+import { Button, Form, Input, InputNumber} from "antd";
 import "./Deposit.scss";
-import {
-  useDepositAndWithdrawQuery,
-  useMinusLimitMutation,
-} from "../../store/service/userlistService";
-import { openNotification, openNotificationError } from "../../App";
 
-const Withdraw = ({ data:datadeposit, userIdData, handleClose, setClientDataState }) => {
+
+const Withdraw = ({  handleClose, }) => {
   const [form]= Form.useForm();
 
-
-  const [trigger, { data, error, isLoading }] = useMinusLimitMutation();
-  const {data: depositeWithdraw} = useDepositAndWithdrawQuery({
-    userId:datadeposit
-  });
-
-  const onFinish = (values) => {
-    const withdrawData = {
-      amount: Number(values?.number),
-      remark: "credit withdraw",
-      lupassword: values?.password,
-      userId: userIdData,
-    };
-    trigger(withdrawData);
+  const onFinish = () => {
+ 
     form?.resetFields();
   };
 
-  useEffect(() => {
-    if (data?.status === true) {
-      openNotification(data?.message);
-      setClientDataState(true)
-      form?.resetFields();
-      handleClose();
-    } else if (data?.status === false || error?.data?.message) {
-      openNotificationError(data?.message || error?.data?.message);
-      handleClose();
-    }
-  }, [data?.data, error]);
+
+  const childUplineAmount = -200
 
 
   return (
     <>
       <div className="ant-spin-nested-loading">
-      {isLoading && (
-          <>
-            <Spin className="spin_icon comp_spin" size="large"></Spin>
-          </>
-        )}
+      
       <div>
-        <p style={{fontSize:"23px", paddingBottom:"12px"}}>Curr Coins : <span className={depositeWithdraw?.data?.childUplineAmount < 0?"text_danger":"text_success"}>{depositeWithdraw?.data?.childUplineAmount}</span></p>
+        <p style={{fontSize:"23px", paddingBottom:"12px"}}>Curr Coins : <span className={childUplineAmount < 0?"text_danger":"text_success"}>{childUplineAmount}</span></p>
       </div>
       <div className="form_modals">
        

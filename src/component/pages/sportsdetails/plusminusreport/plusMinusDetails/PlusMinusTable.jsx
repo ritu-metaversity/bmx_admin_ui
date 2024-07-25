@@ -1,48 +1,346 @@
-import React, { useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { useSportPlusMinusQuery } from "../../../../../store/service/SportDetailServices";
-import { MapInteractionCSS } from "react-map-interaction";
-import { Empty, Spin } from "antd";
+/* eslint-disable no-unreachable */
+/* eslint-disable no-unsafe-optional-chaining */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-key */
+import { useState, useEffect } from "react";
+
+
+const data =  {
+  "demo - (demoUser)": {
+      "groupName": "subadmin",
+      "total": {
+          "matchAmount": 373.00,
+          "matchStake": 400.00,
+          "sessionAmount": 10.00,
+          "sessionStake": 100.00,
+          "totalAmount": 383.00,
+          "matchComm": 0.00,
+          "sessionComm": 0.00,
+          "totalComm": 0.00,
+          "bookmakerAmount": 0,
+          "admin": {
+              "userId": null,
+              "userName": null,
+              "matchComm": 0.00,
+              "sessionComm": 0.00,
+              "totalComm": 0.00,
+              "netAmount": 383.00,
+              "shareAmount": 383.00,
+              "finalAmount": 0.00
+          },
+          "subAdmin": {
+              "userId": null,
+              "userName": null,
+              "matchComm": 0.00,
+              "sessionComm": 0.00,
+              "totalComm": 0.00,
+              "netAmount": 383.00,
+              "shareAmount": 344.70,
+              "finalAmount": 38.30
+          },
+          "superMaster": {
+              "userId": null,
+              "userName": null,
+              "matchComm": 0.00,
+              "sessionComm": 0.00,
+              "totalComm": 0.00,
+              "netAmount": 383.00,
+              "shareAmount": 38.30,
+              "finalAmount": 344.70
+          },
+          "master": {
+              "userId": null,
+              "userName": null,
+              "matchComm": 0.00,
+              "sessionComm": 0.00,
+              "totalComm": 0.00,
+              "netAmount": 383.00,
+              "shareAmount": 38.30,
+              "finalAmount": 344.70
+          },
+          "dealer": {
+              "userId": null,
+              "userName": null,
+              "matchComm": 0.00,
+              "sessionComm": 0.00,
+              "totalComm": 0.00,
+              "netAmount": 383.00,
+              "shareAmount": 38.30,
+              "finalAmount": 344.70
+          }
+      },
+      "Mdemo - (demo)": {
+          "groupName": "supermaster",
+          "total": {
+              "matchAmount": 373.00,
+              "matchStake": 400.00,
+              "sessionAmount": 10.00,
+              "sessionStake": 100.00,
+              "totalAmount": 383.00,
+              "matchComm": 0.00,
+              "sessionComm": 0.00,
+              "totalComm": 0.00,
+              "bookmakerAmount": 0,
+              "admin": {
+                  "userId": null,
+                  "userName": null,
+                  "matchComm": 0.00,
+                  "sessionComm": 0.00,
+                  "totalComm": 0.00,
+                  "netAmount": 383.00,
+                  "shareAmount": 383.00,
+                  "finalAmount": 0.00
+              },
+              "subAdmin": {
+                  "userId": null,
+                  "userName": null,
+                  "matchComm": 0.00,
+                  "sessionComm": 0.00,
+                  "totalComm": 0.00,
+                  "netAmount": 383.00,
+                  "shareAmount": 344.70,
+                  "finalAmount": 38.30
+              },
+              "superMaster": {
+                  "userId": null,
+                  "userName": null,
+                  "matchComm": 0.00,
+                  "sessionComm": 0.00,
+                  "totalComm": 0.00,
+                  "netAmount": 383.00,
+                  "shareAmount": 38.30,
+                  "finalAmount": 344.70
+              },
+              "master": {
+                  "userId": null,
+                  "userName": null,
+                  "matchComm": 0.00,
+                  "sessionComm": 0.00,
+                  "totalComm": 0.00,
+                  "netAmount": 383.00,
+                  "shareAmount": 38.30,
+                  "finalAmount": 344.70
+              },
+              "dealer": {
+                  "userId": null,
+                  "userName": null,
+                  "matchComm": 0.00,
+                  "sessionComm": 0.00,
+                  "totalComm": 0.00,
+                  "netAmount": 383.00,
+                  "shareAmount": 38.30,
+                  "finalAmount": 344.70
+              }
+          },
+          "Sdemo - (demo)": {
+              "groupName": "master",
+              "total": {
+                  "matchAmount": 373.00,
+                  "matchStake": 400.00,
+                  "sessionAmount": 10.00,
+                  "sessionStake": 100.00,
+                  "totalAmount": 383.00,
+                  "matchComm": 0.00,
+                  "sessionComm": 0.00,
+                  "totalComm": 0.00,
+                  "bookmakerAmount": 0,
+                  "admin": {
+                      "userId": null,
+                      "userName": null,
+                      "matchComm": 0.00,
+                      "sessionComm": 0.00,
+                      "totalComm": 0.00,
+                      "netAmount": 383.00,
+                      "shareAmount": 383.00,
+                      "finalAmount": 0.00
+                  },
+                  "subAdmin": {
+                      "userId": null,
+                      "userName": null,
+                      "matchComm": 0.00,
+                      "sessionComm": 0.00,
+                      "totalComm": 0.00,
+                      "netAmount": 383.00,
+                      "shareAmount": 344.70,
+                      "finalAmount": 38.30
+                  },
+                  "superMaster": {
+                      "userId": null,
+                      "userName": null,
+                      "matchComm": 0.00,
+                      "sessionComm": 0.00,
+                      "totalComm": 0.00,
+                      "netAmount": 383.00,
+                      "shareAmount": 38.30,
+                      "finalAmount": 344.70
+                  },
+                  "master": {
+                      "userId": null,
+                      "userName": null,
+                      "matchComm": 0.00,
+                      "sessionComm": 0.00,
+                      "totalComm": 0.00,
+                      "netAmount": 383.00,
+                      "shareAmount": 38.30,
+                      "finalAmount": 344.70
+                  },
+                  "dealer": {
+                      "userId": null,
+                      "userName": null,
+                      "matchComm": 0.00,
+                      "sessionComm": 0.00,
+                      "totalComm": 0.00,
+                      "netAmount": 383.00,
+                      "shareAmount": 38.30,
+                      "finalAmount": 344.70
+                  }
+              },
+              "Ademo - (demo)": {
+                  "groupName": "agent",
+                  "total": {
+                      "matchAmount": 373.00,
+                      "matchStake": 400.00,
+                      "sessionAmount": 10.00,
+                      "sessionStake": 100.00,
+                      "totalAmount": 383.00,
+                      "matchComm": 0.00,
+                      "sessionComm": 0.00,
+                      "totalComm": 0.00,
+                      "bookmakerAmount": 0,
+                      "admin": {
+                          "userId": null,
+                          "userName": null,
+                          "matchComm": 0.00,
+                          "sessionComm": 0.00,
+                          "totalComm": 0.00,
+                          "netAmount": 383.00,
+                          "shareAmount": 383.00,
+                          "finalAmount": 0.00
+                      },
+                      "subAdmin": {
+                          "userId": null,
+                          "userName": null,
+                          "matchComm": 0.00,
+                          "sessionComm": 0.00,
+                          "totalComm": 0.00,
+                          "netAmount": 383.00,
+                          "shareAmount": 344.70,
+                          "finalAmount": 38.30
+                      },
+                      "superMaster": {
+                          "userId": null,
+                          "userName": null,
+                          "matchComm": 0.00,
+                          "sessionComm": 0.00,
+                          "totalComm": 0.00,
+                          "netAmount": 383.00,
+                          "shareAmount": 38.30,
+                          "finalAmount": 344.70
+                      },
+                      "master": {
+                          "userId": null,
+                          "userName": null,
+                          "matchComm": 0.00,
+                          "sessionComm": 0.00,
+                          "totalComm": 0.00,
+                          "netAmount": 383.00,
+                          "shareAmount": 38.30,
+                          "finalAmount": 344.70
+                      },
+                      "dealer": {
+                          "userId": null,
+                          "userName": null,
+                          "matchComm": 0.00,
+                          "sessionComm": 0.00,
+                          "totalComm": 0.00,
+                          "netAmount": 383.00,
+                          "shareAmount": 38.30,
+                          "finalAmount": 344.70
+                      }
+                  },
+                  "users": {
+                      "C184 - (dadfaf)": {
+                          "matchAmount": 373.00,
+                          "matchStake": 400.00,
+                          "sessionAmount": 10.00,
+                          "sessionStake": 100.00,
+                          "totalAmount": 383.00,
+                          "matchComm": 0.00,
+                          "sessionComm": 0.00,
+                          "totalComm": 0.00,
+                          "bookmakerAmount": 0,
+                          "admin": {
+                              "userId": "mango",
+                              "userName": "mango",
+                              "matchComm": 0.00,
+                              "sessionComm": 0.00,
+                              "totalComm": 0.00,
+                              "netAmount": 383.00,
+                              "shareAmount": 383.00,
+                              "finalAmount": 0.00
+                          },
+                          "subAdmin": {
+                              "userId": "wbtritu",
+                              "userName": "wbtritu",
+                              "matchComm": 0.00,
+                              "sessionComm": 0.00,
+                              "totalComm": 0.00,
+                              "netAmount": 383.00,
+                              "shareAmount": 344.70,
+                              "finalAmount": 38.30
+                          },
+                          "superMaster": {
+                              "userId": "Mritu",
+                              "userName": "ritu",
+                              "matchComm": 0.00,
+                              "sessionComm": 0.00,
+                              "totalComm": 0.00,
+                              "netAmount": 383.00,
+                              "shareAmount": 38.30,
+                              "finalAmount": 344.70
+                          },
+                          "master": {
+                              "userId": "Sritu01",
+                              "userName": "ritu",
+                              "matchComm": 0.00,
+                              "sessionComm": 0.00,
+                              "totalComm": 0.00,
+                              "netAmount": 383.00,
+                              "shareAmount": 38.30,
+                              "finalAmount": 344.70
+                          },
+                          "dealer": {
+                              "userId": "Aritu",
+                              "userName": "ritu",
+                              "matchComm": 0.00,
+                              "sessionComm": 0.00,
+                              "totalComm": 0.00,
+                              "netAmount": 383.00,
+                              "shareAmount": 38.30,
+                              "finalAmount": 344.70
+                          }
+                      }
+                  }
+              }
+          }
+      }
+  }
+}
 
 const PlusMinusTable = () => {
-  const { state } = useLocation();
-  const parmes = useParams();
-  const { data, isLoading } = useSportPlusMinusQuery({
-    eventId: parmes?.id,
-    marketId: state?.first,
-    parentIds: state?.secondUserid,
-    parentKey: state?.ParentKey,
-    userId: state?.thirdUserid,
-    matchOdds: state?.showOdds,
-  });
 
   return (
     <div style={{ position: "relative" }}>
-      {/* <MapInteractionCSS
-        defaultValue={{
-          scale: 1,
-          translation: { x: 0, y: 0 },
-        }}
-        minScale={0.2}
-        maxScale={3}
-        translationBounds={{
-          xMax: 200,
-          yMax: 100,
-        }}> */}
+   
         <table className="plus-table plus_minus_sec">
           <tbody>
-            {data?.data &&
-              Object.keys(data.data).map((item) => (
-                <RecursiveTable data={data.data[item]} title={item} />
+            {
+              Object.keys(data).map((item) => (
+                <RecursiveTable data={data[item]} title={item} />
               ))}
           </tbody>
         </table>
-      {/* </MapInteractionCSS> */}
-      {isLoading && (
-        <div className="plus_spin">
-          <Spin size="large" />
-        </div>
-      )}
+      
     </div>
   );
 };

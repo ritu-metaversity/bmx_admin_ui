@@ -4,13 +4,165 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import "./MasterReport.scss";
 import ReportTable from "../ReportTable";
-import {
-  useDataReportMutation,
-  useLazyUserListQuery,
-} from "../../../../store/service/supermasteAccountStatementServices";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
 import DownloadReport from "../../../common/DownloadReport/DownloadReport";
+
+
+const data = [
+  {
+      "createdon": "2024-04-19 16:31:27",
+      "userid": "StestSubAdmin",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "0:0:0:0:0:0:0:1",
+      "old": "12345678",
+      "newvalue": "demoSubAdmin",
+      "action": "Change Password"
+  },
+  {
+      "createdon": "2024-04-19 16:20:41",
+      "userid": "StestSubAdmin",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "0:0:0:0:0:0:0:1",
+      "old": "0.0",
+      "newvalue": "0.0",
+      "action": "Change Casino Commission"
+  },
+  {
+      "createdon": "2024-04-19 16:20:41",
+      "userid": "StestSubAdmin",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "0:0:0:0:0:0:0:1",
+      "old": "null",
+      "newvalue": "testSubAdmin",
+      "action": "Change UserName"
+  },
+  {
+      "createdon": "2024-04-19 16:20:41",
+      "userid": "StestSubAdmin",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "0:0:0:0:0:0:0:1",
+      "old": "null",
+      "newvalue": "12345678",
+      "action": "Change Password"
+  },
+  {
+      "createdon": "2024-04-19 16:20:41",
+      "userid": "StestSubAdmin",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "0:0:0:0:0:0:0:1",
+      "old": "null",
+      "newvalue": "Active",
+      "action": "Change Status"
+  },
+  {
+      "createdon": "2024-04-19 16:20:41",
+      "userid": "StestSubAdmin",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "0:0:0:0:0:0:0:1",
+      "old": "0",
+      "newvalue": "80.00",
+      "action": "Change Share"
+  },
+  {
+      "createdon": "2024-04-19 16:20:40",
+      "userid": "StestSubAdmin",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "0:0:0:0:0:0:0:1",
+      "old": "0.0",
+      "newvalue": "0",
+      "action": "Change Match Commission"
+  },
+  {
+      "createdon": "2024-04-19 16:20:40",
+      "userid": "StestSubAdmin",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "0:0:0:0:0:0:0:1",
+      "old": "0.0",
+      "newvalue": "0",
+      "action": "Change Session Commission"
+  },
+  {
+      "createdon": "2024-04-15 21:14:39",
+      "userid": "SdemoSuperMaster",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "0:0:0:0:0:0:0:1",
+      "old": "A12345",
+      "newvalue": "Asdf1234",
+      "action": "Change Password"
+  },
+  {
+      "createdon": "2024-04-13 17:09:30",
+      "userid": "SdemoSuperMaster",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "127.0.0.1",
+      "old": "demoSuperMaster",
+      "newvalue": "A12345",
+      "action": "Change Password"
+  },
+  {
+      "createdon": "2024-04-13 17:06:17",
+      "userid": "SdemoSuperMaster",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "127.0.0.1",
+      "old": "0.0",
+      "newvalue": "0.0",
+      "action": "Change Casino Commission"
+  },
+  {
+      "createdon": "2024-04-13 17:06:17",
+      "userid": "SdemoSuperMaster",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "127.0.0.1",
+      "old": "null",
+      "newvalue": "demoSuperMaster",
+      "action": "Change UserName"
+  },
+  {
+      "createdon": "2024-04-13 17:06:17",
+      "userid": "SdemoSuperMaster",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "127.0.0.1",
+      "old": "null",
+      "newvalue": "demoSuperMaster",
+      "action": "Change Password"
+  },
+  {
+      "createdon": "2024-04-13 17:06:17",
+      "userid": "SdemoSuperMaster",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "127.0.0.1",
+      "old": "null",
+      "newvalue": "Active",
+      "action": "Change Status"
+  },
+  {
+      "createdon": "2024-04-13 17:06:17",
+      "userid": "SdemoSuperMaster",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "127.0.0.1",
+      "old": "0",
+      "newvalue": "80.00",
+      "action": "Change Share"
+  },
+  {
+      "createdon": "2024-04-13 17:06:16",
+      "userid": "SdemoSuperMaster",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "127.0.0.1",
+      "old": "0.0",
+      "newvalue": "2",
+      "action": "Change Match Commission"
+  },
+  {
+      "createdon": "2024-04-13 17:06:16",
+      "userid": "SdemoSuperMaster",
+      "actionby": "demoSubAdmin",
+      "ipaddress": "127.0.0.1",
+      "old": "0.0",
+      "newvalue": "3",
+      "action": "Change Session Commission"
+  }
+]
 
 const MasterReport = ({ reportName, userType }) => {
   const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
@@ -29,53 +181,26 @@ const MasterReport = ({ reportName, userType }) => {
   };
 
   const { pathname } = useLocation();
-  const [userList, { data: resultData }] = useLazyUserListQuery();
-  const [trigger, { data: loginReport, isLoading }] = useDataReportMutation();
 
-  useEffect(() => {
-    trigger({
-      userType: userType,
-      startDate: dateData[0],
-      endDate: dateData[1],
-      reportType: "all",
-      userId: "",
-    });
-  }, [userType]);
+
 
   const handleChange = (value) => {
-    userList({
-      userType: userType,
-      userName: value,
-    });
+   
   };
 
   useEffect(() => {
     form?.resetFields();
     setClientId("");
-    userList({
-      userType: userType,
-      userName: "",
-    });
   }, [pathname]);
 
   const handleSelect = (value) => {
     setClientId(value);
   };
 
-  const onFinish = (value) => {
-    trigger({
-      userType: userType,
-      startDate: dateData[0],
-      endDate: dateData[1],
-      reportType: value?.reportType || "All",
-      userId: clientId || "",
-    });
-  };
+  const onFinish = () => {};
 
-  const date = new Date();
-  const newDate = moment(date).format("DD-MM-YYYY");
 
-  const dataSource = loginReport?.data?.map((curElm) => {
+  const dataSource = data?.map((curElm) => {
     return {
       userid: curElm?.userid,
       action: curElm?.action?.slice(7),
@@ -114,12 +239,7 @@ const MasterReport = ({ reportName, userType }) => {
               <Form.Item label={reportName} name="client">
                 <Select
                   placeholder="Select Client"
-                  options={
-                    resultData?.data?.map((i) => ({
-                      label: `${i?.userId}  (${i?.userName})`,
-                      value: i?.userId,
-                    })) || []
-                  }
+                  options={[]}
                   showSearch
                   allowClear
                   onSelect={handleSelect}
@@ -156,7 +276,7 @@ const MasterReport = ({ reportName, userType }) => {
           </Row>
           <div className="report_download">
             <Form.Item>
-              <Button loading={isLoading} type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit">
                 Submit
               </Button>
             </Form.Item>
@@ -177,7 +297,7 @@ const MasterReport = ({ reportName, userType }) => {
           <div></div>
         </Form>
       </div>
-      <ReportTable data={loginReport?.data} isLoading={isLoading} />
+      <ReportTable data={data}  />
     </Card>
     </>
   );

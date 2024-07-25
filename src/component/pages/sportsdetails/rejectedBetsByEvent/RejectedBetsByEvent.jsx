@@ -1,13 +1,8 @@
-import React from 'react'
-import { Card, Space, Select, Row, Col, Table } from "antd";
+import { Card,  Table } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRejectedBetDetailQuery } from '../../../../store/service/SportDetailServices';
 
 // import "./MatchSlips.scss";
 
-const handleChange = (value) => {
-  console.log(`selected ${value}`);
-};
 
 
 const columns = [
@@ -21,12 +16,7 @@ const columns = [
       dataIndex: 'stake',
       key: 'stake',
     },
-    // {
-    //   title: 'Type',
-    //   dataIndex: 'type',
-    //   key: 'type',
-    // }
-    // ,
+
     {
       title: 'Team',
       dataIndex: 'matchname',
@@ -67,9 +57,7 @@ const columns = [
       key: 'bet_status',
     }
   ];
-  // const data = [
-    
-  // ];
+
 
 const RejectedBetsByEvent = () => {
     const nav = useNavigate()
@@ -79,10 +67,6 @@ const RejectedBetsByEvent = () => {
 
     const {id} = useParams()
 
-
-    const {data} = useRejectedBetDetailQuery({
-      matchid:Number(id)
-    }, {refetchOnMountOrArgChange: true})
 
 
 
@@ -99,49 +83,10 @@ const RejectedBetsByEvent = () => {
             title="REJECTED And CANCELLED Bets"
             extra={<button onClick={handleBackClick}>Back</button>}>
             
-            {/* <Row className='rejected_row' >
-              <Col xl={4} xs={24} md={24} lg={4}>
-              <Select
-                defaultValue="Select Super"
-               
-                onChange={handleChange}
-                options={[
-                  {
-                    value: "All Supers",
-                    label: "Jack",
-                  }
-                ]}
-              />
-              </Col>
-              <Col xl={4} xs={24} md={24} lg={4}>
-              <Select
-                defaultValue="Select Agent"
-               
-                onChange={handleChange}
-                options={[
-                  {
-                    value: "All Agents",
-                    label: "All Agents",
-                  }
-                ]}
-              />
-              </Col>
-              <Col xl={4} xs={24} md={24} lg={4}>
-              <Select
-                defaultValue="Select Client"
-                onChange={handleChange}
-                options={[
-                  {
-                    value: "All Users",
-                    label: "All Users",
-                  }
-                ]}
-              />
-              </Col>
-            </Row> */}
+            
 
             <div className="table_section" style={{marginBottom:"10px"}}>
-            <Table columns={columns} dataSource={data?.data?.map((res)=>({...res, bet_status:"Deleted"})) || []} />
+            <Table columns={columns} dataSource={[]} />
             </div>
           </Card>
         </div>

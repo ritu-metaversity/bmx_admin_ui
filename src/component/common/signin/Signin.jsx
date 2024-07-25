@@ -1,40 +1,18 @@
 import "./Signin.scss";
-import { Button, Form, Input, message } from "antd";
-import { useLoginMutation } from "../../../store/service/authService";
-import { useEffect } from "react";
+import { Button, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
-// import { useIt_Self_By_APP_URLQuery } from "../../../store/service/supermasteAccountStatementServices";
 
 const Signin = ({logo}) => {
-  const [trigger, { data: authData, error, isLoading }] =useLoginMutation();
   const nav = useNavigate();
-  
-  useEffect(() => {
-    if (authData?.status === false || error?.data?.message) {
-      message.error(authData?.message || error.data?.message);
-    } else if (authData?.token !== null && authData?.token !== undefined) {
-      localStorage.setItem("token", authData?.token);
-      localStorage.setItem("rulesStatus", true)
-      localStorage.setItem("userId", authData?.userId);
-      localStorage.setItem("userType", authData?.userType);
-      localStorage.setItem("passType", authData?.passwordtype);
-      nav("/dashboard");
-    }
-  }, [authData, error]);
+
 
   const onFinish = (values) => {
     const authData = {
       userId: (values?.username?.trim()),
       password: (values?.password?.trim()),
-      appUrl: window.location.hostname, 
-      // appUrl: "master.11bet24.com",
-      // appUrl: "supermaster.11bet24.com",
-      // appUrl: "agent.11bet24.com",
-      // appUrl: "subadmin.11bet24.com",
-      // appUrl: "subadmin.247idhub.com",
-      // appUrl: "subadmin.localhost",
+      appUrl: "subadmin.11bet24.com",
     };
-    trigger(authData);
+    nav('/dashboard')
   };
 
 
@@ -42,11 +20,6 @@ const Signin = ({logo}) => {
     console.log("Failed:", errorInfo);
   };
 
-  useEffect(()=>{
-    if(localStorage.getItem("token") !== null){
-      nav('/dashboard')
-    }
-  }, [])
 
 
   return (
@@ -54,17 +27,6 @@ const Signin = ({logo}) => {
       <div className="gx-app-login-wrap">
         <div className="gx-app-login-container">
           <div className="gx-app-login-main-content">
-            {isLoading ? (
-              <>
-              <div className="main_loading_section"> </div>
-                <div className="loading_image">
-                  <img src="/Images/loaderfast.svg" alt="helllo" />
-                </div>
-                </>
-            ) : (
-              ""
-            )}
-
             <div className="gx-app-logo-content">
               <div className="gx-app-logo-content-bg" />
               <div className="gx-app-logo-wid">

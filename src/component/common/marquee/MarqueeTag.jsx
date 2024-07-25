@@ -1,16 +1,15 @@
-import React from "react";
 import Marquee from "react-fast-marquee";
-import { Outlet } from "react-router-dom";
 import "./MarqueeTag.scss";
-import { useUserMessageQuery } from "../../../store/service/supermasteAccountStatementServices";
 
 const MarqueeTag = () => {
-  const {data} = useUserMessageQuery()
+
+
+  const data = "Welcome"
 
   return (
     <>
       <div className="marque_section">
-        <Marquee style={{textTransform:"capitalize"}}>{data?.message}.</Marquee>
+        <Marquee style={{textTransform:"capitalize"}}>{data}</Marquee>
       </div>
     </>
   );

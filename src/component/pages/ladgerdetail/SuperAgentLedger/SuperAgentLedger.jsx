@@ -1,14 +1,42 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Card, Col, Modal, Row, Table } from "antd";
 import { useNavigate } from "react-router-dom";
-import {
-  useClientLedgerMutation,
-  useDownlineLedgerQuery,
-} from "../../../../store/service/ledgerServices";
 import LedgerPopUp from "../LedgerPopUp";
 import "./SuperAgentLedger.scss";
 import Withdraw from "../../../common/Withdraw";
 import Deposit from "../../../common/Deposit";
+
+
+const data = {
+  "lena": [
+      {
+          "userId": "SdemoSuperMaster",
+          "userName": "demoSuperMaster",
+          "balance": 49.10
+      }
+  ],
+  "dena": [
+      {
+          "userId": "StestSubAdmin",
+          "userName": "testSubAdmin",
+          "balance": -25.60
+      }
+  ],
+  "clear": []
+}
+
+
+const  clientData= {
+  "lena": [],
+  "dena": [
+      {
+          "userId": "CdemoClient",
+          "userName": "demoClient",
+          "balance": 0.0
+      }
+  ],
+  "clear": []
+}
 
 const SuperAgentLedger = ({ userTyep, Listname }) => {
   const [lenaBalance, setLenaBalance] = useState(0);
@@ -33,9 +61,7 @@ const SuperAgentLedger = ({ userTyep, Listname }) => {
     setUserData(val);
     setModalsName(name);
     setIsDepositeModalOpen(true);
-    // if (name == "Clear" || userTyep == 3) {
-    //   setIsDepositeModalOpen(false);
-    // }
+   
   };
 
 
@@ -70,14 +96,6 @@ const SuperAgentLedger = ({ userTyep, Listname }) => {
     );
   };
 
-  // const renderActionButton = (record, name) => (
-  //   <span>
-  //     <p
-  //       onClick={() => handleDenaModals(record, name)}>
-  //       {record?.userId}
-  //     </p>
-  //   </span>
-  // );
 
   const generateColumns = (actionName) =>
     [
@@ -119,24 +137,6 @@ const SuperAgentLedger = ({ userTyep, Listname }) => {
       },
     ].filter((item) => !item.hidden);
 
-  const {
-    data: ledger,
-    isFetching,
-    isLoading,
-  } = useDownlineLedgerQuery(
-    {
-      userType: userTyep,
-    },
-    { refetchOnMountOrArgChange: true }
-  );
-
-  const [trigger, { data: clientData }] = useClientLedgerMutation();
-
-  useEffect(() => {
-    if (Listname === "Client") {
-      trigger();
-    }
-  }, [Listname, clientDataState]);
 
   useEffect(() => {
     const processData = (data) =>
@@ -144,11 +144,11 @@ const SuperAgentLedger = ({ userTyep, Listname }) => {
         ?.map((res) => res?.balance)
         .reduce((prev, curr) => Number(prev) + Number(curr), 0);
     const dataToProcess =
-      Listname === "Client" ? clientData?.data : ledger?.data;
+      Listname === "Client" ? clientData : data;
     setLenaBalance(processData(dataToProcess?.lena));
     setDenaBalance(processData(dataToProcess?.dena));
     setClearData(processData(dataToProcess?.clear));
-  }, [ledger?.data, clientData?.data, Listname]);
+  }, [data, clientData, Listname]);
 
   return (
     <>
@@ -179,11 +179,10 @@ const SuperAgentLedger = ({ userTyep, Listname }) => {
                   bordered
                   pagination={false}
                   columns={generateColumns(itemName)}
-                  loading={isLoading || isFetching}
                   dataSource={
                     Listname === "Client"
                       ? clientData?.data?.[itemName.toLowerCase()]
-                      : ledger?.data?.[itemName.toLowerCase()]
+                      : data?.[itemName.toLowerCase()]
                   }
                 />
               </div>

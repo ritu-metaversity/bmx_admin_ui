@@ -11,10 +11,36 @@ import { Card, Modal } from "antd";
 import "./Dashboard.scss";
 import ActiveMatch from "../../common/ActiveMatch/ActiveMatch";
 import { Link, useNavigate } from "react-router-dom";
-import { useLogoutMutation } from "../../../store/service/authService";
-import { useCreateCasinoListQuery } from "../../../store/service/supermasteAccountStatementServices";
 import CasinoModalsDash from "./CasinoModalsDash";
-import { useDashboardQuery } from "../../../store/service/userlistService";
+
+
+const  casinoDetails= [
+  {
+      "name": "Aura",
+      "casinoId": 1,
+      "active": true
+  },
+  {
+      "name": "Super Nova",
+      "casinoId": 2,
+      "active": true
+  },
+  {
+      "name": "QTech",
+      "casinoId": 3,
+      "active": true
+  },
+  {
+      "name": "Virtual",
+      "casinoId": 4,
+      "active": true
+  },
+  {
+      "name": "SportBook",
+      "casinoId": 5,
+      "active": true
+  }
+]
 
 const Dashboard = () => {
 
@@ -34,20 +60,12 @@ const Dashboard = () => {
     margin: "10px",
     cursor:"pointer"
   };
-
-  const { data: dataDes } = useDashboardQuery();
-
-  const [logOut, { data: logOutData }] = useLogoutMutation();
-
   const handleLogout = () => {
     localStorage.clear();
     nav("/");
-    logOut();
   };
 
-  const uType = localStorage.getItem("userType");
-  
-  const {data: casinoDetails} = useCreateCasinoListQuery({}, {refetchOnMountOrArgChange: true});
+  const uType = 0;
   return (
     <>
       <Card>
@@ -137,7 +155,7 @@ const Dashboard = () => {
               <HiUser />
             </div>
             <div className="tital_card_section f-w">
-              <h2 style={{fontSize:"19px"}}>{dataDes?.data?.userid}</h2>
+              <h2 style={{fontSize:"19px"}}>demoSubAdmin</h2>
               <p>
                 You are{" "}
                 {uType == 5
@@ -159,7 +177,7 @@ const Dashboard = () => {
               <SlDiamond />
             </div>
             <div className="tital_card_section f-w">
-              <h2 style={{fontSize:"19px"}}>{dataDes?.data?.availablebalance}</h2>
+              <h2 style={{fontSize:"19px"}}>65000</h2>
               <p>Chips</p>
             </div>
           </div>
@@ -170,7 +188,7 @@ const Dashboard = () => {
               <HiUser />
             </div>
             <div className="tital_card_section f-w">
-              <h2 style={{fontSize:"19px"}}>{dataDes?.data?.downline}</h2>
+              <h2 style={{fontSize:"19px"}}>1</h2>
               <p>Members</p>
             </div>
           </div>
@@ -181,7 +199,7 @@ const Dashboard = () => {
               <LuBarChart4 />
             </div>
             <div className="tital_card_section f-w">
-              <h2 style={{fontSize:"19px"}}>{dataDes?.data?.myshare}</h2>
+              <h2 style={{fontSize:"19px"}}>90</h2>
               <p>My Share</p>
             </div>
           </div>
@@ -192,7 +210,7 @@ const Dashboard = () => {
               <LuBarChart4 />
             </div>
             <div className="tital_card_section f-w">
-              <h2 style={{fontSize:"19px"}}>{dataDes?.data?.companyshare}</h2>
+              <h2 style={{fontSize:"19px"}}>100</h2>
               <p>Company Share</p>
             </div>
           </div>
@@ -201,7 +219,7 @@ const Dashboard = () => {
           <div className="main_card_section">
             <div className="icon_card_section"></div>
             <div className="tital_card_section f-w">
-              <h2 style={{fontSize:"19px"}}>{dataDes?.data?.matchcomminssion}%</h2>
+              <h2 style={{fontSize:"19px"}}>3%</h2>
               <p>Match Commission</p>
             </div>
           </div>
@@ -210,27 +228,18 @@ const Dashboard = () => {
           <div className="main_card_section">
             <div className="icon_card_section"></div>
             <div className="tital_card_section f-w">
-              <h2 style={{fontSize:"19px"}}>{dataDes?.data?.sessioncomminssion}%</h2>
+              <h2 style={{fontSize:"19px"}}>3%</h2>
               <p>Session Commission</p>
             </div>
           </div>
         </Card.Grid>
-        {/* <Card.Grid hoverable={false} style={gridStyle}>
-          <div className="main_card_section">
-            <div className="icon_card_section"></div>
-            <div className="tital_card_section f-w">
-              <h2 style={{fontSize:"19px"}}>{dataDes?.data?.casinocomminssion || 0}%</h2>
-              <p>Casino Commission</p>
-            </div>
-          </div>
-        </Card.Grid> */}
         <Card.Grid hoverable={false} style={gridStyle}>
           <div className="main_card_section">
             <div className="icon_card_section">
               <HiUser />
             </div>
             <div className="tital_card_section f-w">
-              <h2 style={{fontSize:"19px"}}>{dataDes?.data?.user}</h2>
+              <h2 style={{fontSize:"19px"}}>1</h2>
               <p>Client</p>
             </div>
           </div>
@@ -279,7 +288,7 @@ const Dashboard = () => {
         okButtonProps={{ style: { display: "none" } }}
         cancelButtonProps={{ style: { display: "none" } }}
         footer={null}>
-        <CasinoModalsDash data={casinoDetails?.data}/>
+        <CasinoModalsDash data={casinoDetails}/>
       </Modal>
 
       <ActiveMatch />

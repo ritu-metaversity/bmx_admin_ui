@@ -24,24 +24,17 @@ const data = [
         size:"14",
         userType:2
       },
-      // {
-      //   image: <BiUserCircle />,
-      //   name: "Dr/Cr Entry Client",
-      //   path:"/client/txn-client",
-      //   size:"14",
-      //   userType:3
-      // },
 ]
 
 const CashTransanction = () => {
 
   const userTypeMatch={
-    0:[1,3],
+    0:[1,3,0,2],
     1:[2,3],
     2:[3],
     5:[0,3]
   }
-  const uType =localStorage.getItem("userType")
+  const uType =0
   return (
     <>
       <CardItem data={data.filter(

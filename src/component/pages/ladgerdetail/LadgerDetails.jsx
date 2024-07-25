@@ -52,9 +52,9 @@ const LadgerDetails = () => {
           }
     ]
 
-    const uType =localStorage.getItem("userType")
+    const uType =0
   const userTypeMatch={
-    0:[1,3,6,7],
+    0:[1,3,6,7,0,2],
     1:[2,3,6,7],
     2:[3,6,7],
     5:[0,3,6,7]

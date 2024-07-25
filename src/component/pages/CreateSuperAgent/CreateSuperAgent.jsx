@@ -8,25 +8,56 @@ import {
   InputNumber,
   Row,
   Select,
-  Spin,
   Switch,
-  notification,
 } from "antd";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import {
-  useCreateUserMutation,
-  useLazyCreateUserDataQuery,
-  useLazyIsUserIdQuery,
-} from "../../../store/service/userlistService";
-import { useCreateCasinoListQuery } from "../../../store/service/supermasteAccountStatementServices";
+
+const  casinoDetalisData= [
+  {
+      "name": "Aura",
+      "casinoId": 1,
+      "active": true
+  },
+  {
+      "name": "Super Nova",
+      "casinoId": 2,
+      "active": true
+  },
+  {
+      "name": "QTech",
+      "casinoId": 3,
+      "active": true
+  },
+  {
+      "name": "Virtual",
+      "casinoId": 4,
+      "active": true
+  },
+  {
+      "name": "SportBook",
+      "casinoId": 5,
+      "active": true
+  }
+]
+
+const  data = {
+  "myUserId": "demoSubAdmin",
+  "myUserName": "demoSubAdmin",
+  "myMembers": null,
+  "myBalance": 65000.00,
+  "myShare": 90.00,
+  "myCasinoShare": 90.00,
+  "myMatchCommission": 0.00,
+  "mySessionCommission": 0.00,
+  "myCasinoCommission": 0.0,
+  "null": false
+}
 
 const CreateSuperAgent = ({ createName }) => {
   const [userData, setUserData] = useState({});
   const [commiType, setCommiType] = useState("nocomm");
   const [LuPassword, setLuPassword] = useState("");
   const [createUserId, setCreateUserID] = useState();
-  const [api, contextHolder] = notification.useNotification();
   const [form] = Form.useForm();
 
   const commissionType = (value) => {
@@ -37,24 +68,7 @@ const CreateSuperAgent = ({ createName }) => {
     setLuPassword(e.target.value);
   };
 
-  const openNotification = (mess) => {
-    api.success({
-      message: mess,
-      description: "Success",
-      closeIcon: false,
-      placement: "top",
-    });
-  };
-
-  const openNotificationError = (mess) => {
-    api.error({
-      message: mess,
-      closeIcon: false,
-      placement: "top",
-    });
-  };
-
-  const userId = localStorage.getItem("userId");
+ 
   const [state, setState] = useState({
     isAuraAllowed: "",
     isSuperNovaAllowed: "",
@@ -62,13 +76,10 @@ const CreateSuperAgent = ({ createName }) => {
     isVirtualAllowed: "",
     isSportBookAllowed: "",
   });
-  const { data: casinoDetalisData } = useCreateCasinoListQuery(
-    {},
-    { refetchOnMountOrArgChange: true }
-  );
+ 
 
   useEffect(() => {
-    casinoDetalisData?.data?.map((key) => {
+    casinoDetalisData?.map((key) => {
       setState((prev) => {
         return {
           ...prev,
@@ -81,31 +92,13 @@ const CreateSuperAgent = ({ createName }) => {
   const passw = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,15}$/;
   var mobileNum = /^[6-9][0-9]{9}$/;
 
-  const [getData, { data: results }] = useLazyIsUserIdQuery();
 
   const handelUseId = (e) => {
     setCreateUserID(e.target.value);
   };
 
-  const [createUser, { data: UserList, error, isLoading }] =
-    useCreateUserMutation();
-  const [trigger, { data }] = useLazyCreateUserDataQuery();
 
-  useEffect(() => {
-    trigger();
-  }, [data?.data]);
-
-  useEffect(() => {
-    getData({
-      userId: hostname.includes("create-super")
-        ? "S" + createUserId
-        : hostname.includes("create-agent")
-        ? "M" + createUserId
-        : hostname.includes("create-dealer")
-        ? "A" + createUserId
-        : "C" + createUserId,
-    });
-  }, [createUserId]);
+ 
 
   const hostname = window.location.pathname;
 
@@ -141,18 +134,8 @@ const CreateSuperAgent = ({ createName }) => {
       isVirtualAllowed: state?.isVirtualAllowed,
       isSportBookAllowed: state?.isSportBookAllowed,
     };
-    createUser(userData);
   };
 
-  useEffect(() => {
-    if (UserList?.status === true) {
-      openNotification(UserList?.message);
-      form?.resetFields();
-      trigger();
-    } else if (UserList?.status === false || error?.data?.message) {
-      openNotificationError(UserList?.message || error?.data?.message);
-    }
-  }, [UserList, error]);
 
   const { Option } = Select;
 
@@ -162,13 +145,8 @@ const CreateSuperAgent = ({ createName }) => {
     nav(-1);
   };
 
-  useEffect(() => {
-    setUserData(data?.data);
-  }, [data?.data, UserList?.status]);
-
   return (
     <>
-      {contextHolder}
       <div className="main_live_section">
         <div className="_match">
           <div className="sub_live_section live_report">
@@ -183,13 +161,7 @@ const CreateSuperAgent = ({ createName }) => {
           </div>
         </div>
         <div className="ant-spin-nested-loading">
-          {isLoading ? (
-            <div className="spin_icon">
-              <Spin size="large" />
-            </div>
-          ) : (
-            ""
-          )}
+        
           <Form
             className="form_data"
             form={form}
@@ -202,35 +174,35 @@ const CreateSuperAgent = ({ createName }) => {
             fields={[
               {
                 name: "My Coins",
-                value: data?.data?.myBalance,
+                value: data?.myBalance,
               },
               {
                 name: "MyMatchShare",
-                value: data?.data?.myShare,
+                value: data?.myShare,
               },
               {
                 name: "MyCasinoShare",
-                value: data?.data?.myCasinoShare,
+                value: data?.myCasinoShare,
               },
               {
                 name: "MyCommtype",
                 value:
-                  data?.data?.mySessionCommission === 0 &&
-                  data?.data?.myMatchCommission
+                  data?.mySessionCommission === 0 &&
+                  data?.myMatchCommission
                     ? "No Comm"
                     : "Bet by Bet",
               },
               {
                 name: "cassinoComm",
-                value: data?.data?.myCasinoCommission,
+                value: data?.myCasinoCommission,
               },
               {
                 name: "My_Match_comm",
-                value: data?.data?.myMatchCommission,
+                value: data?.myMatchCommission,
               },
               {
                 name: "My_sess_comm",
-                value: data?.data?.mySessionCommission,
+                value: data?.mySessionCommission,
               },
             ]}>
             <div>
@@ -244,40 +216,6 @@ const CreateSuperAgent = ({ createName }) => {
                       {
                         required: true,
                         message: "Please Enter UserID",
-                      },
-                      {
-                        validator: async (rules, value) => {
-                          try {
-                            const results = await axios.post(
-                              "user/is-userid-available",
-                              {
-                                userId: hostname.includes("create-super")
-                                  ? "S" + value
-                                  : hostname.includes("create-agent")
-                                  ? "M" + value
-                                  : hostname.includes("create-dealer")
-                                  ? "A" + value
-                                  : "C" + value,
-                              },
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${localStorage.getItem(
-                                    "token"
-                                  )}`,
-                                },
-                                baseURL: import.meta.env.VITE_BASE_URL,
-                              }
-                            );
-
-                            if (results?.data.status === false) {
-                              return Promise.reject(
-                                new Error(results?.data.message)
-                              );
-                            }
-                          } catch (err) {
-                            console.log(err);
-                          }
-                        },
                       },
                     ]}>
                     <Input
@@ -371,7 +309,7 @@ const CreateSuperAgent = ({ createName }) => {
                       {
                         validator: async (_, values) => {
                           if (
-                            data?.data?.myBalance < values &&
+                            data?.myBalance < values &&
                             values != "" &&
                             values != null
                           ) {
@@ -462,7 +400,7 @@ const CreateSuperAgent = ({ createName }) => {
                           {
                             validator: async (_, values) => {
                               if (
-                                data?.data?.myShare < values &&
+                                data?.myShare < values &&
                                 values != "" &&
                                 values != null
                               ) {
@@ -470,7 +408,7 @@ const CreateSuperAgent = ({ createName }) => {
                                   new Error(
                                     "Match share can not be more than" +
                                       " " +
-                                      `${data?.data?.myShare}`
+                                      `${data?.myShare}`
                                   )
                                 );
                               }
@@ -682,91 +620,14 @@ const CreateSuperAgent = ({ createName }) => {
                 )}
               </Row>
 
-              {/* {commiType === "bbb" && (
-                <div>
-                  <h2 className="match_share">
-                    {createName} Casino Commission
-                  </h2>
-                </div>
-              )} */}
-
-              {/* <Row className="super_agent sub_super">
-                {commiType === "bbb" && (
-                  <>
-                    <Col span={12}>
-                      <Form.Item
-                        label="My Casino comm(%)"
-                        name="cassinoComm"
-                        required={false}>
-                        <Input type="number" disabled />
-                      </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                      <Form.Item
-                        label="Casino comm(%)"
-                        name="cassino_Comm"
-                        required
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please enter valid Casino commission",
-                          },
-                        ]}>
-                        <Select
-                          defaultValue="Select Casino Comm(%)"
-                          options={[
-                            {
-                              value: "0.00",
-                              label: "0.00",
-                            },
-                            {
-                              value: "0.25",
-                              label: "0.25",
-                            },
-                            {
-                              value: "0.50",
-                              label: "0.50",
-                            },
-                            {
-                              value: "0.75",
-                              label: "0.75",
-                            },
-                            {
-                              value: "1.00",
-                              label: "1.00",
-                            },
-                            // {
-                            //   value: "1.25",
-                            //   label: "1.25",
-                            // },
-                            // {
-                            //   value: "1.50",
-                            //   label: "1.50",
-                            // },
-                            // {
-                            //   value: "1.75",
-                            //   label: "1.75",
-                            // },
-                            // {
-                            //   value: "2.00",
-                            //   label: "2.00",
-                            // },
-                          ]}
-                        />
-                      </Form.Item>
-                    </Col>
-                  </>
-                )}
-              </Row> */}
-
-              {casinoDetalisData?.data?.length != 0 && (
+              {casinoDetalisData?.length != 0 && (
                 <div>
                   <h2 className="match_share">Casino Details</h2>
                 </div>
               )}
 
               <div className="casino_details">
-                {casinoDetalisData?.data?.map((item, id) => {
+                {casinoDetalisData?.map((item, id) => {
                   return (
                     <div key={id}>
                       <div className="casino_name">{item?.name}</div>

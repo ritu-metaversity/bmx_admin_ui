@@ -1,18 +1,35 @@
-import { Button, Card, Col, DatePicker, Input, Row, Select, Form } from "antd";
+/* eslint-disable no-unused-vars */
+import { Button, Card, Col, DatePicker, Row, Select, Form } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import ReportTable from "../ReportTable";
-import {
-  useCommReportMutation,
-  useLazyUserListQuery,
-} from "../../../../store/service/supermasteAccountStatementServices";
 import { useLocation, useNavigate } from "react-router-dom";
 import CommReportTable from "./CommReportTable";
-// import axios from "axios";
 import DownloadReport from "../../../common/DownloadReport/DownloadReport";
 
-const CommReport = ({ reportName, userType }) => {
+
+const data = {
+  "totalPages": 1,
+  "list": [
+      {
+          "userId": "StestSubAdmin",
+          "matchName": "Lucknow Super Giants v Chennai Super Kings",
+          "matchComm": "0.00",
+          "sessionComm": "0.00",
+          "comm": 0.00,
+          "commS": 0.00,
+          "matchCommDiya": "0.00",
+          "sessionCommDiya": "0.00",
+          "commDiya": 0.00,
+          "commDiyaS": 0.00,
+          "date": "2024-04-19 23:44:11",
+          "showDate": false,
+          "dateOnly": "2024-04-19"
+      }
+  ]
+}
+
+const CommReport = ({ reportName }) => {
   const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
   const time = moment().format("YYYY-MM-DD");
   const [dateData, setDateData] = useState([timeBefore, time]);
@@ -32,52 +49,28 @@ const CommReport = ({ reportName, userType }) => {
   };
 
   const { pathname } = useLocation();
-  const [userList, { data: resultData }] = useLazyUserListQuery();
-  const [trigger, { data: commReport, isLoading }] = useCommReportMutation();
 
   useEffect(() => {
-    trigger({
-      userType: userType,
-      startDate: dateData[0],
-      endDate: dateData[1],
-      userId: "",
-      noOfRecords: paginationTotal,
-      index: indexData,
-    });
-    setTotalPage(commReport?.data?.totalPages);
-  }, [userType, totalPage, indexData, paginationTotal]);
+   
+    setTotalPage(data?.totalPages);
+  }, []);
 
 
   const handleChange = (value) => {
-    userList({
-      userType: userType,
-      userName: value,
-    });
+   
   };
 
   useEffect(() => {
     form?.resetFields();
     setClientId("");
-    userList({
-      userType,
-      userName: "",
-    });
+    
   }, [pathname]);
 
   const handleSelect = (value) => {
     setClientId(value);
   };
 
-  const onFinish = (value) => {
-    trigger({
-      userType: userType,
-      startDate: dateData[0],
-      endDate: dateData[1],
-      userId: clientId || "",
-      noOfRecords: "50",
-      index: "0",
-    });
-  };
+  const onFinish = (value) => {};
 
   const headerField = ["User", "Match Name", "Comm Diya", "Comm Liye", "Date"];
   return (
@@ -104,12 +97,7 @@ const CommReport = ({ reportName, userType }) => {
               <Form.Item label={reportName} name="client">
                 <Select
                   placeholder="Select Client"
-                  options={
-                    resultData?.data?.map((i) => ({
-                      label: `${i?.userId}  (${i?.userName})`,
-                      value: i?.userId,
-                    })) || []
-                  }
+                  options={[]}
                   showSearch
                   allowClear
                   onSelect={handleSelect}
@@ -128,7 +116,7 @@ const CommReport = ({ reportName, userType }) => {
             </Col>
             <Col xl={4} lg={4} md={12} xs={12}>
               <Form.Item wrapperCol={{ span: 24 }}>
-                <Button loading={isLoading} type="primary" htmlType="submit">
+                <Button  type="primary" htmlType="submit">
                   Submit
                 </Button>
               </Form.Item>
@@ -137,15 +125,6 @@ const CommReport = ({ reportName, userType }) => {
               <Form.Item>
                 <Form.Item>
                   <DownloadReport
-                  startDate= {dateData[0]}
-                  endDate= {dateData[1]}
-                    userType={userType}
-                    reportName={`${reportName?.replace(
-                      / /g,
-                      "_"
-                    )}_Comm_Reports`}
-                    headerField={headerField}
-                    reportType="CasinoCommReport"
                     isModalOpen={isModalOpen}
                     setIsModalOpen={setIsModalOpen}
                   />
@@ -156,14 +135,13 @@ const CommReport = ({ reportName, userType }) => {
         </Form>
       </div>
       <CommReportTable
-        data={commReport?.data?.list}
+        data={data?.list}
         setTotalPage
         paginationTotal={paginationTotal}
         totalPage={totalPage}
         indexData={indexData}
         setIndexData={setIndexData}
         setPaginationTotal={setPaginationTotal}
-        isLoading={isLoading}
       />
     </Card>
     </>

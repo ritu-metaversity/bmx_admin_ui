@@ -1,8 +1,18 @@
-import { Button, Form, Input, Space, Table, notification } from "antd";
-import React, { useEffect, useRef, useState } from "react";
+import { Button, Form, Input , notification } from "antd";
+import  {  useState } from "react";
 
-import {useDepositMutation, useLazyUpDateLimitesQuery } from "../../../../store/service/userlistService";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+
+
+const data = {
+  "parentName": "demoSubAdmin",
+  "parentAmount": "65000.0",
+  "parentId": "demoSubAdmin",
+  "childName": "demoClient",
+  "childAmount": "5000.0",
+  "childId": "CdemoClient",
+  "childUplineAmount": null
+}
 
 const AddSuperLimites = () => {
   const [addTotal, setAddTotal] = useState(0);
@@ -10,47 +20,17 @@ const AddSuperLimites = () => {
   const [passWord, setPassword] = useState("");
   const [api, contextHolder] = notification.useNotification();
   const [form]= Form.useForm();
-  const {state} = useLocation();
 
   const {id} = useParams()
 
   const handelAddLimit = (e) => {
     setChipsValue(e.target.value);
-    setAddTotal(Number(e.target.value) + Number(updateLimite?.data?.childAmount));
+    setAddTotal(Number(e.target.value) + Number(data?.childAmount));
   };
 
   const handelPassword = (e) => {
     setPassword(e.target.value);
   };
-
-  const openNotification = (mess) => {
-    api.success({
-      message: mess,
-      description: "Success",
-      closeIcon: false,
-      placement: "top",
-    });
-  };
-
-  const openNotificationError = (mess) => {
-    api.error({
-      message: mess,
-      closeIcon: false,
-      placement: "top",
-    });
-  };
-
-
-  const [trigger, { data: addData, error, isLoading }] = useDepositMutation();
-  const [updateLimites, {data: updateLimite}] = useLazyUpDateLimitesQuery()
-
-
-  useEffect(()=>{
-    updateLimites({
-      userId:id
-    })
-  }, [id])
-
   const onFinish = (values) => {
     const addList = {
         amount:Number(values?.amount),
@@ -58,21 +38,9 @@ const AddSuperLimites = () => {
         lupassword:values?.pass,
         userId:id
     };
-    trigger(addList);
+    // trigger(addList);
   };
 
-  useEffect(() => {
-    if (addData?.status === true) {
-      updateLimites({
-        userId:id
-      })
-      setAddTotal(0)
-      openNotification(addData?.message);
-      form?.resetFields();
-    } else if (addData?.status === false || error?.data?.message) {
-      openNotificationError(addData?.message || error?.data?.message);
-    }
-  }, [addData?.data, error]);
 
   return (
     <>
@@ -96,9 +64,9 @@ const AddSuperLimites = () => {
               </tr>
 
               <tr>
-                <td>{updateLimite?.data?.childId}</td>
-                <td>{updateLimite?.data?.childName}</td>
-                <td>{updateLimite?.data?.childAmount}</td>
+                <td>{data?.childId}</td>
+                <td>{data?.childName}</td>
+                <td>{data?.childAmount}</td>
 
                 <td>
                   <div>
@@ -143,7 +111,6 @@ const AddSuperLimites = () => {
                     <Button
                       style={{ height: "unset" }}
                       className="add"
-                      loading={isLoading}
                       htmlType="submit">
                       Add
                     </Button>

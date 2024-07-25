@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import "./SportsDetails.scss";
 import {
   Card,
@@ -7,19 +8,104 @@ import {
   Empty,
   Pagination,
   Row,
-  Select,
-  Spin,
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
-import { useSportDetailQuery } from "../../../store/service/SportDetailServices";
 import { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import dayjs from "dayjs";
-import { useSportListbyIDQuery } from "../../../store/service/supermasteAccountStatementServices";
 
 const { RangePicker } = DatePicker;
+
+const sportDetail = [
+  {
+      "_id": "66015",
+      "eventId": 33422277,
+      "eventName": "Manchester Originals v Welsh Fire",
+      "eventDate": "2024-07-25 23:00:00.000000",
+      "inPlay": false,
+      "isActive": true,
+      "winner": null,
+      "plusMinus": 0,
+      "statusStr": "Upcoming",
+      "upLineAmount": 0,
+      "isLedgerCreated": false
+  },
+  {
+      "_id": "66018",
+      "eventId": 33422448,
+      "eventName": "Manchester Originals Women v Welsh Fire Women",
+      "eventDate": "2024-07-25 19:30:00.000000",
+      "inPlay": false,
+      "isActive": true,
+      "winner": null,
+      "plusMinus": 0,
+      "statusStr": "Upcoming",
+      "upLineAmount": 0,
+      "isLedgerCreated": false
+  },
+  {
+      "_id": "66341",
+      "eventId": 33438620,
+      "eventName": "Glamorgan v Gloucestershire",
+      "eventDate": "2024-07-25 15:30:00.000000",
+      "inPlay": false,
+      "isActive": true,
+      "winner": null,
+      "plusMinus": 0,
+      "statusStr": "Upcoming",
+      "upLineAmount": 0,
+      "isLedgerCreated": false
+  },
+  {
+      "_id": "66340",
+      "eventId": 33438617,
+      "eventName": "Surrey v Yorkshire",
+      "eventDate": "2024-07-25 15:30:00.000000",
+      "inPlay": false,
+      "isActive": true,
+      "winner": null,
+      "plusMinus": 0,
+      "statusStr": "Upcoming",
+      "upLineAmount": 0,
+      "isLedgerCreated": false
+  },
+]
+
+const sportData = [
+  {
+      "sportId": 4,
+      "sportName": "Cricket",
+      "sportImage": "https://admin-new-apiis.s3.ap-south-1.amazonaws.com/"
+  },
+  {
+      "sportId": 2,
+      "sportName": "Tennis",
+      "sportImage": "https://admin-new-apiis.s3.ap-south-1.amazonaws.com/"
+  },
+  {
+      "sportId": 1,
+      "sportName": "Football",
+      "sportImage": "https://admin-new-apiis.s3.ap-south-1.amazonaws.com/"
+  },
+  {
+      "sportId": 77,
+      "sportName": "Horse racing",
+      "sportImage": "https://admin-new-apiis.s3.ap-south-1.amazonaws.com/"
+  },
+  {
+      "sportId": 14,
+      "sportName": "Kabaddi",
+      "sportImage": "https://admin-new-apiis.s3.ap-south-1.amazonaws.com/"
+  },
+  {
+      "sportId": 6,
+      "sportName": "Election",
+      "sportImage": "https://admin-new-apiis.s3.ap-south-1.amazonaws.com/"
+  }
+]
+
 
 const SportsDetails = () => {
   const timeBefore = moment().subtract(14, "days").format("YYYY-MM-DD");
@@ -28,15 +114,14 @@ const SportsDetails = () => {
   const [matchId, setMatchId] = useState(0);
   const [InPlay, setInPlay] = useState();
   const [totalPage, setTotalPage] = useState();
-  const [paginationTotal, setPaginationTotal] = useState(50);
+  const [paginationTotal, setPaginationTotal] = useState(10);
   const [indexData, setIndexData] = useState(0);
   const [dataNameee, setDataNameee] = useState("");
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownStates, setDropdownStates] = useState([]);
   const [layoutOpen, setLayoutOpen] = useState(false);
-  // const [SportId, setSportId] = useState(4);
   const [statusStr, setStatusStr] = useState("");
   const [activeTabData, setActtiveTabData] = useState(4);
+  const totalPages = 10;
 
   const nav = useNavigate();
 
@@ -52,7 +137,6 @@ const SportsDetails = () => {
     nav(`/plus-minus-report/${matchId}`, { state: { dataNameee } });
   };
 
-  const { data: sportData } = useSportListbyIDQuery();
 
   const items = [
     {
@@ -134,37 +218,14 @@ const SportsDetails = () => {
   const onChange = (data, dateString) => {
     setDateData(dateString);
   };
-  const {
-    data: sportDetail,
-    isFetching,
-    isLoading,
-  } = useSportDetailQuery(
-    {
-      startDate: dateData[0],
-      endDate: dateData[1],
-      noOfRecords: paginationTotal,
-      index: indexData < 0 ? 0 : indexData || 0,
-      sportId: activeTabData,
-    },
-    { refetchOnMountOrArgChange: true }
-  );
+
 
   useEffect(() => {
-    setTotalPage(sportDetail?.data?.totalPages);
-  }, [sportDetail]);
-  useEffect(() => {
-    const initialStates = new Array(sportDetail?.data?.data?.length).fill(
-      false
-    );
-    setDropdownStates(initialStates);
-  }, [sportDetail?.data?.data]);
+    setTotalPage(totalPages);
 
-  const handleScroll = () => {
-    const updatedDropdownStates = dropdownStates.map(() => false);
-    setDropdownStates(updatedDropdownStates)
-    setIsDropdownOpen(false);
-    setLayoutOpen(false)
-  };
+  }, [totalPages]);
+ 
+
 
   const toggleDropdown = (index) => {
     setLayoutOpen(false)
@@ -174,26 +235,12 @@ const SportsDetails = () => {
   };
   const myElementRef = useRef(null);
 
-  useEffect(() => {
-    const element = myElementRef.current;
-    if(!isDropdownOpen){
-      window.addEventListener("scroll", handleScroll);
-    element.addEventListener("scroll", handleScroll);
-
-    }
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      element.removeEventListener("scroll", handleScroll);
-
-    };
-  }, [isDropdownOpen]);
+  
 
   const handleSportId = (id) => {
     setActtiveTabData(id);
   };
   
-  console.log(totalPage * paginationTotal, "dsdfsdds")
 
   return (
     <>
@@ -209,7 +256,7 @@ const SportsDetails = () => {
           <Col xl={24} lg={24} md={24} xs={24} style={{ padding: "10px 0px" }}>
             <div className="active_sport_list">
               <div className="sub_list_sport_list">
-                {sportData?.data?.map((item, id) => {
+                {sportData?.map((item, id) => {
                   return (
                     <div
                       key={id}
@@ -254,14 +301,14 @@ const SportsDetails = () => {
               <th className="text-right">Plus Minus</th>
               <th className="text-right">Upline Amount</th>
             </tr>
-            {isLoading || isFetching ? (
+            {/* {isLoading || isFetching ? (
               <div className="spin_icon comp_spin">
                 <Spin size="large" />
               </div>
             ) : (
               ""
-            )}
-            {sportDetail?.data?.data?.map((res, id) => {
+            )} */}
+            {sportDetail.map((res, id) => {
               return (
                 <tr key={res?.key}>
                   <td style={{ cursor: "pointer" }}>
@@ -321,8 +368,8 @@ const SportsDetails = () => {
                 </tr>
               );
             })}
-            {(sportDetail?.data?.data === undefined ||
-              sportDetail?.data?.data?.length === 0) && (
+            {(
+              sportDetail.length === 0) && (
               <tr>
                 {" "}
                 <td colSpan={9}>

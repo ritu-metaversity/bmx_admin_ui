@@ -36,9 +36,9 @@ const MasterDetails = () => {
       userType:3
     },
   ];
-  const uType =localStorage.getItem("userType")
+  const uType =0
   const userTypeMatch={
-    0:[1,3],
+    0:[1,3,2,0,5],
     1:[2,3],
     2:[3],
     5:[0,3]

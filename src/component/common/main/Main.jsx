@@ -50,7 +50,6 @@ import DeletedLenden from "../../pages/CashTransanction/DeletedLenden/DeletedLen
 import Rulespage from "../../pages/RulesPage/Rulespage";
 import MasterReport from "../../pages/dataReport/masterReport/MasterReport";
 import CommReport from "../../pages/dataReport/commReport/CommReport";
-import { useIt_Self_By_APP_URLQuery } from "../../../store/service/supermasteAccountStatementServices";
 import { useEffect } from "react";
 import SetCommission from "../../pages/setCommission/SetCommission";
 
@@ -59,36 +58,17 @@ const Main = () => {
   let appUrl = (window.location.hostname).split(".");
   appUrl.shift();
   appUrl=appUrl.join(".");
-  const {data: logoData} = useIt_Self_By_APP_URLQuery({ 
-    appUrl
-}, {refetchOnMountOrArgChange: true});
+ 
 
-useEffect(() => {
-  document.title = (window.location.hostname).split(".")[1];
-    if (logoData?.data?.favicon) {
-      let favicon = document.createElement("link")
-      favicon.rel = "icon"
-      document.getElementsByTagName("head")[0].appendChild(favicon)
-      favicon.href = logoData?.data?.favicon
-    }
-}, [logoData?.data]);
 
-useEffect(() => {
-  document.title = (window.location.hostname).split(".")[1];
-    if (logoData?.data?.favicon) {
-      let favicon = document.createElement("link")
-      favicon.rel = "icon"
-      document.getElementsByTagName("head")[0].appendChild(favicon)
-      favicon.href = logoData?.data?.favicon
-    }
-}, []);
+
 
   return (
     <>
        <Routes>
-          <Route path="/" element={<Signin logo={logoData?.data?.logo}/>}/>
-          <Route path="/signin" element={<Signin logo={logoData?.data?.logo}/>}/>
-          <Route path="" element={<LayOut logoData={logoData} logo={logoData?.data?.logo} />}> 
+          <Route path="/" element={<Signin logo={"logoData"}/>}/>
+          <Route path="/signin" element={<Signin logo={"logoData?.data?.logo"}/>}/>
+          <Route path="" element={<LayOut logoData={"logoData"} logo={"ogoData"} />}> 
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/client/details-master" element={<MasterDetails />} />
             <Route path="/Events/ladger-details" element={<LadgerDetails />} />

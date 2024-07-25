@@ -17,3 +17,12 @@
 .betting_icon{
     min-height: unset !important;
 }
+
+.switch_btn{
+    .ant-form .ant-form-item .ant-form-item-label, .ant-form .ant-form-item .ant-form-item-control {
+            @media (max-width: 575px) {
+            flex: unset !important;
+            /* max-width: 100%; */
+        }
+    }
+}

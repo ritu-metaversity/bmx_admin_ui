@@ -1,14 +1,100 @@
 import { Card, Col, DatePicker, Table } from "antd";
 import "./MyLedger.scss";
-import { useMyLedgerMutation } from "../../../../store/service/ledgerServices";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import DownloadReport from "../../../common/DownloadReport/DownloadReport";
-// import xlsx from "json-as-xlsx"
-// import {XLSX} from "sheetjs"
-// import { utils, writeFile } from "xlsx-js-style";
+
+
+
+const list = [
+  {
+      "_id": "6622b4b16df0402ee119c1cf",
+      "userId": "demoSubAdmin",
+      "parentId": "mango",
+      "collectionName": "",
+      "credit": 12.80,
+      "debit": 0.00,
+      "balance": -24.80,
+      "paymentType": "Lucknow Super Giants v Chennai Super Kings",
+      "remarks": "Sub Admin Plus",
+      "showDate": false,
+      "isRollback": false,
+      "date": "2024-04-19 23:44:11",
+      "dateOnly": "2024-04-19",
+      "dateStr": "2024-04-19",
+      "dateOnlyStr": "2024-04-19"
+  },
+  {
+      "_id": "661e2da96df0402ee119adaa",
+      "userId": "demoSubAdmin",
+      "parentId": "mango",
+      "collectionName": "",
+      "credit": 0.00,
+      "debit": 10.00,
+      "balance": -12.00,
+      "paymentType": "Antoine Escoffier v Alibek Kachmazov",
+      "remarks": "Sub Admin Minus",
+      "showDate": false,
+      "isRollback": false,
+      "date": "2024-04-16 13:20:00",
+      "dateOnly": "2024-04-16",
+      "dateStr": "2024-04-16",
+      "dateOnlyStr": "2024-04-16"
+  },
+  {
+      "_id": "661abd7d6df0402ee1199a74",
+      "userId": "demoSubAdmin",
+      "parentId": "mango",
+      "collectionName": "",
+      "credit": 0.00,
+      "debit": 10.00,
+      "balance": -22.00,
+      "paymentType": "Surrey v Somerset",
+      "remarks": "Sub Admin Minus",
+      "showDate": true,
+      "isRollback": false,
+      "date": "2024-04-13 22:44:36",
+      "dateOnly": "2024-04-13",
+      "dateStr": "2024-04-13",
+      "dateOnlyStr": "2024-04-13"
+  },
+  {
+      "_id": "65f839d4f9fb08271ce70de1",
+      "userId": "demoSubAdmin",
+      "parentId": "mango",
+      "collectionName": "",
+      "credit": 10.00,
+      "debit": 0.00,
+      "balance": -32.00,
+      "paymentType": "Kandy Samp Army v Delhi Devils",
+      "remarks": "Sub Admin Plus",
+      "showDate": false,
+      "isRollback": false,
+      "date": "2024-03-18 18:25:43",
+      "dateOnly": "2024-03-18",
+      "dateStr": "2024-03-18",
+      "dateOnlyStr": "2024-03-18"
+  },
+  {
+      "_id": "65e7630f0e94da462642ccaa",
+      "userId": "demoSubAdmin",
+      "parentId": "mango",
+      "collectionName": "",
+      "credit": 22.00,
+      "debit": 0.00,
+      "balance": -22.00,
+      "paymentType": "Peshawar Zalmi v Multan Sultans",
+      "remarks": "Sub Admin Plus",
+      "showDate": false,
+      "isRollback": false,
+      "date": "2024-03-05 23:52:51",
+      "dateOnly": "2024-03-05",
+      "dateStr": "2024-03-05",
+      "dateOnlyStr": "2024-03-05"
+  }
+]
 
 const columns = [
   {
@@ -85,124 +171,6 @@ const MyLedger = () => {
     setDateData(dateString);
   };
 
-  const [trigger, { data, isLoading, isFetching }] = useMyLedgerMutation();
-
-  useEffect(() => {
-    trigger({
-      startDate: dateData[0],
-      endDate: dateData[1],
-      index: 0,
-      noOfRecords: 100,
-      isDownloaded: false,
-    });
-  }, [dateData]);
-
-  // const dataSource = data?.data?.list?.map((curElm) => {
-  //   return {
-  //     date: curElm?.date,
-  //     collectionName: curElm?.collectionName,
-  //     debit: curElm?.debit,
-  //     credit: curElm?.credit,
-  //     balance: Math.abs(curElm?.balance),
-  //     paymentType: curElm?.paymentType,
-  //     remarks: curElm?.remarks,
-  //     isRollback: curElm?.isRollback ? "Yes" : "NO",
-  //   };
-  // });
-
-  const headerField = [
-    "Date",
-    "Collection Name",
-    "Debit",
-    "Credit",
-    "Balance",
-    "Payment Type",
-    "Remark",
-    "Rollback",
-  ];
-
-  const lenadenaHeading = ["Lena", "Dena", "Balance"];
-
-  // const arrBalance = [
-  //   ["Lena", "Dena", "Balance"],
-  //   [
-  //     data?.data?.data?.credit?.toFixed(2),
-  //     data?.data?.data?.debit?.toFixed(2),
-  //     Math.abs(data?.data?.data?.balance?.toFixed(2)),
-  //   ],
-  // ];
-
-  // const arrBalance1= [{
-  //   lena:data?.data?.data?.credit?.toFixed(2),
-  //   dena:data?.data?.data?.debit?.toFixed(2),
-  //   balance:data?.data?.data?.balance?.toFixed(2)
-  // }]
-
-  // const downloadFile = () => {
-  //   const origin = 3;
-  //   let worksheet = utils.json_to_sheet(dataSource, {
-  //     origin,
-  //       header:[
-  //       "Date",	"Collection Name",	"Debit",	"Credit",	"Balance",	"Payment Type",	"Remark",	"Rollback"
-  //     ]
-  //   });
-
-  //   console.log(worksheet, "hui");
-  //   utils.sheet_add_aoa(worksheet, arrBalance, { origin: 0 });
-  //   utils.sheet_add_aoa(
-  //     worksheet,
-  //     [
-  //       [
-  //         "Date",
-  //         "Collection Name",
-  //         "Debit",
-  //         "Credit",
-  //         "Balance",
-  //         "Payment Type",
-  //         "Remark",
-  //         "Rollback",
-  //       ],
-  //     ],
-
-  //     { origin: 3 }
-  //   );
-
-  //   for (let i = origin; i < dataSource.length + origin; ++i) {
-  //     console.log(i, "i", `D${i + 2}`);
-  //     worksheet[`C${i + 2}`].s = {
-  //       font: {
-  //         color: { rgb: "FF0000" },
-  //       },
-  //     };
-  //     worksheet[`D${i + 2}`].s = {
-  //       font: {
-  //         color: { rgb: "008000" },
-  //       },
-  //     };
-  //   }
-
-  //   worksheet["A2"].s = {
-  //     font: {
-  //       color: { rgb: "FF0000" },
-  //     },
-  //   };
-  //   worksheet["B2"].s = {
-  //     font: {
-  //       color: { rgb: "008000" },
-  //     },
-  //   };
-  //   worksheet["C2"].s = {
-  //     font: {
-  //       color: { rgb: arrBalance[1][2]<0 ?"FF0000": "00FF00" },
-  //     },
-  //   };
-
-  //   const wb = utils.book_new();
-  //   utils.book_append_sheet(wb, worksheet, "Data");
-
-  //   writeFile(wb, "SheetJSReactAoO.xlsx");
-  // };
-
   return (
     <>
     {
@@ -223,33 +191,25 @@ const MyLedger = () => {
           </Col>
           <div>
             <h3 style={{ padding: "5px", color: "rgb(51, 181, 28)" }}>
-              Lena : {data?.data?.data?.credit?.toFixed(2)}
+              Lena : 20.0
             </h3>
           </div>
           <div>
             <h3 style={{ padding: "5px", color: "rgb(214, 75, 75)" }}>
-              Dena : {data?.data?.data?.debit?.toFixed(2)}
+              Dena :  44.8
             </h3>
           </div>
 
           <div>
             <h3
-              className={
-                data?.data?.data?.balance > 0 ? "text_danger" : "text_success"
-              }>
-              Balance: {Math.abs(data?.data?.data?.balance?.toFixed(2))}{" "}
-              {data?.data?.data?.balance > 0 ? "( Dena )" : "( Lena )"}
+              className="text_success">
+              Balance: 24.80 ( Dena )
             </h3>
           </div>
           {/* <button onClick={downloadFile}>Download</button> */}
           <div>
             <DownloadReport
-              lenadenaHeading={lenadenaHeading}
-              reportType="MyLedger"
-              reportName="MyLedger"
-              headerField={headerField}
-              startDate={dateData[0]}
-              endDate={dateData[1]}
+              
               isModalOpen={isModalOpen}
               setIsModalOpen={setIsModalOpen}
             />
@@ -260,16 +220,14 @@ const MyLedger = () => {
             className="live_table limit_update"
             bordered
             columns={columns}
-            loading={isFetching || isLoading}
             pagination={{
               defaultPageSize: 50,
               pageSizeOptions: [50, 100, 150, 200, 250],
             }}
-            dataSource={data?.data?.list}
+            dataSource={list}
           />
         </div>
       </Card>
-      {/* <button className="download"><AiOutlineArrowDown/></button> */}
     </>
   );
 };

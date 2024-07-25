@@ -5,15 +5,9 @@ import {
   Form,
   Row,
   Select,
-  Table,
-  notification,
-} from "antd";
-import React, { useEffect } from "react";
+  Table } from "antd";
 import { useNavigate } from "react-router-dom";
-import {
-  useGetCommissionMutation,
-  useSetCommissionMutation,
-} from "../../../store/service/CasinoServices";
+
 
 const columns = [
   {
@@ -34,7 +28,6 @@ const columns = [
 ];
 
 const SetCommission = () => {
-  const [api, contextHolder] = notification.useNotification();
   const fancyComm = [
     "0.00",
     "0.25",
@@ -47,61 +40,20 @@ const SetCommission = () => {
     "2.00",
   ];
   const casinoComm = ["0.00", "0.25", "0.50", "0.75", "1.00"];
-  const [trigger, { data, isLoading, error }] = useSetCommissionMutation();
 
   const nav = useNavigate();
   const [form] = Form.useForm();
 
-  const openNotification = (mess) => {
-    api.success({
-      message: mess,
-      description: "Success",
-      closeIcon: false,
-      placement: "top",
-    });
-  };
-
-  const openNotificationError = (mess) => {
-    api.error({
-      message: mess,
-      closeIcon: false,
-      placement: "top",
-    });
-  };
+  
 
   const onFinish = (value) => {
-    trigger({
-      fancyCommission: value?.fancycomm,
-      oddsCommission: value?.oddscomm,
-      casinoCommission: value?.casinocomm,
-    });
+   
   };
 
-  useEffect(() => {
-    if (data?.status == true) {
-      openNotification(data?.message);
-    getComm();
-      form.resetFields();
-    } else if (
-      error?.status == 400 ||
-      error?.data?.status == false ||
-      data?.status == false
-    ) {
-      openNotificationError(error?.data?.message || data?.message);
-      form.resetFields();
-    }
-  }, [data, error]);
 
-  const [getComm, { data: getCommData, isLoading: loading }] =
-    useGetCommissionMutation();
-
-  useEffect(() => {
-    getComm();
-  }, []);
 
   return (
     <>
-      {contextHolder}
       <Card
         className="sport_detail ledger_data"
         title="Set Commission"
@@ -182,7 +134,7 @@ const SetCommission = () => {
               </Col>
             </Row>
             <Form.Item wrapperCol={{ span: 24 }}>
-              <Button loading={isLoading} type="primary" htmlType="submit">
+              <Button  type="primary" htmlType="submit">
                 Submit
               </Button>
             </Form.Item>
@@ -195,8 +147,7 @@ const SetCommission = () => {
               className="live_table roulette_table"
               bordered
               columns={columns}
-              loading={loading}
-              dataSource={[getCommData?.data]}
+              dataSource={[]}
               pagination={false}/>
           </div>
       </Card>

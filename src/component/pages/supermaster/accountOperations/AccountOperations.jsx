@@ -1,10 +1,10 @@
-import { Card, DatePicker, Empty, Pagination, Table } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
+/* eslint-disable no-unused-vars */
+import { Card, DatePicker,  Table } from "antd";
+import { useNavigate} from "react-router-dom";
 import "./AccountOperations.scss";
 import moment from "moment";
 import { useState } from "react";
 import dayjs from "dayjs";
-import { useAccountOprationQuery } from "../../../../store/service/userlistService";
 // import axios from "axios";
 import DownloadReport from "../../../common/DownloadReport/DownloadReport";
 
@@ -20,23 +20,12 @@ const AccountOperations = () => {
     setDateData(dateString);
   };
 
-  const { id } = useParams();
 
   const nav = useNavigate();
   const handleBackClick = () => {
     nav(-1);
   };
 
-  const { data, isFetching, isLoading } = useAccountOprationQuery(
-    {
-      index: 0,
-      noOfRecords: 500,
-      userId: id || "",
-      startDate: dateData[0],
-      endDate: dateData[1],
-    },
-    { refetchOnMountOrArgChange: true }
-  );
 
   const columns = [
     {
@@ -62,15 +51,14 @@ const AccountOperations = () => {
     },
   ];
 
-  const headerField = ["Date", "Operation", "Done By", "Description"];
 
   return (
     <>
-      {isModalOpen && (
+      {/* {isModalOpen && (
         <div
           onClick={() => setIsModalOpen(false)}
           className="report_overlay"></div>
-      )}
+      )} */}
       <div className="match_slip account_match_slip">
         <div>
           <Card
@@ -79,7 +67,7 @@ const AccountOperations = () => {
               width: "100%",
             }}
             className="sport_detail acc_name"
-            title={`List Of All Transactions ( ${data?.data?.data?.length} )`}
+            title={`List Of All Transactions 0`}
             extra={<button onClick={handleBackClick}>Back</button>}>
             <div className="actionlog_download" style={{ margin: "10px 2px" }}>
               <RangePicker
@@ -91,12 +79,7 @@ const AccountOperations = () => {
                 <DownloadReport
                   isModalOpen={isModalOpen}
                   setIsModalOpen={setIsModalOpen}
-                  userId={id}
-                  reportType="ActionLog"
-                  reportName="account-operations"
-                  headerField={headerField}
-                  startDate= {dateData[0]}
-                  endDate= {dateData[1]}
+                  
                 />
               </div>
             </div>
@@ -107,8 +90,8 @@ const AccountOperations = () => {
                   className="live_table agent_master"
                   bordered
                   columns={columns}
-                  dataSource={data?.data?.data || []}
-                  loading={isLoading || isFetching}></Table>
+                  dataSource={[]}
+                  />
               </div>
             </div>
           </Card>

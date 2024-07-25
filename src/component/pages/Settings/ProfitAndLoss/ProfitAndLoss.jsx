@@ -11,7 +11,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import "./ProfitAndLoss.scss";
 import { useEffect, useState } from "react";
-import { useLazyProfitLossQuery } from "../../../../store/service/supermasteAccountStatementServices";
 import moment from "moment";
 import dayjs from "dayjs"
 
@@ -34,41 +33,22 @@ const ProfitAndLoss = () => {
     nav(-1);
   };
 
-  const [getProftLossData, results, { isLoading }] = useLazyProfitLossQuery();
 
   const onChange = (data, dateString) => {
     setDateData(dateString);
   };
 
-  useEffect(() => {
-    getProftLossData({
-      sportId: 4,
-      matchId: "",
-      fromDate: dateData[0],
-      toDate: dateData[1],
-      userId: "",
-      pageNumber: indexData < 0 ? 0 : indexData,
-      pageSize: paginationTotal,
-    });
-  }, []);
+ 
 
   useEffect(()=>{
-    setProfitLossData(results?.data?.data?.market);
-    setTotalPage(results?.data?.data?.totalRecord);
-  }, [results?.data])
+    setProfitLossData([]);
+    setTotalPage(0);
+  }, [])
 
   const handleProfitLossData = () => {
-    getProftLossData({
-      sportId: 4,
-      matchId: "",
-      fromDate: dateData[0],
-      toDate: dateData[1],
-      userId: "",
-      pageNumber: indexData < 0 ? 0 : indexData,
-      pageSize: 100,
-    });
-    setProfitLossData(results?.data?.data?.market);
-    setTotalPage(results?.data?.data?.totalRecord);
+  
+    setProfitLossData([]);
+    setTotalPage(0);
   };
   return (
     <>
@@ -93,7 +73,6 @@ const ProfitAndLoss = () => {
                   <Button
                     type="primary"
                     className="apply_btn"
-                    loading={isLoading}
                     onClick={handleProfitLossData}>
                     Apply
                   </Button>
@@ -110,7 +89,7 @@ const ProfitAndLoss = () => {
                   <th>Net P&L</th>
                   <th>Action</th>
                 </tr>
-                {ProfitLossData?.map((res) => {
+                {/* {ProfitLossData?.map((res) => {
                   return (
                     <tr key={res?.key}>
                       <td>{res?.matchName}</td>
@@ -121,11 +100,11 @@ const ProfitAndLoss = () => {
                       <td>??</td>
                     </tr>
                   );
-                })}
+                })} */}
               </table>
-              {ProfitLossData === undefined ? (
+              
                 <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-              ) : (
+              
                 <>
                   <Divider />
                   <div className="pagination_cus">
@@ -137,7 +116,7 @@ const ProfitAndLoss = () => {
                     />
                   </div>
                 </>
-              )}
+             
             </div>
           </Card>
         </div>

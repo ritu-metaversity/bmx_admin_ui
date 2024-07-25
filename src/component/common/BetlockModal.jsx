@@ -1,73 +1,30 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react/prop-types */
 import {
   Button,
   Form,
   Input,
-  InputNumber,
   Select,
-  Spin,
-  notification,
 } from "antd";
 import "./Deposit.scss";
-import { useBlockBettingMutation } from "../../store/service/supermasteAccountStatementServices";
-import { openNotification, openNotificationError } from "../../App";
 
 const BetlockModal = ({
   betStatus,
-  userIdData,
   handleClose,
   accStatus,
-  paginationTotal,
-  index,
-  id,
-  userType,
-  getData,
+ 
 }) => {
   const [form] = Form.useForm();
 
-  const [trigger, { data, error, isLoading }] = useBlockBettingMutation();
 
-  const onFinish = (values) => {
-    const bettingPayload = {
-      userId: userIdData,
-      betLock: values?.type == "bet" ? !betStatus : betStatus,
-      accountLock: values?.type == "acc" ? !accStatus : accStatus,
-      isactive: true,
-      liveCasinoLock: false,
-      virtualCasinoLock: false,
-      lupassword: values?.password,
-    };
-    trigger(bettingPayload);
+  const onFinish = () => {
+  
   };
 
-  useEffect(() => {
-    if (data?.status === true) {
-      getData({
-        userType: userType,
-        parentUserId: id || null,
-        noOfRecords: paginationTotal,
-        index: index,
-        userId: "",
-      });
-      openNotification(data?.message);
-      form?.resetFields();
-      handleClose();
-    } else if (data?.status === false || error?.data?.message) {
-      openNotificationError(data?.message || error?.data?.message);
-      handleClose();
-    }
-  }, [data?.status, error]);
 
   return (
     <>
       <div className="ant-spin-nested-loading">
-        {isLoading && (
-          <>
-            <Spin
-              className="spin_icon betting_icon comp_spin"
-              size="large"></Spin>
-          </>
-        )}
+       
         <div className="form_modals">
           <Form onFinish={onFinish} form={form} autoComplete="off">
             <Form.Item

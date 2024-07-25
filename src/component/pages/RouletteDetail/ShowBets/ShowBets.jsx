@@ -1,23 +1,15 @@
-import { Card, Empty, Spin,} from "antd";
+import { Card, Empty} from "antd";
 import "./ShowBets.scss";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import {LeftOutlined} from '@ant-design/icons'
-import moment from "moment";
-import { useCasinoBetListQuery } from "../../../../store/service/CasinoServices";
 
 
 const ShowBets = () => {
-
     const nav = useNavigate()
     const {id} = useParams()
 
-    const {state} = useLocation();
+    const data = []
 
-    const {data, isLoading, isError} = useCasinoBetListQuery({
-      casinoId: state?.id,
-      roundId: id,
-      date: state?.state?.rouletteDate
-    }, {refetchOnMountOrArgChange: true})
 
   return (
     <Card
@@ -25,13 +17,7 @@ const ShowBets = () => {
     title={`All Bets - ${id}`}
     extra={<button onClick={() => nav(-1)}><LeftOutlined /> Back</button>}>
     <div className="table_section show_bet_table ant-spin-nested-loading" style={{marginBottom:"12px"}}>
-        {isLoading && (
-          <>
-            <Spin
-              className="spin_icon betting_icon comp_spin"
-              size="large"></Spin>
-          </>
-        )}
+        
       <table>
         <thead>
           <tr>
@@ -48,7 +34,7 @@ const ShowBets = () => {
           </tr>
         </thead>
         <tbody>
-          {data?.data?.map((res) => (
+          {data?.map((res) => (
             <tr key={res.key} className={res.isBack? "back":"lay"}>
               <td>{res?.date}</td>
               <td>{res.clientId}</td>
@@ -65,33 +51,9 @@ const ShowBets = () => {
           ))}
         </tbody>
       </table>
-      {data?.data?.length == 0 || isError ? (
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-        ) : (
-          <>
-            {/* <Divider />
-            <div className="pagination_cus">
-              <Pagination
-                className="pagination_main ledger_pagination"
-                onShowSizeChange={(c, s) => setPaginationTotal(s)}
-                total={
-                  results?.data?.totalPages &&
-                  results?.data?.totalPages * paginationTotal
-                }
-                defaultPageSize={50}
-                pageSizeOptions={[50, 100, 150, 200, 250]}
-                onChange={(e) => setIndexData(e - 1)}
-              />
-            </div> */}
-          </>
-        )}
+      {data?.length == 0 && (<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />)}
     </div>
-    {/* <Divider />
-    <Pagination
-      className="pagination_main ledger_pagination"
-      defaultCurrent={1}
-      total={50}
-    /> */}
+   
   </Card>
   )
 }

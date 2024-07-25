@@ -1,8 +1,5 @@
-import  React from "react";
 import "./PlusMinusDetails.scss";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { globalSelector } from "../../../../../store/global/slice";
 import PlusMinusTable from "./PlusMinusTable";
 
 const PlusMinusDetails = () => {

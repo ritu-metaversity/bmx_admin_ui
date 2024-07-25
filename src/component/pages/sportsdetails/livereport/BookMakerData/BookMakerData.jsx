@@ -1,13 +1,6 @@
-import { Button, Col, Modal, Row } from "antd";
-import React, { useEffect, useState } from "react";
-import FancyBets from "../fancyBets/FancyBets";
-import FancyBookModals from "../FancyBookModals/FancyBookModals";
+import {  Col, Row } from "antd";
+import  { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  useFancyPnlQuery,
-  useLazyOddsQuPnlQuery,
-} from "../../../../../store/service/OddsPnlServices";
-import { useLazyTtlBookQuery } from "../../../../../store/service/supermasteAccountStatementServices";
 
 const BookMakerData = ({ data, keyData, handleBets }) => {
   const [matchid, setMatchID] = useState("");
@@ -17,7 +10,6 @@ const BookMakerData = ({ data, keyData, handleBets }) => {
   const [activeBook1, setActiveBook1] = useState(1);
 
   const { id } = useParams();
-  const [getData, { data: results }] = useLazyTtlBookQuery();
 
   useEffect(() => {
     data?.map((res) => {
@@ -25,69 +17,26 @@ const BookMakerData = ({ data, keyData, handleBets }) => {
       setMatchID(res?.mid);
     });
   }, [data]);
-
-  const [trigger, { data: PnlOdds }] = useLazyOddsQuPnlQuery();
-
-  const { data: fancyPnl } = useFancyPnlQuery({
-    matchId: id,
-  });
   const handleMyBook = (e) => {
     setActiveBook(1);
     e.preventDefault();
     setShowMyBook(2);
-    const oddsPnl = {
-      matchId: Number(id),
-    };
-    trigger(oddsPnl);
   };
   const handleMyBook1 = (e) => {
     setActiveBook1(1);
     setShowMyBook1(2);
-    const oddsPnl = {
-      matchId: Number(id),
-    };
-    trigger(oddsPnl);
+   
   };
-
-  useEffect(() => {
-    id &&
-      matchid &&
-      getData({
-        matchid: Number(id),
-        marketid: matchid,
-      });
-    const oddsPnl = {
-      matchId: Number(id),
-    };
-    trigger(oddsPnl);
-  }, [matchid]);
 
   const handleTtlBook = (e) => {
     setActiveBook(2);
     e.preventDefault();
     setShowMyBook(1);
-    getData({
-      matchid: Number(id),
-      marketid: matchid,
-    });
   };
   const handleTtlBook1 = (e) => {
     setActiveBook1(2);
     setShowMyBook1(1);
-    getData({
-      matchid: Number(id),
-      marketid: matchid,
-    });
   };
-  const ttl = results?.data?.[0]
-    ? {
-        [results?.data?.[0].selection1]: results?.data?.[0].pnl1,
-        [results?.data?.[0].selection2]: results?.data?.[0].pnl2,
-        [results?.data?.[0].selection3]: results?.data?.[0].pnl3,
-      }
-    : {};
-
-
 
   return (
     <>
@@ -113,7 +62,7 @@ const BookMakerData = ({ data, keyData, handleBets }) => {
                         Ttl Book
                       </button>
                       <button
-                      style={{padding:"0px 12px"}}
+                        style={{ padding: "0px 12px" }}
                         className={activeBook == 2 ? "activeMyBook" : ""}
                         onClick={() => handleBets(data[0]?.mid)}>
                         Bet
@@ -145,49 +94,20 @@ const BookMakerData = ({ data, keyData, handleBets }) => {
                       <div className="title">{res?.nation}</div>
                       {!res?.mid?.includes("BM") && (
                         <span
-                          className={
-                            fancyPnl?.data && fancyPnl?.data[res?.sid] < 0
-                              ? "text_danger"
-                              : "text_success"
-                          }>
-                          {(fancyPnl?.data && fancyPnl.data[res?.sid]) || "0"}
+                          className="text_success">
+                           0
                         </span>
                       )}
                       <>
                         {showMyBook === 1 && (
-                          <span
-                            className={
-                              ttl[res.sid] < 0 ? "text_danger" : "text_success"
-                            }>
-                            {ttl[res.sid] || "0.0"}
-                          </span>
+                          <span className="text_success">0.0</span>
                         )}
-                        {PnlOdds?.data?.map((item, id) => {
-                          if (!item?.marketId?.includes("BM")) return <></>;
-                          const bookPnl = {
-                            [item?.selection1]: item?.pnl1,
-                            [item?.selection2]: item?.pnl2,
-                            [item?.selection3]: item?.pnl3,
-                          };
-                          return (
-                            <>
-                              {showMyBook === 2 && (
-                                <div className="sub_title" key={id}>
-                                  {
-                                    <span
-                                      className={
-                                        bookPnl[res?.sid] < 0
-                                          ? "text_danger"
-                                          : "text_success"
-                                      }>
-                                      {bookPnl[res?.sid] || 0}
-                                    </span>
-                                  }
-                                </div>
-                              )}
-                            </>
-                          );
-                        })}
+
+                        {showMyBook === 2 && (
+                          <div className="sub_title" key={id}>
+                            {<span className="text_success">0</span>}
+                          </div>
+                        )}
                       </>
 
                       <div></div>
@@ -242,8 +162,7 @@ const BookMakerData = ({ data, keyData, handleBets }) => {
                         <button
                           className={activeBook1 == 2 ? "activeMyBook" : ""}
                           onClick={() => handleBets(data[2]?.mid)}
-                          style={{padding:"0px 12px"}}
-                          >
+                          style={{ padding: "0px 12px" }}>
                           Bet
                         </button>
                       </Col>
@@ -283,41 +202,16 @@ const BookMakerData = ({ data, keyData, handleBets }) => {
                         )}
                         <>
                           {showMyBook1 === 1 && (
-                            <span
-                              className={
-                                ttl[res.sid] < 0
-                                  ? "text_danger"
-                                  : "text_success"
-                              }>
-                              {ttl[res.sid] || "0.0"}
-                            </span>
+                            <span className={"text_success"}>0.0</span>
                           )}
-                          {PnlOdds?.data?.map((item, id) => {
-                            if (!item?.marketId?.includes("BM")) return <></>;
-                            const bookPnl = {
-                              [item?.selection1]: item?.pnl1,
-                              [item?.selection2]: item?.pnl2,
-                              [item?.selection3]: item?.pnl3,
-                            };
-                            return (
-                              <>
-                                {showMyBook1 === 2 && (
-                                  <div className="sub_title" key={id}>
-                                    {
-                                      <span
-                                        className={
-                                          bookPnl[res?.sid] < 0
-                                            ? "text_danger"
-                                            : "text_success"
-                                        }>
-                                        {bookPnl[res?.sid] || 0}
-                                      </span>
-                                    }
-                                  </div>
-                                )}
-                              </>
-                            );
-                          })}
+
+                          <>
+                            {showMyBook1 === 2 && (
+                              <div className="sub_title" key={id}>
+                                {<span className="text_success">0</span>}
+                              </div>
+                            )}
+                          </>
                         </>
 
                         <div></div>

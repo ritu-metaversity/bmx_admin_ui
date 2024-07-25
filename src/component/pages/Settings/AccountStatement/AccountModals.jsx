@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react/prop-types */
+import {  useState } from "react";
 import { Radio, Table } from "antd";
 import "./AccountModals.scss";
-import { useLazySearchBetMarketIdQuery } from "../../../../store/service/supermasteAccountStatementServices";
 
-const AccountModals = ({marketId,remark, id}) => {
+const AccountModals = ({remark }) => {
   const columns = [
     {
       title: "userId",
@@ -58,17 +58,6 @@ const AccountModals = ({marketId,remark, id}) => {
   };
 
 
-  const [trigger, {data, isFetching, isLoading}] = useLazySearchBetMarketIdQuery()
-
-  useEffect(()=>{
-    const betData= {
-        marketId:marketId,
-        userId:id? id:"",
-        betType:value
-    }
-    trigger(betData)
-  }, [marketId, value])
-
   return (
     <>
       <div className="accont_modals">
@@ -84,10 +73,10 @@ const AccountModals = ({marketId,remark, id}) => {
             </Radio.Group>
             <div className="amount_data">
               <p>
-                Total Soda: <span>{data?.data?.totalBets || 0}</span>
+                Total Soda: <span>{ 0}</span>
               </p>
               <p>
-                Total Amount: <span>{data?.data?.totalStake || 0}</span>
+                Total Amount: <span>{ 0}</span>
               </p>
             </div>
           </div>
@@ -99,8 +88,8 @@ const AccountModals = ({marketId,remark, id}) => {
             bordered
             rowClassName={(record) => record?.isback ? "back":"lay"}
             columns={columns}
-            loading={isLoading || isFetching}
-            dataSource={data?.data?.betList}
+            
+            dataSource={[]}
             pagination={false}
           />
         </div>

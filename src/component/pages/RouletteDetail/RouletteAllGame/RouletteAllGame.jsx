@@ -1,18 +1,14 @@
-import { Card, Divider, Empty, Pagination, Spin } from "antd";
+import { Card, Empty  } from "antd";
 import "./RouletteAllGame.scss";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useAllGameQuery } from "../../../../store/service/CasinoServices";
 const RouletteAllGame = () => {
 
 const {id} = useParams();
 const {state} = useLocation()
 
-  const {data: allGamesData, isLoading, isError} = useAllGameQuery({
-    casinoId: id,
-    date: state?.rouletteDate,
-  }, {refetchOnMountOrArgChange: true})
-
     const nav = useNavigate();
+
+    const data = [];
 
     const handleShowBets = (val)=>{
       nav(`/casino/show-bets/${val}`, {state: {state, id }})
@@ -35,13 +31,6 @@ const {state} = useLocation()
       </p>
     </div> */}
     <div className="table_section ant-spin-nested-loading" style={{marginBottom:"12px"}}>
-    {isLoading && (
-          <>
-            <Spin
-              className="spin_icon betting_icon comp_spin"
-              size="large"></Spin>
-          </>
-        )}
       <table>
         <thead>
           <tr>
@@ -55,7 +44,7 @@ const {state} = useLocation()
           </tr>
         </thead>
         <tbody>
-          {allGamesData?.data?.map((res, id) => (
+          {data?.map((res, id) => (
             <tr key={res.key}>
               <td>{id + 1}</td>
               <td >{res?.roundId}</td>
@@ -71,33 +60,15 @@ const {state} = useLocation()
         </tbody>
       </table>
 
-      {allGamesData?.data?.length == 0 || isError ? (
+      {data?.length == 0  ? (
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
         ) : (
           <>
-            {/* <Divider />
-            <div className="pagination_cus">
-              <Pagination
-                className="pagination_main ledger_pagination"
-                onShowSizeChange={(c, s) => setPaginationTotal(s)}
-                total={
-                  results?.data?.totalPages &&
-                  results?.data?.totalPages * paginationTotal
-                }
-                defaultPageSize={50}
-                pageSizeOptions={[50, 100, 150, 200, 250]}
-                onChange={(e) => setIndexData(e - 1)}
-              />
-            </div> */}
+            
           </>
         )}
     </div>
-    {/* <Divider />
-    <Pagination
-      className="pagination_main ledger_pagination"
-      defaultCurrent={1}
-      total={50}
-    /> */}
+   
   </Card>
   )
 }

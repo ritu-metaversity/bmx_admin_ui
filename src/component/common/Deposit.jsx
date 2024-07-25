@@ -1,106 +1,79 @@
-import React, { useEffect } from "react";
-import { Button, Form, Input, InputNumber, Spin, notification } from "antd";
-import './Deposit.scss'
-import { useAddLimitMutation, useDepositAndWithdrawQuery } from "../../store/service/userlistService";
-import { openNotification, openNotificationError } from "../../App";
+import { Button, Form, Input, InputNumber } from "antd";
+import "./Deposit.scss";
 
-const Deposit = ({data: datadeposit, userIdData, handleClose, setClientDataState}) => {
-  const [form]= Form.useForm();
-
-
-    const [trigger , {data, error, isLoading}] = useAddLimitMutation()
-    const {data: depositeWithdraw} = useDepositAndWithdrawQuery({
-      userId:datadeposit
-    }, {refetchOnMountOrArgChange:true});
+const Deposit = ({ handleClose }) => {
+  const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    const depositData = {
-        amount:Number(values?.number),
-        remark:"credit deposit",
-        lupassword:values?.password,
-        userId:userIdData
-    }
-    trigger(depositData)
     form?.resetFields();
   };
 
-
-useEffect(()=>{
-    if(data?.status === true){
-        openNotification(data?.message);
-        setClientDataState(true)
-        form?.resetFields();
-        handleClose()
-    }else if(data?.status === false || error?.data?.message){
-        openNotificationError(data?.message || error?.data?.message);
-        handleClose()
-    }
-}, [data?.data, error])
-
-
+  const childUplineAmount = 200;
 
   return (
     <>
-    {/* {contextHolder} */}
-    <div>
-    {isLoading && (
-          <>
-            <Spin className="spin_icon comp_spin" size="large"></Spin>
-          </>
-        )}
-    
       <div>
-        <p style={{fontSize:"23px", paddingBottom:"12px"}}>Curr Coins : <span className={depositeWithdraw?.data?.childUplineAmount < 0?"text_danger":"text_success"}>{depositeWithdraw?.data?.childUplineAmount}</span> </p>
-      </div>
-      <div className="form_modals">
-        <Form
-          onFinish={onFinish}
-          form={form}
-          autoComplete="off">
-          <Form.Item
-            required
-            name="number"
-            rules={[
-              {
-                required: true,
-                message: "Please enter valid Coins",
-              },
-            ]}>
-            <InputNumber
-              type="number"
-              className="number_field"
-              style={{ width: "100%" }}
-              placeholder="Enter Coins"
-              min={0}
-              step={1}
-            />
-          </Form.Item>
+        <div>
+          <p style={{ fontSize: "23px", paddingBottom: "12px" }}>
+            Curr Coins :{" "}
+            <span
+              className={
+                childUplineAmount < 0 ? "text_danger" : "text_success"
+              }>
+              {childUplineAmount}
+            </span>{" "}
+          </p>
+        </div>
+        <div className="form_modals">
+          <Form onFinish={onFinish} form={form} autoComplete="off">
+            <Form.Item
+              required
+              name="number"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter valid Coins",
+                },
+              ]}>
+              <InputNumber
+                type="number"
+                className="number_field"
+                style={{ width: "100%" }}
+                placeholder="Enter Coins"
+                min={0}
+                step={1}
+              />
+            </Form.Item>
 
-          <Form.Item
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please enter password",
-              },
-            ]}>
-            <Input autoComplete="off" placeholder="Enter Password" type="password" />
-          </Form.Item>
+            <Form.Item
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter password",
+                },
+              ]}>
+              <Input
+                autoComplete="off"
+                placeholder="Enter Password"
+                type="password"
+              />
+            </Form.Item>
 
             <div className="deposit_btn">
-          <Form.Item>
-            <Button onClick={()=>handleClose()} type="primary" >
-              Return
-            </Button>
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-          </div>
-        </Form>
-      </div>
+              <Form.Item>
+                <Button onClick={() => handleClose()} type="primary">
+                  Return
+                </Button>
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              </Form.Item>
+            </div>
+          </Form>
+        </div>
       </div>
     </>
   );

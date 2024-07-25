@@ -1,22 +1,17 @@
 import { useEffect, useState } from "react";
 import "./Navbar.scss";
 // import { AiOutlineDown } from "react-icons/ai";
-import { Dropdown, Input, Space, Modal, Button } from "antd";
+import { Dropdown, Space, Modal, Button } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import { Form, Link, useNavigate } from "react-router-dom";
-import { useLogoutMutation } from "../../../store/service/authService";
+import {  useNavigate } from "react-router-dom";
 import ChangePassword from "../ChangePassword/ChangePassword";
-import { useForm } from "antd/es/form/Form";
 import { MdMenu } from "react-icons/md";
 
 const Navbar = ({ action, logo }) => {
-  const [trigger, { error, isLoading, isError }] = useLogoutMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userInfo, setUserInfo] = useState();
   const nav = useNavigate();
 
   const handleLogout = () => {
-    trigger();
     localStorage.clear();
     nav("/");
   };
@@ -34,7 +29,7 @@ const Navbar = ({ action, logo }) => {
   ];
 
   const handleModal = (e) => {
-    // e.preventDefault();
+
     if (e.key == 0) {
       setIsModalOpen(true);
     } else {
@@ -42,9 +37,7 @@ const Navbar = ({ action, logo }) => {
     }
   };
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
+ 
   const handleCancel = () => {
     if((pType == "old" || pType == "Old") && uType == "5"){
       setIsModalOpen(true);
@@ -59,8 +52,8 @@ const Navbar = ({ action, logo }) => {
   };
 
 
-  const pType = localStorage.getItem("passType");
-  const uType = localStorage.getItem("userType");
+  const pType = "new";
+  const uType = 5;
 
   useEffect(()=>{
     if((pType == "old" || pType == "Old") && uType == "5"){
@@ -71,7 +64,7 @@ const Navbar = ({ action, logo }) => {
 
   return (
     <>
-      {localStorage.getItem("token") !== null && (
+   
         <div className="nav">
           <div
             style={{
@@ -100,7 +93,7 @@ const Navbar = ({ action, logo }) => {
                 style={{ cursor: "pointer" }}
                 onClick={(e) => e.preventDefault()}>
                 <p style={{ fontWeight: 600, fontSize: "16px" }}>
-                  {localStorage.getItem("userId")}
+                  Demo
                 </p>
                 <p>
                   <DownOutlined />
@@ -109,7 +102,6 @@ const Navbar = ({ action, logo }) => {
             </Dropdown>
           </div>
         </div>
-      )}
 
       <Modal
         className="change_pass"

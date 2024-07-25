@@ -1,61 +1,21 @@
 import { Spin } from "antd";
 import "./ModalsData.scss";
 
-const ModalsData = ({ partnershipDetails, loading }) => {
+const ModalsData = ({ partnershipDetails }) => {
   const uType = localStorage.getItem("userType");
 
-  // let subAdminTotal;
-  // let subAdminCommTotal;
-  // if (uType == 5) {
-  //   subAdminTotal =
-  //     100 -
-  //     (Number(partnershipDetails?.subadminpartnership) +
-  //       Number(partnershipDetails?.supermastepartnership) +
-  //       Number(partnershipDetails?.masterpartership) +
-  //       Number(partnershipDetails?.delearpartership));
-
-  //   subAdminCommTotal =
-  //     100 -
-  //     (Number(partnershipDetails?.subadminpartnershipc) +
-  //       Number(partnershipDetails?.supermastepartnershipc) +
-  //       Number(partnershipDetails?.masterpartershipc) +
-  //       Number(partnershipDetails?.delearpartershipc));
-  // } else if (uType == 0) {
-  //   subAdminTotal =
-  //     100 -
-  //     (Number(partnershipDetails?.supermastepartnership) +
-  //       Number(partnershipDetails?.masterpartership) +
-  //       Number(partnershipDetails?.delearpartership));
-  //   subAdminCommTotal =
-  //     100 -
-  //     (Number(partnershipDetails?.supermastepartnershipc) +
-  //       Number(partnershipDetails?.masterpartershipc) +
-  //       Number(partnershipDetails?.delearpartershipc));
-  // } else if (uType == 1) {
-  //   subAdminTotal =
-  //     100 -
-  //     (Number(partnershipDetails?.masterpartership) +
-  //       Number(partnershipDetails?.delearpartership));
-  //   subAdminCommTotal =
-  //     100 -
-  //     (Number(partnershipDetails?.masterpartershipc) +
-  //       Number(partnershipDetails?.delearpartershipc));
-  // } else if (uType == 2) {
-  //   subAdminTotal = 100 - Number(partnershipDetails?.delearpartership);
-  //   subAdminCommTotal = 100 - Number(partnershipDetails?.delearpartershipc);
-  // }
 
 
   return (
     <>
       <div className="ant-spin-nested-loading">
-        {loading ? (
+        {/* {loading ? (
           <div className="spin_icon">
             <Spin size="large" />
           </div>
         ) : (
           ""
-        )}
+        )} */}
         <div className="partnership">
           <div className="sub_partnership">
             <div className="partnership_name">

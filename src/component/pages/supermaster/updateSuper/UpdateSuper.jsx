@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import {
   Button,
   Col,
@@ -7,15 +7,28 @@ import {
   InputNumber,
   Row,
   Select,
-  Spin,
   notification,
 } from "antd";
 import "./UpdateSuper.scss";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  useLazyGetUserQuery,
-  useUpdateUserMutation,
-} from "../../../../store/service/userlistService";
+
+const result = {
+  "userName": "demoClient",
+  "reference": "",
+  "mobileNumber": null,
+  "password": "Asdf1234",
+  "status": true,
+  "matchComm": 0.00,
+  "sessionComm": 0.00,
+  "casinoComm": 0.0,
+  "casinoShare": null,
+  "matchShare": null,
+  "parentMatchComm": 0.00,
+  "parentSessionComm": 0.00,
+  "parentCasinoComm": 0.0,
+  "parentCasinoShare": 90.00,
+  "parentMatchShare": 90.00
+}
 
 const UpdateSuper = ({ updateName }) => {
   // console.log(updateName, "dasdasd")
@@ -27,29 +40,10 @@ const UpdateSuper = ({ updateName }) => {
   const [data, setData] = useState();
 
   const { id } = useParams();
-  const [trigger, { data: updateData, isLoading, error }] =
-    useUpdateUserMutation();
 
-  const openNotification = (mess) => {
-    api.success({
-      message: mess,
-      description: "Success",
-      closeIcon: false,
-      placement: "top",
-    });
-  };
-
-  const openNotificationError = (mess) => {
-    api.error({
-      message: mess,
-      closeIcon: false,
-      placement: "top",
-    });
-  };
 
   const mobileNum = /^[6-9][0-9]{9}$/;
   const passw = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,}$/;
-  const [getData, resuilt] = useLazyGetUserQuery();
 
   const onFinish = (values) => {
     const userData = {
@@ -66,20 +60,8 @@ const UpdateSuper = ({ updateName }) => {
       reference: values?.reference,
     };
 
-    trigger(userData);
     form?.resetFields();
   };
-  useEffect(() => {
-    if (updateData?.status === true) {
-      getData({
-        userId: id,
-      });
-      openNotification(updateData?.message);
-      form?.resetFields();
-    } else if (updateData?.status === false || error?.data?.message) {
-      openNotificationError(updateData?.message || error?.data?.message);
-    }
-  }, [updateData, error]);
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -87,21 +69,15 @@ const UpdateSuper = ({ updateName }) => {
   const { Option } = Select;
 
 
-  useEffect(() => {
-    getData({
-      userId: id,
-    });
-  }, [resuilt?.data, id]);
 
   useEffect(() => {
-    if (resuilt?.data?.status === true) setData(resuilt?.data?.data);
     setCommType(
-      Number(resuilt?.data?.data?.matchComm) == 0 ||
-        Number(resuilt?.data?.data?.sessionComm) == 0
+      Number(result?.matchComm) == 0 ||
+        Number(result?.sessionComm) == 0
         ? "no-comm"
         : "bbb"
     );
-  }, [resuilt?.data?.data]);
+  }, [result]);
 
   const onCommissionType = (e) => {
     setCommType(e);
@@ -123,75 +99,74 @@ const UpdateSuper = ({ updateName }) => {
           </div>
         </div>
         <div className="ant-spin-nested-loading">
-          {isLoading ? (
+          {/* {isLoading ? (
             <div className="spin_icon">
               <Spin size="large" />
             </div>
           ) : (
             ""
-          )}
+          )} */}
           <Form
             form={form}
             className="form_data"
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            // initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             onFocus={onFinishFailed}
             fields={[
               {
                 name: "name",
-                value: resuilt?.data?.data.userName,
+                value: result.userName,
               },
               {
                 name: "number",
-                value: resuilt?.data?.data.mobileNumber,
+                value: result.mobileNumber,
               },
               {
                 name: "password",
-                value: resuilt?.data?.data.password,
+                value: result.password,
               },
               {
                 name: "status",
-                value: resuilt?.data?.data.status ? "active" : "inActive",
+                value: result.status ? "active" : "inActive",
               },
               {
                 name: "sess_comm",
-                value: (resuilt?.data?.data.sessionComm)?.toFixed(2),
+                value: (result.sessionComm)?.toFixed(2),
               },
               {
                 name: "matchcomm",
-                value: resuilt?.data?.data.parentMatchComm,
+                value: result.parentMatchComm,
               },
               {
                 name: "sesscomm",
-                value: resuilt?.data?.data.parentSessionComm,
+                value: result.parentSessionComm,
               },
               {
                 name: "casinoshare",
-                value: resuilt?.data?.data.parentCasinoShare,
+                value: result.parentCasinoShare,
               },
               {
                 name: "casinoComm",
-                value: resuilt?.data?.data.parentCasinoComm,
+                value: result.parentCasinoComm,
               },
               {
                 name: "reference",
-                value: resuilt?.data?.data.reference,
+                value: result.reference,
               },
               {
                 name: "Supermatchcomm",
-                value: (resuilt?.data?.data.matchComm)?.toFixed(2),
+                value: (result.matchComm)?.toFixed(2),
               },
               {
                 name: "supercasinoShare",
-                value: resuilt?.data?.data.casinoShare,
+                value: result.casinoShare,
               },
               {
                 name: "Supercasinocomm",
-                value: resuilt?.data?.data.casinoComm,
+                value: result.casinoComm,
               },
               {
                 name: "commType",
@@ -207,7 +182,7 @@ const UpdateSuper = ({ updateName }) => {
               },
               {
                 name: "status",
-                value: resuilt?.data?.data.status ? "active" : "inActive",
+                value: result.status ? "active" : "inActive",
               },
             ]}>
             <div>
@@ -461,12 +436,7 @@ const UpdateSuper = ({ updateName }) => {
                             },
                           ]}
                         />
-                        {/* <InputNumber
-                          type="number"
-                          className="number_field"
-                          min={0}
-                          step="0.1"
-                        /> */}
+                       
                       </Form.Item>
                     </Col>
                   </>
@@ -475,104 +445,12 @@ const UpdateSuper = ({ updateName }) => {
                 )}
                 
               </Row>
-              {/* {
-                commType == "bbb" &&  <div>
-                <h2 style={{marginLeft:"0px"}} className="update_agent_text">
-                  Casino  Comm
-                </h2>
-              </div>
-              } */}
+              
               
               <Row className="super_agent  update_agent">
-                {/* <Col lg={12} xs={24}>
-                  <Form.Item
-                    label="MASTER casino Share(%)"
-                    name="casinoshare"
-                    required={false}>
-                    <Input type="number" disabled />
-                  </Form.Item>
-                </Col>
-                <Col lg={12} xs={24}>
-                  <Form.Item
-                    label="Casino Share(%)"
-                    name="supercasinoShare"
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: "Invalid Casino Share",
-                      },
-                    ]}>
-                    <InputNumber className="number_field" min={0} step="0.1" />
-                  </Form.Item>
-                </Col> */}
+                
 
-                {/* {
-                  commType == "bbb" && <>
-                  <Col lg={12} xs={24}>
-                  <Form.Item
-                    label={`${updateName} casino comm(%)`}
-                    name="casinoComm"
-                    required={false}>
-                    <Input disabled />
-                  </Form.Item>
-                </Col>
-                <Col lg={12} xs={24}>
-                  <Form.Item
-                    label="Casino comm(%)"
-                    name="Supercasinocomm"
-                    required
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter valid Casino commission",
-                      }
-                    ]}>
-                    <Select
-                          defaultValue="Select Casino Comm(%)"
-                          options={[
-                            {
-                              value: "0.00",
-                              label: "0.00",
-                            },
-                            {
-                              value: "0.25",
-                              label: "0.25",
-                            },
-                            {
-                              value: "0.50",
-                              label: "0.50",
-                            },
-                            {
-                              value: "0.75",
-                              label: "0.75",
-                            },
-                            {
-                              value: "1.00",
-                              label: "1.00",
-                            },
-                            // {
-                            //   value: "1.25",
-                            //   label: "1.25",
-                            // },
-                            // {
-                            //   value: "1.50",
-                            //   label: "1.50",
-                            // },
-                            // {
-                            //   value: "1.75",
-                            //   label: "1.75",
-                            // },
-                            // {
-                            //   value: "2.00",
-                            //   label: "2.00",
-                            // },
-                          ]}
-                        />
-                  </Form.Item>
-                </Col>
-                  </>
-                } */}
+                
                 
                 <Col lg={12} xs={24}>
                   <Form.Item

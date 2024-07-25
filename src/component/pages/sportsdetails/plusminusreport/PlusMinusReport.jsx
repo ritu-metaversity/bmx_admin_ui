@@ -1,10 +1,34 @@
-import  React, {useEffect, useState } from "react";
-// import { Divider, Radio, Table } from "antd";
+import  {useEffect, useState } from "react";
 import "./PlusMinusReport.scss";
 import { Checkbox, Col, notification, Row, Table } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-import { useComplteFancyOddsClientsQuery } from "../../../../store/service/supermasteAccountStatementServices";
+
+const data = {
+  "markets": [
+      {
+          "marketid": "4.1710076547972-F2",
+          "marketname": "Fancy2Market",
+          "result": 12,
+          "selectionname": "Match 1st Over Run (KK vs PZ) Adv"
+      },
+      {
+          "marketid": "4.1710076565888-F2",
+          "marketname": "Fancy2Market",
+          "result": 46,
+          "selectionname": "How Many Balls Face By B Azam Adv"
+      }
+  ],
+  "users": {
+      "parent": [
+          {
+              "userid": "Mdemo"
+          }
+      ],
+      "parentKey": "supermasterid",
+      "client": []
+  }
+}
 
 const column = [
   {
@@ -48,16 +72,9 @@ const PlusMinusReport = () => {
     setShowOdds(checked);
   };
 
-  const { data, isFetching, isLoading } = useComplteFancyOddsClientsQuery(
-    {
-      eventId: id,
-    },
-    { refetchOnMountOrArgChange: true }
-  );
-
 const [ParentKey, setParentKey] = useState("")
   useEffect(()=>{
-    setParentKey(data?.data?.users?.parentKey)
+    setParentKey(data?.users?.parentKey)
   }, [data?.data])
 
   const nav = useNavigate();
@@ -90,20 +107,19 @@ const [ParentKey, setParentKey] = useState("")
 
   useEffect(() => {
     
-    if(data?.data?.markets?.length){
-      setfirst(data?.data?.markets?.map(i=>i.marketid))
+    if(data?.markets?.length){
+      setfirst(data?.markets?.map(i=>i.marketid))
     }
    
-    if(data?.data?.users?.parent?.length){
-      setSecondUserid(data?.data?.users?.parent?.map(i=>i.userid))
+    if(data?.users?.parent?.length){
+      setSecondUserid(data?.users?.parent?.map(i=>i.userid))
     }   
-    if(data?.data?.users?.client?.length){
-      setThiredUserid(data?.data?.users?.client?.map(i=>i.userid))
+    if(data?.users?.client?.length){
+      setThiredUserid(data?.users?.client?.map(i=>i.userid))
     }
     return () => {}
   }, [data?.data])
   
-  // console.log(first, secondUserid,thirdUserid, "sdasdasa")
 
   return (
     <>
@@ -158,10 +174,6 @@ const [ParentKey, setParentKey] = useState("")
                         setfirst(selectedRows.map((i) => i.marketid));},
                       selectedRowKeys: first,
                       getCheckboxProps: (record) => ({
-                        // disabled: record.name === 'Disabled User',
-                        // : first.includes(record.marketid),
-                        // Column configuration not to be checked
-                        // name: record.name,
                         value: record.marketid,
                         name: record.marketid,
                       }),
@@ -169,9 +181,8 @@ const [ParentKey, setParentKey] = useState("")
                     rowKey="marketid"
                     bordered
                     columns={column}
-                    loading={isFetching || isLoading}
                     pagination={false}
-                    dataSource={data?.data?.markets.filter(
+                    dataSource={data?.markets.filter(
                       (i) =>
                         !["match odds", "bookmaker"].includes(
                           i.marketname?.toLowerCase()
@@ -192,20 +203,16 @@ const [ParentKey, setParentKey] = useState("")
                       },
                       selectedRowKeys: secondUserid,
                       getCheckboxProps: (record) => ({
-                        // disabled: record.name === 'Disabled User',
-                        // : first.includes(record.marketid),
-                        // Column configuration not to be checked
-                        // name: record.name,
                         value: record.userid,
                         name: record.userid,
                       }),
                     }}
                     rowKey="userid"
                     bordered
-                    loading={isFetching || isLoading}
+                    // loading={isFetching || isLoading}
                     columns={columns}
                     pagination={false}
-                    dataSource={data?.data?.users?.parent}
+                    dataSource={data?.users?.parent}
                   />
                 </div>
               </Col>
@@ -222,20 +229,16 @@ const [ParentKey, setParentKey] = useState("")
                       },
                       selectedRowKeys: thirdUserid,
                       getCheckboxProps: (record) => ({
-                        // disabled: record.name === 'Disabled User',
-                        // : first.includes(record.marketid),
-                        // Column configuration not to be checked
-                        // name: record.name,
                         value: record.userid,
                         name: record.userid,
                       }),
                     }}
                     rowKey="userid"
                     bordered
-                    loading={isFetching || isLoading}
+                    // loading={isFetching || isLoading}
                     columns={clintColumns}
                     pagination={false}
-                    dataSource={data?.data?.users?.client}
+                    dataSource={data?.users?.client}
                   />
                 </div>
               </Col>

@@ -50,7 +50,7 @@ const SuperAgentProfitLoss = ({name, data}) => {
                   bordered
                   pagination={false}
                   columns={columns}
-                  dataSource={data?.superMaster}
+                  dataSource={[]}
                 ></Table>
               </div>
             </div>

@@ -1,6 +1,5 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./SuperAgentLimitDetails.scss";
-import React from "react";
 import { Tabs } from "antd";
 import AddSuperLimites from "./AddSuperLimites";
 import MinusLimit from "./MinusLimit";
@@ -30,11 +29,6 @@ const SuperAgentLimitDetails = () => {
   const onChange = (key) => {
     console.log(key);
   };
-
-
-  const uType = localStorage.getItem("userType")
-
-
   return (
     <>
       <div className="main_live_section">
@@ -45,7 +39,7 @@ const SuperAgentLimitDetails = () => {
             <div
               style={{ padding: "9px 8px", fontSize: "22px" }}
               className="team_name">
-              {uType == 5? "Super Master Limit Details": uType == 0?"Master Limit Details ":uType == 1?"Agent Limit Details": uType == 2?"Client Limit Details":""}
+              Super Master Limit Details
             </div>
             <div className="show_btn">
               <button onClick={handleBackClick}>Back</button>

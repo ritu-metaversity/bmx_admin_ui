@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 import { useLocation, useNavigate } from "react-router-dom";
 import TransactionTable from "../TransactionTable";
 import { useEffect, useState } from "react";
-import { useCreateTransactionMutation, useLazyFilterbyClientQuery, useLazyUserListQuery } from "../../../../store/service/supermasteAccountStatementServices";
 import moment from "moment";
 
 const dateFormat = "YYYY/MM/DD";
@@ -30,27 +29,6 @@ const AgentTransactions = ({ userType, Listname }) => {
 
   const { Option } = Select;
 
-  const [getClient, result] = useLazyFilterbyClientQuery();
-
-
-  const [createTran, { data: createTranstions, error, isLoading }] = useCreateTransactionMutation();
-    const openNotification = (mess) => {
-      api.success({
-        message: mess,
-        description: "Success",
-        closeIcon: false,
-        placement: "top",
-      });
-    };
-  
-    const openNotificationError = (mess) => {
-      api.error({
-        message: mess,
-        closeIcon: false,
-        placement: "top",
-      });
-    };
-
   const onFinish = (values) => {
     const createTranstions = {
       userId: values?.client,
@@ -59,72 +37,29 @@ const AgentTransactions = ({ userType, Listname }) => {
       paymenttype: values?.payment_type,
       remarks: values?.remark,
     };
-    createTran(createTranstions);
+
     form?.resetFields();
   };
 
 
-  
-
-  const [userList, {data:resultData, isError}] = useLazyUserListQuery();
 
   const onSelectDate = (date, dateString) => {
     setStartDate(dateString);
   };
 
   const handleChange = (value) => {
-    userList({
-      userType: userType,
-      userName: value,
-    });
-    getClient({
-      userId: value,
-      userType: userType
-    });
+    
   };
   const handleSelect = (value) => {
     setClientId(value);
   };
 
-  useEffect(() => {
-    getClient({
-      userId: clientId,
-      userType:userType,
-    });
-  }, [clientId, result?.data,]);
-
-
-  useEffect(()=>{
-    if (createTranstions?.status === true) {
-      getClient({
-        userId: clientId,
-        userType: userType
-      });
-      openNotification(createTranstions?.message);
-      form?.resetFields();
-    } else if (createTranstions?.status === false || error?.data?.message) {
-      openNotificationError(createTranstions?.message || error?.data?.message);
-    }
-
-  }, [createTranstions, error])
-
-
-  useEffect(()=>{
-    if(result?.data?.data !== undefined){
-    const useData = JSON.parse(result?.data?.data?.cashtransection);
-    setUserTranstionData(useData?.results)
-  }
-  }, [result?.data])
 
   
   
   useEffect(()=>{
     form?.resetFields();
     setClientId("");
-    userList({
-      userType: userType,
-      userName: "",
-    });
   }, [pathname])
   return (
     <>
@@ -157,12 +92,7 @@ const AgentTransactions = ({ userType, Listname }) => {
                   ]}>
                   <Select
                     placeholder="Select Client"
-                    options={
-                      !isError && resultData?.data?.map((i) => ({
-                        label: `${i?.userId}  (${i?.userName})`,
-                        value: i?.userId,
-                      })) || []
-                    }
+                    options={[]}
                     showSearch
                     allowClear
                     onSelect={handleSelect}
@@ -255,7 +185,7 @@ const AgentTransactions = ({ userType, Listname }) => {
               </Col>
             </Row>
             <Form.Item wrapperCol={{ span: 24 }}>
-              <Button loading={isLoading} type="primary" htmlType="submit">
+              <Button  type="primary" htmlType="submit">
                 Submit
               </Button>
             </Form.Item>
@@ -264,9 +194,9 @@ const AgentTransactions = ({ userType, Listname }) => {
       </Card>
 
       <Card className="sport_detail ledger_data">
-        {userTranstionData?.length != 0  && (
-          <TransactionTable clientId={clientId} balanceData = {result?.data?.data?.lenadenabalance}  data={userTranstionData} />
-        )}
+       
+          <TransactionTable clientId={clientId} balanceData ={0}  data={[]} />
+       
       </Card>
     </>
   );

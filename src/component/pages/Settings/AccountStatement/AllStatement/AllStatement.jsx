@@ -1,40 +1,26 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import { Modal, Table } from "antd";
-import { useLazyAccountstatementQuery } from "../../../../../store/service/supermasteAccountStatementServices";
-import { useDispatch } from "react-redux";
-import { setData } from "../../../../../store/global/slice";
 import AccountModals from "../AccountModals";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import moment from "moment";
+
 import DownloadReport from "../../../../common/DownloadReport/DownloadReport";
 
-const AllStatement = ({isModalOpen, setIsModalOpen,clientId, dateData, gameType }) => {
-  const [trigger, { data, isFetching, isLoading }] =
-useLazyAccountstatementQuery();
+const dataList = [];
+
+const AllStatement = ({
+  isModalOpen,
+  setIsModalOpen,
+  clientId,
+  dateData,
+  gameType,
+}) => {
   const [isModalOpen1, setIsModalOpen1] = useState(false);
   const [marketId, setMarketId] = useState("");
   const [remark, setRemark] = useState("");
 
   const { id } = useParams();
-
-  useEffect(() => {
-    const AccData = {
-      index: 0,
-      noOfRecords: "200",
-      fromDate: dateData[0],
-      toDate: dateData[1],
-      userid: clientId || id || "",
-      type: gameType,
-    };
-    trigger(AccData);
-  }, [data, gameType, clientId, dateData]);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(setData(data?.data?.dataList?.length));
-  }, [data?.data]);
 
   const columns = [
     {
@@ -107,8 +93,7 @@ useLazyAccountstatementQuery();
 
   const handleCancel = () => {
     setIsModalOpen1(false);
-    setIsModalOpen(false)
-
+    setIsModalOpen(false);
   };
 
   const handelAccountModals = (e, id, rem) => {
@@ -119,31 +104,13 @@ useLazyAccountstatementQuery();
   };
 
 
-  const headerField = [
-    "Date",
-    "Description",
-    "Prev. Bal",
-    "CR",
-    "DR",
-    "Comm+",
-    "Comm-",
-    "Balance",
-    "Remark",
-  ];
-
-
   return (
     <>
-   
       <div className="account_download">
-      <DownloadReport startDate={dateData[0]}
-      endDate= {dateData[1]} 
-      userId= {clientId || id}
-      type={gameType} reportType="AccountStatementReport" reportName="account-statement" 
-      headerField={headerField}
-      isModalOpen={isModalOpen1}
-      setIsModalOpen={setIsModalOpen1}
-      />
+        <DownloadReport
+          isModalOpen={isModalOpen1}
+          setIsModalOpen={setIsModalOpen1}
+        />
       </div>
       <div className="table_section statement_tabs_data">
         <div className="table_section">
@@ -158,14 +125,13 @@ useLazyAccountstatementQuery();
                 },
               };
             }}
-            loading={isFetching || isLoading}
             columns={columns}
             pagination={{
               defaultPageSize: 50,
               pageSizeOptions: [50, 100, 150, 200, 250],
             }}
             dataSource={
-              data?.data?.dataList?.map((res) => ({
+              dataList?.map((res) => ({
                 ...res,
                 commPlus: 0,
                 commMinus: 0,
